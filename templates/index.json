@@ -1,0 +1,452 @@
+{
+  "sections": {
+    "card_carousel": {
+      "type": "custom-card-carousel",
+      "blocks": {
+        "card_1": {
+          "type": "carousel_card"
+        },
+        "card_2": {
+          "type": "carousel_card"
+        },
+        "card_3": {
+          "type": "carousel_card"
+        },
+        "card_4": {
+          "type": "carousel_card"
+        },
+        "card_5": {
+          "type": "carousel_card"
+        },
+        "card_6": {
+          "type": "carousel_card"
+        },
+        "card_7": {
+          "type": "carousel_card"
+        },
+        "card_8": {
+          "type": "carousel_card"
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4",
+        "card_5",
+        "card_6",
+        "card_7",
+        "card_8"
+      ]
+    },
+    "category_pills": {
+      "type": "custom-category-pills",
+      "blocks": {
+        "pill_1": {
+          "type": "category_pill",
+          "settings": {
+            "label": "SEDIE"
+          }
+        },
+        "pill_2": {
+          "type": "category_pill",
+          "settings": {
+            "label": "TAVOLI"
+          }
+        },
+        "pill_3": {
+          "type": "category_pill",
+          "settings": {
+            "label": "LETTO"
+          }
+        },
+        "pill_4": {
+          "type": "category_pill",
+          "settings": {
+            "label": "SOFA"
+          }
+        },
+        "pill_5": {
+          "type": "category_pill",
+          "settings": {
+            "label": "POLTRONE"
+          }
+        },
+        "pill_6": {
+          "type": "category_pill",
+          "settings": {
+            "label": "CARRELLI"
+          }
+        },
+        "pill_7": {
+          "type": "category_pill",
+          "settings": {
+            "label": "ARMADIO"
+          }
+        },
+        "pill_8": {
+          "type": "category_pill",
+          "settings": {
+            "label": "LAMPADE"
+          }
+        }
+      },
+      "block_order": [
+        "pill_1",
+        "pill_2",
+        "pill_3",
+        "pill_4",
+        "pill_5",
+        "pill_6",
+        "pill_7",
+        "pill_8"
+      ]
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {},
+      "blocks": {
+        "testimonial_1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "La qualità artigianale è straordinaria. Il nostro nuovo divano è il pezzo forte del salotto.",
+            "author": "Sara M."
+          }
+        },
+        "testimonial_2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Mobili bellissimi e costruiti per durare. Abbiamo arredato tutta la casa con Bensa.",
+            "author": "Giovanni T."
+          }
+        },
+        "testimonial_3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Consegna veloce e i mobili sono ancora più belli dal vivo. Consigliatissimi per chi cerca arredamento di qualità.",
+            "author": "Elena R."
+          }
+        },
+        "testimonial_4": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "L'attenzione ai dettagli è notevole. Ogni angolo, ogni finitura parla di qualità.",
+            "author": "Marco L."
+          }
+        },
+        "testimonial_5": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Adoriamo come i mobili si integrano perfettamente con lo stile della nostra casa. Eleganti e funzionali.",
+            "author": "Anna B."
+          }
+        },
+        "testimonial_6": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Servizio clienti eccezionale e il tavolo da pranzo ha superato ogni aspettativa.",
+            "author": "Luca R."
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_1",
+        "testimonial_2",
+        "testimonial_3",
+        "testimonial_4",
+        "testimonial_5",
+        "testimonial_6"
+      ]
+    },
+    "brand_logos": {
+      "type": "custom-brand-logos",
+      "settings": {
+        "heading": "Solo i migliori marchi a livello mondiale.",
+        "background_color": "#f5f3ec"
+      },
+      "blocks": {
+        "logo_1": { "type": "logo", "settings": { "row": "1" } },
+        "logo_2": { "type": "logo", "settings": { "row": "1" } },
+        "logo_3": { "type": "logo", "settings": { "row": "1" } },
+        "logo_4": { "type": "logo", "settings": { "row": "1" } },
+        "logo_5": { "type": "logo", "settings": { "row": "1" } },
+        "logo_6": { "type": "logo", "settings": { "row": "1" } },
+        "logo_7": { "type": "logo", "settings": { "row": "1" } },
+        "logo_8": { "type": "logo", "settings": { "row": "2" } },
+        "logo_9": { "type": "logo", "settings": { "row": "2" } },
+        "logo_10": { "type": "logo", "settings": { "row": "2" } },
+        "logo_11": { "type": "logo", "settings": { "row": "2" } },
+        "logo_12": { "type": "logo", "settings": { "row": "2" } },
+        "logo_13": { "type": "logo", "settings": { "row": "2" } },
+        "logo_14": { "type": "logo", "settings": { "row": "2" } }
+      },
+      "block_order": [
+        "logo_1",
+        "logo_2",
+        "logo_3",
+        "logo_4",
+        "logo_5",
+        "logo_6",
+        "logo_7",
+        "logo_8",
+        "logo_9",
+        "logo_10",
+        "logo_11",
+        "logo_12",
+        "logo_13",
+        "logo_14"
+      ]
+    },
+    "community": {
+      "type": "custom-community",
+      "settings": {
+        "subtitle": "BENSA + VOI",
+        "heading": "La Community",
+        "description": "Scopri come i nostri clienti hanno trasformato le loro case con l'aiuto di Bensa Arredamenti. Lasciati ispirare dalle loro storie."
+      },
+      "blocks": {
+        "community_1": {
+          "type": "video_card",
+          "settings": {
+            "username": "polonaamy"
+          }
+        },
+        "community_2": {
+          "type": "video_card",
+          "settings": {
+            "username": "alexislconway"
+          }
+        },
+        "community_3": {
+          "type": "video_card",
+          "settings": {
+            "username": "sarahdesign"
+          }
+        }
+      },
+      "block_order": [
+        "community_1",
+        "community_2",
+        "community_3"
+      ]
+    },
+    "service_packages": {
+      "type": "custom-packages",
+      "settings": {
+        "subtitle": "I Nostri Servizi",
+        "heading": "Pacchetti flessibili pensati per accompagnarti in ogni fase dell'arredamento della tua casa"
+      },
+      "blocks": {
+        "service_1": {
+          "type": "service_card",
+          "settings": {
+            "title": "Progettazione",
+            "label": "Per chi:",
+            "description": "Desidera una consulenza esperta di interior design per la propria casa"
+          }
+        },
+        "service_2": {
+          "type": "service_card",
+          "settings": {
+            "title": "Arredamento Completo",
+            "label": "Per chi:",
+            "description": "Vuole una trasformazione completa dei propri ambienti"
+          }
+        },
+        "service_3": {
+          "type": "service_card",
+          "settings": {
+            "title": "Ristrutturazione Chiavi in Mano",
+            "label": "Per chi:",
+            "description": "Cerca un servizio completo dalla progettazione alla realizzazione finale"
+          }
+        },
+        "cta": {
+          "type": "cta_card",
+          "settings": {
+            "heading": "Non sai quale servizio fa per te?",
+            "link_label": "Scopri i Dettagli"
+          }
+        }
+      },
+      "block_order": [
+        "service_1",
+        "service_2",
+        "service_3",
+        "cta"
+      ]
+    },
+    "tiktok_viral": {
+      "type": "custom-tiktok-viral",
+      "settings": {
+        "heading": "I preferiti virali su TikTok",
+        "padding_top": 48,
+        "padding_bottom": 48
+      },
+      "blocks": {
+        "tiktok_1": { "type": "video_card" },
+        "tiktok_2": { "type": "video_card" },
+        "tiktok_3": { "type": "video_card" },
+        "tiktok_4": { "type": "video_card" },
+        "tiktok_5": { "type": "video_card" },
+        "tiktok_6": { "type": "video_card" },
+        "tiktok_7": { "type": "video_card" }
+      },
+      "block_order": [
+        "tiktok_1",
+        "tiktok_2",
+        "tiktok_3",
+        "tiktok_4",
+        "tiktok_5",
+        "tiktok_6",
+        "tiktok_7"
+      ]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Resta in contatto",
+        "text": "Iscriviti per ricevere aggiornamenti sulle nuove collezioni, consigli di design e offerte esclusive."
+      }
+    },
+    "info_cards": {
+      "type": "custom-info-cards",
+      "blocks": {
+        "card_about": {
+          "type": "info_card",
+          "settings": {
+            "subtitle": "SCOPRI CHI SIAMO",
+            "heading": "Chi Siamo",
+            "button_label_1": "Scopri di più",
+            "light_background": false
+          }
+        },
+        "card_membership": {
+          "type": "info_card",
+          "settings": {
+            "subtitle": "QUALITÀ ARTIGIANALE",
+            "heading": "Precisione e Cura nei Dettagli",
+            "button_label_1": "Scopri i Brand",
+            "light_background": true,
+            "bg_color": "#f5f3ec"
+          }
+        },
+        "card_sustainability": {
+          "type": "info_card",
+          "settings": {
+            "subtitle": "IL NOSTRO IMPEGNO",
+            "heading": "Ristrutturazione Chiavi in Mano",
+            "button_label_1": "Scopri Come",
+            "button_label_2": "Richiedi Appuntamento",
+            "light_background": false
+          }
+        }
+      },
+      "block_order": [
+        "card_about",
+        "card_membership",
+        "card_sustainability"
+      ]
+    },
+    "custom_featured_grid": {
+      "type": "custom-featured-grid",
+      "blocks": {
+        "card_1": {
+          "type": "product_card",
+          "settings": {
+            "title": "Lodge Sofa",
+            "rating": "4.9",
+            "brand": "ARREDO 3"
+          }
+        },
+        "card_2": {
+          "type": "product_card",
+          "settings": {
+            "title": "The Couch",
+            "rating": "4.9",
+            "brand": "ARREDO 3"
+          }
+        },
+        "card_3": {
+          "type": "product_card",
+          "settings": {
+            "title": "Tavolino Sveden",
+            "rating": "4.8",
+            "brand": "BONALDO"
+          }
+        },
+        "card_4": {
+          "type": "product_card",
+          "settings": {
+            "title": "Bruner",
+            "rating": "5.0",
+            "brand": "SOFIA ARREDAMENTI"
+          }
+        },
+        "card_5": {
+          "type": "product_card",
+          "settings": {
+            "title": "Treveris",
+            "rating": "4.8",
+            "brand": "SKULM"
+          }
+        },
+        "card_6": {
+          "type": "product_card",
+          "settings": {
+            "title": "Tablo",
+            "rating": "4.6",
+            "brand": "ARREDO 3"
+          }
+        },
+        "card_7": {
+          "type": "product_card",
+          "settings": {
+            "title": "Billie",
+            "rating": "5.0",
+            "brand": "ARREDO 3"
+          }
+        },
+        "card_8": {
+          "type": "product_card",
+          "settings": {
+            "title": "Oslo Chair",
+            "rating": "4.7",
+            "brand": "BONALDO"
+          }
+        },
+        "card_9": {
+          "type": "product_card",
+          "settings": {
+            "title": "Nora Dining",
+            "rating": "4.9",
+            "brand": "SKULM"
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4",
+        "card_5",
+        "card_6",
+        "card_7",
+        "card_8",
+        "card_9"
+      ]
+    }
+  },
+  "order": [
+    "card_carousel",
+    "category_pills",
+    "custom_featured_grid",
+    "brand_logos",
+    "community",
+    "testimonials",
+    "service_packages",
+    "tiktok_viral",
+    "info_cards",
+    "newsletter"
+  ]
+}

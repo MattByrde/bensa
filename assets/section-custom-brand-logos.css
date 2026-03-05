@@ -1,0 +1,107 @@
+/* ── Brand Logos Marquee ── */
+.brand-logos {
+  overflow: hidden;
+}
+
+.brand-logos__heading {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding: 0 1.5rem;
+}
+
+/* Marquee container */
+.brand-logos__marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.brand-logos__marquee + .brand-logos__marquee {
+  margin-top: 2.5rem;
+}
+
+/* Scrolling track */
+.brand-logos__track {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  width: max-content;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee-left 40s linear infinite;
+}
+
+.brand-logos__track--reverse {
+  animation-name: marquee-right;
+}
+
+.brand-logos__marquee:hover .brand-logos__track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Individual logo item */
+.brand-logos__item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+}
+
+.brand-logos__img {
+  display: block;
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.5;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.brand-logos__item:hover .brand-logos__img {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+@media screen and (min-width: 750px) {
+  .brand-logos__img {
+    height: 44px;
+  }
+
+  .brand-logos__track {
+    gap: 4rem;
+  }
+}
+
+/* Placeholder */
+.brand-logos__placeholder {
+  width: 100px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #999;
+}

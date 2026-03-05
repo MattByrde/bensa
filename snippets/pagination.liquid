@@ -1,0 +1,36 @@
+{%- comment -%}
+  Pagination Snippet
+  Usage: {% render 'pagination', paginate: paginate %}
+{%- endcomment -%}
+
+{%- if paginate.pages > 1 -%}
+  <nav class="pagination" aria-label="Pagination">
+    {%- if paginate.previous -%}
+      <a href="{{ paginate.previous.url }}" class="pagination__item" aria-label="{{ 'accessibility.previous_slide' | t }}">
+        &laquo;
+      </a>
+    {%- else -%}
+      <span class="pagination__item is-disabled">&laquo;</span>
+    {%- endif -%}
+
+    {%- for part in paginate.parts -%}
+      {%- if part.is_link -%}
+        <a href="{{ part.url }}" class="pagination__item">{{ part.title }}</a>
+      {%- else -%}
+        {%- if part.title == paginate.current_page -%}
+          <span class="pagination__item is-current" aria-current="page">{{ part.title }}</span>
+        {%- else -%}
+          <span class="pagination__item">{{ part.title }}</span>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if paginate.next -%}
+      <a href="{{ paginate.next.url }}" class="pagination__item" aria-label="{{ 'accessibility.next_slide' | t }}">
+        &raquo;
+      </a>
+    {%- else -%}
+      <span class="pagination__item is-disabled">&raquo;</span>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

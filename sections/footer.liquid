@@ -1,0 +1,152 @@
+{%- comment -%} Footer Section {%- endcomment -%}
+
+<footer class="site-footer" data-section-id="{{ section.id }}" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+  <div class="site-footer__inner">
+    <div class="site-footer__grid">
+
+      {%- comment -%} Chi Siamo {%- endcomment -%}
+      <div class="site-footer__column">
+        <h4 class="site-footer__heading">Chi Siamo</h4>
+        <div class="site-footer__links">
+          <a href="/pages/chi-siamo">Chi Siamo</a>
+          <a href="/pages/lo-staff">Il nostro Team</a>
+          <a href="/pages/dicono-di-noi">Dicono di Noi</a>
+          <a href="/pages/realizzazioni">Realizzazioni</a>
+        </div>
+      </div>
+
+      {%- comment -%} Servizi {%- endcomment -%}
+      <div class="site-footer__column">
+        <h4 class="site-footer__heading">Servizi</h4>
+        <div class="site-footer__links">
+          <a href="/pages/progettazione">Progettazione</a>
+          <a href="/pages/arredamento">Arredamento</a>
+          <a href="/pages/ristrutturazioni">Ristrutturazioni Chiavi In Mano</a>
+          <a href="/pages/richiedi-appuntamento">Richiedi Appuntamento</a>
+          <a href="/pages/contatti">Contatti</a>
+        </div>
+      </div>
+
+      {%- comment -%} Prodotti {%- endcomment -%}
+      <div class="site-footer__column">
+        <h4 class="site-footer__heading">Prodotti</h4>
+        <div class="site-footer__links">
+          <a href="/collections/cucine">Cucine</a>
+          <a href="/collections/divani-poltrone">Divani e Poltrone</a>
+          <a href="/collections/camere-camerette">Camere e Camerette</a>
+          <a href="/collections/arredo-bagno">Arredo bagno</a>
+          <a href="/collections/tavoli-sedie">Tavoli e Sedie</a>
+          <a href="/collections/outlet">Outlet</a>
+          <a href="/pages/brand">Brand</a>
+        </div>
+      </div>
+
+      {%- comment -%} Legale {%- endcomment -%}
+      <div class="site-footer__column">
+        <h4 class="site-footer__heading">Legale</h4>
+        <div class="site-footer__links">
+          <a href="/pages/privacy-policy">Privacy Policy</a>
+          <a href="/pages/condizioni-di-vendita">Condizioni di Vendita</a>
+          <a href="/pages/cookie-policy">Cookie Policy</a>
+        </div>
+      </div>
+
+      {%- comment -%} Follow Us / Social Column {%- endcomment -%}
+      <div class="site-footer__column site-footer__column--social">
+        <h4 class="site-footer__heading">Seguici</h4>
+        <div class="site-footer__social">
+          {%- if settings.social_instagram != blank -%}
+            <a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if settings.social_facebook != blank -%}
+            <a href="{{ settings.social_facebook }}" target="_blank" rel="noopener" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if settings.social_tiktok != blank -%}
+            <a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16" fill="currentColor"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/></svg>
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+    </div>
+
+    <button class="site-footer__chat" aria-label="Open chat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.92 1.683.155.553.303 1.157.487 1.832.083.303.498.375.69.123 1.066-1.396 2.378-2.146 3.737-2.316A8.99 8.99 0 0 0 12 20.25Z" />
+      </svg>
+    </button>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "section-footer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#DBD8C9"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#27454E"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Quick links"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "default": "footer"
+        }
+      ]
+    },
+    {
+      "type": "social",
+      "name": "Follow us",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Follow us"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        { "type": "menu", "settings": { "heading": "About" } },
+        { "type": "menu", "settings": { "heading": "Customer Care" } },
+        { "type": "menu", "settings": { "heading": "Account" } },
+        { "type": "menu", "settings": { "heading": "Legal" } },
+        { "type": "menu", "settings": { "heading": "Popular Categories" } },
+        { "type": "social", "settings": { "heading": "Follow us" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

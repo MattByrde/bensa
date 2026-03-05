@@ -1,0 +1,69 @@
+{%- comment -%} Main Search Section {%- endcomment -%}
+
+<section class="section-padding" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <h1 class="text-center" style="margin-bottom: 2rem;">{{ 'search.title' | t }}</h1>
+
+    <form action="{{ routes.search_url }}" method="get" class="search-page__form" role="search">
+      <input
+        type="search"
+        name="q"
+        class="search-page__input"
+        placeholder="{{ 'search.placeholder' | t }}"
+        value="{{ search.terms | escape }}"
+        aria-label="{{ 'search.title' | t }}"
+      >
+      <button type="submit" class="btn btn--primary">{{ 'general.search' | t }}</button>
+    </form>
+
+    {%- if search.performed -%}
+      {%- if search.results_count > 0 -%}
+        <p class="text-center" style="margin-bottom: 2rem; opacity: 0.6;">
+          {{ 'search.results' | t: terms: search.terms }}
+        </p>
+        <div class="grid grid--{{ section.settings.columns }}">
+          {%- for result in search.results -%}
+            {%- if result.object_type == 'product' -%}
+              {% render 'product-card', product: result %}
+            {%- else -%}
+              <article class="blog-card">
+                {%- if result.image -%}
+                  <a href="{{ result.url }}" class="blog-card__image">
+                    <img src="{{ result.image | image_url: width: 400 }}" alt="{{ result.title | escape }}" loading="lazy" width="400" height="{{ 400 | divided_by: result.image.aspect_ratio | ceil }}">
+                  </a>
+                {%- endif -%}
+                <h3 class="blog-card__title">
+                  <a href="{{ result.url }}">{{ result.title }}</a>
+                </h3>
+                <p class="blog-card__excerpt">{{ result.content | strip_html | truncatewords: 20 }}</p>
+              </article>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="text-center" style="padding: 2rem 0; opacity: 0.6;">
+          {{ 'search.no_results' | t: terms: search.terms }}
+        </p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Search page",
+  "class": "section-search",
+  "settings": [
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Product columns",
+      "options": [
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "4"
+    }
+  ]
+}
+{% endschema %}

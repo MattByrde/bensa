@@ -1,0 +1,82 @@
+{%- comment -%} Main Cart Section {%- endcomment -%}
+
+<section class="section-padding" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <h1 class="text-center" style="margin-bottom: 2rem;">{{ 'cart.title' | t }}</h1>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="cart-page__empty">
+        <p>{{ 'cart.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">
+          {{ 'cart.continue_shopping' | t }}
+        </a>
+      </div>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post">
+        <div class="cart-items">
+          {%- for item in cart.items -%}
+            <div class="cart-item">
+              <div class="cart-item__image">
+                {%- if item.image -%}
+                  <a href="{{ item.url }}">
+                    <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" loading="lazy" width="200" height="{{ 200 | divided_by: item.image.aspect_ratio | ceil }}">
+                  </a>
+                {%- endif -%}
+              </div>
+              <div class="cart-item__details">
+                <a href="{{ item.url }}" class="cart-item__title">{{ item.product.title }}</a>
+                {%- unless item.product.has_only_default_variant -%}
+                  <p class="cart-item__variant">{{ item.variant.title }}</p>
+                {%- endunless -%}
+                <div class="product-info__quantity" style="margin: 0.75rem 0;">
+                  <button type="button" class="quantity-btn" data-action="decrease" aria-label="{{ 'products.product.quantity.decrease' | t }}">−</button>
+                  <input
+                    type="number"
+                    name="updates[]"
+                    class="quantity-input"
+                    value="{{ item.quantity }}"
+                    min="0"
+                    data-key="{{ item.key }}"
+                    aria-label="{{ 'products.product.quantity.label' | t }}"
+                  >
+                  <button type="button" class="quantity-btn" data-action="increase" aria-label="{{ 'products.product.quantity.increase' | t }}">+</button>
+                </div>
+                <button type="button" class="cart-item__remove" onclick="BensaCart.removeFromCart('{{ item.key }}')">
+                  {{ 'cart.remove' | t }}
+                </button>
+              </div>
+              <div class="cart-item__price">
+                <p>{{ item.final_line_price | money }}</p>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- if settings.cart_notes_enable -%}
+          <div class="field" style="margin-top: 1.5rem; max-width: 400px; margin-left: auto;">
+            <label for="cart-note" class="field__label">{{ 'cart.note' | t }}</label>
+            <textarea id="cart-note" name="note" class="field__input" rows="3">{{ cart.note }}</textarea>
+          </div>
+        {%- endif -%}
+
+        <div class="cart-footer">
+          <div class="cart-footer__subtotal">
+            <span>{{ 'cart.subtotal' | t }}</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+          <p class="cart-footer__note">{{ 'cart.taxes_and_shipping' | t }}</p>
+          <button type="submit" name="checkout" class="btn btn--primary btn--full">
+            {{ 'cart.checkout' | t }}
+          </button>
+        </div>
+      </form>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart page",
+  "class": "section-cart"
+}
+{% endschema %}

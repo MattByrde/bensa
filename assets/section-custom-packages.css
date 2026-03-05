@@ -1,0 +1,134 @@
+/* --- Packages Section --- */
+.packages {
+  width: 100%;
+}
+
+/* Header */
+.packages__header {
+  padding: 0 36px 32px;
+}
+
+@media screen and (min-width: 750px) {
+  .packages__header {
+    padding: 0 60px 40px;
+  }
+}
+
+.packages__header-layout {
+}
+
+.packages__subtitle {
+  margin: 0;
+  white-space: nowrap;
+  padding-top: 0.35em;
+}
+
+.packages__heading {
+  margin: 0 auto;
+  max-width: 1000px;
+  text-align: center;
+}
+
+/* Grid */
+.packages__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media screen and (min-width: 750px) {
+  .packages__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Package card */
+.packages__card {
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  min-height: 360px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+@media screen and (min-width: 750px) {
+  .packages__card {
+    min-height: 420px;
+    padding: 40px 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .packages__card:last-child {
+    border-right: none;
+  }
+}
+
+
+.packages__card-icon-placeholder {
+  width: 100%;
+  margin-bottom: auto;
+  background: rgba(255, 255, 255, 0.1);
+  aspect-ratio: 1;
+}
+
+.packages__card-media {
+  width: 100%;
+  margin-bottom: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+
+.packages__card-bottom {
+  margin-top: auto;
+  padding-top: 1.5rem;
+}
+
+.packages__card-title {
+  margin: 0 0 0.75rem 0;
+}
+
+.packages__card-label {
+  margin: 0 0 0.5rem 0;
+  opacity: 0.5;
+}
+
+.packages__card-desc {
+  margin: 0;
+  opacity: 0.7;
+  line-height: 1.5;
+}
+
+/* CTA card */
+.packages__cta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 36px 28px;
+  min-height: 360px;
+}
+
+@media screen and (min-width: 750px) {
+  .packages__cta {
+    min-height: 420px;
+    padding: 40px 32px;
+  }
+}
+
+.packages__cta-heading {
+  margin: 0;
+}
+
+.packages__cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+  margin-top: auto;
+  transition: opacity 0.2s;
+}
+
+.packages__cta-link:hover {
+  opacity: 0.8;
+}

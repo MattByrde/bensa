@@ -1,0 +1,196 @@
+<link rel="stylesheet" href="{{ 'section-custom-info-cards.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'section-custom-info-cards.css' | asset_url | stylesheet_tag }}</noscript>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="info-cards">
+  {%- for block in section.blocks -%}
+    {%- assign has_image = false -%}
+    {%- if block.settings.image != blank -%}
+      {%- assign has_image = true -%}
+    {%- endif -%}
+
+    {%- assign is_light_bg = block.settings.light_background -%}
+
+    <div
+      class="info-cards__card{% if has_image %} info-cards__card--has-image{% endif %}{% if is_light_bg %} info-cards__card--light info-cards__card--center{% else %} info-cards__card--dark{% endif %}"
+      style="{% if is_light_bg and block.settings.bg_color != blank %}background-color: {{ block.settings.bg_color }};{% endif %}"
+      {{ block.shopify_attributes }}
+    >
+      {%- if has_image -%}
+        {{ block.settings.image | image_url: width: 1200 | image_tag: class: 'info-cards__bg', loading: 'lazy' }}
+      {%- endif -%}
+
+      <div class="info-cards__top">
+        {%- if block.settings.subtitle != blank -%}
+          <p class="info-cards__subtitle typo-overline">{{ block.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="info-cards__bottom">
+        {%- if block.settings.heading != blank -%}
+          <h3 class="info-cards__heading typo-h1">{{ block.settings.heading }}</h3>
+        {%- endif -%}
+
+        <div class="info-cards__buttons">
+          {%- if block.settings.button_label_1 != blank -%}
+            <a
+              href="{{ block.settings.button_link_1 }}"
+              class="info-cards__btn typo-btn {% if is_light_bg %}info-cards__btn--dark{% else %}info-cards__btn--light{% endif %}"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {{ block.settings.button_label_1 }}
+            </a>
+          {%- endif -%}
+
+          {%- if block.settings.button_label_2 != blank -%}
+            <a
+              href="{{ block.settings.button_link_2 }}"
+              class="info-cards__btn typo-btn {% if is_light_bg %}info-cards__btn--dark{% else %}info-cards__btn--light{% endif %}"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {{ block.settings.button_label_2 }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Info Cards",
+  "tag": "section",
+  "class": "section-info-cards",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "info_card",
+      "name": "Info Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background Image",
+          "info": "Leave empty for a solid background color."
+        },
+        {
+          "type": "checkbox",
+          "id": "light_background",
+          "label": "Use light background (no image)",
+          "default": false,
+          "info": "Check for a light card with dark text and centered layout."
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background Color",
+          "default": "#f5f3ec",
+          "info": "Only used when 'light background' is checked."
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Subtitle"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "label": "Button 1 Label",
+          "default": "Read More"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "Button 1 Link"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "Button 2 Label"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Button 2 Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Info Cards",
+      "blocks": [
+        {
+          "type": "info_card",
+          "settings": {
+            "subtitle": "GET TO KNOW US",
+            "heading": "About Us",
+            "button_label_1": "Read More"
+          }
+        },
+        {
+          "type": "info_card",
+          "settings": {
+            "light_background": true,
+            "subtitle": "MEMBERSHIP",
+            "heading": "Join Our Community",
+            "button_label_1": "Sign Up Now"
+          }
+        },
+        {
+          "type": "info_card",
+          "settings": {
+            "subtitle": "FUTURE PROOFING OUR BUSINESS",
+            "heading": "Sustainability Performance",
+            "button_label_1": "Read More",
+            "button_label_2": "Explore Responsibility"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

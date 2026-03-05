@@ -1,0 +1,664 @@
+{%- comment -%} Header Section {%- endcomment -%}
+
+<header class="site-header" data-section-id="{{ section.id }}">
+    {%- comment -%} Row 1: Logo + Nav + Right Links {%- endcomment -%}
+    <div class="site-header__row site-header__row--nav">
+
+      {%- comment -%} Logo {%- endcomment -%}
+      <a href="/" class="site-header__logo">
+        {%- if settings.logo != blank -%}
+          <img
+            src="{{ settings.logo | image_url: width: settings.logo_width }}"
+            srcset="{{ settings.logo | image_url: width: settings.logo_width }} 1x, {{ settings.logo | image_url: width: settings.logo_width | times: 2 }} 2x"
+            alt="{{ shop.name }}"
+            width="{{ settings.logo_width }}"
+            height="{{ settings.logo_width | divided_by: settings.logo.aspect_ratio }}"
+            loading="eager"
+          >
+        {%- else -%}
+          <img
+            src="https://cdn.shopify.com/s/files/1/1054/4732/6034/files/bensa.png?v=1772359427"
+            alt="{{ shop.name }}"
+            width="{{ settings.logo_width }}"
+            loading="eager"
+            class="site-header__logo-img-default"
+          >
+        {%- endif -%}
+      </a>
+
+      <span class="site-header__separator"></span>
+
+      {%- comment -%} Desktop Navigation (left) {%- endcomment -%}
+      <nav class="site-header__nav" aria-label="Main navigation">
+        <ul class="site-nav__list">
+
+          {%- comment -%} Chi Siamo (mega menu with image cards) {%- endcomment -%}
+          <li class="site-nav__item site-nav__item--has-dropdown site-nav__item--megamenu">
+            <a href="/pages/chi-siamo" class="site-nav__link">
+              Chi Siamo
+              <svg class="site-nav__chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2.5 3.75L5 6.25L7.5 3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="site-nav__dropdown site-nav__dropdown--mega">
+              <div class="page-width site-nav__mega-inner site-nav__mega-inner--cards">
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'megamenu' and block.settings.menu_item == 'Chi Siamo' -%}
+                    <div class="site-nav__mega-cards">
+                      {%- if block.settings.image_1 != blank or block.settings.heading_1 != blank -%}
+                        <a href="{{ block.settings.link_1 | default: '/pages/chi-siamo' }}" class="site-nav__mega-card">
+                          <div class="site-nav__mega-card-img">
+                            {%- if block.settings.image_1 != blank -%}
+                              {{ block.settings.image_1 | image_url: width: 500 | image_tag: loading: 'lazy' }}
+                            {%- else -%}
+                              <div class="site-nav__mega-card-placeholder"></div>
+                            {%- endif -%}
+                          </div>
+                          {%- if block.settings.heading_1 != blank -%}
+                            <span class="site-nav__mega-card-title">{{ block.settings.heading_1 }}</span>
+                          {%- endif -%}
+                        </a>
+                      {%- endif -%}
+                      {%- if block.settings.image_2 != blank or block.settings.heading_2 != blank -%}
+                        <a href="{{ block.settings.link_2 | default: '/pages/lo-staff' }}" class="site-nav__mega-card">
+                          <div class="site-nav__mega-card-img">
+                            {%- if block.settings.image_2 != blank -%}
+                              {{ block.settings.image_2 | image_url: width: 500 | image_tag: loading: 'lazy' }}
+                            {%- else -%}
+                              <div class="site-nav__mega-card-placeholder"></div>
+                            {%- endif -%}
+                          </div>
+                          {%- if block.settings.heading_2 != blank -%}
+                            <span class="site-nav__mega-card-title">{{ block.settings.heading_2 }}</span>
+                          {%- endif -%}
+                        </a>
+                      {%- endif -%}
+                      {%- if block.settings.image_3 != blank or block.settings.heading_3 != blank -%}
+                        <a href="{{ block.settings.link_3 | default: '/pages/dicono-di-noi' }}" class="site-nav__mega-card">
+                          <div class="site-nav__mega-card-img">
+                            {%- if block.settings.image_3 != blank -%}
+                              {{ block.settings.image_3 | image_url: width: 500 | image_tag: loading: 'lazy' }}
+                            {%- else -%}
+                              <div class="site-nav__mega-card-placeholder"></div>
+                            {%- endif -%}
+                          </div>
+                          {%- if block.settings.heading_3 != blank -%}
+                            <span class="site-nav__mega-card-title">{{ block.settings.heading_3 }}</span>
+                          {%- endif -%}
+                        </a>
+                      {%- endif -%}
+                      {%- if block.settings.image_4 != blank or block.settings.heading_4 != blank -%}
+                        <a href="{{ block.settings.link_4 | default: '#' }}" class="site-nav__mega-card">
+                          <div class="site-nav__mega-card-img">
+                            {%- if block.settings.image_4 != blank -%}
+                              {{ block.settings.image_4 | image_url: width: 500 | image_tag: loading: 'lazy' }}
+                            {%- else -%}
+                              <div class="site-nav__mega-card-placeholder"></div>
+                            {%- endif -%}
+                          </div>
+                          {%- if block.settings.heading_4 != blank -%}
+                            <span class="site-nav__mega-card-title">{{ block.settings.heading_4 }}</span>
+                          {%- endif -%}
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          </li>
+
+          {%- comment -%} Progettazione {%- endcomment -%}
+          <li class="site-nav__item">
+            <a href="/pages/progettazione" class="site-nav__link">Progettazione</a>
+          </li>
+
+          {%- comment -%} Prodotti (mega menu) {%- endcomment -%}
+          <li class="site-nav__item site-nav__item--has-dropdown site-nav__item--megamenu">
+            <a href="/collections" class="site-nav__link">
+              Prodotti
+              <svg class="site-nav__chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2.5 3.75L5 6.25L7.5 3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="site-nav__dropdown site-nav__dropdown--mega">
+              <div class="page-width site-nav__mega-inner">
+                <div class="site-nav__mega-links">
+                  <div class="site-nav__mega-column">
+                    <a href="/collections/cucine" class="site-nav__mega-title">Cucine</a>
+                  </div>
+                  <div class="site-nav__mega-column">
+                    <a href="#" class="site-nav__mega-title">Zona Giorno</a>
+                    <ul class="site-nav__mega-sublinks">
+                      <li><a href="/collections/tavoli-sedie">Tavoli e Sedie</a></li>
+                      <li><a href="/collections/divani-poltrone">Divani e Poltrone</a></li>
+                      <li><a href="/collections/tavolini">Tavolini</a></li>
+                    </ul>
+                  </div>
+                  <div class="site-nav__mega-column">
+                    <a href="#" class="site-nav__mega-title">Zona Notte</a>
+                    <ul class="site-nav__mega-sublinks">
+                      <li><a href="/collections/camere-camerette">Camere e Camerette</a></li>
+                      <li><a href="/collections/armadi">Armadi</a></li>
+                    </ul>
+                  </div>
+                  <div class="site-nav__mega-column">
+                    <a href="/collections/arredo-bagno" class="site-nav__mega-title">Arredobagno</a>
+                  </div>
+                  <div class="site-nav__mega-column">
+                    <a href="#" class="site-nav__mega-title">Complementi</a>
+                    <ul class="site-nav__mega-sublinks">
+                      <li><a href="/collections/illuminazione">Illuminazione</a></li>
+                      <li><a href="/collections/complementi">Complementi</a></li>
+                    </ul>
+                  </div>
+                  <div class="site-nav__mega-column">
+                    <a href="#" class="site-nav__mega-title">Non solo Arredo</a>
+                    <ul class="site-nav__mega-sublinks">
+                      <li><a href="/collections/pavimenti-rivestimenti">Pavimenti e Rivestimenti</a></li>
+                      <li><a href="/collections/porte-sistemi-divisori">Porte e Sistemi divisori</a></li>
+                    </ul>
+                  </div>
+                  <div class="site-nav__mega-column">
+                    <a href="#" class="site-nav__mega-title">Altro</a>
+                    <ul class="site-nav__mega-sublinks">
+                      <li><a href="/collections/trasformabili">Trasformabili</a></li>
+                      <li><a href="/collections/ufficio">Uffici e spazi Commerciali</a></li>
+                    </ul>
+                  </div>
+                  <div class="site-nav__mega-column">
+                    <a href="/collections/all" class="site-nav__mega-title">Tutti i Prodotti</a>
+                  </div>
+                </div>
+
+                {%- comment -%} Mega menu promos from blocks {%- endcomment -%}
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'megamenu' and block.settings.menu_item == 'Prodotti' -%}
+                    <div class="site-nav__mega-promos">
+                      {%- if block.settings.image_1 != blank or block.settings.heading_1 != blank -%}
+                        <a href="{{ block.settings.link_1 | default: '#' }}" class="site-nav__promo">
+                          {%- if block.settings.image_1 != blank -%}
+                            <div class="site-nav__promo-img-box">
+                              {{ block.settings.image_1 | image_url: width: 400 | image_tag: loading: 'lazy' }}
+                            </div>
+                          {%- endif -%}
+                          {%- if block.settings.heading_1 != blank -%}
+                            <span class="site-nav__promo-title">{{ block.settings.heading_1 }}</span>
+                          {%- endif -%}
+                        </a>
+                      {%- endif -%}
+                      {%- if block.settings.image_2 != blank or block.settings.heading_2 != blank -%}
+                        <a href="{{ block.settings.link_2 | default: '#' }}" class="site-nav__promo">
+                          {%- if block.settings.image_2 != blank -%}
+                            <div class="site-nav__promo-img-box">
+                              {{ block.settings.image_2 | image_url: width: 400 | image_tag: loading: 'lazy' }}
+                            </div>
+                          {%- endif -%}
+                          {%- if block.settings.heading_2 != blank -%}
+                            <span class="site-nav__promo-title">{{ block.settings.heading_2 }}</span>
+                          {%- endif -%}
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          </li>
+
+          {%- comment -%} Brand {%- endcomment -%}
+          <li class="site-nav__item">
+            <a href="/pages/brand" class="site-nav__link">Brand</a>
+          </li>
+
+          {%- comment -%} Ristrutturazioni {%- endcomment -%}
+          <li class="site-nav__item">
+            <a href="/pages/ristrutturazioni" class="site-nav__link">Ristrutturazioni Chiavi In Mano</a>
+          </li>
+
+          {%- comment -%} Realizzazioni {%- endcomment -%}
+          <li class="site-nav__item">
+            <a href="/pages/realizzazioni" class="site-nav__link">Realizzazioni</a>
+          </li>
+
+          {%- comment -%} Outlet {%- endcomment -%}
+          <li class="site-nav__item">
+            <a href="/collections/outlet" class="site-nav__link">Outlet</a>
+          </li>
+
+        </ul>
+      </nav>
+
+      {%- comment -%} Cart icon — visible only when scrolled {%- endcomment -%}
+      <a href="{{ routes.cart_url }}" class="site-header__icon site-header__icon--scroll-cart" data-cart-toggle aria-label="{{ 'general.cart' | t }}">
+        <span class="site-header__cart-label">Carrello</span>
+        {% render 'icon', icon: 'cart' %}
+        <span class="site-header__cart-count" {% if cart.item_count == 0 %}style="display:none"{% endif %}>
+          {{ cart.item_count }}
+        </span>
+      </a>
+
+      {%- comment -%} Right side: Richiedi Appuntamento {%- endcomment -%}
+      <nav class="site-header__nav-right" aria-label="Secondary navigation">
+        <ul class="site-nav__list">
+          <li class="site-nav__item">
+            <a href="/pages/richiedi-appuntamento" class="site-nav__link site-nav__link--cta">Richiedi Appuntamento</a>
+          </li>
+        </ul>
+      </nav>
+
+      {%- comment -%} Mobile menu toggle {%- endcomment -%}
+      <button class="site-header__menu-toggle" aria-label="{{ 'accessibility.menu' | t }}">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    {%- comment -%} Row 2: Search + Icons {%- endcomment -%}
+    <div class="site-header__row site-header__row--search">
+      <div class="search-autocomplete" data-search-autocomplete>
+        <form action="/search" method="get" class="search-autocomplete__form" role="search">
+          <svg class="search-autocomplete__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input
+            type="search"
+            name="q"
+            class="search-autocomplete__input"
+            placeholder="Cerca prodotti..."
+            autocomplete="off"
+            data-search-input
+          >
+          <input type="hidden" name="type" value="product">
+        </form>
+      </div>
+
+      <div class="site-header__icons">
+        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="site-header__icon" aria-label="{{ 'customer.account.title' | t }}">
+          {% render 'icon', icon: 'account' %}
+        </a>
+
+        <a href="{{ routes.cart_url }}" class="site-header__icon" data-cart-toggle aria-label="{{ 'general.cart' | t }}">
+          {% render 'icon', icon: 'cart' %}
+          <span class="site-header__cart-count" {% if cart.item_count == 0 %}style="display:none"{% endif %}>
+            {{ cart.item_count }}
+          </span>
+        </a>
+      </div>
+    </div>
+</header>
+
+{%- comment -%} Mobile Navigation {%- endcomment -%}
+<div class="mobile-nav" aria-label="Mobile navigation">
+  <div class="mobile-nav__header">
+    <a href="/" class="mobile-nav__logo">
+      {%- if settings.logo != blank -%}
+        <img
+          src="{{ settings.logo | image_url: width: settings.logo_width }}"
+          alt="{{ shop.name }}"
+          width="{{ settings.logo_width }}"
+          loading="eager"
+        >
+      {%- else -%}
+        <img
+          src="https://cdn.shopify.com/s/files/1/1054/4732/6034/files/69203fa13ecc83e793745762_20250612_2340_Divano_Contemporaneo_Italiano_remix_01jxk191agefk95976v7ape5m2.webp?v=1772360283"
+          alt="{{ shop.name }}"
+          width="{{ settings.logo_width }}"
+          loading="eager"
+          class="site-header__logo-img-default"
+        >
+      {%- endif -%}
+    </a>
+    <button class="mobile-nav__close" aria-label="{{ 'accessibility.close' | t }}">
+      {% render 'icon', icon: 'close' %}
+    </button>
+  </div>
+  <nav class="mobile-nav__links">
+    <a href="/pages/chi-siamo" class="mobile-nav__link">Chi Siamo</a>
+    <a href="/pages/progettazione" class="mobile-nav__link">Progettazione</a>
+    <a href="/collections" class="mobile-nav__link">Prodotti</a>
+    <a href="/pages/brand" class="mobile-nav__link">Brand</a>
+    <a href="/pages/ristrutturazioni" class="mobile-nav__link">Ristrutturazioni Chiavi In Mano</a>
+    <a href="/pages/realizzazioni" class="mobile-nav__link">Realizzazioni</a>
+    <a href="/collections/outlet" class="mobile-nav__link">Outlet</a>
+  </nav>
+  <div class="mobile-nav__footer">
+    <a href="/pages/richiedi-appuntamento" class="site-header__cta site-header__cta--mobile">
+      RICHIEDI APPUNTAMENTO
+    </a>
+  </div>
+</div>
+
+{%- comment -%} Cart Drawer {%- endcomment -%}
+<div class="cart-drawer__overlay"></div>
+<div class="cart-drawer" aria-label="{{ 'general.cart' | t }}">
+  <div class="cart-drawer__header">
+    <span class="cart-drawer__title">{{ 'cart.title' | t }}</span>
+    <button class="cart-drawer__close" aria-label="{{ 'accessibility.close' | t }}">
+      {% render 'icon', icon: 'close' %}
+    </button>
+  </div>
+  <div class="cart-drawer__items">
+    {%- if cart.item_count == 0 -%}
+      <p style="text-align:center; opacity:0.6; padding:2rem 0;">{{ 'cart.empty' | t }}</p>
+    {%- else -%}
+      {%- for item in cart.items -%}
+        <div class="cart-item" data-key="{{ item.key }}">
+          <div class="cart-item__image">
+            {%- if item.image -%}
+              <img
+                src="{{ item.image | image_url: width: 200 }}"
+                alt="{{ item.title | escape }}"
+                loading="lazy"
+                width="200"
+                height="{{ 200 | divided_by: item.image.aspect_ratio | ceil }}"
+              >
+            {%- endif -%}
+          </div>
+          <div class="cart-item__details">
+            <p class="cart-item__title">{{ item.product.title }}</p>
+            {%- unless item.product.has_only_default_variant -%}
+              <p class="cart-item__variant">{{ item.variant.title }}</p>
+            {%- endunless -%}
+            <p>{{ item.final_line_price | money }}</p>
+            <button class="cart-item__remove" onclick="BensaCart.removeFromCart('{{ item.key }}')">{{ 'cart.remove' | t }}</button>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+  <div class="cart-drawer__footer">
+    <div class="cart-drawer__subtotal">
+      <span>{{ 'cart.subtotal' | t }}</span>
+      <span>{{ cart.total_price | money }}</span>
+    </div>
+    <p class="cart-drawer__note">{{ 'cart.taxes_and_shipping' | t }}</p>
+    <a href="/checkout" class="btn btn--primary btn--full">{{ 'cart.checkout' | t }}</a>
+    <div class="cart-drawer__payments">
+      {%- for type in shop.enabled_payment_types -%}
+        {{ type | payment_type_svg_tag: class: 'cart-drawer__payment-icon' }}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<div class="search-autocomplete__dropdown" data-search-dropdown>
+  <div class="search-autocomplete__results" data-search-results></div>
+</div>
+
+<script>
+  (function () {
+    var wrapper = document.querySelector('[data-search-autocomplete]');
+    if (!wrapper) return;
+
+    var input = wrapper.querySelector('[data-search-input]');
+    var dropdown = document.querySelector('[data-search-dropdown]');
+    var resultsContainer = dropdown.querySelector('[data-search-results]');
+    var debounceTimer = null;
+    var activeIndex = -1;
+    var currentItems = [];
+    var abortController = null;
+
+    function positionDropdown() {
+      var header = document.querySelector('.site-header');
+      var bottom = header ? header.getBoundingClientRect().bottom : wrapper.getBoundingClientRect().bottom;
+      dropdown.style.top = bottom + 'px';
+    }
+
+    function open() {
+      positionDropdown();
+      dropdown.classList.add('is-open');
+    }
+    function close() { dropdown.classList.remove('is-open'); activeIndex = -1; }
+
+    function formatPrice(val) {
+      if (!val && val !== 0) return '';
+      var num = typeof val === 'string' ? parseFloat(val) : val;
+      if (Number.isInteger(num) && num > 99) num = num / 100;
+      return '€' + num.toFixed(2).replace('.', ',');
+    }
+
+    function getImage(p) {
+      if (!p.image && (!p.featured_image || !p.featured_image.url)) return '';
+      var url = typeof p.image === 'string' ? p.image
+        : (p.image && p.image.url) ? p.image.url
+        : (p.featured_image && p.featured_image.url) ? p.featured_image.url
+        : '';
+      if (!url) return '';
+      if (url.indexOf('cdn.shopify.com') !== -1 && url.indexOf('width=') === -1) {
+        url += (url.indexOf('?') !== -1 ? '&' : '?') + 'width=120';
+      }
+      return url;
+    }
+
+    function render(products, query) {
+      if (!products || products.length === 0) {
+        resultsContainer.innerHTML = '<div class="search-autocomplete__empty">Nessun risultato per &ldquo;' + escapeHtml(query) + '&rdquo;</div>';
+        open();
+        return;
+      }
+
+      var html = '';
+      products.forEach(function (p) {
+        var img = getImage(p);
+        var price = formatPrice(p.price_min || p.price || '');
+        var vendor = p.vendor || '';
+        var pUrl = p.url || '/products/' + p.handle;
+        html += '<a href="' + escapeHtml(pUrl) + '" class="search-autocomplete__item">';
+        if (img) {
+          html += '<img class="search-autocomplete__item-img" src="' + escapeHtml(img) + '" alt="" loading="lazy">';
+        } else {
+          html += '<div class="search-autocomplete__item-img"></div>';
+        }
+        html += '<div class="search-autocomplete__item-info">';
+        html += '<span class="search-autocomplete__item-title">' + highlightMatch(p.title, query) + '</span>';
+        html += '<div class="search-autocomplete__item-meta">';
+        if (vendor) html += '<span>' + escapeHtml(vendor) + '</span>';
+        if (price) html += '<span class="search-autocomplete__item-price">' + price + '</span>';
+        html += '</div></div></a>';
+      });
+
+      html += '<a href="/search?q=' + encodeURIComponent(query) + '&type=product" class="search-autocomplete__view-all">Vedi tutti i risultati</a>';
+      resultsContainer.innerHTML = html;
+      currentItems = Array.from(resultsContainer.querySelectorAll('.search-autocomplete__item'));
+      activeIndex = -1;
+      open();
+    }
+
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function highlightMatch(text, query) {
+      var safe = escapeHtml(text);
+      var re = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+      return safe.replace(re, '<strong>$1</strong>');
+    }
+
+    function fetchResults(query) {
+      if (query.length < 2) { close(); return; }
+
+      if (abortController) abortController.abort();
+      abortController = new AbortController();
+
+      resultsContainer.innerHTML = '<div class="search-autocomplete__loading">Ricerca...</div>';
+      open();
+
+      var searchUrl = '/search/suggest.json?q=' + encodeURIComponent(query)
+        + '&resources[type]=product'
+        + '&resources[limit]=8'
+        + '&resources[options][unavailable_products]=last'
+        + '&resources[options][fields]=title,body,tag,product_type,vendor,variants.title';
+
+      fetch(searchUrl, { signal: abortController.signal })
+        .then(function (r) {
+          if (!r.ok) throw new Error(r.status);
+          return r.json();
+        })
+        .then(function (data) {
+          var products = [];
+          try { products = data.resources.results.products || []; } catch (e) {}
+          render(products, query);
+        })
+        .catch(function (err) {
+          if (err.name === 'AbortError') return;
+          resultsContainer.innerHTML = '<div class="search-autocomplete__empty">Nessun risultato</div>';
+          open();
+        });
+    }
+
+    input.addEventListener('input', function () {
+      clearTimeout(debounceTimer);
+      var q = input.value.trim();
+      if (q.length < 2) { close(); return; }
+      debounceTimer = setTimeout(function () { fetchResults(q); }, 250);
+    });
+
+    input.addEventListener('focus', function () {
+      if (input.value.trim().length >= 2 && resultsContainer.innerHTML) open();
+    });
+
+    input.addEventListener('keydown', function (e) {
+      if (!dropdown.classList.contains('is-open') || currentItems.length === 0) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        activeIndex = Math.min(activeIndex + 1, currentItems.length - 1);
+        updateActive();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        activeIndex = Math.max(activeIndex - 1, 0);
+        updateActive();
+      } else if (e.key === 'Enter' && activeIndex >= 0) {
+        e.preventDefault();
+        currentItems[activeIndex].click();
+      } else if (e.key === 'Escape') {
+        close();
+        input.blur();
+      }
+    });
+
+    function updateActive() {
+      currentItems.forEach(function (el, i) {
+        el.classList.toggle('is-active', i === activeIndex);
+      });
+      if (activeIndex >= 0 && currentItems[activeIndex]) {
+        currentItems[activeIndex].scrollIntoView({ block: 'nearest' });
+      }
+    }
+
+    document.addEventListener('click', function (e) {
+      if (!wrapper.contains(e.target) && !dropdown.contains(e.target)) close();
+    });
+
+    window.addEventListener('scroll', function () {
+      if (dropdown.classList.contains('is-open')) close();
+    }, { passive: true });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main Menu (left)",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_right",
+      "label": "Secondary Menu (right)",
+      "default": "footer"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "megamenu",
+      "name": "Mega Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_item",
+          "label": "Menu Item Title",
+          "info": "The exact title of the top-level menu item (e.g. 'Prodotti' or 'Chi Siamo')."
+        },
+        {
+          "type": "header",
+          "content": "Card 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading_1",
+          "label": "Heading"
+        },
+        {
+          "type": "url",
+          "id": "link_1",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Card 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading_2",
+          "label": "Heading"
+        },
+        {
+          "type": "url",
+          "id": "link_2",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Card 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading_3",
+          "label": "Heading"
+        },
+        {
+          "type": "url",
+          "id": "link_3",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Card 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_4",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading_4",
+          "label": "Heading"
+        },
+        {
+          "type": "url",
+          "id": "link_4",
+          "label": "Link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

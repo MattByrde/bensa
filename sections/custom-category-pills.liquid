@@ -1,0 +1,157 @@
+<link rel="stylesheet" href="{{ 'section-custom-category-pills.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'section-custom-category-pills.css' | asset_url | stylesheet_tag }}</noscript>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="category-pills">
+  <div class="category-pills__track">
+    {%- for block in section.blocks -%}
+      <a href="{{ block.settings.link | default: '#' }}" class="category-pills__pill" {{ block.shopify_attributes }}>
+        {%- if block.settings.icon != blank -%}
+          {{ block.settings.icon | image_url: width: 40 | image_tag: class: 'category-pills__icon', loading: 'lazy' }}
+        {%- else -%}
+          <svg class="category-pills__icon category-pills__icon--default" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9"/>
+          </svg>
+        {%- endif -%}
+        <span class="category-pills__label typo-overline">{{ block.settings.label }}</span>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+<script>
+  (function () {
+    document.querySelectorAll('.category-pills__track').forEach(function (track) {
+      var isDown = false;
+      var startX = 0;
+      var startScroll = 0;
+      var dragMoved = false;
+
+      function onDown(e) {
+        isDown = true;
+        dragMoved = false;
+        track.classList.add('is-dragging');
+        startX = e.clientX;
+        startScroll = track.scrollLeft;
+      }
+
+      function onMove(e) {
+        if (!isDown) return;
+        var dx = e.clientX - startX;
+        if (Math.abs(dx) > 3) dragMoved = true;
+        /* Directly set scrollLeft each frame */
+        requestAnimationFrame(function () {
+          track.scrollLeft = startScroll - dx;
+        });
+      }
+
+      function onUp() {
+        if (!isDown) return;
+        isDown = false;
+        track.classList.remove('is-dragging');
+      }
+
+      track.addEventListener('mousedown', onDown);
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onUp);
+
+      /* Prevent native drag on links/images */
+      track.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+      /* Prevent click navigation when user dragged */
+      track.addEventListener('click', function (e) {
+        if (dragMoved) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Category Pills",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f5f3ec"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category_pill",
+      "name": "Category Pill",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon Outline SVG or PNG"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "SEDIE"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category Pills",
+      "blocks": [
+        { "type": "category_pill" },
+        { "type": "category_pill" },
+        { "type": "category_pill" },
+        { "type": "category_pill" },
+        { "type": "category_pill" },
+        { "type": "category_pill" }
+      ]
+    }
+  ]
+}
+{% endschema %}

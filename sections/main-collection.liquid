@@ -1,0 +1,83 @@
+{%- comment -%} Main Collection Section {%- endcomment -%}
+
+<section class="section-padding" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="collection-header">
+      <h1 class="collection-header__title">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <p class="collection-header__description">{{ collection.description }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="collection-toolbar">
+      <p class="collection-toolbar__count">
+        {{ 'collections.products_count' | t: count: collection.products_count }}
+      </p>
+
+      <div class="collection-toolbar__sort">
+        {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+        <label for="sort-by" class="visually-hidden">{{ 'collections.sort' | t }}</label>
+        <select id="sort-by" onchange="window.location.href = '{{ collection.url }}?sort_by=' + this.value">
+          {%- for option in collection.sort_options -%}
+            <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>
+              {{ option.name }}
+            </option>
+          {%- endfor -%}
+        </select>
+      </div>
+    </div>
+
+    {%- if collection.products.size > 0 -%}
+      <div class="grid grid--{{ section.settings.columns }}">
+        {%- paginate collection.products by section.settings.products_per_page -%}
+          {%- for product in collection.products -%}
+            {% render 'product-card', product: product, show_vendor: section.settings.show_vendor %}
+          {%- endfor -%}
+        {%- endpaginate -%}
+      </div>
+
+      {%- paginate collection.products by section.settings.products_per_page -%}
+        {%- if paginate.pages > 1 -%}
+          {% render 'pagination', paginate: paginate %}
+        {%- endif -%}
+      {%- endpaginate -%}
+    {%- else -%}
+      <p class="text-center" style="padding: 3rem 0; opacity: 0.6;">{{ 'collections.empty' | t }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection page",
+  "class": "section-collection",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

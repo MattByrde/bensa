@@ -1,0 +1,195 @@
+<link rel="stylesheet" href="{{ 'section-custom-featured-grid.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'section-custom-featured-grid.css' | asset_url | stylesheet_tag }}</noscript>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="cfg-wrapper">
+  <div class="cfg-grid">
+    
+    {%- comment -%} Text Intro Block {%- endcomment -%}
+    <div class="cfg-text-block">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="section-heading cfg-heading typo-h2">{{ section.settings.heading | newline_to_br }}</h2>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: '#' }}" class="cfg-button typo-btn">
+          {{ section.settings.button_label }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Product Cards {%- endcomment -%}
+    {%- for block in section.blocks -%}
+      <a href="{{ block.settings.link | default: '#' }}" class="cfg-card" {{ block.shopify_attributes }}>
+        <div class="cfg-card-header">
+          <h3 class="cfg-card-title typo-h3">{{ block.settings.title }}</h3>
+          {%- if block.settings.rating != blank -%}
+            <span class="cfg-card-rating typo-small">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              {{ block.settings.rating }}
+            </span>
+          {%- endif -%}
+        </div>
+
+        <div class="cfg-card-image-box">
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 600 | image_tag: class: 'cfg-card-img', loading: 'lazy' }}
+          {%- else -%}
+            {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'cfg-card-img placeholder-svg' }}
+          {%- endif -%}
+        </div>
+
+        <div class="cfg-card-footer">
+          <span class="cfg-card-brand typo-overline">{{ block.settings.brand }}</span>
+          <span class="cfg-card-link-text typo-small">{{ block.settings.link_label }}</span>
+        </div>
+      </a>
+    {%- endfor -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured Products Grid",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f5f3ec"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "I prodotti da\nnon perdere"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "SCOPRI LA COLLEZIONE"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 68
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Product Title",
+          "default": "Lodge Sofa"
+        },
+        {
+          "type": "text",
+          "id": "rating",
+          "label": "Rating (e.g. 4.9)",
+          "default": "4.9"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product Image"
+        },
+        {
+          "type": "text",
+          "id": "brand",
+          "label": "Brand Name",
+          "default": "ARREDO 3"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link Text",
+          "default": "Scopri di più..."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Product Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products Grid",
+      "blocks": [
+        {
+          "type": "product_card",
+          "settings": { "title": "Lodge Sofa", "rating": "4.9", "brand": "ARREDO 3" }
+        },
+        {
+          "type": "product_card",
+          "settings": { "title": "The Couch", "rating": "4.9", "brand": "ARREDO 3" }
+        },
+        {
+          "type": "product_card",
+          "settings": { "title": "Tavolino Sveden", "rating": "4.8", "brand": "BONALDO" }
+        },
+        {
+          "type": "product_card",
+          "settings": { "title": "Bruner", "rating": "5.0", "brand": "SOFIA ARREDAMENTI" }
+        },
+        {
+          "type": "product_card",
+          "settings": { "title": "Treveris", "rating": "4.8", "brand": "SKULM" }
+        },
+        {
+          "type": "product_card",
+          "settings": { "title": "Tablo", "rating": "4.6", "brand": "ARREDO 3" }
+        },
+        {
+          "type": "product_card",
+          "settings": { "title": "Billie", "rating": "5.0", "brand": "ARREDO 3" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

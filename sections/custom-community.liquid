@@ -1,0 +1,412 @@
+<link rel="stylesheet" href="{{ 'section-custom-community.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'section-custom-community.css' | asset_url | stylesheet_tag }}</noscript>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="community">
+  <div class="community__layout">
+    {%- comment -%} Left column – text content {%- endcomment -%}
+    <div class="community__text">
+      {%- if section.settings.subtitle != blank -%}
+        <p class="community__subtitle typo-overline">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="section-heading community__heading typo-h2">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <p class="community__description typo-body">{{ section.settings.description }}</p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="community__nav">
+          <button class="community__arrow community__arrow--prev" data-community-prev aria-label="Previous">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="community__arrow community__arrow--next" data-community-next aria-label="Next">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <span class="community__counter typo-caption" data-community-counter>1 / {{ section.blocks.size }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Right column – video/image cards carousel {%- endcomment -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="community__carousel" data-community-carousel>
+        <div class="community__track" data-community-track>
+          {%- for block in section.blocks -%}
+            <div class="community__card" {{ block.shopify_attributes }}>
+              <div class="community__card-inner">
+                {%- if block.settings.username != blank -%}
+                  <span class="community__username typo-h4">@{{ block.settings.username }}</span>
+                {%- endif -%}
+
+                {%- if block.settings.video_url != blank -%}
+                  <video
+                    class="community__media"
+                    src="{{ block.settings.video_url }}"
+                    poster="{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 600 }}{%- endif -%}"
+                    loop
+                    muted
+                    playsinline
+                    preload="metadata"
+                    data-community-video
+                  ></video>
+                  <div class="community__controls">
+                    <button class="community__control-btn" data-community-play aria-label="Play / Pause">
+                      <svg class="community__icon-pause" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="4" height="12" rx="1" fill="currentColor"/><rect x="9" y="2" width="4" height="12" rx="1" fill="currentColor"/></svg>
+                      <svg class="community__icon-play" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 2.5L13 8L4 13.5V2.5Z" fill="currentColor"/></svg>
+                    </button>
+                    <button class="community__control-btn" data-community-mute aria-label="Mute / Unmute">
+                      <svg class="community__icon-muted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><line x1="11" y1="5" x2="15" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="5" x2="11" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                      <svg class="community__icon-unmuted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><path d="M11 5.5C11.8 6.3 12.25 7.4 12.25 8.5C12.25 9.6 11.8 10.7 11 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 3.5C14.3 4.8 15 6.6 15 8.5C15 10.4 14.3 12.2 13 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
+                  </div>
+                {%- elsif block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 600 | image_tag: class: 'community__media', loading: 'lazy' }}
+                {%- else -%}
+                  <div class="community__placeholder">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="8" fill="#e5e0da"/><path d="M20 16L32 24L20 32V16Z" fill="#999"/></svg>
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.product_image != blank or block.settings.product_title != blank -%}
+                  {%- if block.settings.product_link != blank -%}
+                    <a href="{{ block.settings.product_link }}" class="community__product-card">
+                  {%- else -%}
+                    <div class="community__product-card">
+                  {%- endif -%}
+                    {%- if block.settings.product_image != blank -%}
+                      <div class="community__product-card-img">
+                        {{ block.settings.product_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.product_title != blank or block.settings.product_price != blank -%}
+                      <div class="community__product-card-info">
+                        {%- if block.settings.product_title != blank -%}
+                          <span class="community__product-card-title typo-h4">{{ block.settings.product_title }}</span>
+                        {%- endif -%}
+                        {%- if block.settings.product_price != blank -%}
+                          <span class="community__product-card-price typo-caption">{{ block.settings.product_price }}</span>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  {%- if block.settings.product_link != blank -%}
+                    </a>
+                  {%- else -%}
+                    </div>
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-community-carousel]').forEach(function (carousel) {
+      var section = carousel.closest('.community');
+      var track = carousel.querySelector('[data-community-track]');
+      var cards = Array.from(track.querySelectorAll('.community__card'));
+      var prevBtn = section.querySelector('[data-community-prev]');
+      var nextBtn = section.querySelector('[data-community-next]');
+      var counterEl = section.querySelector('[data-community-counter]');
+      var total = cards.length;
+      var currentPage = 0;
+
+      function getVisibleCount() {
+        if (window.innerWidth >= 750) return 2;
+        return 1;
+      }
+
+      function getMaxPage() {
+        return Math.max(0, total - getVisibleCount());
+      }
+
+      function getCardOffset(index) {
+        if (index <= 0) return 0;
+        var offset = 0;
+        var gap = parseFloat(getComputedStyle(track).gap) || 16;
+        for (var i = 0; i < index; i++) {
+          offset += cards[i].offsetWidth + gap;
+        }
+        return offset;
+      }
+
+      function update() {
+        track.style.transform = 'translateX(-' + getCardOffset(currentPage) + 'px)';
+        if (counterEl) {
+          counterEl.textContent = (currentPage + 1) + ' / ' + (getMaxPage() + 1);
+        }
+        if (prevBtn) prevBtn.disabled = currentPage <= 0;
+        if (nextBtn) nextBtn.disabled = currentPage >= getMaxPage();
+
+        /* Auto-play visible videos, pause others */
+        cards.forEach(function (c, i) {
+          var video = c.querySelector('[data-community-video]');
+          if (!video) return;
+          var visible = i >= currentPage && i < currentPage + getVisibleCount();
+          if (visible) {
+            video.play().catch(function () {});
+            c.querySelector('.community__card-inner').classList.add('is-playing');
+          } else {
+            video.pause();
+            c.querySelector('.community__card-inner').classList.remove('is-playing');
+          }
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function () {
+          if (currentPage > 0) {
+            currentPage--;
+            update();
+          }
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function () {
+          if (currentPage < getMaxPage()) {
+            currentPage++;
+            update();
+          }
+        });
+      }
+
+      /* Play/pause toggle */
+      carousel.addEventListener('click', function (e) {
+        var playBtn = e.target.closest('[data-community-play]');
+        if (playBtn) {
+          var inner = playBtn.closest('.community__card-inner');
+          var video = inner.querySelector('[data-community-video]');
+          if (!video) return;
+          if (video.paused) {
+            video.play().catch(function () {});
+            inner.classList.add('is-playing');
+          } else {
+            video.pause();
+            inner.classList.remove('is-playing');
+          }
+          return;
+        }
+
+        /* Mute/unmute toggle */
+        var muteBtn = e.target.closest('[data-community-mute]');
+        if (muteBtn) {
+          var inner = muteBtn.closest('.community__card-inner');
+          var video = inner.querySelector('[data-community-video]');
+          if (!video) return;
+          video.muted = !video.muted;
+          inner.classList.toggle('is-unmuted', !video.muted);
+        }
+      });
+
+      /* ── Drag / swipe support ── */
+      var isDragging = false;
+      var dragStartX = 0;
+      var dragMoved = false;
+      var SWIPE_THRESHOLD = 50;
+
+      function onPointerDown(e) {
+        if (e.target.closest('button, a')) return;
+        isDragging = true;
+        dragMoved = false;
+        dragStartX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+        carousel.classList.add('is-dragging');
+      }
+
+      function onPointerMove(e) {
+        if (!isDragging) return;
+        var clientX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+        if (Math.abs(clientX - dragStartX) > 5) dragMoved = true;
+      }
+
+      function onPointerUp(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        carousel.classList.remove('is-dragging');
+        var clientX = e.clientX || (e.changedTouches && e.changedTouches[0].clientX) || 0;
+        var dx = clientX - dragStartX;
+        if (Math.abs(dx) > SWIPE_THRESHOLD) {
+          if (dx < 0 && currentPage < getMaxPage()) {
+            currentPage++;
+            update();
+          } else if (dx > 0 && currentPage > 0) {
+            currentPage--;
+            update();
+          }
+        }
+      }
+
+      carousel.addEventListener('mousedown', onPointerDown);
+      window.addEventListener('mousemove', onPointerMove);
+      window.addEventListener('mouseup', onPointerUp);
+      carousel.addEventListener('touchstart', onPointerDown, { passive: true });
+      carousel.addEventListener('touchmove', onPointerMove, { passive: true });
+      carousel.addEventListener('touchend', onPointerUp);
+      carousel.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+      /* Prevent click on links/buttons after drag */
+      carousel.addEventListener('click', function (e) {
+        if (dragMoved) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+
+      window.addEventListener('resize', function () {
+        if (currentPage > getMaxPage()) currentPage = getMaxPage();
+        update();
+      });
+
+      update();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Community",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "BENSA + YOU"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Community"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Powered by real science, made for real life. Discover how our community are incorporating Bensa into their daily routines."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f5f3ec"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video_card",
+      "name": "Video Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "username",
+          "label": "Username",
+          "info": "Social media handle (without @)."
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Video URL",
+          "info": "Direct link to an mp4 video file."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Cover Image / Poster",
+          "info": "Used as poster frame for videos or as standalone image."
+        },
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product Image",
+          "info": "Small product image for the product card."
+        },
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "Product Title",
+          "info": "e.g. Renewal Cream"
+        },
+        {
+          "type": "text",
+          "id": "product_price",
+          "label": "Product Price",
+          "info": "e.g. €70,00"
+        },
+        {
+          "type": "url",
+          "id": "product_link",
+          "label": "Product Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Community",
+      "blocks": [
+        {
+          "type": "video_card",
+          "settings": {
+            "username": "polonaamy"
+          }
+        },
+        {
+          "type": "video_card",
+          "settings": {
+            "username": "alexislconway"
+          }
+        },
+        {
+          "type": "video_card",
+          "settings": {
+            "username": "sarahdesign"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

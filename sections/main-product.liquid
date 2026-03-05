@@ -1,0 +1,167 @@
+{%- comment -%} Main Product Section {%- endcomment -%}
+
+<section class="section-padding" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="product-page">
+      {%- comment -%} Gallery {%- endcomment -%}
+      <div class="product-gallery">
+        <div class="product-gallery__main">
+          {%- if product.featured_image -%}
+            <img
+              src="{{ product.featured_image | image_url: width: 900 }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              loading="eager"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+        {%- if product.images.size > 1 -%}
+          <div class="product-gallery__thumbs">
+            {%- for image in product.images -%}
+              <div class="product-gallery__thumb{% if forloop.first %} is-active{% endif %}">
+                <img
+                  src="{{ image | image_url: width: 200 }}"
+                  data-full-src="{{ image | image_url: width: 900 }}"
+                  alt="{{ image.alt | default: product.title | escape }}"
+                  loading="lazy"
+                >
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Product Info {%- endcomment -%}
+      <div class="product-info">
+        {%- if product.vendor != blank -%}
+          <p class="product-info__vendor">{{ product.vendor }}</p>
+        {%- endif -%}
+
+        <h1 class="product-info__title">{{ product.title }}</h1>
+
+        <div class="product-info__price">
+          {% render 'price', product: product %}
+        </div>
+
+        {%- form 'product', product -%}
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="product-info__variants">
+                <p class="product-info__variant-label">{{ option.name }}</p>
+                <div class="variant-picker">
+                  {%- for value in option.values -%}
+                    <button
+                      type="button"
+                      class="variant-picker__option{% if option.selected_value == value %} is-selected{% endif %}"
+                      data-value="{{ value }}"
+                    >
+                      {{ value }}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          <select name="id" class="visually-hidden" aria-label="{{ 'products.product.variant' | t }}">
+            {%- for variant in product.variants -%}
+              <option
+                value="{{ variant.id }}"
+                {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                {% unless variant.available %}disabled{% endunless %}
+              >
+                {{ variant.title }} — {{ variant.price | money }}
+              </option>
+            {%- endfor -%}
+          </select>
+
+          <div class="product-info__quantity">
+            <button type="button" class="quantity-btn" data-action="decrease" aria-label="{{ 'products.product.quantity.decrease' | t }}">−</button>
+            <input type="number" name="quantity" class="quantity-input" value="1" min="1" aria-label="{{ 'products.product.quantity.label' | t }}">
+            <button type="button" class="quantity-btn" data-action="increase" aria-label="{{ 'products.product.quantity.increase' | t }}">+</button>
+          </div>
+
+          <div class="product-info__add-to-cart">
+            <button
+              type="submit"
+              class="btn btn--primary btn--full"
+              {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+            >
+              {%- if product.selected_or_first_available_variant.available -%}
+                {{ 'products.product.add_to_cart' | t }}
+              {%- else -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- endif -%}
+            </button>
+          </div>
+        {%- endform -%}
+
+        {%- comment -%} Tabs {%- endcomment -%}
+        <div class="product-tabs">
+          {%- if product.description != blank -%}
+            <div class="product-tab is-open">
+              <button class="product-tab__trigger" type="button">
+                {{ 'products.product.description' | t }}
+                {% render 'icon', icon: 'chevron-down' %}
+              </button>
+              <div class="product-tab__content">
+                {{ product.description }}
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- for block in section.blocks -%}
+            <div class="product-tab" {{ block.shopify_attributes }}>
+              <button class="product-tab__trigger" type="button">
+                {{ block.settings.heading }}
+                {% render 'icon', icon: 'chevron-down' %}
+              </button>
+              <div class="product-tab__content">
+                {{ block.settings.content }}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product page",
+  "class": "section-product",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Custom tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Shipping & returns"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Free shipping on all orders over $500. Returns accepted within 30 days of delivery.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product page",
+      "blocks": [
+        { "type": "tab", "settings": { "heading": "Dimensions", "content": "<p>Please refer to the product specifications for exact dimensions.</p>" } },
+        { "type": "tab", "settings": { "heading": "Materials", "content": "<p>Crafted from sustainably sourced hardwood and premium upholstery fabrics.</p>" } },
+        { "type": "tab", "settings": { "heading": "Shipping & returns", "content": "<p>Free shipping on orders over $500. 30-day return policy on all items.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

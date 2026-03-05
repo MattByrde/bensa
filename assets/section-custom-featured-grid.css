@@ -1,0 +1,132 @@
+.cfg-wrapper {
+    padding: 0 20px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.cfg-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+}
+
+@media screen and (min-width: 750px) {
+    .cfg-wrapper {
+        padding: 0 40px;
+    }
+
+    .cfg-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .cfg-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+/* Text Intro Block */
+.cfg-text-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 20px 20px 0;
+}
+
+.cfg-heading {
+    margin-bottom: 32px;
+}
+
+.cfg-button {
+    background-color: #111111;
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 0;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.cfg-button:hover {
+    background-color: #333333;
+}
+
+/* Product Cards */
+.cfg-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s ease;
+}
+
+.cfg-card:hover {
+    border-color: rgba(0, 0, 0, 0.25);
+}
+
+.cfg-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.cfg-card-title {
+    margin: 0;
+    color: #111111;
+    padding-right: 12px;
+}
+
+.cfg-card-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #111111;
+    flex-shrink: 0;
+}
+
+.cfg-card-image-box {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 0;
+}
+
+.cfg-card-img {
+    width: 100%;
+    height: 100%;
+    max-height: 210px;
+    aspect-ratio: 2 / 1;
+    object-fit: contain;
+}
+
+.cfg-card-footer {
+    margin-top: auto;
+    padding-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.cfg-card-brand {
+    color: var(--color-text, #27454E);
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cfg-card-link-text {
+    flex-shrink: 0;
+    color: #888;
+    text-decoration: none;
+}

@@ -1,0 +1,326 @@
+<link rel="stylesheet" href="{{ 'section-custom-tiktok-viral.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'section-custom-tiktok-viral.css' | asset_url | stylesheet_tag }}</noscript>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="tiktok-viral">
+  <div class="tiktok-viral__header">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="section-heading tiktok-viral__heading typo-h2">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <div class="tiktok-viral__nav" data-tiktok-nav>
+      <button class="tiktok-viral__arrow tiktok-viral__arrow--prev" data-tiktok-prev aria-label="Previous">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="tiktok-viral__arrow tiktok-viral__arrow--next" data-tiktok-next aria-label="Next">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="tiktok-viral__carousel" data-tiktok-carousel data-total="{{ section.blocks.size }}">
+      <div class="tiktok-viral__track" data-tiktok-track>
+        {%- for block in section.blocks -%}
+          <div class="tiktok-viral__card" data-tiktok-card {{ block.shopify_attributes }}>
+            <div class="tiktok-viral__card-inner">
+              {%- if block.settings.video_url != blank -%}
+                <video
+                  class="tiktok-viral__media"
+                  src="{{ block.settings.video_url }}"
+                  poster="{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 600 }}{%- endif -%}"
+                  loop
+                  muted
+                  playsinline
+                  preload="metadata"
+                  data-tiktok-video
+                ></video>
+                <button class="tiktok-viral__mute-btn" data-tiktok-mute aria-label="Mute / Unmute">
+                  <svg class="tiktok-viral__icon-muted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><line x1="11" y1="5" x2="15" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="5" x2="11" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  <svg class="tiktok-viral__icon-unmuted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><path d="M11 5.5C11.8 6.3 12.25 7.4 12.25 8.5C12.25 9.6 11.8 10.7 11 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 3.5C14.3 4.8 15 6.6 15 8.5C15 10.4 14.3 12.2 13 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+              {%- elsif block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 600 | image_tag: class: 'tiktok-viral__media', loading: 'lazy' }}
+              {%- else -%}
+                <div class="tiktok-viral__placeholder">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="8" fill="#e5e0da"/><path d="M20 16L32 24L20 32V16Z" fill="#999"/></svg>
+                </div>
+              {%- endif -%}
+            </div>
+
+            {%- if block.settings.product != blank -%}
+              {%- assign p = block.settings.product -%}
+              <a href="{{ p.url }}" class="tiktok-viral__product">
+                {%- if p.featured_image != blank -%}
+                  <div class="tiktok-viral__product-img">
+                    {{ p.featured_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
+                  </div>
+                {%- endif -%}
+                <div class="tiktok-viral__product-info">
+                  <span class="tiktok-viral__product-title typo-h4">{{ p.title }}</span>
+                  <span class="tiktok-viral__product-price typo-caption">{{ p.price | money }}</span>
+                </div>
+                <span class="tiktok-viral__product-btn" aria-label="Add to cart">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </span>
+              </a>
+            {%- elsif block.settings.product_title != blank -%}
+              <div class="tiktok-viral__product">
+                {%- if block.settings.product_image != blank -%}
+                  <div class="tiktok-viral__product-img">
+                    {{ block.settings.product_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
+                  </div>
+                {%- endif -%}
+                <div class="tiktok-viral__product-info">
+                  <span class="tiktok-viral__product-title typo-h4">{{ block.settings.product_title }}</span>
+                  {%- if block.settings.product_price != blank -%}
+                    <span class="tiktok-viral__product-price typo-caption">{{ block.settings.product_price }}</span>
+                  {%- endif -%}
+                </div>
+                <span class="tiktok-viral__product-btn" aria-label="Add to cart">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </span>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-tiktok-carousel]').forEach(function (carousel) {
+      var section = carousel.closest('.tiktok-viral');
+      var track = carousel.querySelector('[data-tiktok-track]');
+      var prevBtn = section.querySelector('[data-tiktok-prev]');
+      var nextBtn = section.querySelector('[data-tiktok-next]');
+      var cards = Array.from(track.querySelectorAll('[data-tiktok-card]'));
+      var total = cards.length;
+      if (total < 2) return;
+
+      var centerPos = Math.floor(total / 2);
+      var animating = false;
+
+      /* Compute translateX so card at `pos` is centred in the carousel */
+      function getTx(pos) {
+        var card = cards[pos];
+        if (!card) return 0;
+        return -(card.offsetLeft - carousel.offsetWidth / 2 + card.offsetWidth / 2);
+      }
+
+      function refreshCards() {
+        cards = Array.from(track.querySelectorAll('[data-tiktok-card]'));
+      }
+
+      function markCenter() {
+        cards.forEach(function (c) { c.classList.remove('is-center'); });
+        cards[centerPos].classList.add('is-center');
+        /* Play center video, pause others */
+        cards.forEach(function (c, i) {
+          var v = c.querySelector('[data-tiktok-video]');
+          if (!v) return;
+          i === centerPos ? v.play().catch(function () {}) : v.pause();
+        });
+      }
+
+      function snapToCenter() {
+        track.classList.remove('is-sliding');
+        track.classList.add('no-transition');
+        track.style.transform = 'translateX(' + getTx(centerPos) + 'px)';
+        void track.offsetWidth; /* force reflow */
+        track.classList.remove('no-transition');
+      }
+
+      /* ── NEXT: slide track left, then rotate DOM + swap center ── */
+      function goNext() {
+        if (animating) return;
+        animating = true;
+
+        /* Slide track so card at centerPos+1 reaches viewport centre */
+        track.classList.add('is-sliding');
+        track.style.transform = 'translateX(' + getTx(centerPos + 1) + 'px)';
+
+        setTimeout(function () {
+          /* Rotate DOM: first card → end. Then snap with new center. */
+          track.appendChild(cards[0]);
+          refreshCards();
+          markCenter();
+          snapToCenter();
+          animating = false;
+        }, 320);
+      }
+
+      /* ── PREV: prepend last card, then slide right ── */
+      function goPrev() {
+        if (animating) return;
+        animating = true;
+
+        /* 1. Instantly prepend last card (no transition, keep is-center unchanged) */
+        track.classList.remove('is-sliding');
+        track.classList.add('no-transition');
+        track.insertBefore(cards[cards.length - 1], cards[0]);
+        refreshCards();
+
+        /* 2. Position so OLD center (now at centerPos+1) stays visually centred */
+        track.style.transform = 'translateX(' + getTx(centerPos + 1) + 'px)';
+        void track.offsetWidth; /* force paint */
+
+        /* 3. Slide track right so card at centerPos reaches viewport centre */
+        track.classList.remove('no-transition');
+        track.classList.add('is-sliding');
+        track.style.transform = 'translateX(' + getTx(centerPos) + 'px)';
+
+        setTimeout(function () {
+          /* Snap with new center */
+          track.classList.remove('is-sliding');
+          markCenter();
+          snapToCenter();
+          animating = false;
+        }, 320);
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', goPrev);
+      if (nextBtn) nextBtn.addEventListener('click', goNext);
+
+      /* Mute/unmute toggle */
+      carousel.addEventListener('click', function (e) {
+        var muteBtn = e.target.closest('[data-tiktok-mute]');
+        if (muteBtn) {
+          var inner = muteBtn.closest('.tiktok-viral__card-inner');
+          var video = inner.querySelector('[data-tiktok-video]');
+          if (!video) return;
+          video.muted = !video.muted;
+          inner.classList.toggle('is-unmuted', !video.muted);
+        }
+      });
+
+      window.addEventListener('resize', function () { snapToCenter(); });
+
+      /* ── Initial render: center card is immediately highlighted ── */
+      markCenter();
+      snapToCenter();
+
+      /* Re-center once all stylesheets are loaded (CSS uses async media="print" trick) */
+      window.addEventListener('load', function () {
+        snapToCenter();
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "TikTok Viral Favorites",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "TikTok viral favorites"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f5f3ec"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 96
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video_card",
+      "name": "Video Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Video URL",
+          "info": "Direct link to an mp4 video file."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Cover Image / Poster",
+          "info": "Used as poster frame for videos or as standalone image."
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product",
+          "info": "Select a product to show below the video."
+        },
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product Image (manual)",
+          "info": "Only used if no product is selected above."
+        },
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "Product Title (manual)",
+          "info": "Only used if no product is selected above."
+        },
+        {
+          "type": "text",
+          "id": "product_price",
+          "label": "Product Price (manual)",
+          "info": "Only used if no product is selected above. e.g. $48"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "TikTok Viral Favorites",
+      "blocks": [
+        { "type": "video_card" },
+        { "type": "video_card" },
+        { "type": "video_card" },
+        { "type": "video_card" },
+        { "type": "video_card" },
+        { "type": "video_card" },
+        { "type": "video_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}

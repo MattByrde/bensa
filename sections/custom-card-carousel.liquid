@@ -1,0 +1,529 @@
+<link rel="stylesheet" href="{{ 'section-custom-card-carousel.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'section-custom-card-carousel.css' | asset_url | stylesheet_tag }}</noscript>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="card-carousel" data-card-carousel>
+  <!-- Scroll area -->
+  <div class="card-carousel__scroller" data-carousel-scroller>
+    <div class="card-carousel__track" data-carousel-track>
+      {%- for block in section.blocks -%}
+        <div class="card-carousel__card" {{ block.shopify_attributes }}>
+
+          {%- comment -%} Background Media {%- endcomment -%}
+          <div class="card-carousel__media{% if block.settings.iframe_url != blank %} card-carousel__media--iframe{% endif %}">
+            {%- if block.settings.iframe_url != blank -%}
+              <iframe
+                src="{{ block.settings.iframe_url }}"
+                class="card-carousel__media-el"
+                allow="camera *; microphone *; autoplay *; encrypted-media *; fullscreen *; display-capture *;"
+                loading="lazy"
+                style="border: none;"
+              ></iframe>
+            {%- elsif block.settings.video != blank -%}
+              {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, class: 'card-carousel__media-el' }}
+            {%- elsif block.settings.video_url != blank -%}
+              <video class="card-carousel__media-el" autoplay loop muted playsinline>
+                <source src="{{ block.settings.video_url }}" type="video/mp4">
+              </video>
+            {%- elsif block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 800 | image_tag: class: 'card-carousel__media-el', loading: 'lazy' }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'card-carousel__media-el placeholder-svg' }}
+            {%- endif -%}
+          </div>
+
+          {%- comment -%} Video Controls {%- endcomment -%}
+          {%- if block.settings.video != blank or block.settings.video_url != blank -%}
+            <div class="card-carousel__video-controls">
+              <button class="card-carousel__video-btn" data-carousel-play aria-label="Play / Pause">
+                <svg class="card-carousel__icon-pause" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="4" height="12" rx="1" fill="currentColor"/><rect x="9" y="2" width="4" height="12" rx="1" fill="currentColor"/></svg>
+                <svg class="card-carousel__icon-play" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 2.5L13 8L4 13.5V2.5Z" fill="currentColor"/></svg>
+              </button>
+              <button class="card-carousel__video-btn" data-carousel-mute aria-label="Mute / Unmute">
+                <svg class="card-carousel__icon-muted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><line x1="11" y1="5" x2="15" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="5" x2="11" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <svg class="card-carousel__icon-unmuted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><path d="M11 5.5C11.8 6.3 12.25 7.4 12.25 8.5C12.25 9.6 11.8 10.7 11 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 3.5C14.3 4.8 15 6.6 15 8.5C15 10.4 14.3 12.2 13 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          {%- endif -%}
+
+          {%- comment -%} Gradient Overlay {%- endcomment -%}
+          <div class="card-carousel__overlay"></div>
+
+          {%- comment -%} Bottom Content {%- endcomment -%}
+          <div class="card-carousel__content">
+            {%- if block.settings.use_interactive_buttons -%}
+              <div class="card-carousel__interactive">
+                {%- if block.settings.show_play_icon -%}
+                  <div class="card-carousel__play-icon">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="32" cy="32" r="32" fill="white" fill-opacity="0.9"/>
+                      <path d="M42 32L27 41V23L42 32Z" fill="black"/>
+                    </svg>
+                  </div>
+                {%- endif -%}
+                <div class="card-carousel__interactive-btns">
+                  {%- if block.settings.btn1_label != blank -%}
+                    <a href="{{ block.settings.btn1_link | default: '#' }}" class="card-carousel__btn-pill typo-small">
+                      <span class="card-carousel__badge card-carousel__badge--a">A</span>
+                      <span>{{ block.settings.btn1_label }}</span>
+                    </a>
+                  {%- endif -%}
+                  {%- if block.settings.btn2_label != blank -%}
+                    <a href="{{ block.settings.btn2_link | default: '#' }}" class="card-carousel__btn-pill typo-small">
+                      <span class="card-carousel__badge card-carousel__badge--b">B</span>
+                      <span>{{ block.settings.btn2_label }}</span>
+                    </a>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- else -%}
+              {%- if block.settings.title != blank -%}
+                <h2 class="card-carousel__title">{{ block.settings.title }}</h2>
+              {%- endif -%}
+              {%- if block.settings.subtitle != blank -%}
+                <p class="card-carousel__subtitle typo-overline">{{ block.settings.subtitle }}</p>
+              {%- endif -%}
+              {%- if block.settings.button_label != blank -%}
+                {%- assign btn_class = 'card-carousel__btn' -%}
+                {%- if block.settings.button_style == 'blue' -%}
+                  {%- assign btn_class = 'card-carousel__btn card-carousel__btn--blue' -%}
+                {%- endif -%}
+                <a href="{{ block.settings.button_link | default: '#' }}" class="{{ btn_class }} typo-btn">{{ block.settings.button_label }}</a>
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+
+          {%- comment -%} Product Strip {%- endcomment -%}
+          {%- if block.settings.product != blank -%}
+            {%- assign p = block.settings.product -%}
+            <a href="{{ p.url }}" class="card-carousel__product">
+              {%- if p.featured_image != blank -%}
+                <div class="card-carousel__product-img">
+                  {{ p.featured_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
+                </div>
+              {%- endif -%}
+              <div class="card-carousel__product-info">
+                <span class="card-carousel__product-title typo-h4">{{ p.title }}</span>
+                <span class="card-carousel__product-price typo-caption">{{ p.price | money }}</span>
+              </div>
+              <span class="card-carousel__product-btn" aria-label="View product">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </span>
+            </a>
+          {%- elsif block.settings.product_title != blank -%}
+            <div class="card-carousel__product">
+              {%- if block.settings.product_image != blank -%}
+                <div class="card-carousel__product-img">
+                  {{ block.settings.product_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
+                </div>
+              {%- endif -%}
+              <div class="card-carousel__product-info">
+                <span class="card-carousel__product-title typo-h4">{{ block.settings.product_title }}</span>
+                {%- if block.settings.product_price != blank -%}
+                  <span class="card-carousel__product-price typo-caption">{{ block.settings.product_price }}</span>
+                {%- endif -%}
+              </div>
+              <span class="card-carousel__product-btn" aria-label="View product">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <!-- Navigation Arrows (outside scroll area) -->
+  <button class="card-carousel__nav card-carousel__nav--prev" data-carousel-prev aria-label="Previous">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="card-carousel__nav card-carousel__nav--next" data-carousel-next aria-label="Next">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <!-- Dot Indicators -->
+  <div class="card-carousel__dots" data-carousel-dots>
+    {%- for block in section.blocks -%}
+      <button class="card-carousel__dot{% if forloop.first %} is-active{% endif %}" data-dot-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+    {%- endfor -%}
+  </div>
+</div>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-card-carousel]').forEach(function (carousel) {
+      var scroller = carousel.querySelector('[data-carousel-scroller]');
+      var track = carousel.querySelector('[data-carousel-track]');
+      if (!scroller || !track || track.children.length < 2) return;
+
+      var cards = Array.from(track.children);
+      var gap = parseFloat(getComputedStyle(track).gap) || 16;
+      var cardW = cards[0].offsetWidth + gap;
+
+      /* ── Drag / swipe ── */
+      var isDragging = false;
+      var startX = 0;
+      var scrollStart = 0;
+      var velocity = 0;
+      var lastX = 0;
+      var lastTime = 0;
+
+      function onPointerDown(e) {
+        isDragging = true;
+        startX = e.pageX || e.touches[0].pageX;
+        scrollStart = scroller.scrollLeft;
+        lastX = startX;
+        lastTime = Date.now();
+        velocity = 0;
+        scroller.style.scrollSnapType = 'none';
+        scroller.style.cursor = 'grabbing';
+        scroller.classList.add('is-dragging');
+      }
+
+      function onPointerMove(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        var x = e.pageX || e.touches[0].pageX;
+        var now = Date.now();
+        var dt = now - lastTime;
+        if (dt > 0) velocity = (lastX - x) / dt;
+        lastX = x;
+        lastTime = now;
+        scroller.scrollLeft = scrollStart - (x - startX);
+      }
+
+      function onPointerUp() {
+        if (!isDragging) return;
+        isDragging = false;
+        scroller.style.cursor = '';
+        scroller.classList.remove('is-dragging');
+
+        var momentum = velocity * 300;
+        var target = scroller.scrollLeft + momentum;
+        target = Math.round(target / cardW) * cardW;
+        var maxScroll = scroller.scrollWidth - scroller.clientWidth;
+        target = Math.max(0, Math.min(target, maxScroll));
+
+        scroller.style.scrollSnapType = '';
+        scroller.scrollTo({ left: target, behavior: 'smooth' });
+      }
+
+      scroller.addEventListener('mousedown', onPointerDown);
+      scroller.addEventListener('mousemove', onPointerMove);
+      scroller.addEventListener('mouseup', onPointerUp);
+      scroller.addEventListener('mouseleave', onPointerUp);
+      scroller.addEventListener('touchstart', onPointerDown, { passive: true });
+      scroller.addEventListener('touchmove', onPointerMove, { passive: false });
+      scroller.addEventListener('touchend', onPointerUp);
+
+      scroller.addEventListener('click', function (e) {
+        if (Math.abs(lastX - startX) > 5) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+
+      /* ── Navigation arrows ── */
+      var prevBtn = carousel.querySelector('[data-carousel-prev]');
+      var nextBtn = carousel.querySelector('[data-carousel-next]');
+
+      function updateNavVisibility() {
+        var sl = scroller.scrollLeft;
+        var maxScroll = scroller.scrollWidth - scroller.clientWidth;
+        if (prevBtn) prevBtn.classList.toggle('is-hidden', sl <= 2);
+        if (nextBtn) nextBtn.classList.toggle('is-hidden', maxScroll <= 0 ? false : sl >= maxScroll - 2);
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function () {
+          stopAuto();
+          scroller.scrollBy({ left: -cardW, behavior: 'smooth' });
+          setTimeout(startAuto, 3000);
+        });
+      }
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function () {
+          stopAuto();
+          scroller.scrollBy({ left: cardW, behavior: 'smooth' });
+          setTimeout(startAuto, 3000);
+        });
+      }
+
+      scroller.addEventListener('scroll', updateNavVisibility);
+      /* Delay initial check so layout is computed */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(updateNavVisibility);
+      });
+
+      /* ── Auto-play ── */
+      var autoInterval = null;
+      function startAuto() {
+        stopAuto();
+        autoInterval = setInterval(function () {
+          var sl = scroller.scrollLeft;
+          var maxScroll = scroller.scrollWidth - scroller.clientWidth;
+          if (sl >= maxScroll - 2) {
+            scroller.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            scroller.scrollBy({ left: cardW, behavior: 'smooth' });
+          }
+        }, 6000);
+      }
+      function stopAuto() {
+        if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
+      }
+
+      startAuto();
+      carousel.addEventListener('mouseenter', stopAuto);
+      carousel.addEventListener('mouseleave', startAuto);
+      scroller.addEventListener('touchstart', stopAuto, { passive: true });
+      scroller.addEventListener('touchend', function () { setTimeout(startAuto, 3000); });
+
+      /* ── Video controls (play/pause + mute/unmute) ── */
+      cards.forEach(function (card) {
+        var video = card.querySelector('video');
+        if (!video) return;
+
+        /* Mark as playing since videos autoplay */
+        video.addEventListener('playing', function () { card.classList.add('is-playing'); });
+        video.addEventListener('pause', function () { card.classList.remove('is-playing'); });
+        if (!video.paused) card.classList.add('is-playing');
+      });
+
+      carousel.addEventListener('click', function (e) {
+        var playBtn = e.target.closest('[data-carousel-play]');
+        if (playBtn) {
+          var card = playBtn.closest('.card-carousel__card');
+          var video = card.querySelector('video');
+          if (!video) return;
+          if (video.paused) {
+            video.play().catch(function () {});
+          } else {
+            video.pause();
+          }
+          return;
+        }
+
+        var muteBtn = e.target.closest('[data-carousel-mute]');
+        if (muteBtn) {
+          var card = muteBtn.closest('.card-carousel__card');
+          var video = card.querySelector('video');
+          if (!video) return;
+          video.muted = !video.muted;
+          card.classList.toggle('is-unmuted', !video.muted);
+          return;
+        }
+
+        /* Click anywhere on a video card to toggle audio */
+        var card = e.target.closest('.card-carousel__card');
+        if (card && !e.target.closest('a, button, .card-carousel__product')) {
+          var video = card.querySelector('video');
+          if (!video) return;
+          video.muted = !video.muted;
+          card.classList.toggle('is-unmuted', !video.muted);
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Card Carousel",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f5f3ec"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "carousel_card",
+      "name": "Carousel Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Background Video (Shopify)"
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Video URL (MP4 fallback, external)",
+          "info": "Use if you host the video externally."
+        },
+        {
+          "type": "text",
+          "id": "iframe_url",
+          "label": "Embed / iframe URL",
+          "info": "Paste a VideoAsk or other embed URL. Takes priority over image & video."
+        },
+        {
+          "type": "header",
+          "content": "Center Play Icon"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_play_icon",
+          "label": "Show center play icon",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "play_icon_text",
+          "label": "Text under play icon (optional)",
+          "default": "dalla tua casa"
+        },
+        {
+          "type": "header",
+          "content": "Card Content"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subheading"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button Style",
+          "options": [
+            { "value": "white", "label": "White (Rounded)" },
+            { "value": "blue", "label": "Blue (Full Width)" }
+          ],
+          "default": "white"
+        },
+        {
+          "type": "header",
+          "content": "Interactive Features"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_interactive_buttons",
+          "label": "Use Interactive Buttons Overlay",
+          "info": "Replaces the heading/button with two contextual buttons.",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "btn1_label",
+          "label": "Button A Label",
+          "default": "Scopri l'interno"
+        },
+        {
+          "type": "url",
+          "id": "btn1_link",
+          "label": "Button A Link"
+        },
+        {
+          "type": "text",
+          "id": "btn2_label",
+          "label": "Button B Label",
+          "default": "Voglio acquisrarlo"
+        },
+        {
+          "type": "url",
+          "id": "btn2_link",
+          "label": "Button B Link"
+        },
+        {
+          "type": "header",
+          "content": "Product Link"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product",
+          "info": "Select a product to show at the bottom of the card."
+        },
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product Image (manual)",
+          "info": "Only used if no product is selected above."
+        },
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "Product Title (manual)",
+          "info": "Only used if no product is selected above."
+        },
+        {
+          "type": "text",
+          "id": "product_price",
+          "label": "Product Price (manual)",
+          "info": "Only used if no product is selected above. e.g. $48"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Card Carousel",
+      "blocks": [
+        { "type": "carousel_card" },
+        { "type": "carousel_card" },
+        { "type": "carousel_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}

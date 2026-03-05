@@ -1,0 +1,33 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "Free shipping on orders over $500"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {},
+      "blocks": {
+        "mega_prodotti": {
+          "type": "megamenu",
+          "settings": {
+            "menu_item": "Prodotti",
+            "heading_1": "Collezione in evidenza",
+            "heading_2": "Nuovi Arrivi"
+          }
+        }
+      },
+      "block_order": [
+        "mega_prodotti"
+      ]
+    }
+  },
+  "order": [
+    "announcement",
+    "header"
+  ]
+}

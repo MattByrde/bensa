@@ -1,0 +1,62 @@
+/* ── Category Pills ── */
+.category-pills {
+  overflow: hidden;
+  padding: 0;
+}
+
+.category-pills__track {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 8px 20px 8px 1.5rem;
+  margin: -8px 0;
+  cursor: grab;
+}
+
+.category-pills__track::-webkit-scrollbar {
+  display: none;
+}
+
+.category-pills__track.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+  -webkit-user-select: none;
+  scroll-snap-type: none;
+}
+
+.category-pills__pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border: 1px solid #dcdcdc;
+  border-radius: 0;
+  padding: 9px 18px;
+  font-size: 1.1em;
+  color: #333333;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.category-pills__pill:hover {
+  border-color: #999;
+  background-color: #f9f9f9;
+}
+
+.category-pills__icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.category-pills__icon--default {
+  color: #555;
+}
+
+.category-pills__label {
+}

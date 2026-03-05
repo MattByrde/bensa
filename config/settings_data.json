@@ -1,0 +1,23 @@
+{
+  "current": {
+    "color_background": "#FAF8F5",
+    "color_text": "#27454E",
+    "color_accent": "#1E8BA8",
+    "color_secondary": "#BEB9B3",
+    "color_border": "#BEB9B3",
+    "color_button_bg": "#202020",
+    "color_button_text": "#FFFFFF",
+    "color_button_hover": "#1E8BA8",
+    "color_footer_bg": "#DBD8C9",
+    "font_heading": "assistant_n4",
+    "font_body": "assistant_n4",
+    "font_body_size": 16,
+    "logo_width": 120,
+    "cart_type": "drawer",
+    "cart_notes_enable": true,
+    "predictive_search_enabled": true,
+    "social_instagram": "https://www.instagram.com/bensaarredamenti/",
+    "social_facebook": "#",
+    "social_tiktok": "#"
+  }
+}

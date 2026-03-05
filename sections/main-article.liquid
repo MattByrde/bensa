@@ -1,0 +1,43 @@
+{%- comment -%} Main Article Section {%- endcomment -%}
+
+<section class="section-padding" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <article class="article-page">
+      <p class="article-page__meta">
+        {{ 'blogs.article.published' | t: date: article.published_at | date: '%B %d, %Y' }}
+        {%- if article.author -%}
+          &nbsp;&middot;&nbsp; {{ 'blogs.article.author' | t: author: article.author }}
+        {%- endif -%}
+      </p>
+
+      <h1 class="article-page__title">{{ article.title }}</h1>
+
+      {%- if article.image -%}
+        <div class="article-page__featured-image">
+          <img
+            src="{{ article.image | image_url: width: 1200 }}"
+            alt="{{ article.image.alt | default: article.title | escape }}"
+            loading="eager"
+          >
+        </div>
+      {%- endif -%}
+
+      <div class="article-page__content">
+        {{ article.content }}
+      </div>
+
+      <div style="margin-top: 3rem;">
+        <a href="{{ blog.url }}" class="btn btn--secondary">
+          &larr; {{ 'blogs.article.back_to_blog' | t }}
+        </a>
+      </div>
+    </article>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Article page",
+  "class": "section-article"
+}
+{% endschema %}

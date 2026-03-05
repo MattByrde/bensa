@@ -1,0 +1,99 @@
+{%- comment -%} Image with Text Section {%- endcomment -%}
+
+<section class="section-padding" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="image-with-text{% if section.settings.layout == 'image_second' %} image-with-text--reversed{% endif %}">
+      <div class="image-with-text__media">
+        {%- if section.settings.image != blank -%}
+          <img
+            src="{{ section.settings.image | image_url: width: 900 }}"
+            srcset="
+              {{ section.settings.image | image_url: width: 450 }} 450w,
+              {{ section.settings.image | image_url: width: 700 }} 700w,
+              {{ section.settings.image | image_url: width: 900 }} 900w
+            "
+            sizes="(max-width: 749px) 100vw, 50vw"
+            alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+            loading="lazy"
+          >
+        {%- else -%}
+          {{ 'image' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+      <div class="image-with-text__content">
+        {%- if section.settings.caption != blank -%}
+          <p class="image-with-text__caption">{{ section.settings.caption }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="image-with-text__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="image-with-text__text">{{ section.settings.text }}</div>
+        {%- endif -%}
+        {%- if section.settings.button_text != blank -%}
+          <a href="{{ section.settings.button_link }}" class="btn btn--secondary">
+            {{ section.settings.button_text }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image with text",
+  "class": "section-image-with-text",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "image_first", "label": "Image first" },
+        { "value": "image_second", "label": "Image second" }
+      ],
+      "default": "image_first"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Caption",
+      "default": "Quality materials"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Built to last"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>We partner with skilled artisans and source only the finest hardwoods, fabrics, and metals. Each piece undergoes rigorous quality testing to ensure it meets our high standards.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Learn more"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with text"
+    }
+  ]
+}
+{% endschema %}

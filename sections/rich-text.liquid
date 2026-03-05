@@ -1,0 +1,64 @@
+{%- comment -%} Rich Text Section {%- endcomment -%}
+
+<section class="section-padding" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="rich-text">
+      {%- if section.settings.caption != blank -%}
+        <p class="rich-text__caption">{{ section.settings.caption }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="rich-text__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="rich-text__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_text != blank -%}
+        <a href="{{ section.settings.button_link }}" class="btn btn--secondary" style="margin-top: 2rem;">
+          {{ section.settings.button_text }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "class": "section-rich-text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Caption",
+      "default": "Our story"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Crafted with care"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Every piece in our collection is thoughtfully designed and carefully crafted using sustainably sourced materials. We believe furniture should be beautiful, functional, and built to last for generations.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich text"
+    }
+  ]
+}
+{% endschema %}

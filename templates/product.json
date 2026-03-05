@@ -1,0 +1,42 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "dimensions": {
+          "type": "tab",
+          "settings": {
+            "heading": "Dimensions",
+            "content": "<p>Please refer to the product specifications for exact dimensions.</p>"
+          }
+        },
+        "materials": {
+          "type": "tab",
+          "settings": {
+            "heading": "Materials",
+            "content": "<p>Crafted from sustainably sourced hardwood and premium upholstery fabrics.</p>"
+          }
+        },
+        "shipping": {
+          "type": "tab",
+          "settings": {
+            "heading": "Shipping & returns",
+            "content": "<p>Free shipping on orders over $500. 30-day return policy on all items.</p>"
+          }
+        }
+      },
+      "block_order": ["dimensions", "materials", "shipping"]
+    },
+    "related": {
+      "type": "featured-collection",
+      "settings": {
+        "subtitle": "You may also like",
+        "heading": "Related products",
+        "products_to_show": 4,
+        "columns": "4",
+        "show_view_all": false
+      }
+    }
+  },
+  "order": ["main", "related"]
+}

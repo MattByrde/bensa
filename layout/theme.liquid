@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>
+    {%- if page_title -%}
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    {%- else -%}
+      {{ shop.name }}
+    {%- endif -%}
+  </title>
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+
+  {% render 'icon', icon: 'favicon' %}
+
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
+
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- if settings.font_heading.system? == false -%}
+    <link rel="preload" as="font" href="{{ settings.font_heading | font_url }}" type="font/woff2" crossorigin>
+  {%- endif -%}
+  {%- if settings.font_body.system? == false -%}
+    <link rel="preload" as="font" href="{{ settings.font_body | font_url }}" type="font/woff2" crossorigin>
+  {%- endif -%}
+
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+
+  <style>
+    :root {
+      --color-bg: {{ settings.color_background }};
+      --color-text: {{ settings.color_text }};
+      --color-accent: {{ settings.color_accent }};
+      --color-secondary: {{ settings.color_secondary }};
+      --color-border: {{ settings.color_border }};
+      --color-btn-bg: {{ settings.color_button_bg }};
+      --color-btn-text: {{ settings.color_button_text }};
+      --color-btn-hover: {{ settings.color_button_hover }};
+      --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+      --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+      --font-body-size: {{ settings.font_body_size }}px;
+    }
+  </style>
+
+  {{ content_for_header }}
+
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+  </script>
+</head>
+
+<body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
+  <a href="#main" class="skip-link">{{ 'accessibility.skip_to_content' | t }}</a>
+
+  {% sections 'header-group' %}
+
+  <main id="main" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  {% sections 'footer-group' %}
+
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+</body>
+</html>

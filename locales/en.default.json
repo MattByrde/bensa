@@ -1,0 +1,128 @@
+{
+  "general": {
+    "search": "Search",
+    "no_results": "No results found",
+    "cart": "Cart",
+    "menu": "Menu",
+    "close": "Close",
+    "share": "Share",
+    "loading": "Loading..."
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "close": "Close",
+    "menu": "Menu",
+    "cart_count": "{{ count }} items",
+    "next_slide": "Next slide",
+    "previous_slide": "Previous slide"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "added_to_cart": "Added to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "price": {
+        "from": "From {{ price }}",
+        "regular": "Regular price",
+        "sale": "Sale price",
+        "unit_price": "Unit price"
+      },
+      "quantity": {
+        "label": "Quantity",
+        "increase": "Increase quantity",
+        "decrease": "Decrease quantity"
+      },
+      "variant": "Variant",
+      "description": "Description",
+      "dimensions": "Dimensions",
+      "materials": "Materials",
+      "care": "Care instructions",
+      "shipping": "Shipping & returns"
+    }
+  },
+  "collections": {
+    "title": "Collections",
+    "empty": "No products found",
+    "filter": "Filter",
+    "sort": "Sort by",
+    "sort_options": {
+      "manual": "Featured",
+      "best_selling": "Best selling",
+      "title_asc": "A-Z",
+      "title_desc": "Z-A",
+      "price_asc": "Price: low to high",
+      "price_desc": "Price: high to low",
+      "created_asc": "Oldest",
+      "created_desc": "Newest"
+    },
+    "products_count": "{{ count }} products"
+  },
+  "cart": {
+    "title": "Your cart",
+    "empty": "Your cart is empty",
+    "continue_shopping": "Continue shopping",
+    "subtotal": "Subtotal",
+    "taxes_and_shipping": "Taxes and shipping calculated at checkout",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "note": "Order notes",
+    "update": "Update cart"
+  },
+  "customer": {
+    "account": {
+      "title": "My account",
+      "orders": "Order history",
+      "addresses": "Addresses",
+      "logout": "Log out"
+    },
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "forgot_password": "Forgot your password?",
+      "create_account": "Create account"
+    },
+    "register": {
+      "title": "Create account",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create"
+    },
+    "reset_password": {
+      "title": "Reset password",
+      "email": "Email",
+      "submit": "Submit"
+    }
+  },
+  "blogs": {
+    "article": {
+      "read_more": "Read more",
+      "author": "By {{ author }}",
+      "published": "Published on {{ date }}",
+      "comments": "{{ count }} comments",
+      "back_to_blog": "Back to blog"
+    }
+  },
+  "newsletter": {
+    "title": "Stay in touch",
+    "subtitle": "Sign up for updates on new collections, design tips, and exclusive offers.",
+    "email_placeholder": "Your email address",
+    "submit": "Subscribe",
+    "success": "Thanks for subscribing!"
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search our store...",
+    "results": "Search results for \"{{ terms }}\"",
+    "no_results": "No results for \"{{ terms }}\""
+  },
+  "404": {
+    "title": "Page not found",
+    "subtitle": "The page you're looking for doesn't exist.",
+    "button": "Back to home"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "bg_color": "#DBD8C9",
+        "text_color": "#27454E"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}
