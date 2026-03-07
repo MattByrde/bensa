@@ -83,7 +83,7 @@
 /* ── Card inner (video area) ── */
 .tiktok-viral__card-inner {
   position: relative;
-  border-radius: 0;
+  border-radius: 8px;
   overflow: hidden;
   background: #e5e0da;
   aspect-ratio: 9 / 13;
@@ -108,7 +108,7 @@
   z-index: 2;
   width: 36px;
   height: 36px;
-  border-radius: 0;
+  border-radius: 8px;
   background: rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
@@ -151,7 +151,7 @@
   padding: 8px 2px;
   text-decoration: none;
   color: inherit;
-  border-radius: 0;
+  border-radius: 8px;
   transition: background-color 0.2s ease;
 }
 
@@ -162,7 +162,7 @@ a.tiktok-viral__product:hover {
 .tiktok-viral__product-img {
   width: 40px;
   height: 40px;
-  border-radius: 0;
+  border-radius: 8px;
   overflow: hidden;
   flex-shrink: 0;
   background: #f0ede8;
@@ -197,7 +197,7 @@ a.tiktok-viral__product:hover {
 .tiktok-viral__product-btn {
   width: 28px;
   height: 28px;
-  border-radius: 0;
+  border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   background: transparent;
   cursor: pointer;
@@ -227,7 +227,7 @@ a.tiktok-viral__product:hover {
 .tiktok-viral__arrow {
   width: 44px;
   height: 44px;
-  border-radius: 0;
+  border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   background: transparent;
   cursor: pointer;

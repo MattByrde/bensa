@@ -3,64 +3,92 @@
 {%- style -%}
   #shopify-section-{{ section.id }} {
     background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
   }
 {%- endstyle -%}
 
-<section class="section-padding" data-section-id="{{ section.id }}" data-testimonial-slider data-testi-total="{{ section.blocks.size }}">
-  <div class="testi-slider">
+<section class="testi-section" data-testimonial-slider>
+  <div class="testi-section__layout">
 
-    {%- comment -%} Slides {%- endcomment -%}
-    <div class="testi-slider__slides">
-      {%- for block in section.blocks -%}
-        <div class="testi-slider__slide{% if forloop.first %} is-active{% endif %}" data-slide-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
-          <div class="testi-slider__left">
-            <div class="testi-slider__avatar">
-              {%- if block.settings.image != blank -%}
-                {{ block.settings.image | image_url: width: 400 | image_tag: class: 'testi-slider__avatar-img', loading: 'lazy' }}
-              {%- else -%}
-                <div class="testi-slider__avatar-placeholder">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v2h20v-2c0-3.3-6.7-5-10-5z" fill="currentColor"/></svg>
-                </div>
-              {%- endif -%}
-            </div>
-            <div class="testi-slider__text">
-              {%- if block.settings.quote != blank -%}
-                <blockquote class="testi-slider__quote typo-h2">&ldquo;{{ block.settings.quote }}&rdquo;</blockquote>
-              {%- endif -%}
-              <div class="testi-slider__meta">
-                {%- if block.settings.author != blank -%}
-                  <span class="testi-slider__author typo-small">{{ block.settings.author }}</span>
-                {%- endif -%}
-                {%- if block.settings.verified -%}
-                  <span class="testi-slider__verified typo-small">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="7" fill="#333"/><path d="M4 7l2 2 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Verify Customer
-                  </span>
-                {%- endif -%}
+    {%- comment -%} Left column — heading + nav {%- endcomment -%}
+    <div class="testi-section__text">
+      <div>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="testi-section__subtitle typo-overline">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="testi-section__heading typo-h2">{{ section.settings.heading | newline_to_br }}</h2>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="testi-section__description typo-small">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.blocks.size > 1 -%}
+        <div class="testi-section__nav">
+          <button class="testi-section__arrow" data-testi-prev aria-label="Previous review">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11.25 13.5L6.75 9L11.25 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="testi-section__arrow" data-testi-next aria-label="Next review">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6.75 13.5L11.25 9L6.75 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <span class="testi-section__counter typo-caption" data-testi-counter>1 / {{ section.blocks.size }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Right column — card carousel {%- endcomment -%}
+    <div class="testi-section__carousel" data-testi-carousel>
+      <div class="testi-section__track" data-testi-track>
+        {%- for block in section.blocks -%}
+          <div class="testi-section__card" {{ block.shopify_attributes }}>
+            <div class="testi-section__card-inner">
+              {%- comment -%} Stars {%- endcomment -%}
+              <div class="testi-section__stars">
+                {%- for i in (1..5) -%}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                {%- endfor -%}
               </div>
-              {%- comment -%} Controls inside each slide's text area {%- endcomment -%}
-              {%- if section.blocks.size > 1 -%}
-                <div class="testi-slider__controls">
-                  <div class="testi-slider__counter typo-caption">
-                    <span data-testi-current>1</span>/<span data-testi-total>{{ section.blocks.size }}</span>
-                  </div>
-                  <div class="testi-slider__progress">
-                    <div class="testi-slider__progress-bar" data-testi-bar style="width: {{ 100.0 | divided_by: section.blocks.size }}%"></div>
-                  </div>
-                  <div class="testi-slider__arrows">
-                    <button class="testi-slider__arrow" data-testi-prev aria-label="Previous review">
-                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11.25 13.5L6.75 9L11.25 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </button>
-                    <button class="testi-slider__arrow" data-testi-next aria-label="Next review">
-                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6.75 13.5L11.25 9L6.75 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </button>
-                  </div>
-                </div>
+
+              {%- comment -%} Quote {%- endcomment -%}
+              {%- if block.settings.quote != blank -%}
+                <blockquote class="testi-section__quote typo-body">&ldquo;{{ block.settings.quote }}&rdquo;</blockquote>
               {%- endif -%}
+
+              {%- comment -%} Author row {%- endcomment -%}
+              <div class="testi-section__author-row">
+                <div class="testi-section__avatar">
+                  {%- if block.settings.image != blank -%}
+                    {{ block.settings.image | image_url: width: 200 | image_tag: class: 'testi-section__avatar-img', loading: 'lazy' }}
+                  {%- else -%}
+                    <div class="testi-section__avatar-placeholder">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v2h20v-2c0-3.3-6.7-5-10-5z" fill="currentColor"/></svg>
+                    </div>
+                  {%- endif -%}
+                </div>
+                <div class="testi-section__author-info">
+                  {%- if block.settings.author != blank -%}
+                    <span class="testi-section__author-name typo-small">{{ block.settings.author }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.verified -%}
+                    <span class="testi-section__verified typo-caption">
+                      <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="7" fill="#333"/><path d="M4 7l2 2 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      Verified
+                    </span>
+                  {%- endif -%}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      {%- endfor -%}
+        {%- endfor -%}
+      </div>
     </div>
 
   </div>
@@ -69,130 +97,85 @@
 <script>
   (function () {
     document.querySelectorAll('[data-testimonial-slider]').forEach(function (section) {
-      var slides = Array.from(section.querySelectorAll('[data-slide-index]'));
-      if (slides.length < 2) return;
+      var carousel = section.querySelector('[data-testi-carousel]');
+      var track = section.querySelector('[data-testi-track]');
+      var cards = Array.from(track.children);
+      if (!carousel || cards.length < 2) return;
 
-      var current = 0;
-      var total = slides.length;
-      var animating = false;
-      var autoplayInterval = null;
-      var AUTOPLAY_DELAY = 5000;
+      var currentPage = 0;
+      var counterEl = section.querySelector('[data-testi-counter]');
 
-      function getCounterEls() {
-        return section.querySelectorAll('[data-testi-current]');
-      }
-      function getBarEls() {
-        return section.querySelectorAll('[data-testi-bar]');
+      function getCardWidth() {
+        return cards[0].offsetWidth + parseFloat(getComputedStyle(track).gap);
       }
 
-      function updateCounters() {
-        getCounterEls().forEach(function (el) { el.textContent = current + 1; });
-        getBarEls().forEach(function (el) {
-          el.style.transition = 'none';
-          el.style.width = '0%';
-          /* Force reflow then animate to full width over the autoplay interval */
-          void el.offsetWidth;
-          el.style.transition = 'width ' + (AUTOPLAY_DELAY / 1000) + 's linear';
-          el.style.width = '100%';
-        });
+      function getVisibleCards() {
+        return Math.round(carousel.offsetWidth / cards[0].offsetWidth);
       }
 
-      function assignPreviews(activeIdx) {
-        var remaining = total - 1 - activeIdx;
-        slides.forEach(function (slide, idx) {
-          if (idx <= activeIdx) return;
-          var offset = idx - activeIdx;
-          if (offset === 1 && remaining >= 1) slide.classList.add('is-next-1');
-          else if (offset === 2 && remaining >= 2) slide.classList.add('is-next-2');
-          else if (offset === 3 && remaining >= 3) slide.classList.add('is-next-3');
-        });
+      function getMaxPage() {
+        return Math.max(0, cards.length - getVisibleCards());
       }
 
-      function updateClasses() {
-        slides.forEach(function (slide) {
-          slide.classList.remove('is-active', 'is-next-1', 'is-next-2', 'is-next-3', 'is-exiting', 'is-sliding-in', 'is-sliding-out');
-        });
-        slides[current].classList.add('is-active');
-        assignPreviews(current);
-      }
-
-      function goTo(idx, direction) {
-        if (animating) return;
-        var prev = current;
-        var next = (idx + total) % total;
-        if (prev === next) return;
-
-        var goingForward = direction !== undefined ? direction === 'next' : next > prev;
-        animating = true;
-        var prevSlide = slides[prev];
-        var nextSlide = slides[next];
-
-        slides.forEach(function (s) {
-          s.classList.remove('is-active', 'is-next-1', 'is-next-2', 'is-next-3', 'is-exiting', 'is-sliding-in', 'is-sliding-out');
-        });
-
-        /* Direction-aware slide classes */
-        if (goingForward) {
-          prevSlide.classList.add('is-sliding-out');
-          nextSlide.classList.add('is-active', 'is-sliding-in');
-        } else {
-          prevSlide.classList.add('is-sliding-out-reverse');
-          nextSlide.classList.add('is-active', 'is-sliding-in-reverse');
-        }
-
-        assignPreviews(next);
-
-        current = next;
-        updateCounters();
-
-        setTimeout(function () {
-          prevSlide.classList.remove('is-sliding-out', 'is-sliding-out-reverse');
-          nextSlide.classList.remove('is-sliding-in', 'is-sliding-in-reverse');
-          animating = false;
-        }, 500);
-      }
-
-      /* Autoplay */
-      function startAutoplay() {
-        stopAutoplay();
-        autoplayInterval = setInterval(function () {
-          goTo(current + 1, 'next');
-        }, AUTOPLAY_DELAY);
-      }
-
-      function stopAutoplay() {
-        if (autoplayInterval) {
-          clearInterval(autoplayInterval);
-          autoplayInterval = null;
+      function goTo(page) {
+        page = Math.max(0, Math.min(page, getMaxPage()));
+        currentPage = page;
+        track.style.transition = 'transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        track.style.transform = 'translateX(' + (-page * getCardWidth()) + 'px)';
+        if (counterEl) {
+          counterEl.textContent = (currentPage + 1) + ' / ' + cards.length;
         }
       }
 
-      function resetAutoplay() {
-        stopAutoplay();
-        startAutoplay();
-      }
-
-      updateClasses();
-      updateCounters();
-      startAutoplay();
-
-      /* Pause on hover, resume on leave */
-      section.addEventListener('mouseenter', stopAutoplay);
-      section.addEventListener('mouseleave', startAutoplay);
-
-      /* Pause when not visible */
-      document.addEventListener('visibilitychange', function () {
-        if (document.hidden) stopAutoplay();
-        else startAutoplay();
-      });
-
-      /* Delegate click events for prev/next buttons */
       section.addEventListener('click', function (e) {
         var prev = e.target.closest('[data-testi-prev]');
         var next = e.target.closest('[data-testi-next]');
-        if (prev) { goTo(current - 1, 'prev'); resetAutoplay(); }
-        else if (next) { goTo(current + 1, 'next'); resetAutoplay(); }
+        if (prev) goTo(currentPage - 1);
+        else if (next) goTo(currentPage + 1);
       });
+
+      /* Drag / swipe support */
+      var startX = 0, startScroll = 0, isDragging = false;
+
+      carousel.addEventListener('pointerdown', function (e) {
+        isDragging = true;
+        startX = e.clientX;
+        startScroll = currentPage * getCardWidth();
+        track.style.transition = 'none';
+        carousel.classList.add('is-dragging');
+        carousel.setPointerCapture(e.pointerId);
+      });
+
+      carousel.addEventListener('pointermove', function (e) {
+        if (!isDragging) return;
+        var diff = e.clientX - startX;
+        track.style.transform = 'translateX(' + (-startScroll + diff) + 'px)';
+      });
+
+      carousel.addEventListener('pointerup', function (e) {
+        if (!isDragging) return;
+        isDragging = false;
+        carousel.classList.remove('is-dragging');
+        var diff = e.clientX - startX;
+        var threshold = getCardWidth() * 0.25;
+        if (diff < -threshold) goTo(currentPage + 1);
+        else if (diff > threshold) goTo(currentPage - 1);
+        else goTo(currentPage);
+      });
+
+      carousel.addEventListener('pointercancel', function () {
+        isDragging = false;
+        carousel.classList.remove('is-dragging');
+        goTo(currentPage);
+      });
+
+      /* Prevent link clicks after drag */
+      carousel.addEventListener('click', function (e) {
+        if (Math.abs(e.clientX - startX) > 5) e.preventDefault();
+      });
+
+      /* Reset on resize */
+      window.addEventListener('resize', function () { goTo(currentPage); });
     });
   })();
 </script>
@@ -207,6 +190,44 @@
       "id": "background_color",
       "label": "Background Color",
       "default": "#f5f3ec"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "RECENSIONI"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Cosa dicono\ni nostri clienti"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Le opinioni di chi ha scelto i nostri prodotti per la propria casa."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 68
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
     }
   ],
   "blocks": [

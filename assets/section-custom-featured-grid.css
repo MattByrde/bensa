@@ -43,7 +43,7 @@
     background-color: #111111;
     color: #ffffff;
     padding: 12px 24px;
-    border-radius: 0;
+    border-radius: 8px;
     text-decoration: none;
     transition: background-color 0.2s ease;
 }
@@ -58,7 +58,7 @@
     flex-direction: column;
     background-color: #ffffff;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 0;
+    border-radius: 8px;
     padding: 20px;
     text-decoration: none;
     color: inherit;
@@ -96,13 +96,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 24px 0;
+    padding: 16px 0;
 }
 
 .cfg-card-img {
-    width: 100%;
+    width: 80%;
     height: 100%;
-    max-height: 210px;
+    max-height: 160px;
     aspect-ratio: 2 / 1;
     object-fit: contain;
 }

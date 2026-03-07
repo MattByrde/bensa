@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_background": "#FAF8F5",
@@ -8,16 +17,18 @@
     "color_button_bg": "#202020",
     "color_button_text": "#FFFFFF",
     "color_button_hover": "#1E8BA8",
-    "color_footer_bg": "#DBD8C9",
     "font_heading": "assistant_n4",
     "font_body": "assistant_n4",
     "font_body_size": 16,
     "logo_width": 120,
+    "favicon": "shopify://shop_images/bensa.svg",
+    "social_instagram": "https://www.instagram.com/bensaarredamenti/",
+    "social_facebook": "#",
+    "social_tiktok": "#",
     "cart_type": "drawer",
     "cart_notes_enable": true,
     "predictive_search_enabled": true,
-    "social_instagram": "https://www.instagram.com/bensaarredamenti/",
-    "social_facebook": "#",
-    "social_tiktok": "#"
+    "color_footer_bg": "#DBD8C9",
+    "content_for_index": []
   }
 }

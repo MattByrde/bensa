@@ -1,43 +1,144 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "card_carousel": {
       "type": "custom-card-carousel",
       "blocks": {
-        "card_1": {
-          "type": "carousel_card"
-        },
         "card_2": {
-          "type": "carousel_card"
+          "type": "carousel_card",
+          "settings": {
+            "image": "shopify://shop_images/sofa.webp",
+            "video_url": "",
+            "iframe_url": "",
+            "show_play_icon": false,
+            "play_icon_text": "dalla tua casa",
+            "title": "Sofà Lupin",
+            "subtitle": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "white",
+            "use_interactive_buttons": false,
+            "btn1_label": "Scopri l'interno",
+            "btn1_link": "",
+            "btn2_label": "Voglio acquisrarlo",
+            "btn2_link": "",
+            "product": "lupin-sofa-max",
+            "product_title": "",
+            "product_price": ""
+          }
+        },
+        "card_1": {
+          "type": "carousel_card",
+          "settings": {
+            "image": "shopify://shop_images/03_KeSa_UEC_Sand_Side_b8b9e117-ab51-42b9-a1fd-0b88bc3ae027.jpg",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/1e3b3ee058744a359f76d177ebd5a832.mp4",
+            "iframe_url": "",
+            "show_play_icon": false,
+            "play_icon_text": "dalla tua casa",
+            "title": "",
+            "subtitle": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "white",
+            "use_interactive_buttons": true,
+            "btn1_label": "Sviluppa Il tuo Progetto",
+            "btn1_link": "#",
+            "btn2_label": "Scopri I Nostri Servizi",
+            "btn2_link": "#",
+            "product": "",
+            "product_title": "",
+            "product_price": ""
+          }
         },
         "card_3": {
-          "type": "carousel_card"
+          "type": "carousel_card",
+          "settings": {
+            "image": "shopify://shop_images/Micadoni-MIC_CH_257_F1_ECHO1-BG_1920x1437_crop_center_d5058349-50fa-425e-b6e2-c3d249227ffc.webp",
+            "video_url": "",
+            "iframe_url": "",
+            "show_play_icon": false,
+            "play_icon_text": "dalla tua casa",
+            "title": "Sedia A1",
+            "subtitle": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "white",
+            "use_interactive_buttons": false,
+            "btn1_label": "Scopri l'interno",
+            "btn1_link": "",
+            "btn2_label": "Voglio acquisrarlo",
+            "btn2_link": "",
+            "product": "sedia-tipo-a1",
+            "product_title": "",
+            "product_price": ""
+          }
         },
         "card_4": {
-          "type": "carousel_card"
+          "type": "carousel_card",
+          "settings": {
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/0173c3a52dd4460db6c2b39b59392813.mp4",
+            "iframe_url": "",
+            "show_play_icon": false,
+            "play_icon_text": "dalla tua casa",
+            "title": "",
+            "subtitle": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "white",
+            "use_interactive_buttons": true,
+            "btn1_label": "Personalizzazione Arredi",
+            "btn1_link": "#",
+            "btn2_label": "Progettazione su Misura",
+            "btn2_link": "#",
+            "product": "",
+            "product_title": "",
+            "product_price": ""
+          }
         },
-        "card_5": {
-          "type": "carousel_card"
-        },
-        "card_6": {
-          "type": "carousel_card"
-        },
-        "card_7": {
-          "type": "carousel_card"
-        },
-        "card_8": {
-          "type": "carousel_card"
+        "carousel_card_KEwTFq": {
+          "type": "carousel_card",
+          "settings": {
+            "image": "shopify://shop_images/poltrona-in-shearling-nicxon.avif",
+            "video_url": "",
+            "iframe_url": "",
+            "show_play_icon": false,
+            "play_icon_text": "dalla tua casa",
+            "title": "Nicxon",
+            "subtitle": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "white",
+            "use_interactive_buttons": false,
+            "btn1_label": "Scopri l'interno",
+            "btn1_link": "",
+            "btn2_label": "Voglio acquisrarlo",
+            "btn2_link": "",
+            "product": "nicxon",
+            "product_title": "",
+            "product_price": ""
+          }
         }
       },
       "block_order": [
-        "card_1",
         "card_2",
+        "card_1",
         "card_3",
         "card_4",
-        "card_5",
-        "card_6",
-        "card_7",
-        "card_8"
-      ]
+        "carousel_card_KEwTFq"
+      ],
+      "settings": {
+        "background_color": "#f5f3ec",
+        "padding_top": 16,
+        "padding_bottom": 0
+      }
     },
     "category_pills": {
       "type": "custom-category-pills",
@@ -45,49 +146,112 @@
         "pill_1": {
           "type": "category_pill",
           "settings": {
-            "label": "SEDIE"
+            "icon": "shopify://shop_images/692036af0534a0ba0b3e674d_Untitled_Project_-_illustration_8.svg",
+            "label": "SEDIE",
+            "link": ""
           }
         },
         "pill_2": {
           "type": "category_pill",
           "settings": {
-            "label": "TAVOLI"
+            "icon": "shopify://shop_images/tables_6cc5b517-3b4e-4824-bdd6-4d4cc9845f6a.svg",
+            "label": "TAVOLI",
+            "link": ""
           }
         },
         "pill_3": {
           "type": "category_pill",
           "settings": {
-            "label": "LETTO"
+            "icon": "shopify://shop_images/beds.svg",
+            "label": "LETTI",
+            "link": ""
           }
         },
         "pill_4": {
           "type": "category_pill",
           "settings": {
-            "label": "SOFA"
+            "icon": "shopify://shop_images/living.svg",
+            "label": "LIVING",
+            "link": ""
           }
         },
         "pill_5": {
           "type": "category_pill",
           "settings": {
-            "label": "POLTRONE"
+            "icon": "shopify://shop_images/poltrone.svg",
+            "label": "POLTRONE",
+            "link": ""
           }
         },
         "pill_6": {
           "type": "category_pill",
           "settings": {
-            "label": "CARRELLI"
+            "icon": "shopify://shop_images/storage.svg",
+            "label": "CARRELLI",
+            "link": ""
           }
         },
         "pill_7": {
           "type": "category_pill",
           "settings": {
-            "label": "ARMADIO"
+            "icon": "shopify://shop_images/arredi.svg",
+            "label": "ARMADIO",
+            "link": ""
           }
         },
         "pill_8": {
           "type": "category_pill",
           "settings": {
-            "label": "LAMPADE"
+            "icon": "shopify://shop_images/lights.svg",
+            "label": "ILLUMINAZIONE",
+            "link": ""
+          }
+        },
+        "category_pill_hqXihd": {
+          "type": "category_pill",
+          "settings": {
+            "icon": "shopify://shop_images/tables.svg",
+            "label": "ALTRO",
+            "link": ""
+          }
+        },
+        "category_pill_pdknkL": {
+          "type": "category_pill",
+          "settings": {
+            "icon": "shopify://shop_images/tables_6cc5b517-3b4e-4824-bdd6-4d4cc9845f6a.svg",
+            "label": "CATEGORIA 2",
+            "link": ""
+          }
+        },
+        "category_pill_3Y784g": {
+          "type": "category_pill",
+          "settings": {
+            "label": "SEDIE",
+            "link": ""
+          }
+        },
+        "category_pill_DrV74E": {
+          "type": "category_pill",
+          "settings": {
+            "icon": "shopify://shop_images/beds.svg",
+            "label": "CATEGORIA 3",
+            "link": ""
+          }
+        },
+        "category_pill_FJTbWp": {
+          "type": "category_pill",
+          "settings": {
+            "icon": "shopify://shop_images/living.svg",
+            "label": "Categoria 4",
+            "link": ""
+          }
+        },
+        "category_pill_aitHaJ": {
+          "type": "category_pill",
+          "settings": {
+            "icon": "shopify://shop_images/arredi.svg",
+            "label": "CAT AB1",
+            "link": ""
           }
         }
       },
@@ -99,86 +263,272 @@
         "pill_5",
         "pill_6",
         "pill_7",
-        "pill_8"
-      ]
+        "pill_8",
+        "category_pill_hqXihd",
+        "category_pill_pdknkL",
+        "category_pill_3Y784g",
+        "category_pill_DrV74E",
+        "category_pill_FJTbWp",
+        "category_pill_aitHaJ"
+      ],
+      "settings": {
+        "background_color": "#f5f3ec",
+        "padding_top": 4,
+        "padding_bottom": 16
+      }
     },
-    "testimonials": {
-      "type": "testimonials",
-      "settings": {},
+    "custom_featured_grid": {
+      "type": "custom-featured-grid",
       "blocks": {
-        "testimonial_1": {
-          "type": "testimonial",
+        "card_1": {
+          "type": "product_card",
           "settings": {
-            "quote": "La qualità artigianale è straordinaria. Il nostro nuovo divano è il pezzo forte del salotto.",
-            "author": "Sara M."
+            "title": "Lodge Sofa",
+            "rating": "4.9",
+            "image": "shopify://shop_images/test01.png",
+            "brand": "ARREDO 3",
+            "link_label": "Scopri di più...",
+            "link": "shopify://products/lupin-sofa-max"
           }
         },
-        "testimonial_2": {
-          "type": "testimonial",
+        "card_2": {
+          "type": "product_card",
           "settings": {
-            "quote": "Mobili bellissimi e costruiti per durare. Abbiamo arredato tutta la casa con Bensa.",
-            "author": "Giovanni T."
+            "title": "The Couch",
+            "rating": "4.9",
+            "image": "shopify://shop_images/test02.png",
+            "brand": "ARREDO 3",
+            "link_label": "Scopri di più...",
+            "link": "shopify://products/lupin-sofa-max"
           }
         },
-        "testimonial_3": {
-          "type": "testimonial",
+        "card_3": {
+          "type": "product_card",
           "settings": {
-            "quote": "Consegna veloce e i mobili sono ancora più belli dal vivo. Consigliatissimi per chi cerca arredamento di qualità.",
-            "author": "Elena R."
+            "title": "Tavolino Sveden",
+            "rating": "4.8",
+            "image": "shopify://shop_images/6920512cec099c394056b073_Untitled_Project_-_2.png",
+            "brand": "BONALDO",
+            "link_label": "Scopri di più...",
+            "link": "shopify://products/lupin-sofa-max"
           }
         },
-        "testimonial_4": {
-          "type": "testimonial",
+        "card_4": {
+          "type": "product_card",
           "settings": {
-            "quote": "L'attenzione ai dettagli è notevole. Ogni angolo, ogni finitura parla di qualità.",
-            "author": "Marco L."
+            "title": "Bruner",
+            "rating": "5.0",
+            "image": "shopify://shop_images/test03.png",
+            "brand": "SOFIA ARREDAMENTI",
+            "link_label": "Scopri di più...",
+            "link": ""
           }
         },
-        "testimonial_5": {
-          "type": "testimonial",
+        "card_5": {
+          "type": "product_card",
           "settings": {
-            "quote": "Adoriamo come i mobili si integrano perfettamente con lo stile della nostra casa. Eleganti e funzionali.",
-            "author": "Anna B."
+            "title": "Treveris",
+            "rating": "4.8",
+            "image": "shopify://shop_images/test04.png",
+            "brand": "SKULM",
+            "link_label": "Scopri di più...",
+            "link": ""
           }
         },
-        "testimonial_6": {
-          "type": "testimonial",
+        "card_6": {
+          "type": "product_card",
           "settings": {
-            "quote": "Servizio clienti eccezionale e il tavolo da pranzo ha superato ogni aspettativa.",
-            "author": "Luca R."
+            "title": "Tablo",
+            "rating": "4.6",
+            "image": "shopify://shop_images/test05.png",
+            "brand": "ARREDO 3",
+            "link_label": "Scopri di più...",
+            "link": ""
+          }
+        },
+        "card_7": {
+          "type": "product_card",
+          "settings": {
+            "title": "Billie",
+            "rating": "5.0",
+            "image": "shopify://shop_images/test06.png",
+            "brand": "ARREDO 3",
+            "link_label": "Scopri di più...",
+            "link": "shopify://pages/contact"
+          }
+        },
+        "card_8": {
+          "type": "product_card",
+          "settings": {
+            "title": "Oslo Chair",
+            "rating": "4.7",
+            "image": "shopify://shop_images/test07.png",
+            "brand": "BONALDO",
+            "link_label": "Scopri di più...",
+            "link": "shopify://pages/contact"
+          }
+        },
+        "card_9": {
+          "type": "product_card",
+          "settings": {
+            "title": "Nora Dining",
+            "rating": "4.9",
+            "image": "shopify://shop_images/test10.png",
+            "brand": "SKULM",
+            "link_label": "Scopri di più...",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "testimonial_1",
-        "testimonial_2",
-        "testimonial_3",
-        "testimonial_4",
-        "testimonial_5",
-        "testimonial_6"
-      ]
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4",
+        "card_5",
+        "card_6",
+        "card_7",
+        "card_8",
+        "card_9"
+      ],
+      "settings": {
+        "background_color": "#f5f3ec",
+        "heading": "I prodotti da\nnon perdere",
+        "button_label": "SCOPRI LA COLLEZIONE",
+        "button_link": "",
+        "padding_top": 68,
+        "padding_bottom": 40
+      }
     },
     "brand_logos": {
       "type": "custom-brand-logos",
-      "settings": {
-        "heading": "Solo i migliori marchi a livello mondiale.",
-        "background_color": "#f5f3ec"
-      },
       "blocks": {
-        "logo_1": { "type": "logo", "settings": { "row": "1" } },
-        "logo_2": { "type": "logo", "settings": { "row": "1" } },
-        "logo_3": { "type": "logo", "settings": { "row": "1" } },
-        "logo_4": { "type": "logo", "settings": { "row": "1" } },
-        "logo_5": { "type": "logo", "settings": { "row": "1" } },
-        "logo_6": { "type": "logo", "settings": { "row": "1" } },
-        "logo_7": { "type": "logo", "settings": { "row": "1" } },
-        "logo_8": { "type": "logo", "settings": { "row": "2" } },
-        "logo_9": { "type": "logo", "settings": { "row": "2" } },
-        "logo_10": { "type": "logo", "settings": { "row": "2" } },
-        "logo_11": { "type": "logo", "settings": { "row": "2" } },
-        "logo_12": { "type": "logo", "settings": { "row": "2" } },
-        "logo_13": { "type": "logo", "settings": { "row": "2" } },
-        "logo_14": { "type": "logo", "settings": { "row": "2" } }
+        "logo_1": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo01.avif",
+            "alt_text": "",
+            "link": "",
+            "row": "1"
+          }
+        },
+        "logo_2": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo02.avif",
+            "alt_text": "",
+            "link": "",
+            "row": "1"
+          }
+        },
+        "logo_3": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo07.avif",
+            "alt_text": "",
+            "link": "",
+            "row": "1"
+          }
+        },
+        "logo_4": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo08.png",
+            "alt_text": "",
+            "link": "",
+            "row": "1"
+          }
+        },
+        "logo_5": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo06.png",
+            "alt_text": "",
+            "link": "",
+            "row": "1"
+          }
+        },
+        "logo_6": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo04.png",
+            "alt_text": "",
+            "link": "",
+            "row": "1"
+          }
+        },
+        "logo_7": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo03.avif",
+            "alt_text": "",
+            "link": "",
+            "row": "1"
+          }
+        },
+        "logo_8": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/6920864fe2ceb88861c0efac_Untitled_Project_-_13.png",
+            "alt_text": "",
+            "link": "",
+            "row": "2"
+          }
+        },
+        "logo_9": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/6920860a0360193cb8457f00_68342c56afdf6b32c81747d8_flexform.svg",
+            "alt_text": "",
+            "link": "",
+            "row": "2"
+          }
+        },
+        "logo_10": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/692085ffdf06d8d7323afd82_68342c56afdf6b32c81747d1__gubi.avif",
+            "alt_text": "",
+            "link": "",
+            "row": "2"
+          }
+        },
+        "logo_11": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/6920863b510a2cb3ca965914_Untitled_Project_-_12.png",
+            "alt_text": "",
+            "link": "",
+            "row": "2"
+          }
+        },
+        "logo_12": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/69208613465734e2657d7224_68342c56afdf6b32c81747d5__bocci.avif",
+            "alt_text": "",
+            "link": "",
+            "row": "2"
+          }
+        },
+        "logo_13": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo01.avif",
+            "alt_text": "",
+            "link": "",
+            "row": "2"
+          }
+        },
+        "logo_14": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo02.avif",
+            "alt_text": "",
+            "link": "#",
+            "row": "2"
+          }
+        }
       },
       "block_order": [
         "logo_1",
@@ -195,32 +545,49 @@
         "logo_12",
         "logo_13",
         "logo_14"
-      ]
+      ],
+      "settings": {
+        "heading": "",
+        "background_color": "#f5f3ec",
+        "speed": 40,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     },
     "community": {
       "type": "custom-community",
-      "settings": {
-        "subtitle": "BENSA + VOI",
-        "heading": "La Community",
-        "description": "Scopri come i nostri clienti hanno trasformato le loro case con l'aiuto di Bensa Arredamenti. Lasciati ispirare dalle loro storie."
-      },
       "blocks": {
         "community_1": {
           "type": "video_card",
           "settings": {
-            "username": "polonaamy"
+            "username": "bensaarredi",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/0173c3a52dd4460db6c2b39b59392813.mp4",
+            "product_image": "shopify://shop_images/sofa02.webp",
+            "product_title": "Unite Sofa",
+            "product_price": "1.500€",
+            "product_link": ""
           }
         },
         "community_2": {
           "type": "video_card",
           "settings": {
-            "username": "alexislconway"
+            "username": "alexislconway",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/1e3b3ee058744a359f76d177ebd5a832.mp4",
+            "product_image": "shopify://shop_images/poltrona-in-shearling-nicxon_1.avif",
+            "product_title": "Poltrona Infinity",
+            "product_price": "490€",
+            "product_link": ""
           }
         },
         "community_3": {
           "type": "video_card",
           "settings": {
-            "username": "sarahdesign"
+            "username": "sarahdesign",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/277b6cac33e94817a2f997b0738289b0.mp4",
+            "product_image": "shopify://shop_images/03_KeSa_UEC_Sand_Side_b8b9e117-ab51-42b9-a1fd-0b88bc3ae027.jpg",
+            "product_title": "Nicxon",
+            "product_price": "190",
+            "product_link": "shopify://products/nicxon"
           }
         }
       },
@@ -228,14 +595,82 @@
         "community_1",
         "community_2",
         "community_3"
-      ]
+      ],
+      "settings": {
+        "subtitle": "BENSA + VOI",
+        "heading": "La Community",
+        "description": "Scopri come i nostri clienti hanno trasformato le loro case con l'aiuto di Bensa Arredamenti. Lasciati ispirare dalle loro storie.",
+        "background_color": "#f5f3ec",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "La qualità artigianale è straordinaria. Il nostro nuovo divano è il pezzo forte del salotto.",
+            "author": "Sara M.",
+            "verified": true
+          }
+        },
+        "testimonial_2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Mobili bellissimi e costruiti per durare. Abbiamo arredato tutta la casa con Bensa.",
+            "author": "Giovanni T.",
+            "verified": true
+          }
+        },
+        "testimonial_3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Consegna veloce e i mobili sono ancora più belli dal vivo. Consigliatissimi per chi cerca arredamento di qualità.",
+            "author": "Elena R.",
+            "verified": true
+          }
+        },
+        "testimonial_4": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "L'attenzione ai dettagli è notevole. Ogni angolo, ogni finitura parla di qualità.",
+            "author": "Marco L.",
+            "verified": true
+          }
+        },
+        "testimonial_5": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Adoriamo come i mobili si integrano perfettamente con lo stile della nostra casa. Eleganti e funzionali.",
+            "author": "Anna B.",
+            "verified": true
+          }
+        },
+        "testimonial_6": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Servizio clienti eccezionale e il tavolo da pranzo ha superato ogni aspettativa.",
+            "author": "Luca R.",
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_1",
+        "testimonial_2",
+        "testimonial_3",
+        "testimonial_4",
+        "testimonial_5",
+        "testimonial_6"
+      ],
+      "settings": {
+        "background_color": "#f5f3ec"
+      }
     },
     "service_packages": {
       "type": "custom-packages",
-      "settings": {
-        "subtitle": "I Nostri Servizi",
-        "heading": "Pacchetti flessibili pensati per accompagnarti in ogni fase dell'arredamento della tua casa"
-      },
       "blocks": {
         "service_1": {
           "type": "service_card",
@@ -265,7 +700,8 @@
           "type": "cta_card",
           "settings": {
             "heading": "Non sai quale servizio fa per te?",
-            "link_label": "Scopri i Dettagli"
+            "link_label": "Scopri i Dettagli",
+            "link_url": ""
           }
         }
       },
@@ -274,23 +710,88 @@
         "service_2",
         "service_3",
         "cta"
-      ]
+      ],
+      "settings": {
+        "subtitle": "I Nostri Servizi",
+        "heading": "Pacchetti flessibili pensati per accompagnarti in ogni fase dell'arredamento della tua casa",
+        "section_bg_color": "#202020",
+        "header_bg_color": "#202020",
+        "header_text_color": "#ffffff",
+        "subtitle_color": "#1e8ba8",
+        "card_bg_color": "#202020",
+        "card_text_color": "#ffffff",
+        "cta_bg_color": "#1e8ba8",
+        "cta_text_color": "#ffffff",
+        "padding_top": 60,
+        "padding_bottom": 0
+      }
     },
     "tiktok_viral": {
       "type": "custom-tiktok-viral",
-      "settings": {
-        "heading": "I preferiti virali su TikTok",
-        "padding_top": 48,
-        "padding_bottom": 48
-      },
       "blocks": {
-        "tiktok_1": { "type": "video_card" },
-        "tiktok_2": { "type": "video_card" },
-        "tiktok_3": { "type": "video_card" },
-        "tiktok_4": { "type": "video_card" },
-        "tiktok_5": { "type": "video_card" },
-        "tiktok_6": { "type": "video_card" },
-        "tiktok_7": { "type": "video_card" }
+        "tiktok_1": {
+          "type": "video_card",
+          "settings": {
+            "video_url": "",
+            "product": "",
+            "product_title": "",
+            "product_price": ""
+          }
+        },
+        "tiktok_2": {
+          "type": "video_card",
+          "settings": {
+            "video_url": "",
+            "product": "",
+            "product_title": "",
+            "product_price": ""
+          }
+        },
+        "tiktok_3": {
+          "type": "video_card",
+          "settings": {
+            "video_url": "",
+            "product": "",
+            "product_title": "",
+            "product_price": ""
+          }
+        },
+        "tiktok_4": {
+          "type": "video_card",
+          "settings": {
+            "video_url": "",
+            "product": "",
+            "product_title": "",
+            "product_price": ""
+          }
+        },
+        "tiktok_5": {
+          "type": "video_card",
+          "settings": {
+            "video_url": "",
+            "product": "",
+            "product_title": "",
+            "product_price": ""
+          }
+        },
+        "tiktok_6": {
+          "type": "video_card",
+          "settings": {
+            "video_url": "",
+            "product": "",
+            "product_title": "",
+            "product_price": ""
+          }
+        },
+        "tiktok_7": {
+          "type": "video_card",
+          "settings": {
+            "video_url": "",
+            "product": "",
+            "product_title": "",
+            "product_price": ""
+          }
+        }
       },
       "block_order": [
         "tiktok_1",
@@ -300,13 +801,12 @@
         "tiktok_5",
         "tiktok_6",
         "tiktok_7"
-      ]
-    },
-    "newsletter": {
-      "type": "newsletter",
+      ],
       "settings": {
-        "heading": "Resta in contatto",
-        "text": "Iscriviti per ricevere aggiornamenti sulle nuove collezioni, consigli di design e offerte esclusive."
+        "heading": "I preferiti virali su TikTok",
+        "background_color": "#f5f3ec",
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     },
     "info_cards": {
@@ -315,30 +815,40 @@
         "card_about": {
           "type": "info_card",
           "settings": {
+            "light_background": false,
+            "bg_color": "#f5f3ec",
             "subtitle": "SCOPRI CHI SIAMO",
             "heading": "Chi Siamo",
             "button_label_1": "Scopri di più",
-            "light_background": false
+            "button_link_1": "",
+            "button_label_2": "",
+            "button_link_2": ""
           }
         },
         "card_membership": {
           "type": "info_card",
           "settings": {
+            "light_background": true,
+            "bg_color": "#f5f3ec",
             "subtitle": "QUALITÀ ARTIGIANALE",
             "heading": "Precisione e Cura nei Dettagli",
             "button_label_1": "Scopri i Brand",
-            "light_background": true,
-            "bg_color": "#f5f3ec"
+            "button_link_1": "",
+            "button_label_2": "",
+            "button_link_2": ""
           }
         },
         "card_sustainability": {
           "type": "info_card",
           "settings": {
+            "light_background": false,
+            "bg_color": "#f5f3ec",
             "subtitle": "IL NOSTRO IMPEGNO",
             "heading": "Ristrutturazione Chiavi in Mano",
             "button_label_1": "Scopri Come",
+            "button_link_1": "",
             "button_label_2": "Richiedi Appuntamento",
-            "light_background": false
+            "button_link_2": ""
           }
         }
       },
@@ -346,95 +856,19 @@
         "card_about",
         "card_membership",
         "card_sustainability"
-      ]
+      ],
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     },
-    "custom_featured_grid": {
-      "type": "custom-featured-grid",
-      "blocks": {
-        "card_1": {
-          "type": "product_card",
-          "settings": {
-            "title": "Lodge Sofa",
-            "rating": "4.9",
-            "brand": "ARREDO 3"
-          }
-        },
-        "card_2": {
-          "type": "product_card",
-          "settings": {
-            "title": "The Couch",
-            "rating": "4.9",
-            "brand": "ARREDO 3"
-          }
-        },
-        "card_3": {
-          "type": "product_card",
-          "settings": {
-            "title": "Tavolino Sveden",
-            "rating": "4.8",
-            "brand": "BONALDO"
-          }
-        },
-        "card_4": {
-          "type": "product_card",
-          "settings": {
-            "title": "Bruner",
-            "rating": "5.0",
-            "brand": "SOFIA ARREDAMENTI"
-          }
-        },
-        "card_5": {
-          "type": "product_card",
-          "settings": {
-            "title": "Treveris",
-            "rating": "4.8",
-            "brand": "SKULM"
-          }
-        },
-        "card_6": {
-          "type": "product_card",
-          "settings": {
-            "title": "Tablo",
-            "rating": "4.6",
-            "brand": "ARREDO 3"
-          }
-        },
-        "card_7": {
-          "type": "product_card",
-          "settings": {
-            "title": "Billie",
-            "rating": "5.0",
-            "brand": "ARREDO 3"
-          }
-        },
-        "card_8": {
-          "type": "product_card",
-          "settings": {
-            "title": "Oslo Chair",
-            "rating": "4.7",
-            "brand": "BONALDO"
-          }
-        },
-        "card_9": {
-          "type": "product_card",
-          "settings": {
-            "title": "Nora Dining",
-            "rating": "4.9",
-            "brand": "SKULM"
-          }
-        }
-      },
-      "block_order": [
-        "card_1",
-        "card_2",
-        "card_3",
-        "card_4",
-        "card_5",
-        "card_6",
-        "card_7",
-        "card_8",
-        "card_9"
-      ]
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Resta in contatto",
+        "text": "Iscriviti per ricevere aggiornamenti sulle nuove collezioni, consigli di design e offerte esclusive.",
+        "privacy_text": "<p>By signing up, you agree to our <a href=\"/policies/privacy-policy\">Privacy Policy</a> and consent to receive marketing communications.</p>"
+      }
     }
   },
   "order": [
