@@ -1,6 +1,6 @@
 /* ── TikTok Viral Favorites Section ── */
 .tiktok-viral {
-  overflow: hidden;
+  overflow: clip;
 }
 
 .tiktok-viral__header {
@@ -27,15 +27,7 @@
 /* ── Carousel ── */
 .tiktok-viral__carousel {
   position: relative;
-  overflow-x: clip;
-  overflow-y: visible;
-  margin: 0 2rem;
-}
-
-@media (max-width: 749px) {
-  .tiktok-viral__carousel {
-    margin: 0 1rem;
-  }
+  overflow: visible;
 }
 
 .tiktok-viral__track {
@@ -43,6 +35,13 @@
   gap: 14px;
   align-items: center;
   will-change: transform;
+  padding: 0 2rem;
+}
+
+@media (max-width: 749px) {
+  .tiktok-viral__track {
+    padding: 0 1rem;
+  }
 }
 
 @media screen and (min-width: 750px) {
@@ -183,7 +182,7 @@ a.tiktok-viral__product:hover {
 }
 
 .tiktok-viral__product-title {
-  color: var(--color-text, #27454E);
+  color: var(--color-text, #202020);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -204,15 +203,15 @@ a.tiktok-viral__product:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-text, #27454E);
+  color: var(--color-text, #202020);
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   padding: 0;
   flex-shrink: 0;
 }
 
 .tiktok-viral__product-btn:hover {
-  background-color: var(--color-text, #27454E);
-  border-color: var(--color-text, #27454E);
+  background-color: var(--color-text, #202020);
+  border-color: var(--color-text, #202020);
   color: #fff;
 }
 
@@ -234,14 +233,14 @@ a.tiktok-viral__product:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-text, #27454E);
+  color: var(--color-text, #202020);
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   padding: 0;
 }
 
 .tiktok-viral__arrow:hover {
-  background-color: var(--color-text, #27454E);
-  border-color: var(--color-text, #27454E);
+  background-color: var(--color-text, #202020);
+  border-color: var(--color-text, #202020);
   color: #fff;
 }
 

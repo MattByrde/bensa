@@ -1,5 +1,7 @@
 # Bensa — Shopify 2.0 Furniture Theme
 
+shopify theme push --live --store bensa-arredamenti.myshopify.com
+
 A modern, minimal Shopify 2.0 theme built for furniture stores. Clean design with warm neutrals, generous whitespace, and large imagery — inspired by Scandinavian aesthetics.
 
 ## Features

@@ -666,7 +666,9 @@
         "testimonial_6"
       ],
       "settings": {
-        "background_color": "#f5f3ec"
+        "background_color": "#202020",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "service_packages": {
@@ -677,7 +679,8 @@
           "settings": {
             "title": "Progettazione",
             "label": "Per chi:",
-            "description": "Desidera una consulenza esperta di interior design per la propria casa"
+            "button_label": "Scopri",
+            "button_link": ""
           }
         },
         "service_2": {
@@ -685,7 +688,8 @@
           "settings": {
             "title": "Arredamento Completo",
             "label": "Per chi:",
-            "description": "Vuole una trasformazione completa dei propri ambienti"
+            "button_label": "Scopri",
+            "button_link": ""
           }
         },
         "service_3": {
@@ -693,7 +697,8 @@
           "settings": {
             "title": "Ristrutturazione Chiavi in Mano",
             "label": "Per chi:",
-            "description": "Cerca un servizio completo dalla progettazione alla realizzazione finale"
+            "button_label": "Scopri",
+            "button_link": ""
           }
         },
         "cta": {
@@ -706,10 +711,10 @@
         }
       },
       "block_order": [
+        "cta",
         "service_1",
         "service_2",
-        "service_3",
-        "cta"
+        "service_3"
       ],
       "settings": {
         "subtitle": "I Nostri Servizi",
@@ -877,8 +882,8 @@
     "custom_featured_grid",
     "brand_logos",
     "community",
-    "testimonials",
     "service_packages",
+    "testimonials",
     "tiktok_viral",
     "info_cards",
     "newsletter"

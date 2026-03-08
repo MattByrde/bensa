@@ -380,7 +380,7 @@
 </div>
 
 <script>
-  (function () {
+  document.addEventListener('DOMContentLoaded', function () {
     var wrapper = document.querySelector('[data-search-autocomplete]');
     if (!wrapper) return;
 
@@ -549,7 +549,7 @@
     window.addEventListener('scroll', function () {
       if (dropdown.classList.contains('is-open')) close();
     }, { passive: true });
-  })();
+  });
 </script>
 
 {% schema %}

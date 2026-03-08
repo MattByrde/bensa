@@ -1,6 +1,6 @@
 /* ── Community Section ── */
 .community {
-  overflow: hidden;
+  overflow: clip;
 }
 
 /* Layout: text left, carousel right */
@@ -72,7 +72,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-text, #27454E);
+  color: var(--color-text, #202020);
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
   padding: 0;
 }
@@ -82,8 +82,8 @@
 }
 
 .community__arrow:hover:not(:disabled) {
-  background-color: var(--color-text, #27454E);
-  border-color: var(--color-text, #27454E);
+  background-color: var(--color-text, #202020);
+  border-color: var(--color-text, #202020);
   color: #fff;
 }
 
@@ -102,7 +102,7 @@
 .community__carousel {
   flex: 1;
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
   cursor: grab;
 }
 
@@ -288,7 +288,7 @@ a.community__product-card {
 }
 
 .community__product-card-title {
-  color: var(--color-text, #27454E);
+  color: var(--color-text, #202020);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

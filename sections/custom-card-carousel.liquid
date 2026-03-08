@@ -1,5 +1,4 @@
-<link rel="stylesheet" href="{{ 'section-custom-card-carousel.css' | asset_url }}" media="print" onload="this.media='all'">
-<noscript>{{ 'section-custom-card-carousel.css' | asset_url | stylesheet_tag }}</noscript>
+{{ 'section-custom-card-carousel.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
@@ -34,13 +33,17 @@
                 style="border: none;"
               ></iframe>
             {%- elsif block.settings.video != blank -%}
-              {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, class: 'card-carousel__media-el' }}
+              {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, preload: 'none', class: 'card-carousel__media-el' }}
             {%- elsif block.settings.video_url != blank -%}
-              <video class="card-carousel__media-el" autoplay loop muted playsinline>
+              <video class="card-carousel__media-el" autoplay loop muted playsinline preload="none">
                 <source src="{{ block.settings.video_url }}" type="video/mp4">
               </video>
             {%- elsif block.settings.image != blank -%}
-              {{ block.settings.image | image_url: width: 800 | image_tag: class: 'card-carousel__media-el', loading: 'lazy' }}
+              {%- if forloop.first -%}
+                {{ block.settings.image | image_url: width: 800 | image_tag: class: 'card-carousel__media-el', loading: 'eager', fetchpriority: 'high' }}
+              {%- else -%}
+                {{ block.settings.image | image_url: width: 800 | image_tag: class: 'card-carousel__media-el', loading: 'lazy' }}
+              {%- endif -%}
             {%- else -%}
               {{ 'lifestyle-1' | placeholder_svg_tag: 'card-carousel__media-el placeholder-svg' }}
             {%- endif -%}

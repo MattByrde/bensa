@@ -38,6 +38,24 @@
   {{ 'base.css' | asset_url | stylesheet_tag }}
 
   <style>
+    {%- if settings.font_heading.system? == false -%}
+      @font-face {
+        font-family: {{ settings.font_heading.family }};
+        src: url('{{ settings.font_heading | font_url }}') format('woff2');
+        font-weight: {{ settings.font_heading.weight }};
+        font-style: {{ settings.font_heading.style }};
+        font-display: swap;
+      }
+    {%- endif -%}
+    {%- if settings.font_body.system? == false -%}
+      @font-face {
+        font-family: {{ settings.font_body.family }};
+        src: url('{{ settings.font_body | font_url }}') format('woff2');
+        font-weight: {{ settings.font_body.weight }};
+        font-style: {{ settings.font_body.style }};
+        font-display: swap;
+      }
+    {%- endif -%}
     :root {
       --color-bg: {{ settings.color_background }};
       --color-text: {{ settings.color_text }};

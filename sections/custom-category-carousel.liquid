@@ -27,9 +27,9 @@
             {%- comment -%} Background Media {%- endcomment -%}
             <div class="ccc-card-media">
               {%- if block.settings.video != blank -%}
-                {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, class: 'ccc-media' }}
+                {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, preload: 'none', class: 'ccc-media' }}
               {%- elsif block.settings.video_url != blank -%}
-                <video class="ccc-media" autoplay loop muted playsinline>
+                <video class="ccc-media" autoplay loop muted playsinline preload="none">
                   <source src="{{ block.settings.video_url }}" type="video/mp4">
                 </video>
               {%- elsif block.settings.image != blank -%}

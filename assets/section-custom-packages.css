@@ -10,7 +10,7 @@
 
 @media screen and (min-width: 750px) {
   .packages__header {
-    padding: 0 60px 40px;
+    padding: 0 60px 65px;
   }
 }
 
@@ -27,9 +27,11 @@
   margin: 0 auto;
   max-width: 1000px;
   text-align: center;
+  font-size: 3rem;
+  line-height: 1.1;
 }
 
-/* Grid */
+/* Grid: fixed CTA + scrollable carousel */
 .packages__grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -37,81 +39,159 @@
 
 @media screen and (min-width: 750px) {
   .packages__grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr 3fr;
   }
 }
 
-/* Package card */
+/* Carousel container */
+.packages__carousel {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.packages__carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.packages__track {
+  display: flex;
+  min-width: 100%;
+}
+
+/* Package card — info-cards style */
 .packages__card {
-  padding: 36px 28px;
+  position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 360px;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  justify-content: space-between;
+  min-height: 340px;
+  min-width: 280px;
+  flex: 1 0 0%;
+  padding: 32px 28px;
+  overflow: hidden;
+  color: #fff;
 }
 
 @media screen and (min-width: 750px) {
   .packages__card {
     min-height: 420px;
-    padding: 40px 32px;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-    border-right: 1px solid rgba(255, 255, 255, 0.15);
-  }
-
-  .packages__card:last-child {
-    border-right: none;
+    padding: 36px 32px;
   }
 }
 
-
-.packages__card-icon-placeholder {
-  width: 100%;
-  margin-bottom: auto;
-  background: rgba(255, 255, 255, 0.1);
-  aspect-ratio: 1;
+.packages__card--has-media {
+  min-height: 420px;
+  min-width: 340px;
 }
 
-.packages__card-media {
+@media screen and (min-width: 750px) {
+  .packages__card--has-media {
+    min-height: 520px;
+    min-width: 400px;
+  }
+}
+
+/* Full-bleed background media — gradient overlay for text readability */
+.packages__card--has-media::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.15) 40%,
+    rgba(0, 0, 0, 0.55) 75%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.packages__card-bg {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  margin-bottom: auto;
-  aspect-ratio: 1;
+  height: 100%;
   object-fit: cover;
-  display: block;
+  z-index: 0;
+  border-radius: 0;
 }
 
-.packages__card-bottom {
-  margin-top: auto;
-  padding-top: 1.5rem;
+.packages__card-bg-placeholder {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  z-index: 0;
 }
 
-.packages__card-title {
-  margin: 0 0 0.75rem 0;
+/* Content positioning */
+.packages__card-top {
+  position: relative;
+  z-index: 2;
 }
 
 .packages__card-label {
-  margin: 0 0 0.5rem 0;
-  opacity: 0.5;
-}
-
-.packages__card-desc {
   margin: 0;
-  opacity: 0.7;
-  line-height: 1.5;
+  opacity: 0.6;
 }
 
-/* CTA card */
+.packages__card-bottom {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+}
+
+.packages__card-title {
+  margin: 0 0 32px 0;
+}
+
+/* Buttons — matches info-cards__btn--light */
+.packages__card-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.packages__card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 30px;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  color: #fff;
+  background: transparent;
+  transition: opacity 0.2s ease;
+}
+
+.packages__card-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.packages__card-btn svg {
+  flex-shrink: 0;
+}
+
+/* CTA card — fixed column, matches info-cards sizing */
 .packages__cta {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 36px 28px;
-  min-height: 360px;
+  padding: 32px 28px;
+  min-height: 340px;
+  overflow: hidden;
 }
 
 @media screen and (min-width: 750px) {
   .packages__cta {
     min-height: 420px;
-    padding: 40px 32px;
+    padding: 36px 32px;
   }
 }
 
@@ -126,7 +206,11 @@
   text-decoration: none;
   color: inherit;
   margin-top: auto;
-  transition: opacity 0.2s;
+  padding: 12px 24px;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 30px;
+  align-self: flex-start;
+  transition: opacity 0.2s ease;
 }
 
 .packages__cta-link:hover {

@@ -15,15 +15,15 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 480px;
-  padding: 40px 36px;
+  min-height: 340px;
+  padding: 32px 28px;
   overflow: hidden;
 }
 
 @media screen and (min-width: 750px) {
   .info-cards__card {
-    min-height: 580px;
-    padding: 48px 44px;
+    min-height: 420px;
+    padding: 36px 32px;
   }
 }
 
@@ -111,7 +111,7 @@
 /* Dark button (for light backgrounds) */
 .info-cards__btn--dark {
   border: 1.5px solid rgba(0, 0, 0, 0.3);
-  color: var(--color-text, #27454E);
+  color: var(--color-text, #202020);
   background: transparent;
 }
 
@@ -130,5 +130,5 @@
 }
 
 .info-cards__card--light {
-  color: var(--color-text, #27454E);
+  color: var(--color-text, #202020);
 }
