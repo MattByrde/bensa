@@ -56,7 +56,9 @@
 
         <div class="cfg-card-footer">
           <span class="cfg-card-brand typo-overline">{{ block.settings.brand }}</span>
-          <span class="cfg-card-link-text typo-small">{{ block.settings.link_label }}</span>
+          <span class="cfg-card-link-btn" aria-label="{{ block.settings.link_label }}">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </span>
         </div>
       </a>
     {%- endfor -%}

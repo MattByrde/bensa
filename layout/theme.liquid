@@ -28,34 +28,13 @@
 
   <link rel="canonical" href="{{ canonical_url }}">
 
-  {%- if settings.font_heading.system? == false -%}
-    <link rel="preload" as="font" href="{{ settings.font_heading | font_url }}" type="font/woff2" crossorigin>
-  {%- endif -%}
-  {%- if settings.font_body.system? == false -%}
-    <link rel="preload" as="font" href="{{ settings.font_body | font_url }}" type="font/woff2" crossorigin>
-  {%- endif -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 
   {{ 'base.css' | asset_url | stylesheet_tag }}
 
   <style>
-    {%- if settings.font_heading.system? == false -%}
-      @font-face {
-        font-family: {{ settings.font_heading.family }};
-        src: url('{{ settings.font_heading | font_url }}') format('woff2');
-        font-weight: {{ settings.font_heading.weight }};
-        font-style: {{ settings.font_heading.style }};
-        font-display: swap;
-      }
-    {%- endif -%}
-    {%- if settings.font_body.system? == false -%}
-      @font-face {
-        font-family: {{ settings.font_body.family }};
-        src: url('{{ settings.font_body | font_url }}') format('woff2');
-        font-weight: {{ settings.font_body.weight }};
-        font-style: {{ settings.font_body.style }};
-        font-display: swap;
-      }
-    {%- endif -%}
     :root {
       --color-bg: {{ settings.color_background }};
       --color-text: {{ settings.color_text }};
@@ -65,8 +44,8 @@
       --color-btn-bg: {{ settings.color_button_bg }};
       --color-btn-text: {{ settings.color_button_text }};
       --color-btn-hover: {{ settings.color_button_hover }};
-      --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
-      --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
       --font-body-size: {{ settings.font_body_size }}px;
     }
   </style>

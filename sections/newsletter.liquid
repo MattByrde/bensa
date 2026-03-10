@@ -39,7 +39,10 @@
       {%- endform -%}
 
       {%- if section.settings.privacy_text != blank -%}
-        <div class="newsletter__privacy typo-caption">{{ section.settings.privacy_text }}</div>
+        <label class="newsletter__privacy newsletter__privacy--checkbox typo-caption">
+          <input type="checkbox" name="contact[privacy]" required class="newsletter__checkbox">
+          <span>{{ section.settings.privacy_text }}</span>
+        </label>
       {%- endif -%}
     </div>
   </div>

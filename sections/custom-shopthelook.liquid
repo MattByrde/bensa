@@ -1,0 +1,301 @@
+{{ 'section-custom-shopthelook.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    --stl-height: {{ section.settings.scene_height_mobile }}px;
+    --stl-height-mobile: {{ section.settings.scene_height_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+      --stl-height: {{ section.settings.scene_height }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="stl-section">
+  <div class="stl-section__scene" data-stl-scene>
+
+    {%- comment -%} Background media {%- endcomment -%}
+    {%- if section.settings.video_url != blank -%}
+      <video
+        class="stl-section__bg"
+        src="{{ section.settings.video_url }}"
+        autoplay muted loop playsinline
+      ></video>
+    {%- elsif section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 2000 | image_tag: class: 'stl-section__bg', loading: 'lazy' }}
+    {%- else -%}
+      <div class="stl-section__bg stl-section__bg--placeholder"></div>
+    {%- endif -%}
+
+    {%- comment -%} Overlay {%- endcomment -%}
+    <div class="stl-section__overlay"></div>
+
+    {%- comment -%} Product dots {%- endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- assign product_obj = block.settings.product -%}
+      <div
+        class="stl-dot"
+        style="left: {{ block.settings.pos_x }}%; top: {{ block.settings.pos_y }}%;"
+        data-stl-dot
+        {{ block.shopify_attributes }}
+      >
+        <button class="stl-dot__btn" aria-label="Tag prodotto" aria-expanded="false" data-stl-trigger>
+          <span class="stl-dot__ring"></span>
+          <span class="stl-dot__core"></span>
+        </button>
+
+        <div class="stl-dot__tooltip" data-stl-tooltip>
+          {%- if product_obj != blank -%}
+            {%- assign product = all_products[product_obj] -%}
+            <a href="{{ product.url }}" class="stl-dot__tooltip-inner">
+              <div class="stl-dot__product-img">
+                {%- if product.featured_image != blank -%}
+                  {{ product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy' }}
+                {%- endif -%}
+              </div>
+              <div class="stl-dot__product-info">
+                <span class="stl-dot__product-title typo-small">{{ product.title }}</span>
+                <span class="stl-dot__product-price typo-caption">{{ product.price | money }}</span>
+              </div>
+              <svg class="stl-dot__arrow" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          {%- else -%}
+            <div class="stl-dot__tooltip-inner stl-dot__tooltip-inner--manual">
+              {%- if block.settings.manual_image != blank -%}
+                <div class="stl-dot__product-img">
+                  {{ block.settings.manual_image | image_url: width: 160 | image_tag: loading: 'lazy' }}
+                </div>
+              {%- endif -%}
+              <div class="stl-dot__product-info">
+                {%- if block.settings.manual_title != blank -%}
+                  <span class="stl-dot__product-title typo-small">{{ block.settings.manual_title }}</span>
+                {%- endif -%}
+                {%- if block.settings.manual_price != blank -%}
+                  <span class="stl-dot__product-price typo-caption">{{ block.settings.manual_price }}</span>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.manual_link != blank -%}
+                <a href="{{ block.settings.manual_link }}" class="stl-dot__go">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+
+    {%- comment -%} Bottom-left CTA {%- endcomment -%}
+    {%- if section.settings.cta_label != blank -%}
+      <a
+        href="{{ section.settings.cta_link | default: '#' }}"
+        class="stl-section__cta"
+      >
+        {{ section.settings.cta_label }}
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-stl-scene]').forEach(function (scene) {
+      var openDot = null;
+
+      function closeAll() {
+        scene.querySelectorAll('[data-stl-dot]').forEach(function (dot) {
+          dot.classList.remove('is-open');
+          var btn = dot.querySelector('[data-stl-trigger]');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+        });
+        openDot = null;
+      }
+
+      scene.querySelectorAll('[data-stl-dot]').forEach(function (dot) {
+        var btn = dot.querySelector('[data-stl-trigger]');
+        if (!btn) return;
+
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var isOpen = dot.classList.contains('is-open');
+          closeAll();
+          if (!isOpen) {
+            dot.classList.add('is-open');
+            btn.setAttribute('aria-expanded', 'true');
+            openDot = dot;
+            /* Flip tooltip if too close to right/bottom edge */
+            var tooltip = dot.querySelector('[data-stl-tooltip]');
+            if (tooltip) {
+              var rect = tooltip.getBoundingClientRect();
+              dot.classList.toggle('stl-dot--flip-x', rect.right > window.innerWidth - 16);
+              dot.classList.toggle('stl-dot--flip-y', rect.bottom > window.innerHeight - 16);
+            }
+          }
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (openDot && !openDot.contains(e.target)) closeAll();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeAll();
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Shop the Look",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Background Video URL (overrides image)"
+    },
+    {
+      "type": "range",
+      "id": "scene_height",
+      "min": 300,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "label": "Height (desktop)",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "scene_height_mobile",
+      "min": 200,
+      "max": 700,
+      "step": 20,
+      "unit": "px",
+      "label": "Height (mobile)",
+      "default": 400
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA Button Label",
+      "default": "Acquista L'arredo"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Button Link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_dot",
+      "name": "Product Dot",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Position the dot using X/Y percentages (0–100) from top-left."
+        },
+        {
+          "type": "range",
+          "id": "pos_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Position X (left →)",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "pos_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Position Y (top ↓)",
+          "default": 50
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product (auto pulls image + price)"
+        },
+        {
+          "type": "header",
+          "content": "Manual override (if no product selected)"
+        },
+        {
+          "type": "image_picker",
+          "id": "manual_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "manual_title",
+          "label": "Product Name"
+        },
+        {
+          "type": "text",
+          "id": "manual_price",
+          "label": "Price"
+        },
+        {
+          "type": "url",
+          "id": "manual_link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop the Look",
+      "blocks": [
+        { "type": "product_dot" },
+        { "type": "product_dot" }
+      ]
+    }
+  ]
+}
+{% endschema %}

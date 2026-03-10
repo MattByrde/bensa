@@ -49,20 +49,14 @@
             <a
               href="{{ block.settings.button_link_1 }}"
               class="info-cards__btn typo-btn {% if is_light_bg %}info-cards__btn--dark{% else %}info-cards__btn--light{% endif %}"
-            >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              {{ block.settings.button_label_1 }}
-            </a>
+            >{{ block.settings.button_label_1 }}</a>
           {%- endif -%}
 
           {%- if block.settings.button_label_2 != blank -%}
             <a
               href="{{ block.settings.button_link_2 }}"
-              class="info-cards__btn typo-btn {% if is_light_bg %}info-cards__btn--dark{% else %}info-cards__btn--light{% endif %}"
-            >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              {{ block.settings.button_label_2 }}
-            </a>
+              class="info-cards__btn typo-btn info-cards__btn--white"
+            >{{ block.settings.button_label_2 }}</a>
           {%- endif -%}
         </div>
       </div>

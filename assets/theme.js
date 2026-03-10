@@ -287,25 +287,50 @@
       const header = document.querySelector('.site-header');
       if (!header) return;
 
+      const navRow = header.querySelector('.site-header__row--nav');
       const searchRow = header.querySelector('.site-header__row--search');
-      if (!searchRow) return;
+      const spacer = header.querySelector('[data-nav-spacer]');
+      if (!navRow) return;
 
-      // Capture absolute position and height once before any sticky state
-      const rect = searchRow.getBoundingClientRect();
-      const searchRowHeight = rect.height;
-      const threshold = rect.bottom + window.scrollY;
+      // Threshold for is-scrolled (scroll-cart etc): when search row bottom leaves viewport
+      const searchBottom = searchRow
+        ? searchRow.getBoundingClientRect().bottom + window.scrollY
+        : navRow.offsetHeight;
+      const searchH = searchRow ? searchRow.offsetHeight : 0;
+
+      let isFixed = false;
       let isScrolled = false;
 
       const update = () => {
         const y = window.scrollY;
-        if (!isScrolled && y > threshold) {
+
+        // Fix nav row as soon as any scroll happens
+        if (!isFixed && y > 0) {
+          isFixed = true;
+          navRow.classList.add('is-nav-fixed');
+          if (spacer) spacer.style.height = navRow.offsetHeight + 'px';
+        } else if (isFixed && y <= 0) {
+          isFixed = false;
+          navRow.classList.remove('is-nav-fixed');
+          if (spacer) spacer.style.height = '0';
+        }
+
+        // is-scrolled: show scroll-cart etc. after search row is gone
+        if (!isScrolled && y > searchBottom) {
           isScrolled = true;
           header.classList.add('is-scrolled');
-        } else if (isScrolled && y <= threshold - searchRowHeight) {
+        } else if (isScrolled && y <= searchBottom - searchH) {
           isScrolled = false;
           header.classList.remove('is-scrolled');
         }
       };
+
+      // Keep spacer in sync if nav height changes (e.g. is-scrolled min-height tweak)
+      if (window.ResizeObserver && spacer) {
+        new ResizeObserver(() => {
+          if (isFixed) spacer.style.height = navRow.offsetHeight + 'px';
+        }).observe(navRow);
+      }
 
       window.addEventListener('scroll', update, { passive: true });
       update();

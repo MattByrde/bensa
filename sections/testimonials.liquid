@@ -33,7 +33,7 @@
               <div class="testi-section__author-row">
                 <div class="testi-section__avatar">
                   {%- if block.settings.image != blank -%}
-                    {{ block.settings.image | image_url: width: 200 | image_tag: class: 'testi-section__avatar-img', loading: 'lazy' }}
+                    {{ block.settings.image | image_url: width: 300 | image_tag: class: 'testi-section__avatar-img', loading: 'lazy' }}
                   {%- else -%}
                     <div class="testi-section__avatar-placeholder">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v2h20v-2c0-3.3-6.7-5-10-5z" fill="currentColor"/></svg>
@@ -93,8 +93,7 @@
       var track = section.querySelector('[data-testi-track]');
       if (!track) return;
 
-      var totalCards = track.children.length;
-      if (totalCards < 1) return;
+      if (track.children.length < 1) return;
 
       var current = 0;
       var counterEl = section.querySelector('[data-testi-counter]');
@@ -107,7 +106,7 @@
 
       function getTotalPages() {
         var perView = getPerView();
-        return Math.max(1, totalCards - perView + 1);
+        return Math.max(1, track.children.length - perView + 1);
       }
 
       function updateCounter() {

@@ -1,0 +1,277 @@
+/* ── Shop the Look ── */
+.stl-section {
+  width: 100%;
+}
+
+.stl-section__scene {
+  position: relative;
+  width: 100%;
+  height: var(--stl-height, 520px);
+  overflow: hidden;
+  background: #1a1a1a;
+}
+
+@media screen and (max-width: 749px) {
+  .stl-section__scene {
+    height: var(--stl-height-mobile, 420px);
+  }
+}
+
+/* ── Background ── */
+.stl-section__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.stl-section__bg--placeholder {
+  background: #c8bfb4;
+}
+
+/* ── Overlay ── */
+.stl-section__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── CTA Button ── */
+.stl-section__cta {
+  position: absolute;
+  bottom: 28px;
+  left: 28px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  color: #202020;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 24px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.stl-section__cta:hover {
+  background: #202020;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+@media screen and (max-width: 749px) {
+  .stl-section__cta {
+    bottom: 20px;
+    left: 20px;
+    padding: 12px 20px;
+  }
+}
+
+/* ── Dots ── */
+.stl-dot {
+  position: absolute;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+}
+
+.stl-dot__btn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stl-dot__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  animation: stl-pulse 2.4s ease-in-out infinite;
+}
+
+.stl-dot__core {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.stl-dot__btn:hover .stl-dot__core,
+.stl-dot.is-open .stl-dot__core {
+  transform: scale(1.2);
+  background: var(--color-accent, #1E8BA8);
+}
+
+.stl-dot.is-open .stl-dot__ring {
+  animation: none;
+  border-color: var(--color-accent, #1E8BA8);
+  opacity: 1;
+}
+
+@keyframes stl-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50%       { transform: scale(1.5); opacity: 0; }
+}
+
+/* ── Tooltip ── */
+.stl-dot__tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  width: 220px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 10;
+}
+
+.stl-dot.is-open .stl-dot__tooltip {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Flip horizontally when near right edge */
+.stl-dot--flip-x .stl-dot__tooltip {
+  left: auto;
+  right: 50%;
+  transform: translateX(50%) translateY(6px);
+}
+.stl-dot--flip-x.is-open .stl-dot__tooltip {
+  transform: translateX(50%) translateY(0);
+}
+
+/* Flip vertically when near bottom edge */
+.stl-dot--flip-y .stl-dot__tooltip {
+  bottom: auto;
+  top: calc(100% + 12px);
+  transform: translateX(-50%) translateY(-6px);
+}
+.stl-dot--flip-y.is-open .stl-dot__tooltip {
+  transform: translateX(-50%) translateY(0);
+}
+
+.stl-dot--flip-x.stl-dot--flip-y .stl-dot__tooltip {
+  left: auto;
+  right: 50%;
+  transform: translateX(50%) translateY(-6px);
+}
+.stl-dot--flip-x.stl-dot--flip-y.is-open .stl-dot__tooltip {
+  transform: translateX(50%) translateY(0);
+}
+
+/* ── Tooltip Inner ── */
+.stl-dot__tooltip-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  text-decoration: none;
+  color: #202020;
+  border-radius: 12px;
+  transition: background 0.2s ease;
+}
+
+a.stl-dot__tooltip-inner:hover {
+  background: #f5f3ec;
+}
+
+.stl-dot__tooltip-inner--manual {
+  cursor: default;
+}
+
+.stl-dot__product-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f0ede8;
+}
+
+.stl-dot__product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.stl-dot__product-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.stl-dot__product-title {
+  color: #202020;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.stl-dot__product-price {
+  color: rgba(32, 32, 32, 0.6);
+  display: block;
+}
+
+.stl-dot__arrow {
+  color: #202020;
+  flex-shrink: 0;
+  opacity: 0.5;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+a.stl-dot__tooltip-inner:hover .stl-dot__arrow {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+.stl-dot__go {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid rgba(32, 32, 32, 0.15);
+  color: #202020;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.stl-dot__go:hover {
+  background: #202020;
+  color: #ffffff;
+  border-color: #202020;
+}

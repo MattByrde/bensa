@@ -130,8 +130,22 @@
     white-space: nowrap;
 }
 
-.cfg-card-link-text {
+.cfg-card-link-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text, #202020);
     flex-shrink: 0;
-    color: #888;
-    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.cfg-card:hover .cfg-card-link-btn {
+    background-color: var(--color-text, #202020);
+    border-color: var(--color-text, #202020);
+    color: #fff;
 }

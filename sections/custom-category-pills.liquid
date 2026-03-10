@@ -3,16 +3,9 @@
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
-    background-color: {{ section.settings.background_color }};
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-    #shopify-section-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
+    background-color: #363636;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 {%- endstyle -%}
 
@@ -35,6 +28,58 @@
 
 <script>
   (function () {
+    var siteHeader = document.querySelector('.site-header');
+    var navRow = document.querySelector('.site-header__row--nav');
+    var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
+    if (!sectionEl) return;
+
+    /* Sentinel sits in normal flow just before the section; its top tells us when to stick */
+    var sentinel = document.createElement('div');
+    sentinel.style.cssText = 'height:0;margin:0;padding:0;border:0;';
+    sectionEl.parentNode.insertBefore(sentinel, sectionEl);
+
+    /* Spacer fills the gap when the section is removed from flow */
+    var spacer = document.createElement('div');
+    spacer.style.display = 'none';
+    sectionEl.parentNode.insertBefore(spacer, sectionEl);
+
+    var isStuck = false;
+
+    function getNavH() { return navRow ? navRow.offsetHeight : 0; }
+
+    function applyStuck(stuck) {
+      if (stuck === isStuck) return;
+      isStuck = stuck;
+      var navH = getNavH();
+      if (stuck) {
+        spacer.style.height = sectionEl.offsetHeight + 'px';
+        spacer.style.display = 'block';
+        sectionEl.classList.add('is-pills-stuck');
+        sectionEl.style.top = navH + 'px';
+      } else {
+        spacer.style.display = 'none';
+        sectionEl.classList.remove('is-pills-stuck');
+        sectionEl.style.top = '';
+      }
+    }
+
+    function checkSticky() {
+      var navH = getNavH();
+      applyStuck(sentinel.getBoundingClientRect().top <= navH);
+    }
+
+    window.addEventListener('scroll', checkSticky, { passive: true });
+    window.addEventListener('resize', checkSticky, { passive: true });
+
+    if (window.MutationObserver && siteHeader) {
+      new MutationObserver(checkSticky).observe(siteHeader, { attributes: true, attributeFilter: ['class'] });
+    }
+    if (window.ResizeObserver && navRow) {
+      new ResizeObserver(checkSticky).observe(navRow);
+    }
+
+    checkSticky();
+
     document.querySelectorAll('.category-pills__track').forEach(function (track) {
       var isDown = false;
       var startX = 0;

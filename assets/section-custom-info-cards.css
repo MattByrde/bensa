@@ -89,7 +89,7 @@
   gap: 8px;
   text-decoration: none;
   padding: 12px 24px;
-  border-radius: 30px;
+  border-radius: 10px;
   transition: opacity 0.2s ease;
 }
 
@@ -119,9 +119,18 @@
   background: rgba(0, 0, 0, 0.05);
 }
 
-/* Arrow icon */
-.info-cards__btn svg {
-  flex-shrink: 0;
+/* White filled button (second button when two are present) */
+.info-cards__btn--white {
+  background: #ffffff !important;
+  color: #202020 !important;
+  border: 1.5px solid #ffffff;
+}
+
+.info-cards__btn--white:hover {
+  background: transparent !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.6);
+  opacity: 1;
 }
 
 /* Color schemes */

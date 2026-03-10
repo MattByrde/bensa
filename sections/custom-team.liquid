@@ -1,0 +1,142 @@
+{{ 'section-custom-team.css' | asset_url | stylesheet_tag }}
+
+<div class="team-poster-section">
+  <div class="poster-grid">
+    {%- for block in section.blocks -%}
+      <div class="poster" style="background-color: {{ block.settings.fallback_color }};" {{ block.shopify_attributes }}>
+
+        {%- if block.settings.image != blank -%}
+          {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: block.settings.title, class: 'poster__img' }}
+        {%- else -%}
+          <div class="poster__placeholder">
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endif -%}
+
+        <div class="poster__gradient"></div>
+
+        <div class="poster__label">
+          {%- if block.settings.title != blank -%}
+            <span class="poster__label-name">{{ block.settings.title }}</span>
+          {%- endif -%}
+          {%- if block.settings.bottom_text != blank -%}
+            <p class="poster__label-text">{{ block.settings.bottom_text }}</p>
+          {%- endif -%}
+          {%- if block.settings.sub_text != blank -%}
+            <p class="poster__label-sub">{{ block.settings.sub_text | newline_to_br }}</p>
+          {%- endif -%}
+        </div>
+
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Team Poster Grid",
+  "tag": "section",
+  "class": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "poster",
+      "name": "Poster Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background Image"
+        },
+        {
+          "type": "color",
+          "id": "fallback_color",
+          "label": "Fallback Background Color",
+          "default": "#e8e2d9",
+          "info": "Shown when no image is set."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Name / Label",
+          "default": "Violi"
+        },
+        {
+          "type": "textarea",
+          "id": "bottom_text",
+          "label": "Description",
+          "default": "Proponiamo a tutti i nostri clienti una gamma di prodotti delle migliori marche."
+        },
+        {
+          "type": "textarea",
+          "id": "sub_text",
+          "label": "Contact / Sub Info",
+          "default": "info@bensa.com"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Team Poster Grid",
+      "blocks": [
+        {
+          "type": "poster",
+          "settings": {
+            "fallback_color": "#f0ece5",
+            "title": "Violi",
+            "bottom_text": "Proponiamo a tutti i nostri clienti una gamma di prodotti delle migliori marche.",
+            "sub_text": "info@bensa.com"
+          }
+        },
+        {
+          "type": "poster",
+          "settings": {
+            "fallback_color": "#ddd5c8",
+            "title": "Design",
+            "bottom_text": "Design e qualità per ogni spazio.",
+            "sub_text": "info@bensa.com"
+          }
+        },
+        {
+          "type": "poster",
+          "settings": {
+            "fallback_color": "#c9bfb3",
+            "title": "Su misura",
+            "bottom_text": "Arredi su misura per il tuo stile di vita.",
+            "sub_text": "info@bensa.com"
+          }
+        },
+        {
+          "type": "poster",
+          "settings": {
+            "fallback_color": "#e0d8cf",
+            "title": "Moderno",
+            "bottom_text": "Soluzioni moderne per ambienti contemporanei.",
+            "sub_text": "info@bensa.com"
+          }
+        },
+        {
+          "type": "poster",
+          "settings": {
+            "fallback_color": "#d4ccc4",
+            "title": "Complementi",
+            "bottom_text": "Scopri i nostri complementi d'arredo per completare il tuo spazio.",
+            "sub_text": "info@bensa.com"
+          }
+        },
+        {
+          "type": "poster",
+          "settings": {
+            "fallback_color": "#bfb8b0",
+            "title": "Eccellenza",
+            "bottom_text": "Ogni dettaglio è curato per offrirti l'eccellenza.",
+            "sub_text": "info@bensa.com"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

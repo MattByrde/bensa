@@ -46,6 +46,7 @@
                   muted
                   playsinline
                   preload="metadata"
+                  autoplay
                   data-tiktok-video
                 ></video>
                 <button class="tiktok-viral__mute-btn" data-tiktok-mute aria-label="Mute / Unmute">
@@ -59,42 +60,42 @@
                   <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="8" fill="#e5e0da"/><path d="M20 16L32 24L20 32V16Z" fill="#999"/></svg>
                 </div>
               {%- endif -%}
-            </div>
 
-            {%- if block.settings.product != blank -%}
-              {%- assign p = block.settings.product -%}
-              <a href="{{ p.url }}" class="tiktok-viral__product">
-                {%- if p.featured_image != blank -%}
-                  <div class="tiktok-viral__product-img">
-                    {{ p.featured_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
-                  </div>
-                {%- endif -%}
-                <div class="tiktok-viral__product-info">
-                  <span class="tiktok-viral__product-title typo-h4">{{ p.title }}</span>
-                  <span class="tiktok-viral__product-price typo-caption">{{ p.price | money }}</span>
-                </div>
-                <span class="tiktok-viral__product-btn" aria-label="Add to cart">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                </span>
-              </a>
-            {%- elsif block.settings.product_title != blank -%}
-              <div class="tiktok-viral__product">
-                {%- if block.settings.product_image != blank -%}
-                  <div class="tiktok-viral__product-img">
-                    {{ block.settings.product_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
-                  </div>
-                {%- endif -%}
-                <div class="tiktok-viral__product-info">
-                  <span class="tiktok-viral__product-title typo-h4">{{ block.settings.product_title }}</span>
-                  {%- if block.settings.product_price != blank -%}
-                    <span class="tiktok-viral__product-price typo-caption">{{ block.settings.product_price }}</span>
+              {%- if block.settings.product != blank -%}
+                {%- assign p = block.settings.product -%}
+                <a href="{{ p.url }}" class="tiktok-viral__product">
+                  {%- if p.featured_image != blank -%}
+                    <div class="tiktok-viral__product-img">
+                      {{ p.featured_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
+                    </div>
                   {%- endif -%}
+                  <div class="tiktok-viral__product-info">
+                    <span class="tiktok-viral__product-title typo-h4">{{ p.title }}</span>
+                    <span class="tiktok-viral__product-price typo-caption">{{ p.price | money }}</span>
+                  </div>
+                  <span class="tiktok-viral__product-btn" aria-label="View product">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </span>
+                </a>
+              {%- elsif block.settings.product_title != blank -%}
+                <div class="tiktok-viral__product">
+                  {%- if block.settings.product_image != blank -%}
+                    <div class="tiktok-viral__product-img">
+                      {{ block.settings.product_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
+                    </div>
+                  {%- endif -%}
+                  <div class="tiktok-viral__product-info">
+                    <span class="tiktok-viral__product-title typo-h4">{{ block.settings.product_title }}</span>
+                    {%- if block.settings.product_price != blank -%}
+                      <span class="tiktok-viral__product-price typo-caption">{{ block.settings.product_price }}</span>
+                    {%- endif -%}
+                  </div>
+                  <span class="tiktok-viral__product-btn" aria-label="View product">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </span>
                 </div>
-                <span class="tiktok-viral__product-btn" aria-label="Add to cart">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                </span>
-              </div>
-            {%- endif -%}
+              {%- endif -%}
+            </div>
           </div>
         {%- endfor -%}
       </div>
@@ -110,93 +111,147 @@
       var track = carousel.querySelector('[data-tiktok-track]');
       var prevBtn = section.querySelector('[data-tiktok-prev]');
       var nextBtn = section.querySelector('[data-tiktok-next]');
-      var cards = Array.from(track.querySelectorAll('[data-tiktok-card]'));
-      var total = cards.length;
+      var origCards = Array.from(track.querySelectorAll('[data-tiktok-card]'));
+      var total = origCards.length;
       if (total < 2) return;
 
-      var centerPos = Math.floor(total / 2);
-      var animating = false;
+      /* ── Clone cards for infinite loop ── */
+      origCards.forEach(function (card) {
+        var clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        var v = clone.querySelector('[data-tiktok-video]');
+        if (v) v.removeAttribute('autoplay');
+        track.appendChild(clone);
+      });
+      origCards.forEach(function (card) {
+        var clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        var v = clone.querySelector('[data-tiktok-video]');
+        if (v) v.removeAttribute('autoplay');
+        track.insertBefore(clone, track.firstChild);
+      });
 
-      /* Compute translateX so card at `pos` is centred in the carousel */
+      var cards = Array.from(track.querySelectorAll('[data-tiktok-card]'));
+      /* layout: [prepended clones 0..total-1] [real cards total..2*total-1] [appended clones 2*total..3*total-1] */
+      var centerPos = total; /* start at first real card */
+      var animating = false;
+      var currentTx = 0;
+
       function getTx(pos) {
         var card = cards[pos];
         if (!card) return 0;
         return -(card.offsetLeft - carousel.offsetWidth / 2 + card.offsetWidth / 2);
       }
 
-      function refreshCards() {
-        cards = Array.from(track.querySelectorAll('[data-tiktok-card]'));
-      }
-
-      function markCenter() {
+      function playOnly(pos) {
         cards.forEach(function (c) { c.classList.remove('is-center'); });
-        cards[centerPos].classList.add('is-center');
-        /* Play center video, pause others */
+        if (cards[pos]) cards[pos].classList.add('is-center');
         cards.forEach(function (c, i) {
           var v = c.querySelector('[data-tiktok-video]');
           if (!v) return;
-          i === centerPos ? v.play().catch(function () {}) : v.pause();
+          if (i === pos) { v.play().catch(function () {}); }
+          else { v.pause(); }
         });
       }
 
-      function snapToCenter() {
-        track.classList.remove('is-sliding');
-        track.classList.add('no-transition');
-        track.style.transform = 'translateX(' + getTx(centerPos) + 'px)';
-        void track.offsetWidth; /* force reflow */
-        track.classList.remove('no-transition');
+      function setTx(tx, animated) {
+        currentTx = tx;
+        if (animated) {
+          track.classList.add('is-sliding');
+          track.style.transform = 'translateX(' + tx + 'px)';
+        } else {
+          track.classList.remove('is-sliding');
+          track.classList.add('no-transition');
+          track.style.transform = 'translateX(' + tx + 'px)';
+          void track.offsetWidth;
+          track.classList.remove('no-transition');
+        }
       }
 
-      /* ── NEXT: slide track left, then rotate DOM + swap center ── */
+      function snapToCenter(animated) {
+        setTx(getTx(centerPos), animated);
+      }
+
+      /* After animating into a clone region, silently jump to the real counterpart */
+      function checkInfinite() {
+        if (centerPos < total) {
+          centerPos += total;
+          setTx(getTx(centerPos), false);
+        } else if (centerPos >= 2 * total) {
+          centerPos -= total;
+          setTx(getTx(centerPos), false);
+        }
+      }
+
       function goNext() {
         if (animating) return;
         animating = true;
-
-        /* Slide track so card at centerPos+1 reaches viewport centre */
+        centerPos++;
         track.classList.add('is-sliding');
-        track.style.transform = 'translateX(' + getTx(centerPos + 1) + 'px)';
-
+        track.style.transform = 'translateX(' + getTx(centerPos) + 'px)';
         setTimeout(function () {
-          /* Rotate DOM: first card → end. Then snap with new center. */
-          track.appendChild(cards[0]);
-          refreshCards();
-          markCenter();
-          snapToCenter();
+          track.classList.remove('is-sliding');
+          playOnly(centerPos);
+          currentTx = getTx(centerPos);
           animating = false;
+          checkInfinite();
         }, 320);
       }
 
-      /* ── PREV: prepend last card, then slide right ── */
       function goPrev() {
         if (animating) return;
         animating = true;
-
-        /* 1. Instantly prepend last card (no transition, keep is-center unchanged) */
-        track.classList.remove('is-sliding');
-        track.classList.add('no-transition');
-        track.insertBefore(cards[cards.length - 1], cards[0]);
-        refreshCards();
-
-        /* 2. Position so OLD center (now at centerPos+1) stays visually centred */
-        track.style.transform = 'translateX(' + getTx(centerPos + 1) + 'px)';
-        void track.offsetWidth; /* force paint */
-
-        /* 3. Slide track right so card at centerPos reaches viewport centre */
-        track.classList.remove('no-transition');
+        centerPos--;
         track.classList.add('is-sliding');
         track.style.transform = 'translateX(' + getTx(centerPos) + 'px)';
-
         setTimeout(function () {
-          /* Snap with new center */
           track.classList.remove('is-sliding');
-          markCenter();
-          snapToCenter();
+          playOnly(centerPos);
+          currentTx = getTx(centerPos);
           animating = false;
+          checkInfinite();
         }, 320);
       }
 
-      if (prevBtn) prevBtn.addEventListener('click', goPrev);
-      if (nextBtn) nextBtn.addEventListener('click', goNext);
+      if (prevBtn) { prevBtn.disabled = false; prevBtn.addEventListener('click', goPrev); }
+      if (nextBtn) { nextBtn.disabled = false; nextBtn.addEventListener('click', goNext); }
+
+      /* ── Mouse drag ── */
+      var isDragging = false;
+      var dragStartX = 0;
+      var dragStartTx = 0;
+      var DRAG_THRESHOLD = 50;
+
+      carousel.addEventListener('mousedown', function (e) {
+        if (e.button !== 0) return;
+        isDragging = true;
+        dragStartX = e.clientX;
+        dragStartTx = currentTx;
+        track.classList.remove('is-sliding');
+        carousel.classList.add('is-dragging');
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', function (e) {
+        if (!isDragging) return;
+        var delta = e.clientX - dragStartX;
+        currentTx = dragStartTx + delta;
+        track.style.transform = 'translateX(' + currentTx + 'px)';
+      });
+
+      document.addEventListener('mouseup', function (e) {
+        if (!isDragging) return;
+        isDragging = false;
+        carousel.classList.remove('is-dragging');
+        var delta = e.clientX - dragStartX;
+        if (Math.abs(delta) > DRAG_THRESHOLD) {
+          if (delta < 0) goNext();
+          else goPrev();
+        } else {
+          snapToCenter(true);
+          setTimeout(function () { track.classList.remove('is-sliding'); }, 320);
+        }
+      });
 
       /* Mute/unmute toggle */
       carousel.addEventListener('click', function (e) {
@@ -210,16 +265,13 @@
         }
       });
 
-      window.addEventListener('resize', function () { snapToCenter(); });
-
-      /* ── Initial render: center card is immediately highlighted ── */
-      markCenter();
-      snapToCenter();
-
-      /* Re-center once all stylesheets are loaded (CSS uses async media="print" trick) */
-      window.addEventListener('load', function () {
-        snapToCenter();
+      window.addEventListener('resize', function () {
+        snapToCenter(false);
       });
+
+      /* ── Initial render: centre the first real card ── */
+      playOnly(centerPos);
+      snapToCenter(false);
     });
   })();
 </script>

@@ -3,26 +3,51 @@
 {%- style -%}
   #shopify-section-{{ section.id }} {
     background-color: {{ section.settings.background_color }};
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-top: 0;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
 
   @media screen and (min-width: 750px) {
     #shopify-section-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top }}px;
+      padding-top: 0;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
 {%- endstyle -%}
 
 <div class="card-carousel" data-card-carousel>
+
+  {%- if section.settings.show_intro_panel -%}
+  <div class="card-carousel__intro">
+    <div class="card-carousel__intro-content">
+      {%- if section.settings.intro_heading != blank -%}
+        <h2 class="card-carousel__intro-heading typo-h1">{{ section.settings.intro_heading }}</h2>
+      {%- endif -%}
+      <div class="card-carousel__intro-bottom">
+        {%- if section.settings.intro_subtext != blank -%}
+          <p class="card-carousel__intro-subtext">{{ section.settings.intro_subtext }}</p>
+        {%- endif -%}
+        {%- if section.settings.intro_button_label != blank -%}
+          <a href="{{ section.settings.intro_button_link | default: '#' }}" class="card-carousel__intro-btn">
+            {{ section.settings.intro_button_label }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  {%- endif -%}
+
   <!-- Scroll area -->
   <div class="card-carousel__scroller" data-carousel-scroller>
     <div class="card-carousel__track" data-carousel-track>
       {%- for block in section.blocks -%}
-        <div class="card-carousel__card" {{ block.shopify_attributes }}>
+        {%- assign has_product = false -%}
+        {%- if block.settings.product != blank or block.settings.product_title != blank -%}
+          {%- assign has_product = true -%}
+        {%- endif -%}
+        <div class="card-carousel__card{% if has_product %} has-product{% endif %}" {{ block.shopify_attributes }}>
 
-          {%- comment -%} Background Media {%- endcomment -%}
+          {%- comment -%} Full-bleed Background Media {%- endcomment -%}
           <div class="card-carousel__media{% if block.settings.iframe_url != blank %} card-carousel__media--iframe{% endif %}">
             {%- if block.settings.iframe_url != blank -%}
               <iframe
@@ -49,6 +74,101 @@
             {%- endif -%}
           </div>
 
+          {%- comment -%} Gradient Overlay {%- endcomment -%}
+          <div class="card-carousel__overlay"></div>
+
+          {%- comment -%} Left: Text Content + Product {%- endcomment -%}
+          <div class="card-carousel__card-left">
+            {%- unless block.settings.use_interactive_buttons -%}
+              {%- if block.settings.tag != blank or block.settings.tag_2 != blank or block.settings.tag_3 != blank -%}
+                <div class="card-carousel__tags">
+                  {%- if block.settings.tag != blank -%}
+                    <span class="card-carousel__tag">{{ block.settings.tag }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.tag_2 != blank -%}
+                    <span class="card-carousel__tag">{{ block.settings.tag_2 }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.tag_3 != blank -%}
+                    <span class="card-carousel__tag">{{ block.settings.tag_3 }}</span>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endunless -%}
+            <div class="card-carousel__content">
+              {%- unless block.settings.use_interactive_buttons -%}
+                {%- if block.settings.title != blank -%}
+                  <h2 class="card-carousel__title">{{ block.settings.title }}</h2>
+                {%- endif -%}
+                {%- if block.settings.subtitle != blank -%}
+                  <p class="card-carousel__subtitle">{{ block.settings.subtitle }}</p>
+                {%- endif -%}
+                {%- if block.settings.button_label != blank -%}
+                  {%- assign btn_class = 'card-carousel__btn' -%}
+                  {%- if block.settings.button_style == 'blue' -%}
+                    {%- assign btn_class = 'card-carousel__btn card-carousel__btn--blue' -%}
+                  {%- endif -%}
+                  <a href="{{ block.settings.button_link | default: '#' }}" class="{{ btn_class }} typo-btn">{{ block.settings.button_label }}</a>
+                {%- endif -%}
+              {%- endunless -%}
+            </div>
+
+            {%- comment -%} Product Strip (glass, below text content) {%- endcomment -%}
+            {%- if block.settings.product != blank -%}
+              {%- assign p = block.settings.product -%}
+              <a href="{{ p.url }}" class="card-carousel__product">
+                {%- if p.featured_image != blank -%}
+                  <div class="card-carousel__product-img">
+                    {{ p.featured_image | image_url: width: 240 | image_tag: loading: 'lazy' }}
+                  </div>
+                {%- endif -%}
+                <div class="card-carousel__product-info">
+                  <span class="card-carousel__product-title typo-h4">{{ p.title }}</span>
+                  {%- if block.settings.product_subtitle != blank -%}
+                    <span class="card-carousel__product-subtitle">{{ block.settings.product_subtitle }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.product_feature_1 != blank or block.settings.product_feature_2 != blank or block.settings.product_feature_3 != blank -%}
+                    <ul class="card-carousel__product-features">
+                      {%- if block.settings.product_feature_1 != blank -%}<li>{{ block.settings.product_feature_1 }}</li>{%- endif -%}
+                      {%- if block.settings.product_feature_2 != blank -%}<li>{{ block.settings.product_feature_2 }}</li>{%- endif -%}
+                      {%- if block.settings.product_feature_3 != blank -%}<li>{{ block.settings.product_feature_3 }}</li>{%- endif -%}
+                    </ul>
+                  {%- endif -%}
+                  <span class="card-carousel__product-price typo-caption">{{ p.price | money }}</span>
+                </div>
+                <span class="card-carousel__product-btn" aria-label="View product">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </span>
+              </a>
+            {%- elsif block.settings.product_title != blank -%}
+              <div class="card-carousel__product">
+                {%- if block.settings.product_image != blank -%}
+                  <div class="card-carousel__product-img">
+                    {{ block.settings.product_image | image_url: width: 240 | image_tag: loading: 'lazy' }}
+                  </div>
+                {%- endif -%}
+                <div class="card-carousel__product-info">
+                  <span class="card-carousel__product-title typo-h4">{{ block.settings.product_title }}</span>
+                  {%- if block.settings.product_subtitle != blank -%}
+                    <span class="card-carousel__product-subtitle">{{ block.settings.product_subtitle }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.product_feature_1 != blank or block.settings.product_feature_2 != blank or block.settings.product_feature_3 != blank -%}
+                    <ul class="card-carousel__product-features">
+                      {%- if block.settings.product_feature_1 != blank -%}<li>{{ block.settings.product_feature_1 }}</li>{%- endif -%}
+                      {%- if block.settings.product_feature_2 != blank -%}<li>{{ block.settings.product_feature_2 }}</li>{%- endif -%}
+                      {%- if block.settings.product_feature_3 != blank -%}<li>{{ block.settings.product_feature_3 }}</li>{%- endif -%}
+                    </ul>
+                  {%- endif -%}
+                  {%- if block.settings.product_price != blank -%}
+                    <span class="card-carousel__product-price typo-caption">{{ block.settings.product_price }}</span>
+                  {%- endif -%}
+                </div>
+                <span class="card-carousel__product-btn" aria-label="View product">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </span>
+              </div>
+            {%- endif -%}
+          </div>
+
           {%- comment -%} Video Controls {%- endcomment -%}
           {%- if block.settings.video != blank or block.settings.video_url != blank -%}
             <div class="card-carousel__video-controls">
@@ -63,86 +183,31 @@
             </div>
           {%- endif -%}
 
-          {%- comment -%} Gradient Overlay {%- endcomment -%}
-          <div class="card-carousel__overlay"></div>
-
-          {%- comment -%} Bottom Content {%- endcomment -%}
-          <div class="card-carousel__content">
-            {%- if block.settings.use_interactive_buttons -%}
-              <div class="card-carousel__interactive">
-                {%- if block.settings.show_play_icon -%}
-                  <div class="card-carousel__play-icon">
-                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="32" cy="32" r="32" fill="white" fill-opacity="0.9"/>
-                      <path d="M42 32L27 41V23L42 32Z" fill="black"/>
-                    </svg>
-                  </div>
-                {%- endif -%}
-                <div class="card-carousel__interactive-btns">
-                  {%- if block.settings.btn1_label != blank -%}
-                    <a href="{{ block.settings.btn1_link | default: '#' }}" class="card-carousel__btn-pill typo-small">
-                      <span class="card-carousel__badge card-carousel__badge--a">A</span>
-                      <span>{{ block.settings.btn1_label }}</span>
-                    </a>
-                  {%- endif -%}
-                  {%- if block.settings.btn2_label != blank -%}
-                    <a href="{{ block.settings.btn2_link | default: '#' }}" class="card-carousel__btn-pill typo-small">
-                      <span class="card-carousel__badge card-carousel__badge--b">B</span>
-                      <span>{{ block.settings.btn2_label }}</span>
-                    </a>
-                  {%- endif -%}
-                </div>
-              </div>
-            {%- else -%}
-              {%- if block.settings.title != blank -%}
-                <h2 class="card-carousel__title">{{ block.settings.title }}</h2>
-              {%- endif -%}
-              {%- if block.settings.subtitle != blank -%}
-                <p class="card-carousel__subtitle typo-overline">{{ block.settings.subtitle }}</p>
-              {%- endif -%}
-              {%- if block.settings.button_label != blank -%}
-                {%- assign btn_class = 'card-carousel__btn' -%}
-                {%- if block.settings.button_style == 'blue' -%}
-                  {%- assign btn_class = 'card-carousel__btn card-carousel__btn--blue' -%}
-                {%- endif -%}
-                <a href="{{ block.settings.button_link | default: '#' }}" class="{{ btn_class }} typo-btn">{{ block.settings.button_label }}</a>
-              {%- endif -%}
-            {%- endif -%}
-          </div>
-
-          {%- comment -%} Product Strip {%- endcomment -%}
-          {%- if block.settings.product != blank -%}
-            {%- assign p = block.settings.product -%}
-            <a href="{{ p.url }}" class="card-carousel__product">
-              {%- if p.featured_image != blank -%}
-                <div class="card-carousel__product-img">
-                  {{ p.featured_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
+          {%- comment -%} Interactive Buttons (full bleed) {%- endcomment -%}
+          {%- if block.settings.use_interactive_buttons -%}
+            <div class="card-carousel__interactive">
+              {%- if block.settings.show_play_icon -%}
+                <div class="card-carousel__play-icon">
+                  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="32" r="32" fill="white" fill-opacity="0.9"/>
+                    <path d="M42 32L27 41V23L42 32Z" fill="black"/>
+                  </svg>
                 </div>
               {%- endif -%}
-              <div class="card-carousel__product-info">
-                <span class="card-carousel__product-title typo-h4">{{ p.title }}</span>
-                <span class="card-carousel__product-price typo-caption">{{ p.price | money }}</span>
-              </div>
-              <span class="card-carousel__product-btn" aria-label="View product">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              </span>
-            </a>
-          {%- elsif block.settings.product_title != blank -%}
-            <div class="card-carousel__product">
-              {%- if block.settings.product_image != blank -%}
-                <div class="card-carousel__product-img">
-                  {{ block.settings.product_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
-                </div>
-              {%- endif -%}
-              <div class="card-carousel__product-info">
-                <span class="card-carousel__product-title typo-h4">{{ block.settings.product_title }}</span>
-                {%- if block.settings.product_price != blank -%}
-                  <span class="card-carousel__product-price typo-caption">{{ block.settings.product_price }}</span>
+              <div class="card-carousel__interactive-btns">
+                {%- if block.settings.btn1_label != blank -%}
+                  <a href="{{ block.settings.btn1_link | default: '#' }}" class="card-carousel__btn-pill typo-small">
+                    <span class="card-carousel__badge card-carousel__badge--a">A</span>
+                    <span>{{ block.settings.btn1_label }}</span>
+                  </a>
+                {%- endif -%}
+                {%- if block.settings.btn2_label != blank -%}
+                  <a href="{{ block.settings.btn2_link | default: '#' }}" class="card-carousel__btn-pill typo-small">
+                    <span class="card-carousel__badge card-carousel__badge--b">B</span>
+                    <span>{{ block.settings.btn2_label }}</span>
+                  </a>
                 {%- endif -%}
               </div>
-              <span class="card-carousel__product-btn" aria-label="View product">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              </span>
             </div>
           {%- endif -%}
         </div>
@@ -150,12 +215,9 @@
     </div>
   </div>
 
-  <!-- Navigation Arrows (outside scroll area) -->
-  <button class="card-carousel__nav card-carousel__nav--prev" data-carousel-prev aria-label="Previous">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
-  <button class="card-carousel__nav card-carousel__nav--next" data-carousel-next aria-label="Next">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <!-- Floating next arrow -->
+  <button class="card-carousel__next-float" data-carousel-next aria-label="Next">
+    <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>
 
   <!-- Dot Indicators -->
@@ -173,9 +235,56 @@
       var track = carousel.querySelector('[data-carousel-track]');
       if (!scroller || !track || track.children.length < 2) return;
 
-      var cards = Array.from(track.children);
-      var gap = parseFloat(getComputedStyle(track).gap) || 16;
-      var cardW = cards[0].offsetWidth + gap;
+      var origCards = Array.from(track.children);
+      var n = origCards.length;
+
+      /* ── Infinite loop: clone before + after ── */
+      origCards.forEach(function (c) {
+        track.appendChild(c.cloneNode(true));
+      });
+      origCards.forEach(function (c) {
+        track.insertBefore(c.cloneNode(true), track.firstChild);
+      });
+
+      var gap = parseFloat(getComputedStyle(track).gap) || 0;
+
+      function cardW() {
+        return track.children[0].offsetWidth + gap;
+      }
+
+      /* Start in the middle set */
+      function jumpToMiddle(instant) {
+        var w = cardW();
+        if (instant) {
+          scroller.style.scrollBehavior = 'auto';
+          scroller.scrollLeft = w * n;
+          scroller.style.scrollBehavior = '';
+        }
+      }
+
+      requestAnimationFrame(function () { requestAnimationFrame(function () { jumpToMiddle(true); }); });
+
+      /* ── Reposition on scroll to keep loop seamless ── */
+      var ticking = false;
+      scroller.addEventListener('scroll', function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          ticking = false;
+          var w = cardW();
+          var sl = scroller.scrollLeft;
+          var total = w * n;
+          if (sl < w * 0.5) {
+            scroller.style.scrollBehavior = 'auto';
+            scroller.scrollLeft = sl + total;
+            scroller.style.scrollBehavior = '';
+          } else if (sl >= w * (n * 2 - 0.5)) {
+            scroller.style.scrollBehavior = 'auto';
+            scroller.scrollLeft = sl - total;
+            scroller.style.scrollBehavior = '';
+          }
+        });
+      });
 
       /* ── Drag / swipe ── */
       var isDragging = false;
@@ -214,13 +323,9 @@
         isDragging = false;
         scroller.style.cursor = '';
         scroller.classList.remove('is-dragging');
-
+        var w = cardW();
         var momentum = velocity * 300;
-        var target = scroller.scrollLeft + momentum;
-        target = Math.round(target / cardW) * cardW;
-        var maxScroll = scroller.scrollWidth - scroller.clientWidth;
-        target = Math.max(0, Math.min(target, maxScroll));
-
+        var target = Math.round((scroller.scrollLeft + momentum) / w) * w;
         scroller.style.scrollSnapType = '';
         scroller.scrollTo({ left: target, behavior: 'smooth' });
       }
@@ -240,50 +345,22 @@
         }
       }, true);
 
-      /* ── Navigation arrows ── */
-      var prevBtn = carousel.querySelector('[data-carousel-prev]');
+      /* ── Next arrow ── */
       var nextBtn = carousel.querySelector('[data-carousel-next]');
-
-      function updateNavVisibility() {
-        var sl = scroller.scrollLeft;
-        var maxScroll = scroller.scrollWidth - scroller.clientWidth;
-        if (prevBtn) prevBtn.classList.toggle('is-hidden', sl <= 2);
-        if (nextBtn) nextBtn.classList.toggle('is-hidden', maxScroll <= 0 ? false : sl >= maxScroll - 2);
-      }
-
-      if (prevBtn) {
-        prevBtn.addEventListener('click', function () {
-          stopAuto();
-          scroller.scrollBy({ left: -cardW, behavior: 'smooth' });
-          setTimeout(startAuto, 3000);
-        });
-      }
       if (nextBtn) {
         nextBtn.addEventListener('click', function () {
           stopAuto();
-          scroller.scrollBy({ left: cardW, behavior: 'smooth' });
+          scroller.scrollBy({ left: cardW(), behavior: 'smooth' });
           setTimeout(startAuto, 3000);
         });
       }
-
-      scroller.addEventListener('scroll', updateNavVisibility);
-      /* Delay initial check so layout is computed */
-      requestAnimationFrame(function () {
-        requestAnimationFrame(updateNavVisibility);
-      });
 
       /* ── Auto-play ── */
       var autoInterval = null;
       function startAuto() {
         stopAuto();
         autoInterval = setInterval(function () {
-          var sl = scroller.scrollLeft;
-          var maxScroll = scroller.scrollWidth - scroller.clientWidth;
-          if (sl >= maxScroll - 2) {
-            scroller.scrollTo({ left: 0, behavior: 'smooth' });
-          } else {
-            scroller.scrollBy({ left: cardW, behavior: 'smooth' });
-          }
+          scroller.scrollBy({ left: cardW(), behavior: 'smooth' });
         }, 6000);
       }
       function stopAuto() {
@@ -296,42 +373,25 @@
       scroller.addEventListener('touchstart', stopAuto, { passive: true });
       scroller.addEventListener('touchend', function () { setTimeout(startAuto, 3000); });
 
-      /* ── Video controls (play/pause + mute/unmute) ── */
-      cards.forEach(function (card) {
-        var video = card.querySelector('video');
-        if (!video) return;
-
-        /* Mark as playing since videos autoplay */
-        video.addEventListener('playing', function () { card.classList.add('is-playing'); });
-        video.addEventListener('pause', function () { card.classList.remove('is-playing'); });
-        if (!video.paused) card.classList.add('is-playing');
-      });
-
+      /* ── Video controls ── */
       carousel.addEventListener('click', function (e) {
         var playBtn = e.target.closest('[data-carousel-play]');
         if (playBtn) {
           var card = playBtn.closest('.card-carousel__card');
-          var video = card.querySelector('video');
+          var video = card && card.querySelector('video');
           if (!video) return;
-          if (video.paused) {
-            video.play().catch(function () {});
-          } else {
-            video.pause();
-          }
+          video.paused ? video.play().catch(function(){}) : video.pause();
           return;
         }
-
         var muteBtn = e.target.closest('[data-carousel-mute]');
         if (muteBtn) {
           var card = muteBtn.closest('.card-carousel__card');
-          var video = card.querySelector('video');
+          var video = card && card.querySelector('video');
           if (!video) return;
           video.muted = !video.muted;
           card.classList.toggle('is-unmuted', !video.muted);
           return;
         }
-
-        /* Click anywhere on a video card to toggle audio */
         var card = e.target.closest('.card-carousel__card');
         if (card && !e.target.closest('a, button, .card-carousel__product')) {
           var video = card.querySelector('video');
@@ -339,6 +399,14 @@
           video.muted = !video.muted;
           card.classList.toggle('is-unmuted', !video.muted);
         }
+      });
+
+      Array.from(track.children).forEach(function (card) {
+        var video = card.querySelector('video');
+        if (!video) return;
+        video.addEventListener('playing', function () { card.classList.add('is-playing'); });
+        video.addEventListener('pause', function () { card.classList.remove('is-playing'); });
+        if (!video.paused) card.classList.add('is-playing');
       });
     });
   })();
@@ -355,6 +423,36 @@
       "id": "background_color",
       "label": "Background Color",
       "default": "#f5f3ec"
+    },
+    {
+      "type": "header",
+      "content": "Intro Panel"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_intro_panel",
+      "label": "Show intro panel",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "intro_heading",
+      "label": "Intro Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "intro_subtext",
+      "label": "Intro Subtext"
+    },
+    {
+      "type": "text",
+      "id": "intro_button_label",
+      "label": "Intro Button Label"
+    },
+    {
+      "type": "url",
+      "id": "intro_button_link",
+      "label": "Intro Button Link"
     },
     {
       "type": "range",
@@ -426,13 +524,29 @@
         },
         {
           "type": "text",
+          "id": "tag",
+          "label": "Tag 1 (e.g. Cucine, Divani)",
+          "info": "Short label shown as a pill above the title."
+        },
+        {
+          "type": "text",
+          "id": "tag_2",
+          "label": "Tag 2"
+        },
+        {
+          "type": "text",
+          "id": "tag_3",
+          "label": "Tag 3"
+        },
+        {
+          "type": "text",
           "id": "title",
           "label": "Heading"
         },
         {
           "type": "textarea",
           "id": "subtitle",
-          "label": "Subheading"
+          "label": "Description"
         },
         {
           "type": "text",
@@ -514,6 +628,29 @@
           "id": "product_price",
           "label": "Product Price (manual)",
           "info": "Only used if no product is selected above. e.g. $48"
+        },
+        {
+          "type": "text",
+          "id": "product_subtitle",
+          "label": "Product Subtitle",
+          "info": "Short description shown under the product title."
+        },
+        {
+          "type": "text",
+          "id": "product_feature_1",
+          "label": "Product Feature 1",
+          "info": "e.g. Cruelty Free"
+        },
+        {
+          "type": "text",
+          "id": "product_feature_2",
+          "label": "Product Feature 2",
+          "info": "e.g. Vegan"
+        },
+        {
+          "type": "text",
+          "id": "product_feature_3",
+          "label": "Product Feature 3"
         }
       ]
     }
