@@ -53,6 +53,10 @@
   max-width: 320px;
 }
 
+.community__btn {
+  margin-top: 1.25rem;
+}
+
 /* ── Navigation ── */
 .community__nav {
   display: flex;

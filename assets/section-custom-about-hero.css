@@ -1,0 +1,390 @@
+/* ── About Hero Carousel (review cards) ── */
+.about-carousel {
+  position: relative;
+  overflow: clip;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  container-type: inline-size;
+}
+
+/* ── Intro Panel ── */
+.about-carousel__intro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: #202020;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  z-index: 2;
+}
+
+.about-carousel__intro-content {
+  padding: 32px 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  flex: 1;
+}
+
+.about-carousel__intro-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.about-carousel__subtitle {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.about-carousel__intro-heading {
+  color: #fff;
+  margin: 0;
+  font-size: clamp(2.14rem, 3.42vw, 4.275rem);
+  line-height: 1;
+}
+
+.about-carousel__intro-subtext {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 80%;
+}
+
+.about-carousel__intro-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  background: var(--color-accent, #1E8BA8);
+  border: 1.5px solid var(--color-accent, #1E8BA8);
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  align-self: flex-start;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.about-carousel__intro-btn:hover {
+  background: #17748d;
+  border-color: #17748d;
+}
+
+/* ── Scroller ── */
+.about-carousel__scroller {
+  flex: 2;
+  min-width: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0;
+  cursor: grab;
+}
+
+.about-carousel__scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.about-carousel__scroller.is-dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.about-carousel__track {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  height: 100%;
+}
+
+/* ── Card ── */
+.about-carousel__card {
+  position: relative;
+  flex: 0 0 280px;
+  height: 200px;
+  border-radius: 0;
+  overflow: hidden;
+  scroll-snap-align: start;
+  transform: translateZ(0);
+  background-color: #fff;
+}
+
+@media screen and (min-width: 750px) {
+  .about-carousel__card {
+    flex: 0 0 calc(75cqw / 4);
+    height: 100%;
+  }
+
+  .about-carousel__intro {
+    flex: 0 0 25%;
+    min-height: calc(95cqw / 4 * 1.2);
+    overflow: visible;
+  }
+
+  .about-carousel__scroller {
+    flex: 0 0 75%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+
+/* ── Media Background ── */
+.about-carousel__media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.about-carousel__media-el {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.about-carousel__card:hover .about-carousel__media-el {
+  transform: scale(1.05);
+}
+
+/* ── Overlay ── */
+.about-carousel__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 30%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 35%);
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+/* ── Card Inner (review content) ── */
+.about-carousel__card-inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 22px;
+  z-index: 4;
+}
+
+/* ── Review Top: Stars + Tag ── */
+.about-carousel__review-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.about-carousel__stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.about-carousel__star {
+  fill: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.about-carousel__star--filled {
+  fill: #ffffff;
+  color: #ffffff;
+}
+
+.about-carousel__tag {
+  display: inline-flex;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 0.6875rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  line-height: 1.4;
+}
+
+/* ── Review Text ── */
+.about-carousel__review-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: auto 0;
+  padding: 0 8px;
+}
+
+.about-carousel__review-text {
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-style: italic;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 750px) {
+  .about-carousel__review-text {
+    font-size: clamp(1rem, 1.2vw, 1.25rem);
+    -webkit-line-clamp: 5;
+  }
+}
+
+/* ── Author Strip (like product strip) ── */
+.about-carousel__author {
+  position: absolute;
+  bottom: 20px;
+  left: 22px;
+  top: auto;
+  right: auto;
+  transform: none;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fff;
+  border-radius: 10px;
+  padding: 6px 12px 6px 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  max-width: calc(100% - 24px);
+  width: auto;
+  cursor: default;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.about-carousel__card:hover .about-carousel__author {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+.about-carousel__author-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f5f3f0;
+}
+
+.about-carousel__author-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-carousel__author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.about-carousel__author-name {
+  color: var(--color-text, #202020);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.about-carousel__author-role {
+  color: #666;
+}
+
+/* ── Navigation Arrow ── */
+.about-carousel__next-float {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 48px;
+  height: 64px;
+  border: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.2s ease;
+}
+
+.about-carousel__next-float:hover {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+@media screen and (min-width: 750px) {
+  .about-carousel__next-float {
+    display: flex;
+  }
+}
+
+/* ── Dot Indicators ── */
+.about-carousel__dots {
+  display: none;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 0 0 0;
+  position: relative;
+  z-index: 10;
+}
+
+.about-carousel__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.about-carousel__dot:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.about-carousel__dot.is-active {
+  background: #333;
+  transform: scale(1.25);
+}

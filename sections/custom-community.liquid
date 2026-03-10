@@ -29,6 +29,9 @@
       {%- if section.settings.description != blank -%}
         <p class="community__description typo-body">{{ section.settings.description }}</p>
       {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link }}" class="btn btn--accent community__btn">{{ section.settings.button_label }}</a>
+      {%- endif -%}
 
       {%- if section.blocks.size > 0 -%}
         <div class="community__nav">
@@ -309,6 +312,16 @@
       "id": "description",
       "label": "Description",
       "default": "Powered by real science, made for real life. Discover how our community are incorporating Bensa into their daily routines."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
     },
     {
       "type": "color",

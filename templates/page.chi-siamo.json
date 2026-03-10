@@ -1,0 +1,39 @@
+{
+  "sections": {
+    "about_hero": {
+      "type": "custom-about-hero",
+      "blocks": {
+        "review_1": {
+          "type": "review_card",
+          "settings": {
+            "stars": 5,
+            "review_text": "Qualità eccezionale e un servizio clienti impeccabile. Non potremmo essere più soddisfatti!",
+            "author_name": "Maria Rossi",
+            "author_role": "Milano"
+          }
+        },
+        "review_2": {
+          "type": "review_card",
+          "settings": {
+            "stars": 5,
+            "review_text": "Mobili bellissimi e resistenti. La consegna è stata puntuale e il montaggio perfetto.",
+            "author_name": "Luca Bianchi",
+            "author_role": "Roma"
+          }
+        },
+        "review_3": {
+          "type": "review_card",
+          "settings": {
+            "stars": 4,
+            "review_text": "Design moderno e materiali di prima qualità. Consiglio vivamente a tutti!",
+            "author_name": "Giulia Verdi",
+            "author_role": "Torino"
+          }
+        }
+      },
+      "block_order": ["review_1", "review_2", "review_3"],
+      "settings": {}
+    }
+  },
+  "order": ["about_hero"]
+}

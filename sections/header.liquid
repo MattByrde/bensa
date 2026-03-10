@@ -31,197 +31,200 @@
       {%- comment -%} Desktop Navigation (left) {%- endcomment -%}
       <nav class="site-header__nav" aria-label="Main navigation">
         <ul class="site-nav__list">
+          {%- for link in linklists[section.settings.menu].links -%}
 
-          {%- comment -%} Chi Siamo (mega menu with image cards) {%- endcomment -%}
-          <li class="site-nav__item site-nav__item--has-dropdown site-nav__item--megamenu">
-            <a href="/pages/chi-siamo" class="site-nav__link">
-              Chi Siamo
-              <svg class="site-nav__chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2.5 3.75L5 6.25L7.5 3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <div class="site-nav__dropdown site-nav__dropdown--mega">
-              <div class="page-width site-nav__mega-inner site-nav__mega-inner--cards">
-                {%- for block in section.blocks -%}
-                  {%- if block.type == 'megamenu' and block.settings.menu_item == 'Chi Siamo' -%}
-                    <div class="site-nav__mega-cards">
-                      {%- if block.settings.image_1 != blank or block.settings.heading_1 != blank -%}
-                        <a href="{{ block.settings.link_1 | default: '/pages/chi-siamo' }}" class="site-nav__mega-card">
-                          <div class="site-nav__mega-card-img">
-                            {%- if block.settings.image_1 != blank -%}
-                              {{ block.settings.image_1 | image_url: width: 500 | image_tag: loading: 'lazy' }}
-                            {%- else -%}
-                              <div class="site-nav__mega-card-placeholder"></div>
-                            {%- endif -%}
-                          </div>
-                          {%- if block.settings.heading_1 != blank -%}
-                            <span class="site-nav__mega-card-title">{{ block.settings.heading_1 }}</span>
+            {%- if link.title == 'Chi Siamo' -%}
+              {%- comment -%} ═══ Chi Siamo — megamenu with image cards (from blocks) ═══ {%- endcomment -%}
+              {%- assign mega_block = nil -%}
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'megamenu' and block.settings.menu_item == 'Chi Siamo' -%}
+                  {%- assign mega_block = block -%}
+                {%- endif -%}
+              {%- endfor -%}
+              <li class="site-nav__item site-nav__item--has-dropdown site-nav__item--megamenu" {% if mega_block %}{{ mega_block.shopify_attributes }}{% endif %}>
+                <a href="{{ link.url }}" class="site-nav__link">
+                  {{ link.title }}
+                  <svg class="site-nav__chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2.5 3.75L5 6.25L7.5 3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <div class="site-nav__dropdown site-nav__dropdown--mega">
+                  <div class="site-nav__mega-inner site-nav__mega-inner--cards">
+                    {%- if mega_block -%}
+                      {%- if mega_block.settings.intro_title != blank or mega_block.settings.intro_description != blank -%}
+                        <div class="site-nav__mega-intro">
+                          {%- if mega_block.settings.intro_title != blank -%}
+                            <h3 class="site-nav__mega-intro-title">{{ mega_block.settings.intro_title }}</h3>
                           {%- endif -%}
-                        </a>
-                      {%- endif -%}
-                      {%- if block.settings.image_2 != blank or block.settings.heading_2 != blank -%}
-                        <a href="{{ block.settings.link_2 | default: '/pages/lo-staff' }}" class="site-nav__mega-card">
-                          <div class="site-nav__mega-card-img">
-                            {%- if block.settings.image_2 != blank -%}
-                              {{ block.settings.image_2 | image_url: width: 500 | image_tag: loading: 'lazy' }}
-                            {%- else -%}
-                              <div class="site-nav__mega-card-placeholder"></div>
-                            {%- endif -%}
-                          </div>
-                          {%- if block.settings.heading_2 != blank -%}
-                            <span class="site-nav__mega-card-title">{{ block.settings.heading_2 }}</span>
+                          {%- if mega_block.settings.intro_description != blank -%}
+                            <p class="site-nav__mega-intro-desc">{{ mega_block.settings.intro_description }}</p>
                           {%- endif -%}
-                        </a>
-                      {%- endif -%}
-                      {%- if block.settings.image_3 != blank or block.settings.heading_3 != blank -%}
-                        <a href="{{ block.settings.link_3 | default: '/pages/dicono-di-noi' }}" class="site-nav__mega-card">
-                          <div class="site-nav__mega-card-img">
-                            {%- if block.settings.image_3 != blank -%}
-                              {{ block.settings.image_3 | image_url: width: 500 | image_tag: loading: 'lazy' }}
-                            {%- else -%}
-                              <div class="site-nav__mega-card-placeholder"></div>
-                            {%- endif -%}
-                          </div>
-                          {%- if block.settings.heading_3 != blank -%}
-                            <span class="site-nav__mega-card-title">{{ block.settings.heading_3 }}</span>
+                          {%- if mega_block.settings.intro_button_label != blank -%}
+                            <a href="{{ mega_block.settings.intro_button_link | default: '#' }}" class="site-nav__mega-intro-btn">
+                              {{ mega_block.settings.intro_button_label }}
+                              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
                           {%- endif -%}
-                        </a>
+                        </div>
                       {%- endif -%}
-                      {%- if block.settings.image_4 != blank or block.settings.heading_4 != blank -%}
-                        <a href="{{ block.settings.link_4 | default: '#' }}" class="site-nav__mega-card">
-                          <div class="site-nav__mega-card-img">
-                            {%- if block.settings.image_4 != blank -%}
-                              {{ block.settings.image_4 | image_url: width: 500 | image_tag: loading: 'lazy' }}
-                            {%- else -%}
-                              <div class="site-nav__mega-card-placeholder"></div>
+                      <div class="site-nav__mega-cards">
+                        {%- if mega_block.settings.image_1 != blank or mega_block.settings.heading_1 != blank -%}
+                          <a href="{{ mega_block.settings.link_1 | default: '#' }}" class="site-nav__mega-card">
+                            <div class="site-nav__mega-card-img">
+                              {%- if mega_block.settings.image_1 != blank -%}
+                                {{ mega_block.settings.image_1 | image_url: width: 500 | image_tag: loading: 'lazy' }}
+                              {%- else -%}
+                                <div class="site-nav__mega-card-placeholder"></div>
+                              {%- endif -%}
+                            </div>
+                            {%- if mega_block.settings.heading_1 != blank -%}
+                              <span class="site-nav__mega-card-title">{{ mega_block.settings.heading_1 }}</span>
                             {%- endif -%}
-                          </div>
-                          {%- if block.settings.heading_4 != blank -%}
-                            <span class="site-nav__mega-card-title">{{ block.settings.heading_4 }}</span>
-                          {%- endif -%}
-                        </a>
-                      {%- endif -%}
-                    </div>
-                  {%- endif -%}
-                {%- endfor -%}
-              </div>
-            </div>
-          </li>
-
-          {%- comment -%} Progettazione {%- endcomment -%}
-          <li class="site-nav__item">
-            <a href="/pages/progettazione" class="site-nav__link">Progettazione</a>
-          </li>
-
-          {%- comment -%} Prodotti (mega menu) {%- endcomment -%}
-          <li class="site-nav__item site-nav__item--has-dropdown site-nav__item--megamenu">
-            <a href="/collections" class="site-nav__link">
-              Prodotti
-              <svg class="site-nav__chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2.5 3.75L5 6.25L7.5 3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <div class="site-nav__dropdown site-nav__dropdown--mega">
-              <div class="page-width site-nav__mega-inner">
-                <div class="site-nav__mega-links">
-                  <div class="site-nav__mega-column">
-                    <a href="/collections/cucine" class="site-nav__mega-title">Cucine</a>
-                  </div>
-                  <div class="site-nav__mega-column">
-                    <a href="#" class="site-nav__mega-title">Zona Giorno</a>
-                    <ul class="site-nav__mega-sublinks">
-                      <li><a href="/collections/tavoli-sedie">Tavoli e Sedie</a></li>
-                      <li><a href="/collections/divani-poltrone">Divani e Poltrone</a></li>
-                      <li><a href="/collections/tavolini">Tavolini</a></li>
-                    </ul>
-                  </div>
-                  <div class="site-nav__mega-column">
-                    <a href="#" class="site-nav__mega-title">Zona Notte</a>
-                    <ul class="site-nav__mega-sublinks">
-                      <li><a href="/collections/camere-camerette">Camere e Camerette</a></li>
-                      <li><a href="/collections/armadi">Armadi</a></li>
-                    </ul>
-                  </div>
-                  <div class="site-nav__mega-column">
-                    <a href="/collections/arredo-bagno" class="site-nav__mega-title">Arredobagno</a>
-                  </div>
-                  <div class="site-nav__mega-column">
-                    <a href="#" class="site-nav__mega-title">Complementi</a>
-                    <ul class="site-nav__mega-sublinks">
-                      <li><a href="/collections/illuminazione">Illuminazione</a></li>
-                      <li><a href="/collections/complementi">Complementi</a></li>
-                    </ul>
-                  </div>
-                  <div class="site-nav__mega-column">
-                    <a href="#" class="site-nav__mega-title">Non solo Arredo</a>
-                    <ul class="site-nav__mega-sublinks">
-                      <li><a href="/collections/pavimenti-rivestimenti">Pavimenti e Rivestimenti</a></li>
-                      <li><a href="/collections/porte-sistemi-divisori">Porte e Sistemi divisori</a></li>
-                    </ul>
-                  </div>
-                  <div class="site-nav__mega-column">
-                    <a href="#" class="site-nav__mega-title">Altro</a>
-                    <ul class="site-nav__mega-sublinks">
-                      <li><a href="/collections/trasformabili">Trasformabili</a></li>
-                      <li><a href="/collections/ufficio">Uffici e spazi Commerciali</a></li>
-                    </ul>
-                  </div>
-                  <div class="site-nav__mega-column">
-                    <a href="/collections/all" class="site-nav__mega-title">Tutti i Prodotti</a>
+                          </a>
+                        {%- endif -%}
+                        {%- if mega_block.settings.image_2 != blank or mega_block.settings.heading_2 != blank -%}
+                          <a href="{{ mega_block.settings.link_2 | default: '#' }}" class="site-nav__mega-card">
+                            <div class="site-nav__mega-card-img">
+                              {%- if mega_block.settings.image_2 != blank -%}
+                                {{ mega_block.settings.image_2 | image_url: width: 500 | image_tag: loading: 'lazy' }}
+                              {%- else -%}
+                                <div class="site-nav__mega-card-placeholder"></div>
+                              {%- endif -%}
+                            </div>
+                            {%- if mega_block.settings.heading_2 != blank -%}
+                              <span class="site-nav__mega-card-title">{{ mega_block.settings.heading_2 }}</span>
+                            {%- endif -%}
+                          </a>
+                        {%- endif -%}
+                        {%- if mega_block.settings.image_3 != blank or mega_block.settings.heading_3 != blank -%}
+                          <a href="{{ mega_block.settings.link_3 | default: '#' }}" class="site-nav__mega-card">
+                            <div class="site-nav__mega-card-img">
+                              {%- if mega_block.settings.image_3 != blank -%}
+                                {{ mega_block.settings.image_3 | image_url: width: 500 | image_tag: loading: 'lazy' }}
+                              {%- else -%}
+                                <div class="site-nav__mega-card-placeholder"></div>
+                              {%- endif -%}
+                            </div>
+                            {%- if mega_block.settings.heading_3 != blank -%}
+                              <span class="site-nav__mega-card-title">{{ mega_block.settings.heading_3 }}</span>
+                            {%- endif -%}
+                          </a>
+                        {%- endif -%}
+                        {%- if mega_block.settings.image_4 != blank or mega_block.settings.heading_4 != blank -%}
+                          <a href="{{ mega_block.settings.link_4 | default: '#' }}" class="site-nav__mega-card">
+                            <div class="site-nav__mega-card-img">
+                              {%- if mega_block.settings.image_4 != blank -%}
+                                {{ mega_block.settings.image_4 | image_url: width: 500 | image_tag: loading: 'lazy' }}
+                              {%- else -%}
+                                <div class="site-nav__mega-card-placeholder"></div>
+                              {%- endif -%}
+                            </div>
+                            {%- if mega_block.settings.heading_4 != blank -%}
+                              <span class="site-nav__mega-card-title">{{ mega_block.settings.heading_4 }}</span>
+                            {%- endif -%}
+                          </a>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
                   </div>
                 </div>
+              </li>
 
-                {%- comment -%} Mega menu promos from blocks {%- endcomment -%}
-                {%- for block in section.blocks -%}
-                  {%- if block.type == 'megamenu' and block.settings.menu_item == 'Prodotti' -%}
-                    <div class="site-nav__mega-promos">
-                      {%- if block.settings.image_1 != blank or block.settings.heading_1 != blank -%}
-                        <a href="{{ block.settings.link_1 | default: '#' }}" class="site-nav__promo">
-                          {%- if block.settings.image_1 != blank -%}
-                            <div class="site-nav__promo-img-box">
-                              {{ block.settings.image_1 | image_url: width: 400 | image_tag: loading: 'lazy' }}
-                            </div>
-                          {%- endif -%}
-                          {%- if block.settings.heading_1 != blank -%}
-                            <span class="site-nav__promo-title">{{ block.settings.heading_1 }}</span>
-                          {%- endif -%}
-                        </a>
-                      {%- endif -%}
-                      {%- if block.settings.image_2 != blank or block.settings.heading_2 != blank -%}
-                        <a href="{{ block.settings.link_2 | default: '#' }}" class="site-nav__promo">
-                          {%- if block.settings.image_2 != blank -%}
-                            <div class="site-nav__promo-img-box">
-                              {{ block.settings.image_2 | image_url: width: 400 | image_tag: loading: 'lazy' }}
-                            </div>
-                          {%- endif -%}
-                          {%- if block.settings.heading_2 != blank -%}
-                            <span class="site-nav__promo-title">{{ block.settings.heading_2 }}</span>
-                          {%- endif -%}
-                        </a>
-                      {%- endif -%}
+            {%- elsif link.title == 'Prodotti' -%}
+              {%- comment -%} ═══ Prodotti — static megamenu with columns ═══ {%- endcomment -%}
+              <li class="site-nav__item site-nav__item--has-dropdown site-nav__item--megamenu">
+                <a href="{{ link.url }}" class="site-nav__link">
+                  {{ link.title }}
+                  <svg class="site-nav__chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2.5 3.75L5 6.25L7.5 3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <div class="site-nav__dropdown site-nav__dropdown--mega">
+                  <div class="site-nav__mega-inner site-nav__mega-inner--full">
+                    <div class="site-nav__mega-links">
+                      <div class="site-nav__mega-column">
+                        <a href="/collections/cucine" class="site-nav__mega-title">Cucine</a>
+                      </div>
+                      <div class="site-nav__mega-column">
+                        <a href="#" class="site-nav__mega-title">Zona Giorno</a>
+                        <ul class="site-nav__mega-sublinks">
+                          <li><a href="/collections/tavoli-sedie">Tavoli e Sedie</a></li>
+                          <li><a href="/collections/divani-poltrone">Divani e Poltrone</a></li>
+                          <li><a href="/collections/tavolini">Tavolini</a></li>
+                        </ul>
+                      </div>
+                      <div class="site-nav__mega-column">
+                        <a href="#" class="site-nav__mega-title">Zona Notte</a>
+                        <ul class="site-nav__mega-sublinks">
+                          <li><a href="/collections/camere-camerette">Camere e Camerette</a></li>
+                          <li><a href="/collections/armadi">Armadi</a></li>
+                        </ul>
+                      </div>
+                      <div class="site-nav__mega-column">
+                        <a href="/collections/arredo-bagno" class="site-nav__mega-title">Arredobagno</a>
+                      </div>
+                      <div class="site-nav__mega-column">
+                        <a href="#" class="site-nav__mega-title">Complementi</a>
+                        <ul class="site-nav__mega-sublinks">
+                          <li><a href="/collections/illuminazione">Illuminazione</a></li>
+                          <li><a href="/collections/complementi">Complementi</a></li>
+                        </ul>
+                      </div>
+                      <div class="site-nav__mega-column">
+                        <a href="#" class="site-nav__mega-title">Non solo Arredo</a>
+                        <ul class="site-nav__mega-sublinks">
+                          <li><a href="/collections/pavimenti-rivestimenti">Pavimenti e Rivestimenti</a></li>
+                          <li><a href="/collections/porte-sistemi-divisori">Porte e Sistemi divisori</a></li>
+                        </ul>
+                      </div>
+                      <div class="site-nav__mega-column">
+                        <a href="#" class="site-nav__mega-title">Altro</a>
+                        <ul class="site-nav__mega-sublinks">
+                          <li><a href="/collections/trasformabili">Trasformabili</a></li>
+                          <li><a href="/collections/ufficio">Uffici e spazi Commerciali</a></li>
+                        </ul>
+                      </div>
+                      <div class="site-nav__mega-column">
+                        <a href="/collections/all" class="site-nav__mega-title">Tutti i Prodotti</a>
+                      </div>
                     </div>
-                  {%- endif -%}
-                {%- endfor -%}
-              </div>
-            </div>
-          </li>
+                  </div>
+                </div>
+              </li>
 
-          {%- comment -%} Brand {%- endcomment -%}
-          <li class="site-nav__item">
-            <a href="/pages/brand" class="site-nav__link">Brand</a>
-          </li>
+            {%- elsif link.title == 'Marchi' -%}
+              {%- comment -%} ═══ Marchi — static megamenu with brand logo grid ═══ {%- endcomment -%}
+              <li class="site-nav__item site-nav__item--has-dropdown site-nav__item--megamenu">
+                <a href="{{ link.url }}" class="site-nav__link">
+                  {{ link.title }}
+                  <svg class="site-nav__chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2.5 3.75L5 6.25L7.5 3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <div class="site-nav__dropdown site-nav__dropdown--mega">
+                  <div class="site-nav__mega-inner site-nav__mega-inner--full">
+                    <div class="site-nav__brand-grid">
+                      {%- for block in section.blocks -%}
+                        {%- if block.type == 'brand_logo' -%}
+                          <a href="{{ block.settings.brand_link | default: '#' }}" class="site-nav__brand-item" {{ block.shopify_attributes }}>
+                            {%- if block.settings.logo != blank -%}
+                              {{ block.settings.logo | image_url: width: 200 | image_tag: loading: 'lazy', alt: block.settings.brand_name }}
+                            {%- elsif block.settings.brand_name != blank -%}
+                              <span class="site-nav__brand-name">{{ block.settings.brand_name }}</span>
+                            {%- endif -%}
+                          </a>
+                        {%- endif -%}
+                      {%- endfor -%}
+                      <a href="/pages/brand" class="site-nav__brand-item site-nav__brand-item--cta">
+                        <span>Tutti i Marchi</span>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </li>
 
-          {%- comment -%} Ristrutturazioni {%- endcomment -%}
-          <li class="site-nav__item">
-            <a href="/pages/ristrutturazioni" class="site-nav__link">Ristrutturazioni Chiavi In Mano</a>
-          </li>
-
-          {%- comment -%} Realizzazioni {%- endcomment -%}
-          <li class="site-nav__item">
-            <a href="/pages/realizzazioni" class="site-nav__link">Realizzazioni</a>
-          </li>
-
-          {%- comment -%} Outlet {%- endcomment -%}
-          <li class="site-nav__item">
-            <a href="/collections/outlet" class="site-nav__link">Outlet</a>
-          </li>
-
+            {%- else -%}
+              {%- comment -%} Simple link {%- endcomment -%}
+              <li class="site-nav__item">
+                <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
         </ul>
       </nav>
 
@@ -234,14 +237,10 @@
         </span>
       </a>
 
-      {%- comment -%} Right side: Richiedi Appuntamento {%- endcomment -%}
-      <nav class="site-header__nav-right" aria-label="Secondary navigation">
-        <ul class="site-nav__list">
-          <li class="site-nav__item">
-            <a href="/pages/richiedi-appuntamento" class="site-nav__link site-nav__link--cta">Richiedi Appuntamento</a>
-          </li>
-        </ul>
-      </nav>
+      {%- comment -%} Right side: CTA button {%- endcomment -%}
+      {%- if section.settings.cta_label != blank -%}
+        <a href="{{ section.settings.cta_link | default: '#' }}" class="site-nav__link site-nav__link--cta">{{ section.settings.cta_label }}</a>
+      {%- endif -%}
 
       {%- comment -%} Mobile menu toggle {%- endcomment -%}
       <button class="site-header__menu-toggle" aria-label="{{ 'accessibility.menu' | t }}">
@@ -308,18 +307,16 @@
     </button>
   </div>
   <nav class="mobile-nav__links">
-    <a href="/pages/chi-siamo" class="mobile-nav__link">Chi Siamo</a>
-    <a href="/pages/progettazione" class="mobile-nav__link">Progettazione</a>
-    <a href="/collections" class="mobile-nav__link">Prodotti</a>
-    <a href="/pages/brand" class="mobile-nav__link">Brand</a>
-    <a href="/pages/ristrutturazioni" class="mobile-nav__link">Ristrutturazioni Chiavi In Mano</a>
-    <a href="/pages/realizzazioni" class="mobile-nav__link">Realizzazioni</a>
-    <a href="/collections/outlet" class="mobile-nav__link">Outlet</a>
+    {%- for link in linklists[section.settings.menu].links -%}
+      <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
+    {%- endfor -%}
   </nav>
   <div class="mobile-nav__footer">
-    <a href="/pages/richiedi-appuntamento" class="site-header__cta site-header__cta--mobile">
-      RICHIEDI APPUNTAMENTO
-    </a>
+    {%- if section.settings.cta_label != blank -%}
+      <a href="{{ section.settings.cta_link | default: '#' }}" class="site-header__cta site-header__cta--mobile">
+        {{ section.settings.cta_label | upcase }}
+      </a>
+    {%- endif -%}
   </div>
 </div>
 
@@ -565,10 +562,15 @@
       "default": "main-menu"
     },
     {
-      "type": "link_list",
-      "id": "menu_right",
-      "label": "Secondary Menu (right)",
-      "default": "footer"
+      "type": "text",
+      "id": "cta_label",
+      "label": "Menu Button Label",
+      "default": "Cerca"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Menu Button Link"
     }
   ],
   "blocks": [
@@ -580,11 +582,35 @@
           "type": "text",
           "id": "menu_item",
           "label": "Menu Item Title",
-          "info": "The exact title of the top-level menu item (e.g. 'Prodotti' or 'Chi Siamo')."
+          "info": "The exact title of the top-level menu item this block belongs to."
         },
         {
           "type": "header",
-          "content": "Card 1"
+          "content": "Intro Block (left side)"
+        },
+        {
+          "type": "text",
+          "id": "intro_title",
+          "label": "Intro Title"
+        },
+        {
+          "type": "textarea",
+          "id": "intro_description",
+          "label": "Intro Description"
+        },
+        {
+          "type": "text",
+          "id": "intro_button_label",
+          "label": "Intro Button Label"
+        },
+        {
+          "type": "url",
+          "id": "intro_button_link",
+          "label": "Intro Button Link"
+        },
+        {
+          "type": "header",
+          "content": "Card / Promo 1"
         },
         {
           "type": "image_picker",
@@ -603,7 +629,7 @@
         },
         {
           "type": "header",
-          "content": "Card 2"
+          "content": "Card / Promo 2"
         },
         {
           "type": "image_picker",
@@ -622,7 +648,7 @@
         },
         {
           "type": "header",
-          "content": "Card 3"
+          "content": "Card / Promo 3"
         },
         {
           "type": "image_picker",
@@ -641,7 +667,7 @@
         },
         {
           "type": "header",
-          "content": "Card 4"
+          "content": "Card / Promo 4"
         },
         {
           "type": "image_picker",
@@ -659,7 +685,38 @@
           "label": "Link"
         }
       ]
+    },
+    {
+      "type": "brand_logo",
+      "name": "Brand Logo (Marchi)",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Brand Logo"
+        },
+        {
+          "type": "text",
+          "id": "brand_name",
+          "label": "Brand Name"
+        },
+        {
+          "type": "url",
+          "id": "brand_link",
+          "label": "Brand Link"
+        }
+      ]
     }
-  ]
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "megamenu",
+        "settings": {
+          "menu_item": "Chi Siamo"
+        }
+      }
+    ]
+  }
 }
 {% endschema %}

@@ -548,6 +548,7 @@ p+p {
 .site-header {
   background-color: #ffffff;
   width: 100%;
+  font-family: 'Outfit', sans-serif;
 }
 
 /* Nav row: fixed when scrolled — applied via JS */
@@ -847,7 +848,7 @@ p+p {
   align-items: center;
   gap: 4px;
   padding: 0.5rem 0;
-  font-size: 0.85rem;
+  font-size: 0.83rem;
   font-weight: 600;
   letter-spacing: 0;
   text-transform: uppercase;
@@ -962,6 +963,7 @@ p+p {
   left: 0;
   border-left: none;
   border-right: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -969,7 +971,11 @@ p+p {
   display: flex;
   justify-content: space-between;
   gap: 4rem;
-  padding: 3rem 0;
+  padding: 2rem 2rem;
+}
+
+.site-nav__mega-inner--full {
+  max-width: none;
 }
 
 .site-nav__mega-links {
@@ -1055,9 +1061,117 @@ p+p {
   color: var(--color-text);
 }
 
+/* Mega Menu – Brand Logo Grid (Marchi) */
+.site-nav__brand-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 1px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.08);
+  border: 0px solid rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.site-nav__brand-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  padding: 16px 12px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+  aspect-ratio: 1;
+}
+
+.site-nav__brand-item:hover {
+  background-color: #f5f3ec;
+}
+
+.site-nav__brand-item img {
+  max-width: 60%;
+  max-height: 28px;
+  object-fit: contain;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.site-nav__brand-item:hover img {
+  opacity: 1;
+}
+
+.site-nav__brand-name {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text, #202020);
+  opacity: 0.6;
+  text-align: center;
+}
+
+.site-nav__brand-item:hover .site-nav__brand-name {
+  opacity: 1;
+}
+
+.site-nav__brand-item--cta {
+  flex-direction: column;
+  gap: 6px;
+  color: var(--color-text, #202020);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: #f5f3ec;
+}
+
+.site-nav__brand-item--cta:hover {
+  background: #ebe8df;
+}
+
 /* Mega Menu – Image Cards (Chi Siamo) */
 .site-nav__mega-inner--cards {
-  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+
+.site-nav__mega-intro {
+  flex: 0 0 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.site-nav__mega-intro-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-text, #202020);
+}
+
+.site-nav__mega-intro-desc {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #666;
+}
+
+.site-nav__mega-intro-btn {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  margin-top: 0.5rem;
+  padding: 12px 24px;
+  border: 1.5px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  color: var(--color-text, #202020);
+  background: transparent;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.site-nav__mega-intro-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  opacity: 0.8;
 }
 
 .site-nav__mega-cards {
@@ -1081,7 +1195,6 @@ p+p {
 
 .site-nav__mega-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .site-nav__mega-card-img {
@@ -1713,7 +1826,7 @@ p+p {
 
 @media screen and (min-width: 750px) {
   .testi-section__quote {
-    font-size: 1.375rem;
+    font-size: 1.175rem;
   }
 }
 
