@@ -1,39 +1,120 @@
-/* ── Team Poster Grid Section ── */
-.team-poster-section {
-  width: 100%;
-  padding: 0 12px 12px;
+/* ── Team Poster Carousel ── */
+.team-carousel {
+  overflow: clip;
 }
 
-/* ── Responsive grid ── */
-.poster-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+.team-carousel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 1rem;
+  margin-bottom: 2rem;
 }
 
 @media screen and (min-width: 750px) {
-  .team-poster-section {
-    padding: 0 16px 16px;
+  .team-carousel__header {
+    padding: 0 2rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+.team-carousel__heading {
+  text-align: left;
+  margin: 0;
+}
+
+/* ── Nav arrows ── */
+.team-carousel__nav {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.team-carousel__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.team-carousel__arrow:hover {
+  background: #f5f5f5;
+  border-color: #999;
+}
+
+/* ── Carousel viewport ── */
+.team-carousel__viewport {
+  position: relative;
+  overflow: visible;
+    padding-left: 2rem;
+      padding-right: 1rem;
+}
+
+.team-carousel__viewport.is-dragging {
+  cursor: grabbing;
+}
+
+.team-carousel__track {
+  display: flex;
+  gap: 16px;
+  will-change: transform;
+  padding-left: 1rem;
+}
+
+.team-carousel__track::after {
+  content: '';
+  flex: 0 0 1rem;
+}
+
+@media screen and (min-width: 750px) {
+  .team-carousel__track {
+    padding-left: 2rem;
   }
 
-  .poster-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+  .team-carousel__track::after {
+    flex: 0 0 2rem;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .team-carousel__track {
+    padding-left: 2rem;
+  }
+}
+
+.team-carousel__track.is-sliding {
+  transition: transform 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.team-carousel__track.no-transition {
+  transition: none !important;
+}
+
+/* ── Card ── */
+.team-carousel__card {
+  flex: 0 0 220px;
+}
+
+@media screen and (min-width: 750px) {
+  .team-carousel__card {
+    flex: 0 0 280px;
   }
 }
 
 @media screen and (min-width: 990px) {
-  .team-poster-section {
-    padding: 0 20px 20px;
-  }
-
-  .poster-grid {
-    grid-template-columns: repeat(6, 1fr);
-    gap: 20px;
+  .team-carousel__card {
+    flex: 0 0 300px;
   }
 }
 
-/* ── Individual Poster Card ── */
+/* ── Poster (reuse existing styles) ── */
 .poster {
   position: relative;
   border-radius: 14px;
@@ -42,7 +123,27 @@
   background: #e5e0da;
 }
 
-/* ── Full-bleed image ── */
+.poster__tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: inline-flex;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 0.6875rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  line-height: 1.4;
+}
+
 .poster__img {
   position: absolute;
   inset: 0;
@@ -53,7 +154,6 @@
   display: block;
 }
 
-/* ── Placeholder (no image) ── */
 .poster__placeholder {
   position: absolute;
   inset: 0;
@@ -68,7 +168,6 @@
   opacity: 0.2;
 }
 
-/* ── Gradient overlay for depth ── */
 .poster__gradient {
   position: absolute;
   inset: 0;
@@ -81,17 +180,15 @@
   pointer-events: none;
 }
 
-/* ── Frosted-glass label (matches TikTok product tag style) ── */
 .poster__label {
   position: absolute;
   bottom: 12px;
   left: 12px;
-  right: 12px;
-  background: rgba(255, 255, 255, 0.93);
+  background: #fff;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 10px;
-  padding: 10px 12px;
+  padding: 10px 20px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
   display: flex;
   flex-direction: column;
@@ -122,7 +219,6 @@
   overflow: hidden;
 }
 
-/* ── Contact sub-text with subtle arrow treatment ── */
 .poster__label-sub {
   margin: 0;
   font-size: 0.65rem;

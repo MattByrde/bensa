@@ -1,0 +1,112 @@
+{{ 'section-custom-story.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+  .story-section {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+<div class="story-section">
+  <div class="story-layout">
+    <div class="story-left">
+      {%- if section.settings.intro_text != blank -%}
+        <p class="story-left__intro">{{ section.settings.intro_text }}</p>
+      {%- endif -%}
+      <div class="story-left__image">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 800 | image_tag: loading: 'lazy' }}
+        {%- else -%}
+          <div class="story-left__placeholder">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="story-right">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.text != blank -%}
+          <p class="story-right__text" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Story",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 140
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "textarea",
+      "id": "intro_text",
+      "label": "Intro Text (large)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "paragraph",
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Story",
+      "settings": {
+        "intro_text": "La storia di Bensa inizia nel 2017, quando Damian studiava all'Università di Arti, Architettura e Urbanistica. A differenza dei grandi design tradizionali, Damian voleva creare una collezione di oggetti funzionali e utili — una nuova visione dell'arredamento."
+      },
+      "blocks": [
+        { "type": "paragraph", "settings": { "text": "Le cose si fecero interessanti durante un viaggio di Capodanno a Londra. Lì, Damian incontrò Cyprian, che si appassionò all'idea. Anche se nessuno dei due aveva esperienza nel settore dell'arredamento, decisero di unire le forze. Nessun fondo, nessuna esperienza, nessun team esperto — iniziarono da zero." } },
+        { "type": "paragraph", "settings": { "text": "Il primo quartier generale? L'appartamento al quarto piano di Damian, senza ascensore. Immaginate trasportare prototipi! Ma è lì che presero forma i primi 40 prodotti. Seguì un servizio fotografico rivoluzionario, che attirò l'attenzione dei media e diede il via al nostro slancio." } },
+        { "type": "paragraph", "settings": { "text": "Passo dopo passo, il progetto crebbe. Un momento decisivo: un ordine da 2000 EUR dal Belgio. Quello dimostrò che potevamo vendere. Da lì, ci spostammo in uno spazio di co-working (piano terra, per fortuna), e poi nel nostro primo piccolo ufficio con un magazzino." } },
+        { "type": "paragraph", "settings": { "text": "L'espansione del team e la costruzione delle competenze vennero naturalmente. L'influenza di Bensa crebbe sia nelle vendite che nelle operazioni. Oggi operiamo in due sedi: un ufficio di 450 metri quadrati e un grande magazzino avanzato di 2500 metri quadrati nelle vicinanze. Bensa sta diventando uno dei brand di design in più rapida crescita in Europa." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

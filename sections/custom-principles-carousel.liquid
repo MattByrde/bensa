@@ -1,0 +1,142 @@
+{{ 'section-custom-principles-carousel.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+  .principles-carousel {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+<div class="principles-carousel">
+  {%- if section.blocks.size > 0 -%}
+    <div class="principles-carousel__track">
+      {%- for block in section.blocks -%}
+        <div class="principles-carousel__slide{% if block.settings.highlight %} principles-carousel__slide--highlight{% endif %}" {{ block.shopify_attributes }}>
+          <div class="principles-carousel__text">
+            {%- if block.settings.text != blank -%}
+              <p>{{ block.settings.text }}</p>
+            {%- endif -%}
+          </div>
+          <div class="principles-carousel__image">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy' }}
+            {%- else -%}
+              <div class="principles-carousel__placeholder">
+                {{ 'image' | placeholder_svg_tag }}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function() {
+    const track = document.querySelector('#shopify-section-{{ section.id }} .principles-carousel__track');
+    if (!track) return;
+    const slides = track.querySelectorAll('.principles-carousel__slide');
+    slides.forEach(function(slide) {
+      slide.addEventListener('mouseenter', function() {
+        slides.forEach(function(s) {
+          s.classList.remove('principles-carousel__slide--active');
+          s.classList.remove('principles-carousel__slide--highlight');
+        });
+        slide.classList.add('principles-carousel__slide--active');
+      });
+    });
+    // Drag to scroll
+    let isDown = false, startX, scrollLeft;
+    track.addEventListener('mousedown', function(e) {
+      isDown = true;
+      startX = e.pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+    });
+    track.addEventListener('mouseleave', function() { isDown = false; });
+    track.addEventListener('mouseup', function() { isDown = false; });
+    track.addEventListener('mousemove', function(e) {
+      if (!isDown) return;
+      e.preventDefault();
+      var x = e.pageX - track.offsetLeft;
+      track.scrollLeft = scrollLeft - (x - startX);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Principles Carousel",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f5f2ed"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Bold / highlight text",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Principles Carousel",
+      "blocks": [
+        { "type": "slide", "settings": { "text": "Il buon design è coerente con i materiali di ogni oggetto e con le persone che interagiscono con esso." } },
+        { "type": "slide", "settings": { "text": "Le case sono spazi per esplorare ciò che conta per noi in modo coerente con i nostri valori." } },
+        { "type": "slide", "settings": { "text": "Le tendenze sono il nostro punto di partenza, mai la destinazione." } },
+        { "type": "slide", "settings": { "text": "Collaboriamo con designer coerenti con la nostra visione per creare qualcosa di collettivo.", "highlight": true } },
+        { "type": "slide", "settings": { "text": "Il design è uno strumento per valorizzare la produzione locale e creare nuove opportunità." } },
+        { "type": "slide", "settings": { "text": "Bilanciamo funzione e bellezza, rispettando l'ambiente, le persone e l'economia." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

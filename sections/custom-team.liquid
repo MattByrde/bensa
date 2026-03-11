@@ -1,43 +1,264 @@
 {{ 'section-custom-team.css' | asset_url | stylesheet_tag }}
 
-<div class="team-poster-section">
-  <div class="poster-grid">
-    {%- for block in section.blocks -%}
-      <div class="poster" style="background-color: {{ block.settings.fallback_color }};" {{ block.shopify_attributes }}>
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
 
-        {%- if block.settings.image != blank -%}
-          {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: block.settings.title, class: 'poster__img' }}
-        {%- else -%}
-          <div class="poster__placeholder">
-            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-          </div>
-        {%- endif -%}
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
 
-        <div class="poster__gradient"></div>
-
-        <div class="poster__label">
-          {%- if block.settings.title != blank -%}
-            <span class="poster__label-name">{{ block.settings.title }}</span>
-          {%- endif -%}
-          {%- if block.settings.bottom_text != blank -%}
-            <p class="poster__label-text">{{ block.settings.bottom_text }}</p>
-          {%- endif -%}
-          {%- if block.settings.sub_text != blank -%}
-            <p class="poster__label-sub">{{ block.settings.sub_text | newline_to_br }}</p>
-          {%- endif -%}
-        </div>
-
-      </div>
-    {%- endfor -%}
+<div class="team-carousel">
+  <div class="team-carousel__header">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="section-heading team-carousel__heading typo-h2">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <div class="team-carousel__nav" data-team-nav>
+      <button class="team-carousel__arrow team-carousel__arrow--prev" data-team-prev aria-label="Previous">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="team-carousel__arrow team-carousel__arrow--next" data-team-next aria-label="Next">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
   </div>
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="team-carousel__viewport" data-team-carousel data-total="{{ section.blocks.size }}">
+      <div class="team-carousel__track" data-team-track>
+        {%- for block in section.blocks -%}
+          <div class="team-carousel__card" data-team-card {{ block.shopify_attributes }}>
+            <div class="poster" style="background-color: {{ block.settings.fallback_color }};">
+              {%- if block.settings.tag != blank -%}
+                <span class="poster__tag">{{ block.settings.tag }}</span>
+              {%- endif -%}
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: block.settings.title, class: 'poster__img' }}
+              {%- else -%}
+                <div class="poster__placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+
+              <div class="poster__gradient"></div>
+
+              <div class="poster__label">
+                {%- if block.settings.title != blank -%}
+                  <span class="poster__label-name">{{ block.settings.title }}</span>
+                {%- endif -%}
+                {%- if block.settings.bottom_text != blank -%}
+                  <p class="poster__label-text">{{ block.settings.bottom_text }}</p>
+                {%- endif -%}
+                {%- if block.settings.sub_text != blank -%}
+                  <p class="poster__label-sub">{{ block.settings.sub_text | newline_to_br }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
 </div>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-team-carousel]').forEach(function (carousel) {
+      var section = carousel.closest('.team-carousel');
+      var track = carousel.querySelector('[data-team-track]');
+      var prevBtn = section.querySelector('[data-team-prev]');
+      var nextBtn = section.querySelector('[data-team-next]');
+      var cards = Array.from(track.querySelectorAll('[data-team-card]'));
+      var total = cards.length;
+      if (total < 1) return;
+
+      var currentPos = 0;
+      var animating = false;
+      var currentTx = 0;
+
+      function getMaxPos() {
+        var trackW = track.scrollWidth;
+        var viewW = carousel.offsetWidth;
+        if (trackW <= viewW) return 0;
+        /* Find the last card index where scrolling makes sense */
+        for (var i = total - 1; i >= 0; i--) {
+          var tx = -cards[i].offsetLeft;
+          if (Math.abs(tx) <= trackW - viewW) return i;
+        }
+        return 0;
+      }
+
+      function getTx(pos) {
+        var card = cards[pos];
+        if (!card) return 0;
+        return -card.offsetLeft;
+      }
+
+      function clampTx(tx) {
+        var maxScroll = track.scrollWidth - carousel.offsetWidth;
+        if (maxScroll < 0) maxScroll = 0;
+        if (tx > 0) tx = 0;
+        if (tx < -maxScroll) tx = -maxScroll;
+        return tx;
+      }
+
+      function setTx(tx, animated) {
+        tx = clampTx(tx);
+        currentTx = tx;
+        if (animated) {
+          track.classList.add('is-sliding');
+          track.style.transform = 'translateX(' + tx + 'px)';
+        } else {
+          track.classList.remove('is-sliding');
+          track.style.transform = 'translateX(' + tx + 'px)';
+        }
+      }
+
+      function updateButtons() {
+        var maxPos = getMaxPos();
+        if (prevBtn) prevBtn.disabled = currentPos <= 0;
+        if (nextBtn) nextBtn.disabled = currentPos >= maxPos;
+      }
+
+      function goTo(pos, animated) {
+        var maxPos = getMaxPos();
+        if (pos < 0) pos = 0;
+        if (pos > maxPos) pos = maxPos;
+        currentPos = pos;
+        setTx(getTx(pos), animated);
+        updateButtons();
+        if (animated) {
+          animating = true;
+          setTimeout(function () {
+            track.classList.remove('is-sliding');
+            animating = false;
+          }, 320);
+        }
+      }
+
+      function goNext() { if (!animating) goTo(currentPos + 1, true); }
+      function goPrev() { if (!animating) goTo(currentPos - 1, true); }
+
+      if (prevBtn) prevBtn.addEventListener('click', goPrev);
+      if (nextBtn) nextBtn.addEventListener('click', goNext);
+
+      /* Mouse drag */
+      var isDragging = false;
+      var dragStartX = 0;
+      var dragStartTx = 0;
+      var DRAG_THRESHOLD = 50;
+
+      carousel.addEventListener('mousedown', function (e) {
+        if (e.button !== 0) return;
+        isDragging = true;
+        dragStartX = e.clientX;
+        dragStartTx = currentTx;
+        track.classList.remove('is-sliding');
+        carousel.classList.add('is-dragging');
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', function (e) {
+        if (!isDragging) return;
+        var delta = e.clientX - dragStartX;
+        var tx = clampTx(dragStartTx + delta);
+        currentTx = tx;
+        track.style.transform = 'translateX(' + tx + 'px)';
+      });
+
+      document.addEventListener('mouseup', function (e) {
+        if (!isDragging) return;
+        isDragging = false;
+        carousel.classList.remove('is-dragging');
+        var delta = e.clientX - dragStartX;
+        if (Math.abs(delta) > DRAG_THRESHOLD) {
+          if (delta < 0) goNext();
+          else goPrev();
+        } else {
+          goTo(currentPos, true);
+        }
+      });
+
+      /* Touch swipe */
+      var touchStartX = 0;
+      carousel.addEventListener('touchstart', function (e) {
+        touchStartX = e.touches[0].clientX;
+        dragStartTx = currentTx;
+        track.classList.remove('is-sliding');
+      }, { passive: true });
+
+      carousel.addEventListener('touchmove', function (e) {
+        var delta = e.touches[0].clientX - touchStartX;
+        var tx = clampTx(dragStartTx + delta);
+        currentTx = tx;
+        track.style.transform = 'translateX(' + tx + 'px)';
+      }, { passive: true });
+
+      carousel.addEventListener('touchend', function (e) {
+        var delta = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(delta) > DRAG_THRESHOLD) {
+          if (delta < 0) goNext();
+          else goPrev();
+        } else {
+          goTo(currentPos, true);
+        }
+      });
+
+      window.addEventListener('resize', function () {
+        goTo(currentPos, false);
+      });
+
+      goTo(0, false);
+    });
+  })();
+</script>
 
 {% schema %}
 {
-  "name": "Team Poster Grid",
+  "name": "Team Poster Carousel",
   "tag": "section",
   "class": "section",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Il nostro team"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    }
+  ],
   "blocks": [
     {
       "type": "poster",
@@ -62,6 +283,12 @@
           "default": "Violi"
         },
         {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag",
+          "info": "Small label in the top-right corner"
+        },
+        {
           "type": "textarea",
           "id": "bottom_text",
           "label": "Description",
@@ -76,65 +303,17 @@
       ]
     }
   ],
-  "max_blocks": 6,
+  "max_blocks": 12,
   "presets": [
     {
-      "name": "Team Poster Grid",
+      "name": "Team Poster Carousel",
       "blocks": [
-        {
-          "type": "poster",
-          "settings": {
-            "fallback_color": "#f0ece5",
-            "title": "Violi",
-            "bottom_text": "Proponiamo a tutti i nostri clienti una gamma di prodotti delle migliori marche.",
-            "sub_text": "info@bensa.com"
-          }
-        },
-        {
-          "type": "poster",
-          "settings": {
-            "fallback_color": "#ddd5c8",
-            "title": "Design",
-            "bottom_text": "Design e qualità per ogni spazio.",
-            "sub_text": "info@bensa.com"
-          }
-        },
-        {
-          "type": "poster",
-          "settings": {
-            "fallback_color": "#c9bfb3",
-            "title": "Su misura",
-            "bottom_text": "Arredi su misura per il tuo stile di vita.",
-            "sub_text": "info@bensa.com"
-          }
-        },
-        {
-          "type": "poster",
-          "settings": {
-            "fallback_color": "#e0d8cf",
-            "title": "Moderno",
-            "bottom_text": "Soluzioni moderne per ambienti contemporanei.",
-            "sub_text": "info@bensa.com"
-          }
-        },
-        {
-          "type": "poster",
-          "settings": {
-            "fallback_color": "#d4ccc4",
-            "title": "Complementi",
-            "bottom_text": "Scopri i nostri complementi d'arredo per completare il tuo spazio.",
-            "sub_text": "info@bensa.com"
-          }
-        },
-        {
-          "type": "poster",
-          "settings": {
-            "fallback_color": "#bfb8b0",
-            "title": "Eccellenza",
-            "bottom_text": "Ogni dettaglio è curato per offrirti l'eccellenza.",
-            "sub_text": "info@bensa.com"
-          }
-        }
+        { "type": "poster", "settings": { "fallback_color": "#f0ece5", "title": "Violi", "bottom_text": "Proponiamo a tutti i nostri clienti una gamma di prodotti delle migliori marche.", "sub_text": "info@bensa.com" } },
+        { "type": "poster", "settings": { "fallback_color": "#ddd5c8", "title": "Design", "bottom_text": "Design e qualità per ogni spazio.", "sub_text": "info@bensa.com" } },
+        { "type": "poster", "settings": { "fallback_color": "#c9bfb3", "title": "Su misura", "bottom_text": "Arredi su misura per il tuo stile di vita.", "sub_text": "info@bensa.com" } },
+        { "type": "poster", "settings": { "fallback_color": "#e0d8cf", "title": "Moderno", "bottom_text": "Soluzioni moderne per ambienti contemporanei.", "sub_text": "info@bensa.com" } },
+        { "type": "poster", "settings": { "fallback_color": "#d4ccc4", "title": "Complementi", "bottom_text": "Scopri i nostri complementi d'arredo.", "sub_text": "info@bensa.com" } },
+        { "type": "poster", "settings": { "fallback_color": "#bfb8b0", "title": "Eccellenza", "bottom_text": "Ogni dettaglio è curato per offrirti l'eccellenza.", "sub_text": "info@bensa.com" } }
       ]
     }
   ]

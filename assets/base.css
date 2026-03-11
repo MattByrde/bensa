@@ -2907,3 +2907,10 @@ p+p {
   content-visibility: auto;
   contain-intrinsic-size: auto 500px;
 }
+
+
+#shopify-section-template--29281350779218__custom_team_GfkG3m .team-carousel {
+    max-width: 1400px;
+    margin: auto;
+    overflow: visible;
+}
