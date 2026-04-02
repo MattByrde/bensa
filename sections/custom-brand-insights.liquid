@@ -1,0 +1,269 @@
+{{ 'section-custom-brand-insights.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    border-top: 1px solid #e0e0e0;
+  }
+  .brand-insights {
+    padding-top: {{ section.settings.padding_top }}px;
+  }
+  .brand-insights__carousel {
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+<div class="brand-insights">
+
+  {%- comment -%} ── Vision top ── {%- endcomment -%}
+  <div class="brand-insights__vision">
+    {%- if section.settings.heading_light != blank or section.settings.heading_bold != blank -%}
+      <h2 class="brand-insights__heading typo-h2">
+        {%- if section.settings.heading_light != blank -%}
+          <span class="brand-insights__heading-light">{{ section.settings.heading_light }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading_bold != blank -%}
+          <span class="brand-insights__heading-bold">{{ section.settings.heading_bold }}</span>
+        {%- endif -%}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.subtitle_left != blank or section.settings.subtitle_right != blank -%}
+      <div class="brand-insights__subtitle-row">
+        {%- if section.settings.subtitle_left != blank -%}
+          <p class="brand-insights__subtitle">{{ section.settings.subtitle_left }}</p>
+        {%- endif -%}
+        {%- if section.settings.subtitle_right != blank -%}
+          <p class="brand-insights__subtitle">{{ section.settings.subtitle_right }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- assign columns = section.blocks | where: "type", "column" -%}
+    {%- if columns.size > 0 -%}
+      <div class="brand-insights__columns">
+        {%- for block in columns -%}
+          <div class="brand-insights__col" {{ block.shopify_attributes }}>
+            {%- if block.settings.number != blank -%}
+              <span class="brand-insights__col-number">{{ block.settings.number }}</span>
+            {%- endif -%}
+            <div class="brand-insights__col-content">
+              {%- if block.settings.title != blank -%}
+                <p class="brand-insights__col-title">{{ block.settings.title }}</p>
+              {%- endif -%}
+              {%- if block.settings.text_1 != blank -%}
+                <p class="brand-insights__col-text">{{ block.settings.text_1 }}</p>
+              {%- endif -%}
+              {%- if block.settings.text_2 != blank -%}
+                <p class="brand-insights__col-text">{{ block.settings.text_2 }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} ── Principles carousel bottom ── {%- endcomment -%}
+  {%- assign slides = section.blocks | where: "type", "slide" -%}
+  {%- if slides.size > 0 -%}
+    <div class="brand-insights__carousel">
+      <div class="brand-insights__track" data-brand-insights-track>
+        {%- for block in slides -%}
+          <div class="brand-insights__slide{% if block.settings.highlight %} brand-insights__slide--highlight{% endif %}" {{ block.shopify_attributes }}>
+            <div class="brand-insights__slide-text">
+              {%- if block.settings.text != blank -%}
+                <p>{{ block.settings.text }}</p>
+              {%- endif -%}
+            </div>
+            <div class="brand-insights__slide-image">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy' }}
+              {%- else -%}
+                <div class="brand-insights__slide-placeholder">
+                  {{ 'image' | placeholder_svg_tag }}
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function() {
+    var track = document.querySelector('#shopify-section-{{ section.id }} [data-brand-insights-track]');
+    if (!track) return;
+    var slides = track.querySelectorAll('.brand-insights__slide');
+    slides.forEach(function(slide) {
+      slide.addEventListener('mouseenter', function() {
+        slides.forEach(function(s) {
+          s.classList.remove('brand-insights__slide--active');
+          s.classList.remove('brand-insights__slide--highlight');
+        });
+        slide.classList.add('brand-insights__slide--active');
+      });
+    });
+    var isDown = false, startX, scrollLeft;
+    track.addEventListener('mousedown', function(e) {
+      isDown = true;
+      startX = e.pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+    });
+    track.addEventListener('mouseleave', function() { isDown = false; });
+    track.addEventListener('mouseup', function() { isDown = false; });
+    track.addEventListener('mousemove', function(e) {
+      if (!isDown) return;
+      e.preventDefault();
+      var x = e.pageX - track.offsetLeft;
+      track.scrollLeft = scrollLeft - (x - startX);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Brand Insights",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Colore sfondo",
+      "default": "#f5f3ec"
+    },
+    {
+      "type": "text",
+      "id": "heading_light",
+      "label": "Titolo (light)",
+      "default": "Scegliere"
+    },
+    {
+      "type": "text",
+      "id": "heading_bold",
+      "label": "Titolo (bold)",
+      "default": "il brand giusto"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle_left",
+      "label": "Sottotitolo (sinistra)",
+      "default": "Ogni brand che selezioniamo riflette la nostra filosofia: qualità artigianale, design senza tempo e materiali che durano nel tempo."
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle_right",
+      "label": "Sottotitolo (destra)",
+      "default": "Vi guidiamo nella scelta del marchio più adatto al vostro stile e alle vostre esigenze, combinando estetica e funzionalità."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Colonna",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Numero",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titolo"
+        },
+        {
+          "type": "textarea",
+          "id": "text_1",
+          "label": "Paragrafo 1"
+        },
+        {
+          "type": "textarea",
+          "id": "text_2",
+          "label": "Paragrafo 2"
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Testo"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Evidenzia testo",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Immagine"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "presets": [
+    {
+      "name": "Brand Insights",
+      "settings": {
+        "heading_light": "Scegliere",
+        "heading_bold": "il brand giusto"
+      },
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "number": "01",
+            "text_1": "Selezioniamo ogni marchio con cura, visitando le fabbriche e verificando personalmente la qualità dei materiali e dei processi produttivi.",
+            "text_2": "Il nostro obiettivo è offrirvi solo brand che condividono la nostra passione per l'eccellenza e il rispetto per l'ambiente."
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "number": "02",
+            "title": "Come scegliere.",
+            "text_1": "Ogni ambiente ha esigenze diverse. Vi aiutiamo a trovare il brand che meglio si adatta al vostro progetto, considerando stile, budget e funzionalità."
+          }
+        },
+        { "type": "slide", "settings": { "text": "La qualità dei materiali è il primo criterio: legni certificati, tessuti naturali e finiture che resistono al tempo." } },
+        { "type": "slide", "settings": { "text": "Il design deve essere coerente con il vostro spazio e riflettere la vostra personalità." } },
+        { "type": "slide", "settings": { "text": "Un buon brand offre garanzie concrete e un servizio post-vendita affidabile.", "highlight": true } },
+        { "type": "slide", "settings": { "text": "La sostenibilità non è un'opzione: scegliamo marchi che rispettano l'ambiente e le persone." } },
+        { "type": "slide", "settings": { "text": "Il rapporto qualità-prezzo deve essere trasparente: nessun compromesso nascosto." } },
+        { "type": "slide", "settings": { "text": "L'innovazione conta: i migliori brand investono in ricerca per migliorare comfort e funzionalità." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

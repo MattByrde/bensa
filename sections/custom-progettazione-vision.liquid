@@ -1,0 +1,82 @@
+{{ 'section-custom-progettazione-vision.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    border-top: 1px solid #333;
+  }
+  .prog-vision-section {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+<div class="prog-vision-section">
+  {%- if section.settings.heading_light != blank or section.settings.heading_bold != blank -%}
+    <h2 class="prog-vision-heading typo-h2">
+      {%- if section.settings.heading_light != blank -%}
+        <span class="prog-vision-heading__light">{{ section.settings.heading_light }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading_bold != blank -%}
+        <span class="prog-vision-heading__bold">{{ section.settings.heading_bold }}</span>
+      {%- endif -%}
+    </h2>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Progettazione Vision",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 140
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "text",
+      "id": "heading_light",
+      "label": "Heading (light)",
+      "default": "Il nostro"
+    },
+    {
+      "type": "text",
+      "id": "heading_bold",
+      "label": "Heading (bold)",
+      "default": "approccio"
+    },
+  ],
+  "presets": [
+    {
+      "name": "Progettazione Vision",
+      "settings": {
+        "heading_light": "Il nostro",
+        "heading_bold": "approccio"
+      }
+    }
+  ]
+}
+{% endschema %}

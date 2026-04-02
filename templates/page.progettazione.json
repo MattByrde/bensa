@@ -1,0 +1,201 @@
+{
+  "sections": {
+    "prog_hero": {
+      "type": "custom-progettazione-hero",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "author_name": "Maria Rossi",
+            "author_location": "Cuneo",
+            "stars": 5,
+            "review_text": "Qualità eccezionale e un servizio clienti impeccabile. Il team ha ascoltato ogni nostra richiesta con grande attenzione."
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "author_name": "Luca Bianchi",
+            "author_location": "Torino",
+            "stars": 5,
+            "review_text": "Progettazione curata nei minimi dettagli. Dalla prima consulenza alla consegna, tutto perfetto."
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "author_name": "Giulia Verdi",
+            "author_location": "Alba",
+            "stars": 5,
+            "review_text": "Finalmente la casa che sognavo. Materiali di prima qualità e un'atmosfera che rispecchia esattamente la nostra personalità."
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "author_name": "Roberto Ferrari",
+            "author_location": "Vignolo",
+            "stars": 5,
+            "review_text": "Professionalità e competenza al massimo livello. Il rendering 3D ci ha permesso di vedere il risultato finale ancora prima dell'installazione."
+          }
+        }
+      },
+      "block_order": ["review_1", "review_2", "review_3", "review_4"],
+      "settings": {
+        "subtitle": "Progettazione",
+        "heading": "Progettiamo il tuo spazio ideale",
+        "subtext": "All'ingresso nel nostro showroom sarete accolti da personale esperto, pronto ad ascoltare con attenzione le vostre esigenze e i vostri desideri. Crediamo che l'ascolto sia il fondamento di ogni collaborazione di successo.",
+        "button_label": "Contattaci",
+        "score": "5.0",
+        "height": 75
+      }
+    },
+    "prog_bar": {
+      "type": "custom-progettazione-bar",
+      "blocks": {
+        "feat_1": {
+          "type": "feature",
+          "settings": {
+            "icon": "chat",
+            "label": "Consulenza gratuita",
+            "description": "Ascoltiamo ogni tua esigenza in showroom"
+          }
+        },
+        "feat_2": {
+          "type": "feature",
+          "settings": {
+            "icon": "pencil",
+            "label": "Progettazione 3D",
+            "description": "Rendering realistici prima dell'installazione"
+          }
+        },
+        "feat_3": {
+          "type": "feature",
+          "settings": {
+            "icon": "ruler",
+            "label": "Rilievo preciso",
+            "description": "Misurazioni laser per la massima precisione"
+          }
+        },
+        "feat_4": {
+          "type": "feature",
+          "settings": {
+            "icon": "tools",
+            "label": "Installazione chiavi in mano",
+            "description": "Tecnici specializzati, cura nei dettagli"
+          }
+        },
+      },
+      "block_order": ["feat_1", "feat_2", "feat_3", "feat_4"],
+      "settings": {}
+    },
+    "prog_showcase": {
+      "type": "custom-progettazione-showcase",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "title": "In armonia",
+            "description": "Lavoriamo fianco a fianco e impariamo dai designer che condividono la nostra visione. Perché quando è collettivo, la nostra prospettiva va più lontano."
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "title": "Artigianalità europea",
+            "description": "Produciamo in modo equo e trasparente, in collaborazione con artigiani europei. Manteniamo la produzione locale, garantendo qualità e responsabilità in ogni fase."
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "title": "Il design al centro",
+            "description": "Ogni progetto nasce dall'ascolto e prende forma attraverso la creatività condivisa tra designer, artigiani e clienti."
+          }
+        }
+      },
+      "block_order": ["row_1", "row_2", "row_3"],
+      "settings": {
+        "heading": "Collezioni esclusive con designer e artigiani che condividono la nostra visione",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "prog_steps": {
+      "type": "custom-progettazione-steps",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Progettazione",
+            "text": "Una volta discusse le esigenze del cliente, il nostro team sviluppa una o più bozze di progetto da valutare insieme. Dopo aver scelto la direzione, selezioniamo materiali, colori, tessuti e finiture per creare un'atmosfera personalizzata, supportati da immagini, mood board, disegni e rendering 3D."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Rilievo",
+            "text": "Il rilievo è una fase cruciale per la realizzazione del progetto. I nostri tecnici utilizzano tecnologia avanzata — livelli laser, distanziometri e stazioni totali — per garantire la massima precisione nelle misurazioni, fondamentali per la realizzazione dei disegni tecnici."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Installazione",
+            "text": "Tecnici specializzati eseguono l'installazione con cura e discrezione, prestando la massima attenzione ai dettagli. Il nostro supporto non si esaurisce con la consegna: siamo disponibili anche dopo la posa per qualsiasi esigenza."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "title": "La vostra casa",
+            "text": "I bozzetti diventano realtà. Arredi, colori, materiali e illuminazione si fondono per creare un'atmosfera che rispecchia la vostra personalità e le vostre emozioni. Il vostro spazio, finalmente come l'avevate immaginato."
+          }
+        }
+      },
+      "block_order": ["step_1", "step_2", "step_3", "step_4"],
+      "settings": {
+        "subtitle": "Il nostro processo",
+        "heading": "Dal progetto alla realtà",
+        "intro": "Ogni progetto nasce dall'ascolto. Seguiamo ogni cliente in ogni fase, dalla prima consulenza alla consegna chiavi in mano.",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+    "prog_approach": {
+      "type": "custom-progettazione-approach",
+      "blocks": {
+        "para_1": {
+          "type": "paragraph",
+          "settings": {
+            "text": "Partiamo sempre da un dialogo aperto con il cliente. Capire le abitudini, i desideri e lo stile di vita è il primo passo per trasformare un ambiente in qualcosa di unico e funzionale."
+          }
+        },
+        "para_2": {
+          "type": "paragraph",
+          "settings": {
+            "text": "Ogni progetto segue un percorso chiaro: dall'analisi dello spazio alla definizione del concept, dalla scelta dei materiali alla realizzazione finale. Nulla è lasciato al caso."
+          }
+        },
+        "para_3": {
+          "type": "paragraph",
+          "settings": {
+            "text": "Lavoriamo con artigiani e fornitori selezionati, privilegiando qualità e sostenibilità. Il risultato è un equilibrio tra estetica e praticità che dura nel tempo."
+          }
+        },
+        "para_4": {
+          "type": "paragraph",
+          "settings": {
+            "text": "Il nostro obiettivo non è solo creare ambienti belli, ma spazi che migliorano la qualità della vita quotidiana — dove ogni dettaglio ha un senso e ogni scelta è pensata per chi li abita."
+          }
+        }
+      },
+      "block_order": ["para_1", "para_2", "para_3", "para_4"],
+      "settings": {
+        "intro_text": "Il nostro approccio alla progettazione nasce dall'ascolto. Ogni spazio racconta una storia — il nostro compito è darle forma, rispettando chi lo vive ogni giorno."
+      }
+    }
+  },
+  "order": ["prog_hero", "prog_bar", "prog_steps", "prog_showcase", "prog_approach"]
+}

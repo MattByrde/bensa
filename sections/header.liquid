@@ -42,7 +42,7 @@
                 {%- endif -%}
               {%- endfor -%}
               <li class="site-nav__item site-nav__item--has-dropdown site-nav__item--megamenu" {% if mega_block %}{{ mega_block.shopify_attributes }}{% endif %}>
-                <a href="{{ link.url }}" class="site-nav__link">
+                <a href="{{ link.url }}" class="site-nav__link{% if request.path == link.url %} site-nav__link--active{% endif %}">
                   {{ link.title }}
                   <svg class="site-nav__chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2.5 3.75L5 6.25L7.5 3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
@@ -131,7 +131,7 @@
             {%- elsif link.title == 'Prodotti' -%}
               {%- comment -%} ═══ Prodotti — static megamenu with columns ═══ {%- endcomment -%}
               <li class="site-nav__item site-nav__item--has-dropdown site-nav__item--megamenu">
-                <a href="{{ link.url }}" class="site-nav__link">
+                <a href="{{ link.url }}" class="site-nav__link{% if request.path == link.url %} site-nav__link--active{% endif %}">
                   {{ link.title }}
                   <svg class="site-nav__chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2.5 3.75L5 6.25L7.5 3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
@@ -191,7 +191,7 @@
             {%- elsif link.title == 'Marchi' -%}
               {%- comment -%} ═══ Marchi — static megamenu with brand logo grid ═══ {%- endcomment -%}
               <li class="site-nav__item site-nav__item--has-dropdown site-nav__item--megamenu">
-                <a href="{{ link.url }}" class="site-nav__link">
+                <a href="{{ link.url }}" class="site-nav__link{% if request.path == link.url %} site-nav__link--active{% endif %}">
                   {{ link.title }}
                   <svg class="site-nav__chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2.5 3.75L5 6.25L7.5 3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
@@ -221,7 +221,7 @@
             {%- else -%}
               {%- comment -%} Simple link {%- endcomment -%}
               <li class="site-nav__item">
-                <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
+                <a href="{{ link.url }}" class="site-nav__link{% if request.path == link.url %} site-nav__link--active{% endif %}">{{ link.title }}</a>
               </li>
             {%- endif -%}
           {%- endfor -%}

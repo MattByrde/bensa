@@ -1,0 +1,21 @@
+.prog-vision-section {
+  padding: 80px 20px 100px;
+}
+
+@media screen and (min-width: 750px) {
+  .prog-vision-section {
+    padding: 100px 40px 140px;
+  }
+}
+
+.prog-vision-heading {
+  font-size: clamp(2.5rem, 6vw, 3rem);
+  line-height: 1.1;
+  margin: 0;
+  font-weight: 600;
+}
+
+.prog-vision-heading__light,
+.prog-vision-heading__bold {
+  color: #ffffff;
+}

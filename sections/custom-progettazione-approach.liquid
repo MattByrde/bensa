@@ -1,0 +1,140 @@
+{{ 'section-custom-progettazione-approach.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+  .prog-approach {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+<div class="prog-approach">
+  <div class="prog-approach__layout">
+
+    {%- comment -%} Left: paragraphs {%- endcomment -%}
+    <div class="prog-approach__left">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.text != blank -%}
+          <p class="prog-approach__text" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- comment -%} Scattered images {%- endcomment -%}
+      <div class="prog-approach__scatter">
+        {%- if section.settings.scatter_1 != blank -%}
+          <div class="prog-approach__scatter-img prog-approach__scatter-img--1">
+            {{ section.settings.scatter_1 | image_url: width: 360 | image_tag: loading: 'lazy' }}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.scatter_2 != blank -%}
+          <div class="prog-approach__scatter-img prog-approach__scatter-img--2">
+            {{ section.settings.scatter_2 | image_url: width: 300 | image_tag: loading: 'lazy' }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} Right: intro text + image {%- endcomment -%}
+    <div class="prog-approach__right">
+      {%- if section.settings.intro_text != blank -%}
+        <p class="prog-approach__intro">{{ section.settings.intro_text }}</p>
+      {%- endif -%}
+      <div class="prog-approach__image">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 800 | image_tag: loading: 'lazy' }}
+        {%- else -%}
+          <div class="prog-approach__placeholder">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Progettazione Approach",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 140
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "textarea",
+      "id": "intro_text",
+      "label": "Intro Text (large)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "scatter_1",
+      "label": "Scatter Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "scatter_2",
+      "label": "Scatter Image 2"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "paragraph",
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Progettazione Approach",
+      "settings": {
+        "intro_text": "Il nostro approccio alla progettazione nasce dall'ascolto. Ogni spazio racconta una storia — il nostro compito è darle forma, rispettando chi lo vive ogni giorno."
+      },
+      "blocks": [
+        { "type": "paragraph", "settings": { "text": "Partiamo sempre da un dialogo aperto con il cliente. Capire le abitudini, i desideri e lo stile di vita è il primo passo per trasformare un ambiente in qualcosa di unico e funzionale." } },
+        { "type": "paragraph", "settings": { "text": "Ogni progetto segue un percorso chiaro: dall'analisi dello spazio alla definizione del concept, dalla scelta dei materiali alla realizzazione finale. Nulla è lasciato al caso." } },
+        { "type": "paragraph", "settings": { "text": "Lavoriamo con artigiani e fornitori selezionati, privilegiando qualità e sostenibilità. Il risultato è un equilibrio tra estetica e praticità che dura nel tempo." } },
+        { "type": "paragraph", "settings": { "text": "Il nostro obiettivo non è solo creare ambienti belli, ma spazi che migliorano la qualità della vita quotidiana — dove ogni dettaglio ha un senso e ogni scelta è pensata per chi li abita." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

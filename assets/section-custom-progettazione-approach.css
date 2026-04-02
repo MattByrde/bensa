@@ -1,0 +1,128 @@
+/* ── Progettazione Approach (flipped story) ── */
+.prog-approach {
+  padding: 80px 20px 100px;
+  max-width: 1475px;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 750px) {
+  .prog-approach {
+    padding: 100px 40px 140px;
+  }
+}
+
+.prog-approach__layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10rem;
+}
+
+/* ── Left column: paragraphs ── */
+.prog-approach__left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.prog-approach__text {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* ── Scattered images ── */
+.prog-approach__scatter {
+  display: flex;
+  gap: 16px;
+  margin-top: 48px;
+  align-items: flex-start;
+}
+
+.prog-approach__scatter-img {
+  overflow: hidden;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.prog-approach__scatter-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.prog-approach__scatter-img--1 {
+  width: 48%;
+  aspect-ratio: 4 / 3;
+  transform: rotate(-2deg);
+  margin-top: 20px;
+}
+
+.prog-approach__scatter-img--2 {
+  width: 40%;
+  aspect-ratio: 3 / 4;
+  transform: rotate(3deg);
+  margin-left: auto;
+}
+
+/* ── Right column: intro + image ── */
+.prog-approach__right {
+  display: flex;
+  flex-direction: column;
+}
+
+.prog-approach__intro {
+font-size: clamp(1.1rem, 1.8vw, 1.75rem);
+    line-height: 1.35;
+    font-weight: 500;
+    color: #fff;
+    margin: auto;
+    max-width: 500px;
+    margin-top: 0;
+}
+
+.prog-approach__image {
+  width: 90%;
+  aspect-ratio: 6 / 4;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-left: auto;
+}
+
+.prog-approach__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.prog-approach__placeholder {
+  width: 100%;
+  height: 100%;
+  background: #e8e4de;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prog-approach__placeholder svg {
+  width: 40%;
+  opacity: 0.3;
+}
+
+/* ── Mobile ── */
+@media (max-width: 749px) {
+  .prog-approach__layout {
+    grid-template-columns: 1fr;
+    gap: 10rem;
+  }
+
+  .prog-approach__layout > .prog-approach__right {
+    order: -1;
+  }
+
+  .prog-approach__image {
+    margin-left: 0;
+  }
+}

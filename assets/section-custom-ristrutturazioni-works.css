@@ -1,0 +1,259 @@
+/* ── Works Carousel (full-width portfolio carousel) ── */
+.works-carousel {
+  position: relative;
+  overflow: clip;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  container-type: inline-size;
+}
+
+/* ── Per-card centered title ── */
+.works-carousel__card-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  color: #fff;
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.05;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  width: 100%;
+}
+
+@media screen and (min-width: 750px) {
+  .works-carousel__card-title {
+    font-size: clamp(1.75rem, 2.5vw, 3rem);
+  }
+}
+
+/* ── Per-card bottom button ── */
+.works-carousel__card-bottom {
+  position: absolute;
+  bottom: 24px;
+  left: 22px;
+  right: 22px;
+  z-index: 6;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+
+.works-carousel__card-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: transparent;
+  border: 1.5px solid #fff;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.works-carousel__card-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
+}
+
+/* ── Scroller ── */
+.works-carousel__scroller {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0;
+  cursor: grab;
+}
+
+.works-carousel__scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.works-carousel__scroller.is-dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.works-carousel__track {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  height: 100%;
+}
+
+/* ── Card ── */
+.works-carousel__card {
+  position: relative;
+  flex: 0 0 280px;
+  height: 320px;
+  border-radius: 0;
+  overflow: hidden;
+  scroll-snap-align: start;
+  transform: translateZ(0);
+  background-color: #fff;
+}
+
+@media screen and (min-width: 750px) {
+  .works-carousel__card {
+    flex: 0 0 calc(100cqw / 4);
+    height: auto;
+    min-height: calc(100cqw / 4 * 1.2);
+  }
+
+  .works-carousel__scroller {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+
+/* ── Media Background ── */
+.works-carousel__media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.works-carousel__media-el {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.works-carousel__card:hover .works-carousel__media-el {
+  transform: scale(1.05);
+}
+
+/* ── Overlay ── */
+.works-carousel__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0) 30%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 40%);
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+/* ── Card Inner ── */
+.works-carousel__card-inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 22px;
+  z-index: 4;
+}
+
+/* ── Card Top: Tag ── */
+.works-carousel__card-top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.works-carousel__tag {
+  display: inline-flex;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 0.6875rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  line-height: 1.4;
+}
+
+/* ── Navigation Arrow ── */
+.works-carousel__next-float {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 48px;
+  height: 64px;
+  border: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.2s ease;
+}
+
+.works-carousel__next-float:hover {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+@media screen and (min-width: 750px) {
+  .works-carousel__next-float {
+    display: flex;
+  }
+}
+
+/* ── Dot Indicators ── */
+.works-carousel__dots {
+  display: none;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 0 0 0;
+  position: relative;
+  z-index: 10;
+}
+
+.works-carousel__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.works-carousel__dot:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.works-carousel__dot.is-active {
+  background: #333;
+  transform: scale(1.25);
+}

@@ -1,0 +1,432 @@
+{{ 'section-custom-ristrutturazioni-approach.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+  .ristr-approach {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+<div class="ristr-approach">
+  <div class="ristr-approach__layout">
+
+    {%- comment -%} Left: top scatter + paragraphs + bottom scatter {%- endcomment -%}
+    <div class="ristr-approach__left">
+
+      {%- comment -%} Top scattered images {%- endcomment -%}
+      <div class="ristr-approach__scatter ristr-approach__scatter--top">
+        {%- if section.settings.scatter_top_1 != blank -%}
+          <div class="ristr-approach__scatter-img ristr-approach__scatter-img--1">
+            {{ section.settings.scatter_top_1 | image_url: width: 360 | image_tag: loading: 'lazy' }}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.scatter_top_2 != blank -%}
+          <div class="ristr-approach__scatter-img ristr-approach__scatter-img--2">
+            {{ section.settings.scatter_top_2 | image_url: width: 300 | image_tag: loading: 'lazy' }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Text paragraphs {%- endcomment -%}
+      <div class="ristr-approach__texts">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.text != blank -%}
+            <p class="ristr-approach__text" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Bottom scattered images {%- endcomment -%}
+      <div class="ristr-approach__scatter ristr-approach__scatter--bottom">
+        {%- if section.settings.scatter_bottom_1 != blank -%}
+          <div class="ristr-approach__scatter-img ristr-approach__scatter-img--3">
+            {{ section.settings.scatter_bottom_1 | image_url: width: 360 | image_tag: loading: 'lazy' }}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.scatter_bottom_2 != blank -%}
+          <div class="ristr-approach__scatter-img ristr-approach__scatter-img--4">
+            {{ section.settings.scatter_bottom_2 | image_url: width: 300 | image_tag: loading: 'lazy' }}
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+
+    {%- comment -%} Right: intro text + image {%- endcomment -%}
+    <div class="ristr-approach__right">
+      {%- if section.settings.intro_text != blank -%}
+        <p class="ristr-approach__intro">{{ section.settings.intro_text }}</p>
+      {%- endif -%}
+      {%- comment -%} Video Ask player {%- endcomment -%}
+      <div class="ristr-approach__image ristr-approach__video-ask" data-ristr-video-ask>
+        <script type="application/json" data-ristr-va-nodes>
+          [
+            {%- assign va_index = 0 -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'video_node' -%}
+                {%- assign va_index = va_index | plus: 1 -%}
+                {
+                  "index": {{ va_index }},
+                  "video_url": {{ block.settings.video_url | json }},
+                  "video_shopify": {% if block.settings.video != blank %}[{% for source in block.settings.video.sources %}{"url":{{ source.url | json }},"mime_type":{{ source.mime_type | json }}}{% unless forloop.last %},{% endunless %}{% endfor %}]{% else %}null{% endif %},
+                  "poster": {% if block.settings.poster != blank %}{{ block.settings.poster | image_url: width: 1280 | json }}{% else %}null{% endif %},
+                  "btn_a_label": {{ block.settings.btn_a_label | json }},
+                  "btn_a_action": {{ block.settings.btn_a_action | json }},
+                  "btn_a_target_node": {{ block.settings.btn_a_target_node | json }},
+                  "btn_a_link": {{ block.settings.btn_a_link | json }},
+                  "btn_b_label": {{ block.settings.btn_b_label | json }},
+                  "btn_b_action": {{ block.settings.btn_b_action | json }},
+                  "btn_b_target_node": {{ block.settings.btn_b_target_node | json }},
+                  "btn_b_link": {{ block.settings.btn_b_link | json }},
+                  "btn_c_label": {{ block.settings.btn_c_label | json }},
+                  "btn_c_action": {{ block.settings.btn_c_action | json }},
+                  "btn_c_target_node": {{ block.settings.btn_c_target_node | json }},
+                  "btn_c_link": {{ block.settings.btn_c_link | json }}
+                },
+              {%- endif -%}
+            {%- endfor -%}
+            null
+          ]
+        </script>
+
+        <video class="ristr-approach__video" playsinline autoplay muted preload="auto" data-ristr-va-video></video>
+
+        {%- comment -%} TikTok-style top-right controls {%- endcomment -%}
+        <div class="ristr-va__top-controls">
+          <button class="ristr-va__icon-btn" data-ristr-va-mute aria-label="Mute/Unmute">
+            <svg class="ristr-va__icon-muted" width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><line x1="11" y1="5" x2="15" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="5" x2="11" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <svg class="ristr-va__icon-unmuted" width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><path d="M11 5.5C11.8 6.3 12.25 7.4 12.25 8.5C12.25 9.6 11.8 10.7 11 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 3.5C14.3 4.8 15 6.6 15 8.5C15 10.4 14.3 12.2 13 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <button class="ristr-va__icon-btn" data-ristr-va-playpause aria-label="Play/Pause">
+            <svg class="ristr-va__icon-pause" width="20" height="20" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="4" height="12" rx="1" fill="currentColor"/><rect x="9" y="2" width="4" height="12" rx="1" fill="currentColor"/></svg>
+            <svg class="ristr-va__icon-play" width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M4 2.5L13 8L4 13.5V2.5Z" fill="currentColor"/></svg>
+          </button>
+        </div>
+
+        <div class="ristr-va__pause-indicator">
+          <svg width="48" height="48" viewBox="0 0 16 16" fill="none"><path d="M4 2.5L13 8L4 13.5V2.5Z" fill="currentColor"/></svg>
+        </div>
+
+        {%- comment -%} Interactive buttons {%- endcomment -%}
+        <div class="ristr-approach__va-interactive" data-ristr-va-interactive>
+          <div class="ristr-approach__va-btns" data-ristr-va-btns></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function() {
+  document.querySelectorAll('[data-ristr-video-ask]').forEach(function(section) {
+    var nodesJSON = section.querySelector('[data-ristr-va-nodes]');
+    if (!nodesJSON) return;
+    var raw = JSON.parse(nodesJSON.textContent);
+    var nodes = raw.filter(function(n) { return n !== null; });
+    if (!nodes.length) return;
+
+    var video = section.querySelector('[data-ristr-va-video]');
+    var interactiveEl = section.querySelector('[data-ristr-va-interactive]');
+    var btnsEl = section.querySelector('[data-ristr-va-btns]');
+
+    var currentNode = null;
+
+    function findNode(target) {
+      var idx = parseInt(target, 10);
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].index === idx) return nodes[i];
+      }
+      return null;
+    }
+
+    function loadNode(node) {
+      if (!node) return;
+      currentNode = node;
+      interactiveEl.classList.remove('is-visible');
+      section.classList.remove('has-ended');
+      btnsEl.innerHTML = '';
+
+      /* Create a new hidden video, swap only when ready */
+      var newVideo = document.createElement('video');
+      newVideo.className = video.className;
+      newVideo.setAttribute('playsinline', '');
+      newVideo.setAttribute('preload', 'auto');
+      newVideo.muted = true;
+      newVideo.autoplay = true;
+      newVideo.loop = video.loop;
+      Object.keys(video.dataset).forEach(function(k) { newVideo.dataset[k] = video.dataset[k]; });
+
+      if (node.video_shopify && node.video_shopify.length) {
+        node.video_shopify.forEach(function(src) {
+          var s = document.createElement('source');
+          s.src = src.url;
+          s.type = src.mime_type;
+          newVideo.appendChild(s);
+        });
+      } else if (node.video_url) {
+        var s = document.createElement('source');
+        s.src = node.video_url;
+        s.type = 'video/mp4';
+        newVideo.appendChild(s);
+      }
+
+      if (node.poster) newVideo.poster = node.poster;
+      newVideo.load();
+
+      /* Wait until enough data is buffered, then swap instantly */
+      newVideo.addEventListener('canplay', function onReady() {
+        newVideo.removeEventListener('canplay', onReady);
+        video.parentNode.replaceChild(newVideo, video);
+        video = newVideo;
+        video.play().catch(function(){});
+        section.classList.add('is-playing');
+        section.classList.remove('is-unmuted');
+        showButtons();
+        bindVideoEvents();
+      }, { once: true });
+
+      /* Fallback: if canplay doesn't fire within 3s, swap anyway */
+      setTimeout(function() {
+        if (newVideo.parentNode !== video.parentNode) {
+          video.parentNode.replaceChild(newVideo, video);
+          video = newVideo;
+          video.play().catch(function(){});
+          section.classList.add('is-playing');
+          showButtons();
+          bindVideoEvents();
+        }
+      }, 3000);
+    }
+
+    function showButtons() {
+      if (!currentNode) return;
+      btnsEl.innerHTML = '';
+      var badges = ['A', 'B', 'C'];
+      var badgeClasses = ['ristr-va__badge--a', 'ristr-va__badge--b', 'ristr-va__badge--c'];
+      var btnKeys = [
+        { label: 'btn_a_label', action: 'btn_a_action', target: 'btn_a_target_node', link: 'btn_a_link' },
+        { label: 'btn_b_label', action: 'btn_b_action', target: 'btn_b_target_node', link: 'btn_b_link' },
+        { label: 'btn_c_label', action: 'btn_c_action', target: 'btn_c_target_node', link: 'btn_c_link' }
+      ];
+      btnKeys.forEach(function(k, i) {
+        var lbl = currentNode[k.label];
+        if (!lbl) return;
+        var action = currentNode[k.action];
+        var target = currentNode[k.target];
+        var link = currentNode[k.link];
+        var btn;
+        if (action === 'link' && link) {
+          btn = document.createElement('a');
+          btn.href = link;
+          btn.className = 'ristr-va__btn-pill';
+        } else {
+          btn = document.createElement('button');
+          btn.className = 'ristr-va__btn-pill';
+          btn.type = 'button';
+          btn.addEventListener('click', function() {
+            if (action === 'video' && target) {
+              var next = findNode(target);
+              if (next) loadNode(next);
+            }
+          });
+        }
+        btn.innerHTML = '<span class="ristr-va__badge ' + badgeClasses[i] + '">' + badges[i] + '</span><span>' + lbl + '</span>';
+        btnsEl.appendChild(btn);
+      });
+      if (btnsEl.children.length) interactiveEl.classList.add('is-visible');
+    }
+
+    function bindVideoEvents() {
+      video.addEventListener('ended', function() {
+        section.classList.remove('is-playing');
+        section.classList.add('has-ended');
+        showButtons();
+      });
+      video.addEventListener('click', function(e) {
+        if (interactiveEl.classList.contains('is-visible')) return;
+        if (video.paused) { video.play().catch(function(){}); }
+        else { video.pause(); }
+      });
+      video.addEventListener('playing', function() { section.classList.add('is-playing'); });
+      video.addEventListener('pause', function() { section.classList.remove('is-playing'); });
+    }
+
+    bindVideoEvents();
+
+    section.querySelector('[data-ristr-va-playpause]').addEventListener('click', function() {
+      if (video.paused) { video.play().catch(function(){}); }
+      else { video.pause(); }
+    });
+
+    section.querySelector('[data-ristr-va-mute]').addEventListener('click', function() {
+      video.muted = !video.muted;
+      section.classList.toggle('is-unmuted', !video.muted);
+    });
+
+    loadNode(nodes[0]);
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Ristrutturazioni Approach",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 140
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "textarea",
+      "id": "intro_text",
+      "label": "Intro Text (large)"
+    },
+    {
+      "type": "header",
+      "content": "Top Scatter Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "scatter_top_1",
+      "label": "Top Scatter Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "scatter_top_2",
+      "label": "Top Scatter Image 2"
+    },
+    {
+      "type": "header",
+      "content": "Bottom Scatter Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "scatter_bottom_1",
+      "label": "Bottom Scatter Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "scatter_bottom_2",
+      "label": "Bottom Scatter Image 2"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "paragraph",
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "video_node",
+      "name": "Video Node",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (Shopify hosted)"
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Video URL (external MP4)"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster",
+          "label": "Poster / Thumbnail"
+        },
+        { "type": "header", "content": "Button A" },
+        { "type": "text", "id": "btn_a_label", "label": "Label" },
+        {
+          "type": "select",
+          "id": "btn_a_action",
+          "label": "Action",
+          "options": [
+            { "value": "video", "label": "Play another video node" },
+            { "value": "link", "label": "Go to page" }
+          ],
+          "default": "video"
+        },
+        { "type": "text", "id": "btn_a_target_node", "label": "Target Node #", "info": "Enter the number of the Video Node to jump to (1 = first, 2 = second, etc.)" },
+        { "type": "url", "id": "btn_a_link", "label": "Link URL" },
+        { "type": "header", "content": "Button B" },
+        { "type": "text", "id": "btn_b_label", "label": "Label" },
+        {
+          "type": "select",
+          "id": "btn_b_action",
+          "label": "Action",
+          "options": [
+            { "value": "video", "label": "Play another video node" },
+            { "value": "link", "label": "Go to page" }
+          ],
+          "default": "video"
+        },
+        { "type": "text", "id": "btn_b_target_node", "label": "Target Node #" },
+        { "type": "url", "id": "btn_b_link", "label": "Link URL" },
+        { "type": "header", "content": "Button C" },
+        { "type": "text", "id": "btn_c_label", "label": "Label" },
+        {
+          "type": "select",
+          "id": "btn_c_action",
+          "label": "Action",
+          "options": [
+            { "value": "video", "label": "Play another video node" },
+            { "value": "link", "label": "Go to page" }
+          ],
+          "default": "video"
+        },
+        { "type": "text", "id": "btn_c_target_node", "label": "Target Node #" },
+        { "type": "url", "id": "btn_c_link", "label": "Link URL" }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "Ristrutturazioni Approach",
+      "settings": {
+        "intro_text": "Ristrutturare significa dare nuova vita agli spazi, rispettando la storia di ogni edificio e le esigenze di chi lo abita."
+      },
+      "blocks": [
+        { "type": "paragraph", "settings": { "text": "Ogni ristrutturazione parte da un'analisi attenta dello stato esistente. Valutiamo struttura, impianti e potenzialità per definire un intervento mirato ed efficace." } },
+        { "type": "paragraph", "settings": { "text": "Coordiniamo ogni fase del cantiere con precisione, dalla demolizione alla finitura, garantendo tempi certi e qualità costante in ogni dettaglio." } },
+        { "type": "paragraph", "settings": { "text": "Il risultato è uno spazio rinnovato che unisce comfort moderno e carattere autentico, pensato per durare e per essere vissuto ogni giorno." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

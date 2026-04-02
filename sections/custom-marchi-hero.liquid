@@ -1,0 +1,390 @@
+{{ 'section-custom-marchi-hero.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: 0;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: 0;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="marchi-carousel" data-marchi-carousel>
+
+  {%- comment -%} Intro Panel (left side) {%- endcomment -%}
+  <div class="marchi-carousel__intro">
+    <div class="marchi-carousel__intro-content">
+      {%- if section.settings.subtitle != blank -%}
+        <span class="marchi-carousel__subtitle">{{ section.settings.subtitle }}</span>
+      {%- endif -%}
+      {%- if section.settings.intro_heading != blank -%}
+        <h2 class="marchi-carousel__intro-heading typo-h1">{{ section.settings.intro_heading }}</h2>
+      {%- endif -%}
+      <div class="marchi-carousel__intro-bottom">
+        {%- if section.settings.intro_subtext != blank -%}
+          <div class="marchi-carousel__intro-subtext">{{ section.settings.intro_subtext }}</div>
+        {%- endif -%}
+        {%- if section.settings.intro_button_label != blank -%}
+          <a href="{{ section.settings.intro_button_link | default: '#' }}" class="marchi-carousel__intro-btn typo-btn">
+            {{ section.settings.intro_button_label }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Scroll area with brand cards {%- endcomment -%}
+  <div class="marchi-carousel__scroller" data-marchi-scroller>
+    <div class="marchi-carousel__track" data-marchi-track>
+      {%- for block in section.blocks -%}
+        <div class="marchi-carousel__card" {{ block.shopify_attributes }}>
+
+          {%- comment -%} Background Image {%- endcomment -%}
+          <div class="marchi-carousel__media">
+            {%- if block.settings.image != blank -%}
+              {%- if forloop.first -%}
+                {{ block.settings.image | image_url: width: 800 | image_tag: class: 'marchi-carousel__media-el', loading: 'eager', fetchpriority: 'high' }}
+              {%- else -%}
+                {{ block.settings.image | image_url: width: 800 | image_tag: class: 'marchi-carousel__media-el', loading: 'lazy' }}
+              {%- endif -%}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'marchi-carousel__media-el placeholder-svg' }}
+            {%- endif -%}
+          </div>
+
+          {%- comment -%} Gradient Overlay {%- endcomment -%}
+          <div class="marchi-carousel__overlay"></div>
+
+          {%- comment -%} Card Content {%- endcomment -%}
+          <div class="marchi-carousel__card-inner">
+            <div class="marchi-carousel__card-top">
+              {%- if block.settings.tag != blank -%}
+                <span class="marchi-carousel__tag">{{ block.settings.tag }}</span>
+              {%- endif -%}
+            </div>
+
+            <div class="marchi-carousel__card-center">
+              {%- if block.settings.logo != blank -%}
+                {%- assign logo_alt = block.settings.brand_name | default: '' | escape -%}
+                {{ block.settings.logo | image_url: width: 400 | image_tag: class: 'marchi-carousel__logo-img', loading: 'lazy', alt: logo_alt }}
+              {%- endif -%}
+            </div>
+
+            {%- comment -%} Product strip (bottom-left, like tiktok carousel) {%- endcomment -%}
+            {%- if block.settings.product != blank -%}
+              {%- assign p = block.settings.product -%}
+              <a href="{{ p.url }}" class="marchi-carousel__product">
+                {%- if p.featured_image != blank -%}
+                  <div class="marchi-carousel__product-img">
+                    {{ p.featured_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
+                  </div>
+                {%- endif -%}
+                <div class="marchi-carousel__product-info">
+                  <span class="marchi-carousel__product-title typo-h4">{{ p.title }}</span>
+                  <span class="marchi-carousel__product-price typo-caption">{{ p.price | money }}</span>
+                </div>
+                <span class="marchi-carousel__product-btn" aria-label="Vedi prodotto">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </span>
+              </a>
+            {%- elsif block.settings.product_title != blank -%}
+              <div class="marchi-carousel__product">
+                {%- if block.settings.product_image != blank -%}
+                  <div class="marchi-carousel__product-img">
+                    {{ block.settings.product_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
+                  </div>
+                {%- endif -%}
+                <div class="marchi-carousel__product-info">
+                  <span class="marchi-carousel__product-title typo-h4">{{ block.settings.product_title }}</span>
+                  {%- if block.settings.product_price != blank -%}
+                    <span class="marchi-carousel__product-price typo-caption">{{ block.settings.product_price }}</span>
+                  {%- endif -%}
+                </div>
+                <span class="marchi-carousel__product-btn" aria-label="Vedi prodotto">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </span>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} Floating next arrow {%- endcomment -%}
+  <button class="marchi-carousel__next-float" data-marchi-next aria-label="Next">
+    <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  {%- comment -%} Dot Indicators {%- endcomment -%}
+  <div class="marchi-carousel__dots" data-marchi-dots>
+    {%- for block in section.blocks -%}
+      <button class="marchi-carousel__dot{% if forloop.first %} is-active{% endif %}" data-dot-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+    {%- endfor -%}
+  </div>
+</div>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-marchi-carousel]').forEach(function (carousel) {
+      var scroller = carousel.querySelector('[data-marchi-scroller]');
+      var track = carousel.querySelector('[data-marchi-track]');
+      if (!scroller || !track || track.children.length < 2) return;
+
+      var origCards = Array.from(track.children);
+      var n = origCards.length;
+
+      /* ── Infinite loop: clone before + after ── */
+      origCards.forEach(function (c) {
+        track.appendChild(c.cloneNode(true));
+      });
+      origCards.forEach(function (c) {
+        track.insertBefore(c.cloneNode(true), track.firstChild);
+      });
+
+      var gap = parseFloat(getComputedStyle(track).gap) || 0;
+
+      function cardW() {
+        return track.children[0].offsetWidth + gap;
+      }
+
+      function jumpToMiddle(instant) {
+        var w = cardW();
+        if (instant) {
+          scroller.style.scrollBehavior = 'auto';
+          scroller.scrollLeft = w * n;
+          scroller.style.scrollBehavior = '';
+        }
+      }
+
+      requestAnimationFrame(function () { requestAnimationFrame(function () { jumpToMiddle(true); }); });
+
+      var ticking = false;
+      scroller.addEventListener('scroll', function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          ticking = false;
+          var w = cardW();
+          var sl = scroller.scrollLeft;
+          var total = w * n;
+          if (sl < w * 0.5) {
+            scroller.style.scrollBehavior = 'auto';
+            scroller.scrollLeft = sl + total;
+            scroller.style.scrollBehavior = '';
+          } else if (sl >= w * (n * 2 - 0.5)) {
+            scroller.style.scrollBehavior = 'auto';
+            scroller.scrollLeft = sl - total;
+            scroller.style.scrollBehavior = '';
+          }
+        });
+      });
+
+      /* ── Drag / swipe ── */
+      var isDragging = false;
+      var startX = 0;
+      var scrollStart = 0;
+      var velocity = 0;
+      var lastX = 0;
+      var lastTime = 0;
+
+      function onPointerDown(e) {
+        isDragging = true;
+        startX = e.pageX || e.touches[0].pageX;
+        scrollStart = scroller.scrollLeft;
+        lastX = startX;
+        lastTime = Date.now();
+        velocity = 0;
+        scroller.style.scrollSnapType = 'none';
+        scroller.style.cursor = 'grabbing';
+        scroller.classList.add('is-dragging');
+      }
+
+      function onPointerMove(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        var x = e.pageX || e.touches[0].pageX;
+        var now = Date.now();
+        var dt = now - lastTime;
+        if (dt > 0) velocity = (lastX - x) / dt;
+        lastX = x;
+        lastTime = now;
+        scroller.scrollLeft = scrollStart - (x - startX);
+      }
+
+      function onPointerUp() {
+        if (!isDragging) return;
+        isDragging = false;
+        scroller.style.cursor = '';
+        scroller.classList.remove('is-dragging');
+        var w = cardW();
+        var momentum = velocity * 300;
+        var target = Math.round((scroller.scrollLeft + momentum) / w) * w;
+        scroller.style.scrollSnapType = '';
+        scroller.scrollTo({ left: target, behavior: 'smooth' });
+      }
+
+      scroller.addEventListener('mousedown', onPointerDown);
+      scroller.addEventListener('mousemove', onPointerMove);
+      scroller.addEventListener('mouseup', onPointerUp);
+      scroller.addEventListener('mouseleave', onPointerUp);
+      scroller.addEventListener('touchstart', onPointerDown, { passive: true });
+      scroller.addEventListener('touchmove', onPointerMove, { passive: false });
+      scroller.addEventListener('touchend', onPointerUp);
+
+      scroller.addEventListener('click', function (e) {
+        if (Math.abs(lastX - startX) > 5) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+
+      /* ── Next arrow ── */
+      var nextBtn = carousel.querySelector('[data-marchi-next]');
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function () {
+          stopAuto();
+          scroller.scrollBy({ left: cardW(), behavior: 'smooth' });
+          setTimeout(startAuto, 3000);
+        });
+      }
+
+      /* ── Auto-play ── */
+      var autoInterval = null;
+      function startAuto() {
+        stopAuto();
+        autoInterval = setInterval(function () {
+          scroller.scrollBy({ left: cardW(), behavior: 'smooth' });
+        }, 6000);
+      }
+      function stopAuto() {
+        if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
+      }
+
+      startAuto();
+      carousel.addEventListener('mouseenter', stopAuto);
+      carousel.addEventListener('mouseleave', startAuto);
+      scroller.addEventListener('touchstart', stopAuto, { passive: true });
+      scroller.addEventListener('touchend', function () { setTimeout(startAuto, 3000); });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Marchi Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Colore sfondo",
+      "default": "#f5f3ec"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sottotitolo",
+      "default": "Marchi"
+    },
+    {
+      "type": "text",
+      "id": "intro_heading",
+      "label": "Titolo",
+      "default": "I nostri marchi"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_subtext",
+      "label": "Testo introduttivo",
+      "default": "<p>Collaboriamo con i migliori marchi a livello mondiale per offrirvi qualità e design senza compromessi.</p>"
+    },
+    {
+      "type": "text",
+      "id": "intro_button_label",
+      "label": "Testo pulsante",
+      "default": "Scopri di più"
+    },
+    {
+      "type": "url",
+      "id": "intro_button_link",
+      "label": "Link pulsante"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding inferiore",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand_card",
+      "name": "Brand",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Immagine sfondo"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo brand"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag (es. Novità, Cucine, Bagni)",
+          "info": "Etichetta pill mostrata in alto."
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Prodotto",
+          "info": "Seleziona un prodotto per la strip in basso."
+        },
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Immagine prodotto (manuale)",
+          "info": "Usata solo se nessun prodotto è selezionato."
+        },
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "Titolo prodotto (manuale)",
+          "info": "Usato solo se nessun prodotto è selezionato."
+        },
+        {
+          "type": "text",
+          "id": "product_price",
+          "label": "Prezzo prodotto (manuale)",
+          "info": "Usato solo se nessun prodotto è selezionato. Es. €480"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marchi Hero",
+      "blocks": [
+        { "type": "brand_card" },
+        { "type": "brand_card" },
+        { "type": "brand_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}

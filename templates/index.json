@@ -9,6 +9,49 @@
  */
 {
   "sections": {
+    "home_hero": {
+      "type": "custom-home-hero",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "subtitle": "Bensa Arredamenti",
+            "heading": "Progettiamo ambienti che raccontano chi sei",
+            "subtext": "Da oltre 40 anni trasformiamo visioni in spazi unici. Consulenza, progettazione e realizzazione completa per la tua casa o il tuo studio.",
+            "button_label": "Prenota un appuntamento",
+            "button_label_2": "Le nostre realizzazioni"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "subtitle": "Showroom Cuneo",
+            "heading": "Oltre 50 brand italiani e internazionali",
+            "subtext": "Tocca con mano i materiali, prova le finiture e lasciati guidare dai nostri consulenti nella scelta perfetta.",
+            "button_label": "Visita lo showroom",
+            "button_label_2": "Scopri i marchi"
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "subtitle": "Per professionisti",
+            "heading": "Sei un architetto? Collabora con noi",
+            "subtext": "Supporto tecnico dedicato, listini riservati e un partner affidabile per i tuoi progetti di interior design.",
+            "button_label": "Diventa partner",
+            "button_label_2": "Scopri i vantaggi"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3"
+      ],
+      "settings": {
+        "height": 80
+      }
+    },
     "card_carousel": {
       "type": "custom-card-carousel",
       "blocks": {
@@ -877,6 +920,7 @@
     }
   },
   "order": [
+    "home_hero",
     "card_carousel",
     "category_pills",
     "custom_featured_grid",

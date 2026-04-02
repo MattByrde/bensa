@@ -1,0 +1,326 @@
+/* ── Progettazione Hero ── */
+.prog-hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+}
+
+/* ── Background Image ── */
+.prog-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.prog-hero__media img,
+.prog-hero__media .placeholder-svg,
+.prog-hero__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.prog-hero__video-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: -1;
+}
+
+/* ── Overlay ── */
+.prog-hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 40%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 50%);
+  pointer-events: none;
+}
+
+/* ── Inner layout ── */
+.prog-hero__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 32px;
+  padding: 80px 32px 60px;
+}
+
+@media screen and (min-width: 750px) {
+  .prog-hero__inner {
+    padding: 100px 60px 72px;
+    align-items: center;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .prog-hero__inner {
+    padding: 120px 80px 88px;
+  }
+}
+
+/* ── Left Content ── */
+.prog-hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 520px;
+  flex: 1;
+  min-width: 0;
+}
+
+.prog-hero__subtitle {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.prog-hero__heading {
+  color: #fff;
+  margin: 0;
+  font-size: clamp(2.2rem, 4.5vw, 4.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.prog-hero__subtext {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 80%;
+}
+
+.prog-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  background: var(--color-accent, #1E8BA8);
+  border: 1.5px solid var(--color-accent, #1E8BA8);
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  align-self: flex-start;
+  margin-top: 4px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.prog-hero__btn:hover {
+  background: #17748d;
+  border-color: #17748d;
+}
+
+/* ── Right: Reviews Card ── */
+.prog-hero__reviews {
+  display: none;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (min-width: 900px) {
+  .prog-hero__reviews {
+    display: flex;
+  }
+}
+
+.prog-hero__reviews-card {
+  width: 560px;
+  background: rgba(20, 20, 20, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  padding: 20px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Reviews header: stars summary ── */
+.prog-hero__reviews-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.prog-hero__reviews-stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.prog-hero__reviews-stars svg {
+  fill: #f5c518;
+  color: #f5c518;
+}
+
+.prog-hero__reviews-score {
+  color: #fff;
+  font-size: 0.945rem;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.prog-hero__reviews-count {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.864rem;
+}
+
+.prog-hero__reviews-label {
+  font-size: 0.702rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 3px 10px;
+}
+
+/* ── Scrolling track ── */
+.prog-hero__reviews-viewport {
+  overflow: hidden;
+  position: relative;
+}
+
+.prog-hero__reviews-track {
+  display: flex;
+  flex-direction: row;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── One page = 1 row × 2 cols ── */
+.prog-hero__reviews-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 12px;
+  flex: 0 0 100%;
+  width: 100%;
+}
+
+/* ── Individual review item ── */
+.prog-hero__review-item {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 18px 18px;
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.prog-hero__review-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.prog-hero__review-avatar {
+  width: 37px;
+  height: 37px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.864rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.prog-hero__review-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.prog-hero__review-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.prog-hero__review-name {
+  color: #fff;
+  font-size: 0.864rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prog-hero__review-item-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.prog-hero__review-item-stars svg {
+  fill: #f5c518;
+  color: #f5c518;
+}
+
+.prog-hero__review-text {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.864rem;
+  line-height: 1.55;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Dots ── */
+.prog-hero__reviews-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding-top: 4px;
+}
+
+.prog-hero__reviews-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, transform 0.2s ease, width 0.25s ease;
+}
+
+.prog-hero__reviews-dot.is-active {
+  background: #fff;
+  width: 18px;
+  border-radius: 3px;
+  transform: none;
+}

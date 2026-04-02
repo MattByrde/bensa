@@ -3,6 +3,7 @@
 <section class="section-padding" data-section-id="{{ section.id }}">
   <div class="page-width">
     <div class="collection-header">
+      <span class="collection-header__subtitle">{{ 'collections.title' | t | default: 'Collection' }}</span>
       <h1 class="collection-header__title">{{ collection.title }}</h1>
       {%- if collection.description != blank -%}
         <p class="collection-header__description">{{ collection.description }}</p>

@@ -1,0 +1,394 @@
+/* ── Marchi Hero Carousel (brand cards) ── */
+.marchi-carousel {
+  position: relative;
+  overflow: clip;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  container-type: inline-size;
+}
+
+/* ── Intro Panel ── */
+.marchi-carousel__intro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: #202020;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  z-index: 2;
+}
+
+.marchi-carousel__intro-content {
+  padding: 32px 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  flex: 1;
+}
+
+.marchi-carousel__intro-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.marchi-carousel__subtitle {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.marchi-carousel__intro-heading {
+  color: #fff;
+  margin: 0;
+  font-size: clamp(2.14rem, 3.42vw, 4.275rem);
+  line-height: 1;
+}
+
+.marchi-carousel__intro-subtext {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 80%;
+}
+
+.marchi-carousel__intro-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  background: var(--color-accent, #1E8BA8);
+  border: 1.5px solid var(--color-accent, #1E8BA8);
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  align-self: flex-start;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.marchi-carousel__intro-btn:hover {
+  background: #17748d;
+  border-color: #17748d;
+}
+
+/* ── Scroller ── */
+.marchi-carousel__scroller {
+  flex: 2;
+  min-width: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0;
+  cursor: grab;
+}
+
+.marchi-carousel__scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.marchi-carousel__scroller.is-dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.marchi-carousel__track {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  height: 100%;
+}
+
+/* ── Card ── */
+.marchi-carousel__card {
+  position: relative;
+  flex: 0 0 280px;
+  height: 320px;
+  border-radius: 0;
+  overflow: hidden;
+  scroll-snap-align: start;
+  transform: translateZ(0);
+  background-color: #fff;
+}
+
+@media screen and (min-width: 750px) {
+  .marchi-carousel__card {
+    flex: 0 0 calc(75cqw / 4);
+    height: 100%;
+  }
+
+  .marchi-carousel__intro {
+    flex: 0 0 25%;
+    min-height: calc(100cqw / 4 * 1.2);
+    overflow: visible;
+  }
+
+  .marchi-carousel__scroller {
+    flex: 0 0 75%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+
+/* ── Media Background ── */
+.marchi-carousel__media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.marchi-carousel__media-el {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.marchi-carousel__card:hover .marchi-carousel__media-el {
+  transform: scale(1.05);
+}
+
+/* ── Overlay ── */
+.marchi-carousel__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 30%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 35%);
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+/* ── Card Inner ── */
+.marchi-carousel__card-inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 22px;
+  z-index: 4;
+}
+
+/* ── Card Top: Tag ── */
+.marchi-carousel__card-top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.marchi-carousel__tag {
+  display: inline-flex;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 0.6875rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  line-height: 1.4;
+}
+
+/* ── Card Center: Logo ── */
+.marchi-carousel__card-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto 0;
+  padding: 0 16px;
+}
+
+.marchi-carousel__logo-img {
+  display: block;
+  max-height: 60px;
+  max-width: 180px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+
+.marchi-carousel__card:hover .marchi-carousel__logo-img {
+  opacity: 1;
+}
+
+/* ── Product Strip (bottom-left) ── */
+.marchi-carousel__product {
+  position: absolute;
+  bottom: 20px;
+  left: 22px;
+  max-width: calc(100% - 44px);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 6px 12px 6px 6px;
+  text-decoration: none;
+  color: var(--color-text, #202020);
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+a.marchi-carousel__product:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+a.marchi-carousel__product:active {
+  transform: translateY(-2px) scale(0.98);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.marchi-carousel__product-img {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f0ede8;
+}
+
+.marchi-carousel__product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.marchi-carousel__product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+  margin-right: 0.5rem;
+}
+
+.marchi-carousel__product-title {
+  color: var(--color-text, #202020);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+}
+
+.marchi-carousel__product-price {
+  color: #888;
+  font-size: 0.75rem;
+}
+
+.marchi-carousel__product-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text, #202020);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.marchi-carousel__product-btn:hover {
+  background-color: var(--color-text, #202020);
+  border-color: var(--color-text, #202020);
+  color: #fff;
+}
+
+/* ── Navigation Arrow ── */
+.marchi-carousel__next-float {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 48px;
+  height: 64px;
+  border: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.2s ease;
+}
+
+.marchi-carousel__next-float:hover {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+@media screen and (min-width: 750px) {
+  .marchi-carousel__next-float {
+    display: flex;
+  }
+}
+
+/* ── Dot Indicators ── */
+.marchi-carousel__dots {
+  display: none;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 0 0 0;
+  position: relative;
+  z-index: 10;
+}
+
+.marchi-carousel__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.marchi-carousel__dot:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.marchi-carousel__dot.is-active {
+  background: #333;
+  transform: scale(1.25);
+}

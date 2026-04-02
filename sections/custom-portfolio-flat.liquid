@@ -1,0 +1,490 @@
+<link rel="stylesheet" href="{{ 'section-custom-portfolio.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'section-custom-portfolio.css' | asset_url | stylesheet_tag }}</noscript>
+<link rel="stylesheet" href="{{ 'section-custom-card-carousel.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'section-custom-card-carousel.css' | asset_url | stylesheet_tag }}</noscript>
+<link rel="stylesheet" href="{{ 'section-custom-portfolio-flat.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'section-custom-portfolio-flat.css' | asset_url | stylesheet_tag }}</noscript>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="portfolio portfolio--flat">
+  {%- if section.blocks.size > 0 -%}
+    <div class="portfolio__wrapper">
+    <div class="portfolio__carousel" data-portfl-carousel>
+      <div class="portfolio__track" data-portfl-track>
+        {%- for block in section.blocks -%}
+          {%- assign has_review = false -%}
+          {%- if block.settings.review_text != blank -%}{%- assign has_review = true -%}{%- endif -%}
+          <div class="portfolio__card{% if has_review %} portfolio__card--has-review{% endif %}" {{ block.shopify_attributes }}>
+
+            {%- comment -%} Media side {%- endcomment -%}
+            <div class="portfolio__card-media">
+              <div class="portfolio__card-inner">
+                {%- if block.settings.video != blank -%}
+                  {%- assign poster_url = '' -%}
+                  {%- if block.settings.image != blank -%}
+                    {%- assign poster_url = block.settings.image | image_url: width: 600 -%}
+                  {%- elsif block.settings.video.preview_image != blank -%}
+                    {%- assign poster_url = block.settings.video.preview_image | image_url: width: 600 -%}
+                  {%- endif -%}
+                  <video
+                    class="portfolio__media"
+                    src="{{ block.settings.video.sources[1].url | default: block.settings.video.sources[0].url }}"
+                    poster="{{ poster_url }}"
+                    loop
+                    muted
+                    playsinline
+                    preload="metadata"
+                    data-portfl-video
+                  ></video>
+                  <div class="portfolio__controls">
+                    <button class="portfolio__control-btn" data-portfl-play aria-label="Play / Pause">
+                      <svg class="portfolio__icon-pause" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="4" height="12" rx="1" fill="currentColor"/><rect x="9" y="2" width="4" height="12" rx="1" fill="currentColor"/></svg>
+                      <svg class="portfolio__icon-play" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 2.5L13 8L4 13.5V2.5Z" fill="currentColor"/></svg>
+                    </button>
+                    <button class="portfolio__control-btn" data-portfl-mute aria-label="Mute / Unmute">
+                      <svg class="portfolio__icon-muted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><line x1="11" y1="5" x2="15" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="5" x2="11" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                      <svg class="portfolio__icon-unmuted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><path d="M11 5.5C11.8 6.3 12.25 7.4 12.25 8.5C12.25 9.6 11.8 10.7 11 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 3.5C14.3 4.8 15 6.6 15 8.5C15 10.4 14.3 12.2 13 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
+                  </div>
+                {%- elsif block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 600 | image_tag: class: 'portfolio__media', loading: 'lazy' }}
+                {%- else -%}
+                  <div class="portfolio__placeholder">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="8" fill="#e5e0da"/><path d="M20 16L32 24L20 32V16Z" fill="#999"/></svg>
+                  </div>
+                {%- endif -%}
+
+                <div class="portfolio__overlay"></div>
+
+                <div class="portfolio__card-layout">
+                  <div class="portfolio__card-top">
+                    {%- if block.settings.tag != blank or block.settings.tag_2 != blank or block.settings.tag_3 != blank -%}
+                      <div class="card-carousel__tags">
+                        {%- if block.settings.tag != blank -%}<span class="card-carousel__tag">{{ block.settings.tag }}</span>{%- endif -%}
+                        {%- if block.settings.tag_2 != blank -%}<span class="card-carousel__tag">{{ block.settings.tag_2 }}</span>{%- endif -%}
+                        {%- if block.settings.tag_3 != blank -%}<span class="card-carousel__tag">{{ block.settings.tag_3 }}</span>{%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                  <div class="portfolio__card-center">
+                    {%- if block.settings.title != blank -%}
+                      <h3 class="card-carousel__title">{{ block.settings.title }}</h3>
+                    {%- endif -%}
+                  </div>
+                  <div class="portfolio__card-bottom">
+                    {%- if block.settings.product_1 != blank -%}
+                      {%- assign p = block.settings.product_1 -%}
+                      <a href="{{ p.url }}" class="card-carousel__product">
+                        {%- if p.featured_image != blank -%}<div class="card-carousel__product-img">{{ p.featured_image | image_url: width: 240 | image_tag: loading: 'lazy' }}</div>{%- endif -%}
+                        <div class="card-carousel__product-info"><span class="card-carousel__product-title typo-h4">{{ p.title }}</span><span class="card-carousel__product-price typo-caption">{{ p.price | money }}</span></div>
+                        <span class="card-carousel__product-btn" aria-label="View product"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                      </a>
+                    {%- endif -%}
+                    {%- if block.settings.product_2 != blank -%}
+                      {%- assign p = block.settings.product_2 -%}
+                      <a href="{{ p.url }}" class="card-carousel__product">
+                        {%- if p.featured_image != blank -%}<div class="card-carousel__product-img">{{ p.featured_image | image_url: width: 240 | image_tag: loading: 'lazy' }}</div>{%- endif -%}
+                        <div class="card-carousel__product-info"><span class="card-carousel__product-title typo-h4">{{ p.title }}</span><span class="card-carousel__product-price typo-caption">{{ p.price | money }}</span></div>
+                        <span class="card-carousel__product-btn" aria-label="View product"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                      </a>
+                    {%- endif -%}
+                    {%- if block.settings.product_3 != blank -%}
+                      {%- assign p = block.settings.product_3 -%}
+                      <a href="{{ p.url }}" class="card-carousel__product">
+                        {%- if p.featured_image != blank -%}<div class="card-carousel__product-img">{{ p.featured_image | image_url: width: 240 | image_tag: loading: 'lazy' }}</div>{%- endif -%}
+                        <div class="card-carousel__product-info"><span class="card-carousel__product-title typo-h4">{{ p.title }}</span><span class="card-carousel__product-price typo-caption">{{ p.price | money }}</span></div>
+                        <span class="card-carousel__product-btn" aria-label="View product"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                      </a>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {%- comment -%} Review panel (right side extension) {%- endcomment -%}
+            {%- if has_review -%}
+              <div class="portfolio__card-review">
+                <div class="portfolio__review-stars" aria-label="{{ block.settings.stars }} stars">
+                  {%- assign star_count = block.settings.stars | plus: 0 -%}
+                  {%- for i in (1..5) -%}
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.8 3.6 4 .6-2.9 2.8.7 4L8 10.4l-3.6 1.9.7-4L2.2 5.7l4-.6L8 1.5z" fill="{% if i <= star_count %}#fff{% else %}rgba(255,255,255,0.25){% endif %}"/></svg>
+                  {%- endfor -%}
+                </div>
+                <p class="portfolio__review-text">{{ block.settings.review_text }}</p>
+                <div class="portfolio__review-author">
+                  {%- if block.settings.author_image != blank -%}
+                    <div class="portfolio__review-avatar">
+                      {{ block.settings.author_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
+                    </div>
+                  {%- endif -%}
+                  <div class="portfolio__review-author-info">
+                    {%- if block.settings.author_name != blank -%}
+                      <span class="portfolio__review-name">{{ block.settings.author_name }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.author_detail != blank -%}
+                      <span class="portfolio__review-detail">{{ block.settings.author_detail }}</span>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Floating arrows {%- endcomment -%}
+      <button class="portfl-flat__arrow portfl-flat__arrow--prev" data-portfl-prev aria-label="Previous">
+        <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="portfl-flat__arrow portfl-flat__arrow--next" data-portfl-next aria-label="Next">
+        <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    </div><!-- /.portfolio__wrapper -->
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-portfl-carousel]').forEach(function (carousel) {
+      var section = carousel.closest('.portfolio') || carousel.parentElement;
+      var prevBtn = section.querySelector('[data-portfl-prev]');
+      var nextBtn = section.querySelector('[data-portfl-next]');
+      var track = carousel.querySelector('[data-portfl-track]');
+      var cards = Array.from(track.querySelectorAll('.portfolio__card'));
+      var total = cards.length;
+      var currentPage = 0;
+
+      function getVisibleCount() {
+        if (!cards.length) return 1;
+        var gap = parseFloat(getComputedStyle(track).gap) || 0;
+        var carouselW = carousel.offsetWidth;
+        var cardW = cards[0].offsetWidth + gap;
+        return Math.max(1, Math.floor(carouselW / cardW));
+      }
+
+      function getMaxPage() {
+        return Math.max(0, total - getVisibleCount());
+      }
+
+      function getCardOffset(index) {
+        if (index <= 0) return 0;
+        var offset = 0;
+        var gap = parseFloat(getComputedStyle(track).gap) || 0;
+        for (var i = 0; i < index; i++) {
+          offset += cards[i].offsetWidth + gap;
+        }
+        return offset;
+      }
+
+      function getMaxOffset() {
+        return Math.max(0, track.scrollWidth - carousel.offsetWidth);
+      }
+
+      function update() {
+        var offset = Math.min(getCardOffset(currentPage), getMaxOffset());
+        track.style.transform = 'translateX(-' + offset + 'px)';
+        if (prevBtn) prevBtn.disabled = currentPage <= 0;
+        if (nextBtn) nextBtn.disabled = currentPage >= getMaxPage();
+        cards.forEach(function (c, i) {
+          var video = c.querySelector('[data-portfl-video]');
+          if (!video) return;
+          var visible = i >= currentPage && i < currentPage + getVisibleCount();
+          if (visible) {
+            video.play().catch(function () {});
+            c.querySelector('.portfolio__card-inner').classList.add('is-playing');
+          } else {
+            video.pause();
+            c.querySelector('.portfolio__card-inner').classList.remove('is-playing');
+          }
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function () {
+          if (currentPage > 0) { currentPage--; update(); }
+        });
+      }
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function () {
+          if (currentPage < getMaxPage()) { currentPage++; update(); }
+        });
+      }
+
+      carousel.addEventListener('click', function (e) {
+        var playBtn = e.target.closest('[data-portfl-play]');
+        if (playBtn) {
+          var inner = playBtn.closest('.portfolio__card-inner');
+          var video = inner.querySelector('[data-portfl-video]');
+          if (!video) return;
+          if (video.paused) {
+            video.play().catch(function () {});
+            inner.classList.add('is-playing');
+          } else {
+            video.pause();
+            inner.classList.remove('is-playing');
+          }
+          return;
+        }
+        var muteBtn = e.target.closest('[data-portfl-mute]');
+        if (muteBtn) {
+          var inner = muteBtn.closest('.portfolio__card-inner');
+          var video = inner.querySelector('[data-portfl-video]');
+          if (!video) return;
+          video.muted = !video.muted;
+          inner.classList.toggle('is-unmuted', !video.muted);
+        }
+      });
+
+      var isDragging = false;
+      var dragStartX = 0;
+      var dragMoved = false;
+      var SWIPE_THRESHOLD = 50;
+
+      function onPointerDown(e) {
+        if (e.target.closest('button, a')) return;
+        isDragging = true;
+        dragMoved = false;
+        dragStartX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+        carousel.classList.add('is-dragging');
+      }
+
+      function onPointerMove(e) {
+        if (!isDragging) return;
+        var clientX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+        if (Math.abs(clientX - dragStartX) > 5) dragMoved = true;
+      }
+
+      function onPointerUp(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        carousel.classList.remove('is-dragging');
+        var clientX = e.clientX || (e.changedTouches && e.changedTouches[0].clientX) || 0;
+        var dx = clientX - dragStartX;
+        if (Math.abs(dx) > SWIPE_THRESHOLD) {
+          if (dx < 0 && currentPage < getMaxPage()) { currentPage++; update(); }
+          else if (dx > 0 && currentPage > 0) { currentPage--; update(); }
+        }
+        setTimeout(function () { dragMoved = false; }, 0);
+      }
+
+      carousel.addEventListener('mousedown', onPointerDown);
+      window.addEventListener('mousemove', onPointerMove);
+      window.addEventListener('mouseup', onPointerUp);
+      carousel.addEventListener('touchstart', onPointerDown, { passive: true });
+      carousel.addEventListener('touchmove', onPointerMove, { passive: true });
+      carousel.addEventListener('touchend', onPointerUp);
+      carousel.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+      carousel.addEventListener('click', function (e) {
+        if (dragMoved) { e.preventDefault(); e.stopPropagation(); }
+      }, true);
+
+      window.addEventListener('resize', function () {
+        if (currentPage > getMaxPage()) currentPage = getMaxPage();
+        update();
+      });
+
+      /* ── Autoplay ── */
+      if (section.classList.contains('portfolio--flat')) {
+        var autoplayInterval = 4000;
+        var autoplayTimer;
+
+        function startAutoplay() {
+          stopAutoplay();
+          autoplayTimer = setInterval(function () {
+            if (currentPage < getMaxPage()) {
+              currentPage++;
+            } else {
+              currentPage = 0;
+            }
+            update();
+          }, autoplayInterval);
+        }
+
+        function stopAutoplay() {
+          if (autoplayTimer) clearInterval(autoplayTimer);
+        }
+
+        carousel.addEventListener('mouseenter', stopAutoplay);
+        carousel.addEventListener('mouseleave', startAutoplay);
+        carousel.addEventListener('touchstart', stopAutoplay, { passive: true });
+        carousel.addEventListener('touchend', function () {
+          setTimeout(startAutoplay, 2000);
+        });
+
+        startAutoplay();
+      }
+
+      update();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Portfolio Flat",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Scopri le nostre lavorazioni"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f5f3ec"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Media"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Cover Image / Poster"
+        },
+        {
+          "type": "header",
+          "content": "Card Content"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag 1"
+        },
+        {
+          "type": "text",
+          "id": "tag_2",
+          "label": "Tag 2"
+        },
+        {
+          "type": "text",
+          "id": "tag_3",
+          "label": "Tag 3"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "header",
+          "content": "Products"
+        },
+        {
+          "type": "product",
+          "id": "product_1",
+          "label": "Product 1"
+        },
+        {
+          "type": "product",
+          "id": "product_2",
+          "label": "Product 2"
+        },
+        {
+          "type": "product",
+          "id": "product_3",
+          "label": "Product 3"
+        },
+        {
+          "type": "header",
+          "content": "Review (right panel)"
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review Text",
+          "info": "Leave empty to hide the review panel"
+        },
+        {
+          "type": "range",
+          "id": "stars",
+          "label": "Stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "image_picker",
+          "id": "author_image",
+          "label": "Author Photo"
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Author Name"
+        },
+        {
+          "type": "text",
+          "id": "author_detail",
+          "label": "Author Detail",
+          "info": "e.g. Cliente verificato · Milano"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "Portfolio Flat",
+      "blocks": [
+        { "type": "card" },
+        { "type": "card" },
+        { "type": "card" }
+      ]
+    }
+  ]
+}
+{% endschema %}

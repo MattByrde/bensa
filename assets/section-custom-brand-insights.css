@@ -1,0 +1,223 @@
+/* ── Brand Insights: Vision top ── */
+.brand-insights__vision {
+  padding: 0 20px 80px;
+  max-width: 1475px;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 750px) {
+  .brand-insights__vision {
+    padding: 0 40px 120px;
+  }
+}
+
+.brand-insights__heading {
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.2;
+  margin: 0 0 45px;
+  font-weight: 600;
+}
+
+.brand-insights__heading-light,
+.brand-insights__heading-bold {
+  color: #202020;
+}
+
+.brand-insights__subtitle-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  max-width: 1100px;
+  margin: 0 auto 120px;
+}
+
+.brand-insights__subtitle {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #666;
+  margin: 0;
+}
+
+@media (max-width: 749px) {
+  .brand-insights__subtitle-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 50px;
+  }
+}
+
+.brand-insights__columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.brand-insights__col {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.brand-insights__col-number {
+  font-size: 0.85rem;
+  color: #999;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.brand-insights__col-content {
+  flex: 1;
+}
+
+.brand-insights__col-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #202020;
+  margin: 0 0 16px;
+  line-height: 1.4;
+}
+
+.brand-insights__col-text {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #333;
+  margin: 0 0 16px;
+}
+
+.brand-insights__col-text:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 749px) {
+  .brand-insights__columns {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .brand-insights__heading {
+    margin-bottom: 50px;
+  }
+}
+
+/* ── Brand Insights: Carousel bottom ── */
+.brand-insights__carousel {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.brand-insights__track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 40px;
+  cursor: grab;
+}
+
+.brand-insights__track:active {
+  cursor: grabbing;
+}
+
+.brand-insights__track::-webkit-scrollbar {
+  display: none;
+}
+
+.brand-insights__slide {
+  flex: 0 0 calc((100% - 5rem) / 6);
+  min-width: 220px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.brand-insights__slide--active,
+.brand-insights__slide--highlight {
+  opacity: 1;
+}
+
+.brand-insights__slide-text {
+  padding: 20px 0;
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  border-top: 1px solid #ddd;
+}
+
+.brand-insights__slide-text p {
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.25;
+  color: #aaa;
+  margin: 0;
+}
+
+.brand-insights__slide--active .brand-insights__slide-text p,
+.brand-insights__slide--highlight .brand-insights__slide-text p {
+  color: #202020;
+}
+
+.brand-insights__slide-image {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 4px;
+  position: relative;
+}
+
+.brand-insights__slide-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(to bottom, rgba(245, 243, 236, 0.85), rgba(245, 243, 236, 0));
+  z-index: 1;
+  pointer-events: none;
+}
+
+.brand-insights__slide-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.brand-insights__slide-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #e8e4de;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-insights__slide-placeholder svg {
+  width: 40%;
+  opacity: 0.3;
+}
+
+@media (max-width: 989px) {
+  .brand-insights__slide {
+    flex: 0 0 calc((100% - 2rem) / 3);
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 749px) {
+  .brand-insights__track {
+    padding: 0 20px;
+  }
+
+  .brand-insights__slide {
+    flex: 0 0 70%;
+    min-width: 0;
+  }
+}

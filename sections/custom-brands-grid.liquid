@@ -1,0 +1,120 @@
+{{ 'section-custom-brands-grid.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+</style>
+
+<div class="brands-grid-section" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="brands-grid-section__heading typo-h2">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+
+  <div class="brands-grid">
+    {%- for block in section.blocks -%}
+      <div class="brands-grid__item" {{ block.shopify_attributes }}>
+        {%- if block.settings.logo != blank -%}
+          {%- assign logo_alt = block.settings.brand_name | default: '' | escape -%}
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="brands-grid__link">
+              {{ block.settings.logo | image_url: width: 400 | image_tag: class: 'brands-grid__logo', loading: 'lazy', alt: logo_alt }}
+            </a>
+          {%- else -%}
+            {{ block.settings.logo | image_url: width: 400 | image_tag: class: 'brands-grid__logo', loading: 'lazy', alt: logo_alt }}
+          {%- endif -%}
+          {%- if block.settings.brand_name != blank -%}
+            <span class="brands-grid__name">{{ block.settings.brand_name }}</span>
+          {%- endif -%}
+        {%- else -%}
+          <div class="brands-grid__placeholder">Logo</div>
+          {%- if block.settings.brand_name != blank -%}
+            <span class="brands-grid__name">{{ block.settings.brand_name }}</span>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Brands Grid",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Colore sfondo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titolo",
+      "default": "I nostri marchi"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo"
+        },
+        {
+          "type": "text",
+          "id": "brand_name",
+          "label": "Nome brand"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (opzionale)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brands Grid",
+      "blocks": [
+        { "type": "brand" },
+        { "type": "brand" },
+        { "type": "brand" },
+        { "type": "brand" },
+        { "type": "brand" },
+        { "type": "brand" },
+        { "type": "brand" },
+        { "type": "brand" },
+        { "type": "brand" },
+        { "type": "brand" }
+      ]
+    }
+  ]
+}
+{% endschema %}

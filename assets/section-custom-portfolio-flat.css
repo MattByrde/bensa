@@ -1,0 +1,96 @@
+/* ── Portfolio Flat — overrides for no-gap / no-padding / no-radius variant ── */
+
+.portfolio--flat .portfolio__carousel {
+  padding: 0;
+  position: relative;
+}
+.portfolio--flat {
+    border-top: 0px solid #555;
+    border-bottom:1px solid #555;
+}
+
+.portfolio__card {
+  border-right: 1px solid #555;
+}
+
+.portfolio--flat .portfolio__track {
+  gap: 0;
+      max-height: 28rem;
+}
+
+.portfolio--flat .portfolio__card-inner {
+  border-radius: 0;
+}
+
+.portfolio--flat .portfolio__card--has-review .portfolio__card-inner {
+  border-radius: 0;
+}
+
+.portfolio--flat .portfolio__card--has-review {
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.portfolio--flat .portfolio__card-review {
+  border-radius: 0;
+}
+
+.portfolio--flat .portfolio__card-review {
+    width: 350px;
+    border-left: 1px solid #555;
+}
+
+.portfolio--flat .portfolio__card {
+  width: calc(100% / 2);
+  max-width: none;
+}
+
+.portfolio--flat .portfolio__card--has-review {
+  width: 50%;
+}
+
+/* ── Floating Arrows ── */
+.portfl-flat__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 48px;
+  height: 64px;
+  border: none;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.2s ease, opacity 0.25s ease;
+}
+
+.portfl-flat__arrow:hover {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.portfl-flat__arrow--prev {
+  left: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.portfl-flat__arrow--next {
+  right: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.portfl-flat__arrow[disabled] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media screen and (min-width: 750px) {
+  .portfl-flat__arrow {
+    display: flex;
+  }
+}

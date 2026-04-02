@@ -1,0 +1,200 @@
+/* ── Video Ask Section ── */
+.video-ask__container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.video-ask__heading {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* ── Player wrapper ── */
+.video-ask__player {
+  position: relative;
+  width: 100%;
+}
+
+.video-ask__video-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 14 / 16;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.video-ask__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── TikTok-style top-right controls ── */
+.video-ask__top-controls {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+}
+
+.video-ask__icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.video-ask__icon-btn:hover {
+  background: rgba(0, 0, 0, 0.55);
+  transform: scale(1.1);
+}
+
+/* Play/Pause icon toggling */
+.video-ask__video-wrap.is-playing .video-ask__icon-play { display: none; }
+.video-ask__video-wrap:not(.is-playing) .video-ask__icon-pause { display: none; }
+
+/* Mute icon toggling */
+.video-ask__video-wrap.is-unmuted .video-ask__icon-muted { display: none; }
+.video-ask__video-wrap:not(.is-unmuted) .video-ask__icon-unmuted { display: none; }
+
+/* ── Center pause indicator ── */
+.video-ask__pause-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(255, 255, 255, 0.85);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+  z-index: 5;
+}
+
+.video-ask__video-wrap:not(.is-playing):not(.has-ended) .video-ask__pause-indicator {
+  opacity: 1;
+}
+
+/* ── Interactive buttons overlay ── */
+.video-ask__interactive {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 8;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.video-ask__interactive.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.video-ask__interactive-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 22px 28px;
+}
+
+/* ── Button pills (same style as card-carousel) ── */
+.video-ask__btn-pill {
+  display: flex;
+  align-items: center;
+  background: rgba(40, 30, 20, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+button.video-ask__btn-pill {
+  width: 100%;
+  text-align: left;
+}
+
+.video-ask__btn-pill:hover {
+  background: rgba(40, 30, 20, 0.7);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.video-ask__badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.7rem;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.video-ask__badge--a {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.video-ask__badge--b {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.video-ask__badge--c {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* ── Responsive ── */
+@media screen and (max-width: 749px) {
+  .video-ask__video-wrap {
+    border-radius: 10px;
+  }
+
+  .video-ask__interactive-btns {
+    padding: 14px 14px 20px;
+  }
+
+  .video-ask__btn-pill {
+    padding: 8px 12px;
+    font-size: 0.72rem;
+  }
+
+  .video-ask__icon-btn {
+    width: 32px;
+    height: 32px;
+  }
+}

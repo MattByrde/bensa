@@ -1,0 +1,312 @@
+{{ 'section-custom-ristrutturazioni-works.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: 0;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: 0;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="works-carousel" data-works-carousel>
+
+  {%- comment -%} Scroll area with portfolio cards {%- endcomment -%}
+  <div class="works-carousel__scroller" data-works-scroller>
+    <div class="works-carousel__track" data-works-track>
+      {%- for block in section.blocks -%}
+        <div class="works-carousel__card" {{ block.shopify_attributes }}>
+
+          {%- comment -%} Background Image or Video {%- endcomment -%}
+          <div class="works-carousel__media">
+            {%- if block.settings.video != blank -%}
+              <video class="works-carousel__media-el" autoplay muted loop playsinline>
+                {%- for source in block.settings.video.sources -%}
+                  <source src="{{ source.url }}" type="{{ source.mime_type }}">
+                {%- endfor -%}
+              </video>
+            {%- elsif block.settings.image != blank -%}
+              {%- if forloop.first -%}
+                {{ block.settings.image | image_url: width: 800 | image_tag: class: 'works-carousel__media-el', loading: 'eager', fetchpriority: 'high' }}
+              {%- else -%}
+                {{ block.settings.image | image_url: width: 800 | image_tag: class: 'works-carousel__media-el', loading: 'lazy' }}
+              {%- endif -%}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'works-carousel__media-el placeholder-svg' }}
+            {%- endif -%}
+          </div>
+
+          {%- comment -%} Gradient Overlay {%- endcomment -%}
+          <div class="works-carousel__overlay"></div>
+
+          {%- comment -%} Card Content: Portfolio Job {%- endcomment -%}
+          <div class="works-carousel__card-inner">
+            <div class="works-carousel__card-top">
+              {%- if block.settings.tag != blank -%}
+                <span class="works-carousel__tag">{{ block.settings.tag }}</span>
+              {%- endif -%}
+            </div>
+
+            {%- comment -%} Centered title {%- endcomment -%}
+            {%- if block.settings.card_title != blank -%}
+              <h2 class="works-carousel__card-title">{{ block.settings.card_title }}</h2>
+            {%- endif -%}
+
+            {%- comment -%} Bottom button {%- endcomment -%}
+            <div class="works-carousel__card-bottom">
+              {%- if block.settings.button_label != blank -%}
+                <a href="{{ block.settings.button_link | default: '#' }}" class="works-carousel__card-btn typo-btn">
+                  {{ block.settings.button_label }}
+                </a>
+              {%- endif -%}
+            </div>
+
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} Floating next arrow {%- endcomment -%}
+  <button class="works-carousel__next-float" data-works-next aria-label="Next">
+    <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  {%- comment -%} Dot Indicators {%- endcomment -%}
+  <div class="works-carousel__dots" data-works-dots>
+    {%- for block in section.blocks -%}
+      <button class="works-carousel__dot{% if forloop.first %} is-active{% endif %}" data-dot-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+    {%- endfor -%}
+  </div>
+</div>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-works-carousel]').forEach(function (carousel) {
+      var scroller = carousel.querySelector('[data-works-scroller]');
+      var track = carousel.querySelector('[data-works-track]');
+      if (!scroller || !track || track.children.length < 2) return;
+
+      var origCards = Array.from(track.children);
+      var n = origCards.length;
+
+      /* ── Infinite loop: clone before + after ── */
+      origCards.forEach(function (c) {
+        track.appendChild(c.cloneNode(true));
+      });
+      origCards.forEach(function (c) {
+        track.insertBefore(c.cloneNode(true), track.firstChild);
+      });
+
+      var gap = parseFloat(getComputedStyle(track).gap) || 0;
+
+      function cardW() {
+        return track.children[0].offsetWidth + gap;
+      }
+
+      function jumpToMiddle(instant) {
+        var w = cardW();
+        if (instant) {
+          scroller.style.scrollBehavior = 'auto';
+          scroller.scrollLeft = w * n;
+          scroller.style.scrollBehavior = '';
+        }
+      }
+
+      requestAnimationFrame(function () { requestAnimationFrame(function () { jumpToMiddle(true); }); });
+
+      var ticking = false;
+      scroller.addEventListener('scroll', function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          ticking = false;
+          var w = cardW();
+          var sl = scroller.scrollLeft;
+          var total = w * n;
+          if (sl < w * 0.5) {
+            scroller.style.scrollBehavior = 'auto';
+            scroller.scrollLeft = sl + total;
+            scroller.style.scrollBehavior = '';
+          } else if (sl >= w * (n * 2 - 0.5)) {
+            scroller.style.scrollBehavior = 'auto';
+            scroller.scrollLeft = sl - total;
+            scroller.style.scrollBehavior = '';
+          }
+        });
+      });
+
+      /* ── Drag / swipe ── */
+      var isDragging = false;
+      var startX = 0;
+      var scrollStart = 0;
+      var velocity = 0;
+      var lastX = 0;
+      var lastTime = 0;
+
+      function onPointerDown(e) {
+        isDragging = true;
+        startX = e.pageX || e.touches[0].pageX;
+        scrollStart = scroller.scrollLeft;
+        lastX = startX;
+        lastTime = Date.now();
+        velocity = 0;
+        scroller.style.scrollSnapType = 'none';
+        scroller.style.cursor = 'grabbing';
+        scroller.classList.add('is-dragging');
+      }
+
+      function onPointerMove(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        var x = e.pageX || e.touches[0].pageX;
+        var now = Date.now();
+        var dt = now - lastTime;
+        if (dt > 0) velocity = (lastX - x) / dt;
+        lastX = x;
+        lastTime = now;
+        scroller.scrollLeft = scrollStart - (x - startX);
+      }
+
+      function onPointerUp() {
+        if (!isDragging) return;
+        isDragging = false;
+        scroller.style.cursor = '';
+        scroller.classList.remove('is-dragging');
+        var w = cardW();
+        var momentum = velocity * 300;
+        var target = Math.round((scroller.scrollLeft + momentum) / w) * w;
+        scroller.style.scrollSnapType = '';
+        scroller.scrollTo({ left: target, behavior: 'smooth' });
+      }
+
+      scroller.addEventListener('mousedown', onPointerDown);
+      scroller.addEventListener('mousemove', onPointerMove);
+      scroller.addEventListener('mouseup', onPointerUp);
+      scroller.addEventListener('mouseleave', onPointerUp);
+      scroller.addEventListener('touchstart', onPointerDown, { passive: true });
+      scroller.addEventListener('touchmove', onPointerMove, { passive: false });
+      scroller.addEventListener('touchend', onPointerUp);
+
+      scroller.addEventListener('click', function (e) {
+        if (Math.abs(lastX - startX) > 5) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+
+      /* ── Next arrow ── */
+      var nextBtn = carousel.querySelector('[data-works-next]');
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function () {
+          stopAuto();
+          scroller.scrollBy({ left: cardW(), behavior: 'smooth' });
+          setTimeout(startAuto, 3000);
+        });
+      }
+
+      /* ── Auto-play ── */
+      var autoInterval = null;
+      function startAuto() {
+        stopAuto();
+        autoInterval = setInterval(function () {
+          scroller.scrollBy({ left: cardW(), behavior: 'smooth' });
+        }, 6000);
+      }
+      function stopAuto() {
+        if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
+      }
+
+      startAuto();
+      carousel.addEventListener('mouseenter', stopAuto);
+      carousel.addEventListener('mouseleave', startAuto);
+      scroller.addEventListener('touchstart', stopAuto, { passive: true });
+      scroller.addEventListener('touchend', function () { setTimeout(startAuto, 3000); });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Ristrutturazioni Lavori",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Colore sfondo",
+      "default": "#f5f3ec"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding inferiore",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "project_card",
+      "name": "Progetto",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Immagine progetto"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video sfondo",
+          "info": "Se presente, il video ha priorità sull'immagine."
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Categoria (es. Cucina, Bagno)",
+          "default": "Cucina"
+        },
+        {
+          "type": "text",
+          "id": "card_title",
+          "label": "Titolo card",
+          "default": "Sander Chic"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Testo pulsante",
+          "default": "Scopri di più"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Link pulsante"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ristrutturazioni Lavori",
+      "blocks": [
+        { "type": "project_card" },
+        { "type": "project_card" },
+        { "type": "project_card" },
+        { "type": "project_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}

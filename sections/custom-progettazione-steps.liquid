@@ -1,0 +1,285 @@
+{{ 'section-custom-progettazione-steps.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+  .prog-steps {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<div class="prog-steps">
+  <div class="prog-steps__header">
+    {%- if section.settings.subtitle != blank -%}
+      <span class="prog-steps__subtitle">{{ section.settings.subtitle }}</span>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="prog-steps__heading typo-h2">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.intro != blank -%}
+      <p class="prog-steps__intro">{{ section.settings.intro }}</p>
+    {%- endif -%}
+  </div>
+
+  <div class="prog-steps__grid">
+    {%- for block in section.blocks -%}
+      <div class="prog-steps__step" {{ block.shopify_attributes }}>
+        <div class="prog-steps__step-image">
+          {%- if block.settings.video != blank -%}
+            <video
+              class="prog-steps__img prog-steps__video"
+              src="{{ block.settings.video.sources[1].url | default: block.settings.video.sources[0].url }}"
+              poster="{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 800 }}{%- endif -%}"
+              loop
+              muted
+              playsinline
+              preload="metadata"
+              data-steps-video
+            ></video>
+            <div class="prog-steps__controls">
+              <button class="prog-steps__control-btn" data-steps-play aria-label="Play / Pausa">
+                <svg class="prog-steps__icon-pause" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="4" height="12" rx="1" fill="currentColor"/><rect x="9" y="2" width="4" height="12" rx="1" fill="currentColor"/></svg>
+                <svg class="prog-steps__icon-play" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 2.5L13 8L4 13.5V2.5Z" fill="currentColor"/></svg>
+              </button>
+              <button class="prog-steps__control-btn" data-steps-mute aria-label="Muto / Riattiva audio">
+                <svg class="prog-steps__icon-muted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><line x1="11" y1="5" x2="15" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="5" x2="11" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <svg class="prog-steps__icon-unmuted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><path d="M11 5.5C11.8 6.3 12.25 7.4 12.25 8.5C12.25 9.6 11.8 10.7 11 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 3.5C14.3 4.8 15 6.6 15 8.5C15 10.4 14.3 12.2 13 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          {%- elsif block.settings.video_url != blank -%}
+            <video
+              class="prog-steps__img prog-steps__video"
+              src="{{ block.settings.video_url }}"
+              poster="{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 800 }}{%- endif -%}"
+              loop
+              muted
+              playsinline
+              preload="metadata"
+              data-steps-video
+            ></video>
+            <div class="prog-steps__controls">
+              <button class="prog-steps__control-btn" data-steps-play aria-label="Play / Pausa">
+                <svg class="prog-steps__icon-pause" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="4" height="12" rx="1" fill="currentColor"/><rect x="9" y="2" width="4" height="12" rx="1" fill="currentColor"/></svg>
+                <svg class="prog-steps__icon-play" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 2.5L13 8L4 13.5V2.5Z" fill="currentColor"/></svg>
+              </button>
+              <button class="prog-steps__control-btn" data-steps-mute aria-label="Muto / Riattiva audio">
+                <svg class="prog-steps__icon-muted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><line x1="11" y1="5" x2="15" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="5" x2="11" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <svg class="prog-steps__icon-unmuted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><path d="M11 5.5C11.8 6.3 12.25 7.4 12.25 8.5C12.25 9.6 11.8 10.7 11 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 3.5C14.3 4.8 15 6.6 15 8.5C15 10.4 14.3 12.2 13 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          {%- elsif block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'prog-steps__img' }}
+          {%- else -%}
+            <div class="prog-steps__img-placeholder">
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+          <span class="prog-steps__number">
+            {%- if forloop.index < 10 -%}0{%- endif -%}{{ forloop.index }}
+          </span>
+        </div>
+        <div class="prog-steps__step-body">
+          {%- if block.settings.title != blank -%}
+            <h3 class="prog-steps__step-title">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <p class="prog-steps__step-text">{{ block.settings.text }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-steps-read-more]').forEach(function (btn) {
+      var text = btn.previousElementSibling;
+      btn.addEventListener('click', function () {
+        var expanded = text.classList.toggle('is-expanded');
+        btn.innerHTML = expanded
+          ? 'Chiudi <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 12L12 7 7 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+          : 'Leggi di più <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      });
+    });
+
+    document.querySelectorAll('.prog-steps__step-image').forEach(function (wrap) {
+      var video = wrap.querySelector('[data-steps-video]');
+      if (!video) return;
+
+      var inner = wrap;
+
+      /* Auto-play on intersection */
+      if (window.IntersectionObserver) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              video.play().catch(function () {});
+              inner.classList.add('is-playing');
+            } else {
+              video.pause();
+              inner.classList.remove('is-playing');
+            }
+          });
+        }, { threshold: 0.4 }).observe(wrap);
+      } else {
+        video.play().catch(function () {});
+        inner.classList.add('is-playing');
+      }
+
+      var playBtn = wrap.querySelector('[data-steps-play]');
+      var muteBtn = wrap.querySelector('[data-steps-mute]');
+
+      if (playBtn) {
+        playBtn.addEventListener('click', function () {
+          if (video.paused) {
+            video.play().catch(function () {});
+            inner.classList.add('is-playing');
+          } else {
+            video.pause();
+            inner.classList.remove('is-playing');
+          }
+        });
+      }
+
+      if (muteBtn) {
+        muteBtn.addEventListener('click', function () {
+          video.muted = !video.muted;
+          inner.classList.toggle('is-unmuted', !video.muted);
+        });
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Progettazione Steps",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Colore sfondo",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sottotitolo",
+      "default": "Il nostro processo"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titolo",
+      "default": "Dal progetto alla realtà"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Testo introduttivo",
+      "default": "Ogni progetto nasce dall'ascolto. Seguiamo ogni cliente in ogni fase, dalla prima consulenza alla consegna chiavi in mano."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Fase",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (Shopify)",
+          "info": "Se impostato, ha priorità sull'immagine."
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "URL video esterno (.mp4)",
+          "info": "Alternativa al video Shopify."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Immagine / Poster video"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titolo fase"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Descrizione"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Progettazione Steps",
+      "settings": {
+        "subtitle": "Il nostro processo",
+        "heading": "Dal progetto alla realtà",
+        "intro": "Ogni progetto nasce dall'ascolto. Seguiamo ogni cliente in ogni fase, dalla prima consulenza alla consegna chiavi in mano."
+      },
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Progettazione",
+            "text": "Una volta discusse le esigenze del cliente, il nostro team sviluppa una o più bozze di progetto da valutare insieme. Dopo aver scelto la direzione, selezioniamo materiali, colori, tessuti e finiture per creare un'atmosfera personalizzata, supportati da immagini, mood board, disegni e rendering 3D."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Rilievo",
+            "text": "Il rilievo è una fase cruciale per la realizzazione del progetto. I nostri tecnici utilizzano tecnologia avanzata — livelli laser, distanziometri e stazioni totali — per garantire la massima precisione nelle misurazioni, fondamentali per la realizzazione dei disegni tecnici."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Installazione",
+            "text": "Tecnici specializzati eseguono l'installazione con cura e discrezione, prestando la massima attenzione ai dettagli. Il nostro supporto non si esaurisce con la consegna: siamo disponibili anche dopo la posa per qualsiasi esigenza."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "La vostra casa",
+            "text": "I bozzetti diventano realtà. Arredi, colori, materiali e illuminazione si fondono per creare un'atmosfera che rispecchia la vostra personalità e le vostre emozioni. Il vostro spazio, finalmente come l'avevate immaginato."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

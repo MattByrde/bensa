@@ -1,0 +1,385 @@
+{{ 'section-custom-video-ask.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="video-ask" data-video-ask>
+  <div class="video-ask__container page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="video-ask__heading typo-h2">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="video-ask__player">
+      {%- comment -%} Build a JSON map of all nodes for the JS engine {%- endcomment -%}
+      <script type="application/json" data-video-ask-nodes>
+        [
+          {%- assign va_index = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- assign va_index = va_index | plus: 1 -%}
+            {
+              "index": {{ va_index }},
+              "video_url": {{ block.settings.video_url | json }},
+              "video_shopify": {% if block.settings.video != blank %}[{% for source in block.settings.video.sources %}{"url":{{ source.url | json }},"mime_type":{{ source.mime_type | json }}}{% unless forloop.last %},{% endunless %}{% endfor %}]{% else %}null{% endif %},
+              "poster": {% if block.settings.poster != blank %}{{ block.settings.poster | image_url: width: 1280 | json }}{% else %}null{% endif %},
+              "btn_a_label": {{ block.settings.btn_a_label | json }},
+              "btn_a_action": {{ block.settings.btn_a_action | json }},
+              "btn_a_target_node": {{ block.settings.btn_a_target_node | json }},
+              "btn_a_link": {{ block.settings.btn_a_link | json }},
+              "btn_b_label": {{ block.settings.btn_b_label | json }},
+              "btn_b_action": {{ block.settings.btn_b_action | json }},
+              "btn_b_target_node": {{ block.settings.btn_b_target_node | json }},
+              "btn_b_link": {{ block.settings.btn_b_link | json }},
+              "btn_c_label": {{ block.settings.btn_c_label | json }},
+              "btn_c_action": {{ block.settings.btn_c_action | json }},
+              "btn_c_target_node": {{ block.settings.btn_c_target_node | json }},
+              "btn_c_link": {{ block.settings.btn_c_link | json }}
+            }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      </script>
+
+      {%- comment -%} Video element {%- endcomment -%}
+      <div class="video-ask__video-wrap">
+        <video class="video-ask__video" playsinline autoplay muted preload="auto" data-video-ask-video></video>
+
+        {%- comment -%} TikTok-style top-right controls {%- endcomment -%}
+        <div class="video-ask__top-controls">
+          <button class="video-ask__icon-btn" data-video-ask-mute aria-label="Mute/Unmute">
+            <svg class="video-ask__icon-muted" width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><line x1="11" y1="5" x2="15" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="5" x2="11" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <svg class="video-ask__icon-unmuted" width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><path d="M11 5.5C11.8 6.3 12.25 7.4 12.25 8.5C12.25 9.6 11.8 10.7 11 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 3.5C14.3 4.8 15 6.6 15 8.5C15 10.4 14.3 12.2 13 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <button class="video-ask__icon-btn" data-video-ask-playpause aria-label="Play/Pause">
+            <svg class="video-ask__icon-pause" width="20" height="20" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="4" height="12" rx="1" fill="currentColor"/><rect x="9" y="2" width="4" height="12" rx="1" fill="currentColor"/></svg>
+            <svg class="video-ask__icon-play" width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M4 2.5L13 8L4 13.5V2.5Z" fill="currentColor"/></svg>
+          </button>
+        </div>
+
+        {%- comment -%} Center play icon on pause {%- endcomment -%}
+        <div class="video-ask__pause-indicator">
+          <svg width="48" height="48" viewBox="0 0 16 16" fill="none"><path d="M4 2.5L13 8L4 13.5V2.5Z" fill="currentColor"/></svg>
+        </div>
+
+        {%- comment -%} Interactive buttons overlay {%- endcomment -%}
+        <div class="video-ask__interactive" data-video-ask-interactive>
+          <div class="video-ask__interactive-btns" data-video-ask-btns></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  document.querySelectorAll('[data-video-ask]').forEach(function(section) {
+    var nodesJSON = section.querySelector('[data-video-ask-nodes]');
+    if (!nodesJSON) return;
+    var nodes = JSON.parse(nodesJSON.textContent);
+    if (!nodes.length) return;
+
+    var video = section.querySelector('[data-video-ask-video]');
+    var interactiveEl = section.querySelector('[data-video-ask-interactive]');
+    var btnsEl = section.querySelector('[data-video-ask-btns]');
+    var wrap = section.querySelector('.video-ask__video-wrap');
+
+    var currentNode = null;
+
+    function findNode(target) {
+      var idx = parseInt(target, 10);
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].index === idx) return nodes[i];
+      }
+      return null;
+    }
+
+    function loadNode(node) {
+      if (!node) return;
+      currentNode = node;
+      interactiveEl.classList.remove('is-visible');
+      wrap.classList.remove('has-ended');
+      btnsEl.innerHTML = '';
+
+      /* Set video source */
+      if (node.video_shopify && node.video_shopify.length) {
+        video.innerHTML = '';
+        node.video_shopify.forEach(function(src) {
+          var source = document.createElement('source');
+          source.src = src.url;
+          source.type = src.mime_type;
+          video.appendChild(source);
+        });
+      } else if (node.video_url) {
+        video.innerHTML = '';
+        var source = document.createElement('source');
+        source.src = node.video_url;
+        source.type = 'video/mp4';
+        video.appendChild(source);
+      }
+
+      if (node.poster) {
+        video.poster = node.poster;
+      }
+
+      video.load();
+      video.muted = true;
+      video.play().catch(function(){});
+      wrap.classList.add('is-playing');
+      wrap.classList.remove('is-unmuted');
+    }
+
+    function showButtons() {
+      if (!currentNode) return;
+      btnsEl.innerHTML = '';
+      var badges = ['A', 'B', 'C'];
+      var badgeClasses = ['video-ask__badge--a', 'video-ask__badge--b', 'video-ask__badge--c'];
+      var btnKeys = [
+        { label: 'btn_a_label', action: 'btn_a_action', target: 'btn_a_target_node', link: 'btn_a_link' },
+        { label: 'btn_b_label', action: 'btn_b_action', target: 'btn_b_target_node', link: 'btn_b_link' },
+        { label: 'btn_c_label', action: 'btn_c_action', target: 'btn_c_target_node', link: 'btn_c_link' }
+      ];
+
+      btnKeys.forEach(function(k, i) {
+        var lbl = currentNode[k.label];
+        if (!lbl) return;
+        var action = currentNode[k.action];
+        var target = currentNode[k.target];
+        var link = currentNode[k.link];
+
+        var btn;
+        if (action === 'link' && link) {
+          btn = document.createElement('a');
+          btn.href = link;
+          btn.className = 'video-ask__btn-pill';
+        } else {
+          btn = document.createElement('button');
+          btn.className = 'video-ask__btn-pill';
+          btn.type = 'button';
+          btn.addEventListener('click', function() {
+            if (action === 'video' && target) {
+              var nextNode = findNode(target);
+              if (nextNode) loadNode(nextNode);
+            }
+          });
+        }
+
+        btn.innerHTML = '<span class="video-ask__badge ' + badgeClasses[i] + '">' + badges[i] + '</span><span>' + lbl + '</span>';
+        btnsEl.appendChild(btn);
+      });
+
+      if (btnsEl.children.length) {
+        interactiveEl.classList.add('is-visible');
+      }
+    }
+
+    /* Video ended → show buttons */
+    video.addEventListener('ended', function() {
+      wrap.classList.remove('is-playing');
+      wrap.classList.add('has-ended');
+      showButtons();
+    });
+
+    /* Tap video to play/pause */
+    video.addEventListener('click', function() {
+      if (interactiveEl.classList.contains('is-visible')) return;
+      if (video.paused) {
+        video.play().catch(function(){});
+      } else {
+        video.pause();
+      }
+    });
+
+    video.addEventListener('playing', function() { wrap.classList.add('is-playing'); });
+    video.addEventListener('pause', function() { wrap.classList.remove('is-playing'); });
+
+    /* Top-right play/pause button */
+    section.querySelector('[data-video-ask-playpause]').addEventListener('click', function() {
+      if (video.paused) {
+        video.play().catch(function(){});
+      } else {
+        video.pause();
+      }
+    });
+
+    /* Mute/unmute */
+    section.querySelector('[data-video-ask-mute]').addEventListener('click', function() {
+      video.muted = !video.muted;
+      wrap.classList.toggle('is-unmuted', !video.muted);
+    });
+
+    /* Autoplay first node */
+    loadNode(nodes[0]);
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Video Ask",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f5f3ec"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video_node",
+      "name": "Video Node",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (Shopify hosted)"
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Video URL (external MP4)",
+          "info": "Use if you host the video externally. Shopify video takes priority."
+        },
+        {
+          "type": "image_picker",
+          "id": "poster",
+          "label": "Poster / Thumbnail"
+        },
+        {
+          "type": "header",
+          "content": "Button A"
+        },
+        {
+          "type": "text",
+          "id": "btn_a_label",
+          "label": "Label"
+        },
+        {
+          "type": "select",
+          "id": "btn_a_action",
+          "label": "Action",
+          "options": [
+            { "value": "video", "label": "Play another video node" },
+            { "value": "link", "label": "Go to page" }
+          ],
+          "default": "video"
+        },
+        {
+          "type": "text",
+          "id": "btn_a_target_node",
+          "label": "Target Node #",
+          "info": "Enter the number of the Video Node to jump to (1 = first, 2 = second, etc.)"
+        },
+        {
+          "type": "url",
+          "id": "btn_a_link",
+          "label": "Link URL",
+          "info": "Only used when action = Go to page."
+        },
+        {
+          "type": "header",
+          "content": "Button B"
+        },
+        {
+          "type": "text",
+          "id": "btn_b_label",
+          "label": "Label"
+        },
+        {
+          "type": "select",
+          "id": "btn_b_action",
+          "label": "Action",
+          "options": [
+            { "value": "video", "label": "Play another video node" },
+            { "value": "link", "label": "Go to page" }
+          ],
+          "default": "video"
+        },
+        {
+          "type": "text",
+          "id": "btn_b_target_node",
+          "label": "Target Node #"
+        },
+        {
+          "type": "url",
+          "id": "btn_b_link",
+          "label": "Link URL"
+        },
+        {
+          "type": "header",
+          "content": "Button C"
+        },
+        {
+          "type": "text",
+          "id": "btn_c_label",
+          "label": "Label"
+        },
+        {
+          "type": "select",
+          "id": "btn_c_action",
+          "label": "Action",
+          "options": [
+            { "value": "video", "label": "Play another video node" },
+            { "value": "link", "label": "Go to page" }
+          ],
+          "default": "video"
+        },
+        {
+          "type": "text",
+          "id": "btn_c_target_node",
+          "label": "Target Node #"
+        },
+        {
+          "type": "url",
+          "id": "btn_c_link",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Ask",
+      "blocks": [
+        { "type": "video_node" }
+      ]
+    }
+  ]
+}
+{% endschema %}
