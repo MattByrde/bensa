@@ -1,0 +1,190 @@
+{{ 'section-custom-about-showcase.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="about-showcase">
+  {%- comment -%} Header row: heading + description {%- endcomment -%}
+  <div class="about-showcase__header">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="about-showcase__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <div class="about-showcase__intro">
+      {%- if section.settings.description != blank -%}
+        <p class="about-showcase__description">{{ section.settings.description }}</p>
+      {%- endif -%}
+      {%- if section.settings.link_label != blank -%}
+        <a href="{{ section.settings.link | default: '#' }}" class="about-showcase__link">
+          {{ section.settings.link_label }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} Bento grid {%- endcomment -%}
+  <div class="about-showcase__grid">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+
+        {%- when 'image' -%}
+          <div class="about-showcase__cell about-showcase__cell--image about-showcase__cell--{{ block.settings.size }}" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 900 | image_tag: class: 'about-showcase__img', loading: 'lazy' }}
+            {%- else -%}
+              <div class="about-showcase__placeholder">
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {%- endif -%}
+          </div>
+
+        {%- when 'text' -%}
+          <div class="about-showcase__cell about-showcase__cell--text about-showcase__cell--{{ block.settings.size }}" {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}
+              <h3 class="about-showcase__cell-title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="about-showcase__cell-text">{{ block.settings.text }}</p>
+            {%- endif -%}
+          </div>
+
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Showcase",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Da Bensa Arredamenti offriamo servizi di interior design e arredamento su misura, assicurando che il risultato finale superi le vostre aspettative"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Vi aiutiamo a creare spazi unici e funzionali che rispecchiano la vostra personalità, combinando estetica e comfort con la massima cura per ogni dettaglio."
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link Label",
+      "default": "SCOPRI CHI SIAMO"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "size",
+          "label": "Size",
+          "options": [
+            { "value": "small", "label": "Small" },
+            { "value": "medium", "label": "Medium" },
+            { "value": "large", "label": "Large" }
+          ],
+          "default": "medium"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Creiamo ambienti che combinano bellezza e funzionalità, selezionando i migliori marchi per ogni progetto."
+        },
+        {
+          "type": "select",
+          "id": "size",
+          "label": "Size",
+          "options": [
+            { "value": "small", "label": "Small" },
+            { "value": "medium", "label": "Medium" },
+            { "value": "large", "label": "Large" }
+          ],
+          "default": "small"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "About Showcase",
+      "blocks": [
+        { "type": "image", "settings": { "size": "medium" } },
+        { "type": "image", "settings": { "size": "small" } },
+        { "type": "text", "settings": { "title": "Ambienti su misura", "text": "Creiamo ambienti che combinano bellezza e funzionalità, selezionando i migliori marchi per ogni progetto.", "size": "small" } },
+        { "type": "image", "settings": { "size": "small" } },
+        { "type": "image", "settings": { "size": "medium" } },
+        { "type": "image", "settings": { "size": "small" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

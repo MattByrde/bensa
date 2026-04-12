@@ -1,0 +1,310 @@
+{{ 'section-custom-method.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%} Build a JSON map of panel-index → background color for JS {%- endcomment -%}
+{%- assign panel_colors = '' -%}
+{%- assign pi = 0 -%}
+{%- for block in section.blocks -%}
+  {%- if block.type == 'intro' -%}
+    {%- capture entry -%}"{{ pi }}":"{{ block.settings.background_color | default: section.settings.background_color }}"{%- endcapture -%}
+    {%- if panel_colors != '' -%}{%- assign panel_colors = panel_colors | append: ',' -%}{%- endif -%}
+    {%- assign panel_colors = panel_colors | append: entry -%}
+    {%- assign pi = pi | plus: 1 -%}
+  {%- elsif block.type == 'step' -%}
+    {%- capture entry -%}"{{ pi }}":"{{ block.settings.background_color | default: section.settings.background_color }}"{%- endcapture -%}
+    {%- if panel_colors != '' -%}{%- assign panel_colors = panel_colors | append: ',' -%}{%- endif -%}
+    {%- assign panel_colors = panel_colors | append: entry -%}
+    {%- assign pi = pi | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+  }
+{%- endstyle -%}
+
+<div class="method" data-method-section data-panel-colors='{{ "{" | append: panel_colors | append: "}" }}'>
+  {%- comment -%} Sticky center text {%- endcomment -%}
+  <div class="method__center">
+    {%- assign panel_index = 0 -%}
+    {%- assign step_count = 0 -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'intro' -%}
+        <div class="method__panel" data-method-panel="{{ panel_index }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.heading != blank -%}
+            <h2 class="method__heading">{{ block.settings.heading }}</h2>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <p class="method__description">{{ block.settings.text }}</p>
+          {%- endif -%}
+          {%- if block.settings.link_label != blank -%}
+            <a href="{{ block.settings.link | default: '#' }}" class="method__link">
+              {{ block.settings.link_label }}
+            </a>
+          {%- endif -%}
+        </div>
+        {%- assign panel_index = panel_index | plus: 1 -%}
+      {%- elsif block.type == 'step' -%}
+        {%- assign step_count = step_count | plus: 1 -%}
+        <div class="method__panel" data-method-panel="{{ panel_index }}" {{ block.shopify_attributes }}>
+          <span class="method__step-number">{{ step_count }}</span>
+          {%- if block.settings.title != blank -%}
+            <h3 class="method__step-heading">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <p class="method__step-text">{{ block.settings.text }}</p>
+          {%- endif -%}
+        </div>
+        {%- assign panel_index = panel_index | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  {%- comment -%} Scrolling images column {%- endcomment -%}
+  <div class="method__images-block">
+    <div class="method__images-col">
+      {%- assign media_index = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'media' -%}
+          {%- assign media_index = media_index | plus: 1 -%}
+          <div
+            class="method__img-wrap method__img-wrap--{{ media_index }} method__img-wrap--{{ block.settings.size }}"
+            data-method-media
+            data-parallax-speed="{{ block.settings.parallax_speed }}"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.video != blank -%}
+              <video class="method__media-asset" autoplay muted loop playsinline>
+                {%- for source in block.settings.video.sources -%}
+                  <source src="{{ source.url }}" type="{{ source.mime_type }}">
+                {%- endfor -%}
+              </video>
+            {%- elsif block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 600 | image_tag: class: 'method__media-asset', loading: 'lazy' }}
+            {%- else -%}
+              <div class="method__media-placeholder"></div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var section = document.querySelector('[data-method-section]');
+    if (!section) return;
+
+    var panels = section.querySelectorAll('[data-method-panel]');
+    var mediaItems = section.querySelectorAll('[data-method-media]');
+    var totalPanels = panels.length;
+    var ticking = false;
+
+    if (totalPanels === 0) return;
+
+    // Parse per-panel background colors from data attribute
+    var panelColors = {};
+    try { panelColors = JSON.parse(section.getAttribute('data-panel-colors') || '{}'); } catch(e) {}
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(function() {
+        var rect = section.getBoundingClientRect();
+        var sectionHeight = section.offsetHeight;
+        var viewportH = window.innerHeight;
+        var scrolled = -rect.top;
+        var scrollable = sectionHeight - viewportH;
+
+        if (scrollable <= 0) { ticking = false; return; }
+
+        var progress = Math.max(0, Math.min(1, scrolled / scrollable));
+
+        // Hide everything if section hasn't entered viewport yet
+        if (scrolled < -viewportH * 0.3) {
+          panels.forEach(function(p) { p.classList.remove('is-active'); });
+          ticking = false;
+          return;
+        }
+
+        // Intro panel gets only 10% of scroll, rest split equally among steps
+        var activeIndex;
+        if (progress < 0.1) {
+          activeIndex = 0;
+        } else {
+          var stepProgress = (progress - 0.1) / 0.9;
+          activeIndex = Math.min(1 + Math.floor(stepProgress * (totalPanels - 1)), totalPanels - 1);
+        }
+
+        // Apply per-panel background color
+        var color = panelColors[String(activeIndex)] || '';
+        section.style.backgroundColor = color;
+
+        panels.forEach(function(panel) {
+          var idx = parseInt(panel.getAttribute('data-method-panel'));
+          panel.classList.toggle('is-active', idx === activeIndex);
+        });
+
+        mediaItems.forEach(function(item) {
+          var speed = (parseFloat(item.getAttribute('data-parallax-speed')) || 5) / 10;
+          var y = scrolled * speed * 0.1;
+
+          var itemRect = item.getBoundingClientRect();
+          var itemCenter = itemRect.top + itemRect.height / 2;
+          var reveal = Math.max(0, Math.min(1, (viewportH - itemCenter) / (viewportH * 0.35)));
+          var eased = 1 - Math.pow(1 - reveal, 3);
+
+          item.style.opacity = String(eased);
+          item.style.transform = 'translateY(' + (-(y) + 40 * (1 - eased)) + 'px) scale(' + (0.9 + 0.1 * eased) + ')';
+        });
+
+        ticking = false;
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    requestAnimationFrame(function() { onScroll(); });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "The Method",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f5f3ec"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "intro",
+      "name": "Intro Text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Il Metodo Bensa"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Non vintage, non moderno. Il nostro metodo di design prende un approccio raccolto e autentico, utilizzando pezzi ben costruiti con carattere senza tempo, a prescindere dalla loro età. Da Bensa, crediamo che il carattere sia la pietra angolare degli interni senza tempo. Creiamo pezzi fatti per invecchiare e vivere attraverso le generazioni."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link Label",
+          "default": "SCOPRI DI PIÙ"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "#f5f3ec"
+        }
+      ]
+    },
+    {
+      "type": "media",
+      "name": "Image / Video",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (overrides image)"
+        },
+        {
+          "type": "select",
+          "id": "size",
+          "label": "Size",
+          "options": [
+            { "value": "xs", "label": "Small square" },
+            { "value": "sm", "label": "Medium square" },
+            { "value": "lg", "label": "Large square" },
+            { "value": "vt", "label": "Vertical" },
+            { "value": "hz", "label": "Horizontal" }
+          ],
+          "default": "sm"
+        },
+        {
+          "type": "range",
+          "id": "parallax_speed",
+          "label": "Parallax Speed",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "default": 5,
+          "info": "1 = slow drift, 10 = fast"
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "name": "Method Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "IL DESIGNER"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Il nostro processo inizia nelle mani del designer, dove generazioni di esperienza vengono sviluppate a partire da uno schizzo."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "#f5f3ec"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 24,
+  "presets": [
+    {
+      "name": "The Method",
+      "blocks": [
+        { "type": "intro", "settings": { "heading": "Il Metodo Bensa", "text": "Non vintage, non moderno. Il nostro metodo di design prende un approccio raccolto e autentico, utilizzando pezzi ben costruiti con carattere senza tempo, a prescindere dalla loro età. Da Bensa, crediamo che il carattere sia la pietra angolare degli interni senza tempo. Creiamo pezzi fatti per invecchiare e vivere attraverso le generazioni.", "link_label": "SCOPRI DI PIÙ" } },
+        { "type": "media", "settings": { "size": "lg", "parallax_speed": 2 } },
+        { "type": "media", "settings": { "size": "vt", "parallax_speed": 5 } },
+        { "type": "media", "settings": { "size": "xs", "parallax_speed": 8 } },
+        { "type": "media", "settings": { "size": "lg", "parallax_speed": 3 } },
+        { "type": "media", "settings": { "size": "lg", "parallax_speed": 4 } },
+        { "type": "media", "settings": { "size": "lg", "parallax_speed": 2 } },
+        { "type": "media", "settings": { "size": "xs", "parallax_speed": 9 } },
+        { "type": "media", "settings": { "size": "xs", "parallax_speed": 7 } },
+        { "type": "media", "settings": { "size": "hz", "parallax_speed": 5 } },
+        { "type": "media", "settings": { "size": "xs", "parallax_speed": 6 } },
+        { "type": "media", "settings": { "size": "lg", "parallax_speed": 3 } },
+        { "type": "step", "settings": { "title": "IL DESIGNER", "text": "Il nostro processo inizia nelle mani del designer, dove generazioni di esperienza vengono sviluppate a partire da uno schizzo fatto a mano e trasformate dal nostro team di ingegneri. Le finiture sono determinate con la massima qualità degli interni in mente, per garantire la longevità di ogni pezzo." } },
+        { "type": "step", "settings": { "title": "L'ARTIGIANO", "text": "Il progetto viene poi affidato all'artigiano per dare vita alla forma e alla struttura. Ore dedicate alla sagomatura, levigatura, assemblaggio e cucitura con il tocco della mano umana, poi meticolosamente ispezionato per il controllo qualità su ogni pezzo." } },
+        { "type": "step", "settings": { "title": "IL REALIZZATORE", "text": "Un prototipo finale viene poi passato ai laboratori dei realizzatori per essere prodotto, curando ogni minimo dettaglio: tessuti, cuciture, stampe e timbri applicati, e firmato ad ogni passaggio." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -292,6 +292,16 @@
       const spacer = header.querySelector('[data-nav-spacer]');
       if (!navRow) return;
 
+      // Transparent header over hero
+      const hero = document.querySelector('[data-home-hero]');
+      const headerGroup = document.querySelector('.shopify-section-group-header-group');
+      const hasHero = !!hero;
+
+      if (hasHero && headerGroup) {
+        headerGroup.classList.add('is-over-hero');
+        header.classList.add('is-transparent');
+      }
+
       // Threshold for is-scrolled (scroll-cart etc): when search row bottom leaves viewport
       const searchBottom = searchRow
         ? searchRow.getBoundingClientRect().bottom + window.scrollY
@@ -300,6 +310,7 @@
 
       let isFixed = false;
       let isScrolled = false;
+      let isTransparent = hasHero;
 
       const update = () => {
         const y = window.scrollY;
@@ -322,6 +333,18 @@
         } else if (isScrolled && y <= searchBottom - searchH) {
           isScrolled = false;
           header.classList.remove('is-scrolled');
+        }
+
+        // Transparent header: clean toggle at hero boundary
+        if (hasHero) {
+          const heroBottom = hero.offsetHeight - navRow.offsetHeight;
+          if (isTransparent && y > heroBottom) {
+            isTransparent = false;
+            header.classList.remove('is-transparent');
+          } else if (!isTransparent && y <= heroBottom) {
+            isTransparent = true;
+            header.classList.add('is-transparent');
+          }
         }
       };
 

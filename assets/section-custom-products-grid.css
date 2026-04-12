@@ -1,0 +1,153 @@
+.cpg-wrapper {
+    padding: 0 20px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.cpg-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+}
+
+@media screen and (min-width: 750px) {
+    .cpg-wrapper {
+        padding: 0 40px;
+    }
+
+    .cpg-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .cpg-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+/* Text Intro Block */
+.cpg-text-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 20px 20px 0;
+}
+
+.cpg-heading {
+    margin-bottom: 32px;
+}
+
+.cpg-button {
+    background-color: #202020;
+    color: #ffffff;
+    padding: 12px 24px;
+    border: 1.5px solid #202020;
+    border-radius: 10px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.cpg-button:hover {
+    background-color: #333333;
+    border-color: #333333;
+}
+
+/* Product Cards */
+.cpg-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cpg-card:hover {
+    border-color: rgba(0, 0, 0, 0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.cpg-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.cpg-card-title {
+    margin: 0;
+    color: #111111;
+    padding-right: 12px;
+}
+
+.cpg-card-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #111111;
+    flex-shrink: 0;
+}
+
+.cpg-card-image-box {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 0;
+}
+
+.cpg-card-img {
+    width: 80%;
+    height: 100%;
+    max-height: 160px;
+    aspect-ratio: 2 / 1;
+    object-fit: contain;
+}
+
+.cpg-card-footer {
+    margin-top: auto;
+    padding-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.cpg-card-brand {
+    color: var(--color-text, #202020);
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cpg-card-link-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text, #202020);
+    flex-shrink: 0;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.cpg-card:hover .cpg-card-link-btn {
+    background-color: var(--color-text, #202020);
+    border-color: var(--color-text, #202020);
+    color: #fff;
+}

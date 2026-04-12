@@ -23,9 +23,6 @@
 ### Home — Prodotti
 - **Evitare rimandi ai prodotti singoli** nella home. Non puntano sulla vendita del singolo prodotto.
 
-### Sezione Brand
-- **Mantenere** la sezione brand venduti in show-room.
-
 ### Sezione "Non sai quale servizio fa per te"
 - **OK**, da mantenere.
 

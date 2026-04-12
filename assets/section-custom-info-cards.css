@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: 1fr;
   width: 100%;
-    border-top: 1px solid #555;
-    border-bottom:1px solid #555;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 @media screen and (min-width: 750px) {
@@ -17,26 +17,26 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 340px;
-  padding: 32px 28px;
+  min-height: 380px;
+  padding: 36px 32px;
   overflow: hidden;
 }
 
 @media screen and (min-width: 750px) {
   .info-cards__card {
-    min-height: 420px;
-    padding: 36px 32px;
+    min-height: 480px;
+    padding: 44px 40px;
   }
 }
 
-/* Background image overlay */
+/* Background image overlay — matches hero gradient style */
 .info-cards__card--has-image::before {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 30%),
-    linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 35%);
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 30%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 50%);
   z-index: 1;
   pointer-events: none;
 }
@@ -48,17 +48,25 @@
   height: 100%;
   object-fit: cover;
   z-index: 0;
+  transition: transform 0.6s ease;
+}
+
+.info-cards__card:hover .info-cards__bg {
+  transform: scale(1.03);
 }
 
 /* Content positioning */
 .info-cards__top {
   position: relative;
   z-index: 2;
-  text-align: center;
 }
 
 .info-cards__subtitle {
   margin: 0;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  font-size: 0.65rem;
+  opacity: 0.5;
 }
 
 .info-cards__bottom {
@@ -69,24 +77,32 @@
 
 @media screen and (min-width: 750px) {
   .info-cards__bottom {
-    max-width: 80%;
+    max-width: 85%;
   }
 }
 
 .info-cards__heading {
-  margin: 0 0 32px 0;
+  margin: 0 0 28px 0;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
-/* Center variant for middle card */
+/* Center variant for light card */
+.info-cards__card--center .info-cards__top {
+  text-align: center;
+}
+
 .info-cards__card--center .info-cards__bottom {
   text-align: center;
+  max-width: 100%;
 }
 
 .info-cards__card--center .info-cards__buttons {
   justify-content: center;
 }
 
-/* Buttons */
+/* Buttons — matches hero button sizing */
 .info-cards__buttons {
   display: flex;
   flex-wrap: wrap;
@@ -98,49 +114,50 @@
   align-items: center;
   gap: 8px;
   text-decoration: none;
-  padding: 12px 24px;
+  padding: 14px 28px;
   border-radius: 10px;
-  transition: opacity 0.2s ease;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
-.info-cards__btn:hover {
-  opacity: 0.8;
-}
-
-/* Light button (for dark/image backgrounds) */
+/* Light button (for dark/image backgrounds) — matches hero secondary */
 .info-cards__btn--light {
-  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
   color: #fff;
   background: transparent;
 }
 
 .info-cards__btn--light:hover {
-  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* Dark button (for light backgrounds) */
 .info-cards__btn--dark {
-  border: 1.5px solid rgba(0, 0, 0, 0.3);
-  color: var(--color-text, #202020);
+  border: 1.5px solid #111;
+  color: #111;
   background: transparent;
 }
 
 .info-cards__btn--dark:hover {
-  background: rgba(0, 0, 0, 0.05);
+  background: #111;
+  color: #fff;
 }
 
-/* White filled button (second button when two are present) */
+/* White filled button (second button) */
 .info-cards__btn--white {
-  background: #ffffff !important;
-  color: #202020 !important;
-  border: 1.5px solid #ffffff;
+  background: #fff;
+  color: #111;
+  border: 1.5px solid #fff;
 }
 
 .info-cards__btn--white:hover {
-  background: transparent !important;
-  color: #ffffff !important;
-  border-color: rgba(255, 255, 255, 0.6);
-  opacity: 1;
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 /* Color schemes */

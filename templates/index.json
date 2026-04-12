@@ -49,7 +49,7 @@
         "slide_3"
       ],
       "settings": {
-        "height": 80
+        "height": 100
       }
     },
     "card_carousel": {
@@ -324,101 +324,46 @@
       "type": "custom-featured-grid",
       "blocks": {
         "card_1": {
-          "type": "product_card",
+          "type": "service_card",
           "settings": {
-            "title": "Lodge Sofa",
-            "rating": "4.9",
-            "image": "shopify://shop_images/test01.png",
-            "brand": "ARREDO 3",
-            "link_label": "Scopri di più...",
-            "link": "shopify://products/lupin-sofa-max"
+            "title": "Progettazione d'interni",
+            "icon": "",
+            "description": "Progettiamo insieme il tuo spazio ideale, dal concept alla realizzazione.",
+            "label": "DESIGN",
+            "link_label": "Scopri di più",
+            "link": ""
           }
         },
         "card_2": {
-          "type": "product_card",
+          "type": "service_card",
           "settings": {
-            "title": "The Couch",
-            "rating": "4.9",
-            "image": "shopify://shop_images/test02.png",
-            "brand": "ARREDO 3",
-            "link_label": "Scopri di più...",
-            "link": "shopify://products/lupin-sofa-max"
+            "title": "Consulenza personalizzata",
+            "icon": "",
+            "description": "Ti guidiamo nella scelta dei materiali, colori e stili più adatti.",
+            "label": "SUPPORTO",
+            "link_label": "Scopri di più",
+            "link": ""
           }
         },
         "card_3": {
-          "type": "product_card",
+          "type": "service_card",
           "settings": {
-            "title": "Tavolino Sveden",
-            "rating": "4.8",
-            "image": "shopify://shop_images/6920512cec099c394056b073_Untitled_Project_-_2.png",
-            "brand": "BONALDO",
-            "link_label": "Scopri di più...",
-            "link": "shopify://products/lupin-sofa-max"
+            "title": "Consegna e montaggio",
+            "icon": "",
+            "description": "Consegna rapida e installazione professionale a domicilio.",
+            "label": "LOGISTICA",
+            "link_label": "Scopri di più",
+            "link": ""
           }
         },
         "card_4": {
-          "type": "product_card",
+          "type": "service_card",
           "settings": {
-            "title": "Bruner",
-            "rating": "5.0",
-            "image": "shopify://shop_images/test03.png",
-            "brand": "SOFIA ARREDAMENTI",
-            "link_label": "Scopri di più...",
-            "link": ""
-          }
-        },
-        "card_5": {
-          "type": "product_card",
-          "settings": {
-            "title": "Treveris",
-            "rating": "4.8",
-            "image": "shopify://shop_images/test04.png",
-            "brand": "SKULM",
-            "link_label": "Scopri di più...",
-            "link": ""
-          }
-        },
-        "card_6": {
-          "type": "product_card",
-          "settings": {
-            "title": "Tablo",
-            "rating": "4.6",
-            "image": "shopify://shop_images/test05.png",
-            "brand": "ARREDO 3",
-            "link_label": "Scopri di più...",
-            "link": ""
-          }
-        },
-        "card_7": {
-          "type": "product_card",
-          "settings": {
-            "title": "Billie",
-            "rating": "5.0",
-            "image": "shopify://shop_images/test06.png",
-            "brand": "ARREDO 3",
-            "link_label": "Scopri di più...",
-            "link": "shopify://pages/contact"
-          }
-        },
-        "card_8": {
-          "type": "product_card",
-          "settings": {
-            "title": "Oslo Chair",
-            "rating": "4.7",
-            "image": "shopify://shop_images/test07.png",
-            "brand": "BONALDO",
-            "link_label": "Scopri di più...",
-            "link": "shopify://pages/contact"
-          }
-        },
-        "card_9": {
-          "type": "product_card",
-          "settings": {
-            "title": "Nora Dining",
-            "rating": "4.9",
-            "image": "shopify://shop_images/test10.png",
-            "brand": "SKULM",
-            "link_label": "Scopri di più...",
+            "title": "Preventivi su misura",
+            "icon": "",
+            "description": "Preventivi gratuiti e senza impegno per ogni progetto.",
+            "label": "PREVENTIVI",
+            "link_label": "Scopri di più",
             "link": ""
           }
         }
@@ -427,20 +372,179 @@
         "card_1",
         "card_2",
         "card_3",
-        "card_4",
-        "card_5",
-        "card_6",
-        "card_7",
-        "card_8",
-        "card_9"
+        "card_4"
+      ],
+      "settings": {
+        "background_color": "#ffffff",
+        "subtitle": "COSA FACCIAMO",
+        "heading": "I nostri servizi",
+        "button_label": "TUTTI I SERVIZI",
+        "button_link": "",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "about_showcase": {
+      "type": "custom-about-showcase",
+      "blocks": {
+        "img_1": {
+          "type": "image",
+          "settings": {
+            "size": "medium"
+          }
+        },
+        "img_2": {
+          "type": "image",
+          "settings": {
+            "size": "small"
+          }
+        },
+        "text_1": {
+          "type": "text",
+          "settings": {
+            "title": "Ambienti su misura",
+            "text": "Creiamo ambienti che combinano bellezza e funzionalità, selezionando i migliori marchi per ogni progetto.",
+            "size": "small"
+          }
+        },
+        "img_3": {
+          "type": "image",
+          "settings": {
+            "size": "small"
+          }
+        },
+        "img_4": {
+          "type": "image",
+          "settings": {
+            "size": "medium"
+          }
+        },
+        "img_5": {
+          "type": "image",
+          "settings": {
+            "size": "small"
+          }
+        }
+      },
+      "block_order": [
+        "img_1",
+        "img_2",
+        "text_1",
+        "img_3",
+        "img_4",
+        "img_5"
+      ],
+      "settings": {
+        "background_color": "#ffffff",
+        "heading": "Da Bensa Arredamenti offriamo servizi di interior design e arredamento su misura, assicurando che il risultato finale superi le vostre aspettative",
+        "description": "Vi aiutiamo a creare spazi unici e funzionali che rispecchiano la vostra personalità, combinando estetica e comfort con la massima cura per ogni dettaglio.",
+        "link_label": "SCOPRI CHI SIAMO",
+        "link": "",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "the_method": {
+      "type": "custom-method",
+      "blocks": {
+        "m_intro": {
+          "type": "intro",
+          "settings": {
+            "heading": "Il Metodo Bensa",
+            "text": "Non vintage, non moderno. Il nostro metodo di design prende un approccio raccolto e autentico, utilizzando pezzi ben costruiti con carattere senza tempo, a prescindere dalla loro età. Da Bensa, crediamo che il carattere sia la pietra angolare degli interni senza tempo. Creiamo pezzi fatti per invecchiare e vivere attraverso le generazioni.",
+            "link_label": "SCOPRI DI PIÙ",
+            "link": ""
+          }
+        },
+        "m_media_1": {
+          "type": "media",
+          "settings": { "size": "lg", "parallax_speed": 2 }
+        },
+        "m_media_2": {
+          "type": "media",
+          "settings": { "size": "vt", "parallax_speed": 5 }
+        },
+        "m_media_3": {
+          "type": "media",
+          "settings": { "size": "xs", "parallax_speed": 8 }
+        },
+        "m_media_4": {
+          "type": "media",
+          "settings": { "size": "lg", "parallax_speed": 3 }
+        },
+        "m_media_5": {
+          "type": "media",
+          "settings": { "size": "lg", "parallax_speed": 4 }
+        },
+        "m_media_6": {
+          "type": "media",
+          "settings": { "size": "lg", "parallax_speed": 2 }
+        },
+        "m_media_7": {
+          "type": "media",
+          "settings": { "size": "xs", "parallax_speed": 9 }
+        },
+        "m_media_8": {
+          "type": "media",
+          "settings": { "size": "xs", "parallax_speed": 7 }
+        },
+        "m_media_9": {
+          "type": "media",
+          "settings": { "size": "hz", "parallax_speed": 5 }
+        },
+        "m_media_10": {
+          "type": "media",
+          "settings": { "size": "xs", "parallax_speed": 6 }
+        },
+        "m_media_11": {
+          "type": "media",
+          "settings": { "size": "lg", "parallax_speed": 3 }
+        },
+        "m_step_1": {
+          "type": "step",
+          "settings": {
+            "title": "IL DESIGNER",
+            "text": "Il nostro processo inizia nelle mani del designer, dove generazioni di esperienza vengono sviluppate a partire da uno schizzo fatto a mano e trasformate dal nostro team di ingegneri. Le finiture sono determinate con la massima qualità degli interni in mente, per garantire la longevità di ogni pezzo."
+          }
+        },
+        "m_step_2": {
+          "type": "step",
+          "settings": {
+            "title": "L'ARTIGIANO",
+            "text": "Il progetto viene poi affidato all'artigiano per dare vita alla forma e alla struttura. Ore dedicate alla sagomatura, levigatura, assemblaggio e cucitura con il tocco della mano umana, poi meticolosamente ispezionato per il controllo qualità su ogni pezzo."
+          }
+        },
+        "m_step_3": {
+          "type": "step",
+          "settings": {
+            "title": "IL REALIZZATORE",
+            "text": "Un prototipo finale viene poi passato ai laboratori dei realizzatori per essere prodotto, curando ogni minimo dettaglio: tessuti, cuciture, stampe e timbri applicati, e firmato ad ogni passaggio."
+          }
+        }
+      },
+      "block_order": [
+        "m_intro",
+        "m_media_1",
+        "m_media_2",
+        "m_media_3",
+        "m_media_4",
+        "m_media_5",
+        "m_media_6",
+        "m_media_7",
+        "m_media_8",
+        "m_media_9",
+        "m_media_10",
+        "m_media_11",
+        "m_step_1",
+        "m_step_2",
+        "m_step_3"
       ],
       "settings": {
         "background_color": "#f5f3ec",
-        "heading": "I prodotti da\nnon perdere",
-        "button_label": "SCOPRI LA COLLEZIONE",
-        "button_link": "",
-        "padding_top": 68,
-        "padding_bottom": 40
+        "heading": "Il Metodo Bensa",
+        "description": "Non vintage, non moderno. Il nostro metodo di design prende un approccio raccolto e autentico, utilizzando pezzi ben costruiti con carattere senza tempo, a prescindere dalla loro età. Da Bensa, crediamo che il carattere sia la pietra angolare degli interni senza tempo. Creiamo pezzi fatti per invecchiare e vivere attraverso le generazioni.",
+        "link_label": "SCOPRI DI PIÙ",
+        "link": ""
       }
     },
     "brand_logos": {
@@ -452,7 +556,7 @@
             "logo": "shopify://shop_images/logo01.avif",
             "alt_text": "",
             "link": "",
-            "row": "1"
+            "row": ""
           }
         },
         "logo_2": {
@@ -461,7 +565,7 @@
             "logo": "shopify://shop_images/logo02.avif",
             "alt_text": "",
             "link": "",
-            "row": "1"
+            "row": ""
           }
         },
         "logo_3": {
@@ -470,7 +574,7 @@
             "logo": "shopify://shop_images/logo07.avif",
             "alt_text": "",
             "link": "",
-            "row": "1"
+            "row": ""
           }
         },
         "logo_4": {
@@ -479,7 +583,7 @@
             "logo": "shopify://shop_images/logo08.png",
             "alt_text": "",
             "link": "",
-            "row": "1"
+            "row": ""
           }
         },
         "logo_5": {
@@ -488,7 +592,7 @@
             "logo": "shopify://shop_images/logo06.png",
             "alt_text": "",
             "link": "",
-            "row": "1"
+            "row": ""
           }
         },
         "logo_6": {
@@ -497,7 +601,7 @@
             "logo": "shopify://shop_images/logo04.png",
             "alt_text": "",
             "link": "",
-            "row": "1"
+            "row": ""
           }
         },
         "logo_7": {
@@ -506,7 +610,7 @@
             "logo": "shopify://shop_images/logo03.avif",
             "alt_text": "",
             "link": "",
-            "row": "1"
+            "row": ""
           }
         },
         "logo_8": {
@@ -515,7 +619,7 @@
             "logo": "shopify://shop_images/6920864fe2ceb88861c0efac_Untitled_Project_-_13.png",
             "alt_text": "",
             "link": "",
-            "row": "2"
+            "row": ""
           }
         },
         "logo_9": {
@@ -524,7 +628,7 @@
             "logo": "shopify://shop_images/6920860a0360193cb8457f00_68342c56afdf6b32c81747d8_flexform.svg",
             "alt_text": "",
             "link": "",
-            "row": "2"
+            "row": ""
           }
         },
         "logo_10": {
@@ -533,7 +637,7 @@
             "logo": "shopify://shop_images/692085ffdf06d8d7323afd82_68342c56afdf6b32c81747d1__gubi.avif",
             "alt_text": "",
             "link": "",
-            "row": "2"
+            "row": ""
           }
         },
         "logo_11": {
@@ -542,7 +646,7 @@
             "logo": "shopify://shop_images/6920863b510a2cb3ca965914_Untitled_Project_-_12.png",
             "alt_text": "",
             "link": "",
-            "row": "2"
+            "row": ""
           }
         },
         "logo_12": {
@@ -551,7 +655,7 @@
             "logo": "shopify://shop_images/69208613465734e2657d7224_68342c56afdf6b32c81747d5__bocci.avif",
             "alt_text": "",
             "link": "",
-            "row": "2"
+            "row": ""
           }
         },
         "logo_13": {
@@ -560,7 +664,7 @@
             "logo": "shopify://shop_images/logo01.avif",
             "alt_text": "",
             "link": "",
-            "row": "2"
+            "row": ""
           }
         },
         "logo_14": {
@@ -569,7 +673,7 @@
             "logo": "shopify://shop_images/logo02.avif",
             "alt_text": "",
             "link": "#",
-            "row": "2"
+            "row": ""
           }
         }
       },
@@ -605,10 +709,7 @@
           "settings": {
             "username": "bensaarredi",
             "video_url": "https://cdn.shopify.com/videos/c/o/v/0173c3a52dd4460db6c2b39b59392813.mp4",
-            "product_image": "shopify://shop_images/sofa02.webp",
-            "product_title": "Unite Sofa",
-            "product_price": "1.500€",
-            "product_link": ""
+            "image": "shopify://shop_images/sofa02.webp"
           }
         },
         "community_2": {
@@ -616,10 +717,7 @@
           "settings": {
             "username": "alexislconway",
             "video_url": "https://cdn.shopify.com/videos/c/o/v/1e3b3ee058744a359f76d177ebd5a832.mp4",
-            "product_image": "shopify://shop_images/poltrona-in-shearling-nicxon_1.avif",
-            "product_title": "Poltrona Infinity",
-            "product_price": "490€",
-            "product_link": ""
+            "image": "shopify://shop_images/poltrona-in-shearling-nicxon_1.avif"
           }
         },
         "community_3": {
@@ -627,10 +725,7 @@
           "settings": {
             "username": "sarahdesign",
             "video_url": "https://cdn.shopify.com/videos/c/o/v/277b6cac33e94817a2f997b0738289b0.mp4",
-            "product_image": "shopify://shop_images/03_KeSa_UEC_Sand_Side_b8b9e117-ab51-42b9-a1fd-0b88bc3ae027.jpg",
-            "product_title": "Nicxon",
-            "product_price": "190",
-            "product_link": "shopify://products/nicxon"
+            "image": "shopify://shop_images/03_KeSa_UEC_Sand_Side_b8b9e117-ab51-42b9-a1fd-0b88bc3ae027.jpg"
           }
         }
       },
@@ -640,11 +735,11 @@
         "community_3"
       ],
       "settings": {
-        "subtitle": "BENSA + VOI",
         "heading": "La Community",
-        "description": "Scopri come i nostri clienti hanno trasformato le loro case con l'aiuto di Bensa Arredamenti. Lasciati ispirare dalle loro storie.",
+        "subtitle_left": "Scopri come i nostri clienti hanno trasformato le loro case con l'aiuto di Bensa Arredamenti. Lasciati ispirare dalle loro storie.",
+        "subtitle_right": "Ogni progetto è unico, ogni ambiente racconta una storia. La nostra community condivide passione e risultati.",
         "background_color": "#f5f3ec",
-        "padding_top": 48,
+        "padding_top": 72,
         "padding_bottom": 48
       }
     },
@@ -924,6 +1019,8 @@
     "card_carousel",
     "category_pills",
     "custom_featured_grid",
+    "about_showcase",
+    "the_method",
     "brand_logos",
     "community",
     "service_packages",

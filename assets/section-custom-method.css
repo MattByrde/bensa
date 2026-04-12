@@ -1,0 +1,334 @@
+/* ── The Method — GSAP Field-style scroll gallery ── */
+
+/* Outer wrapper — position:relative allows sticky to work */
+.method {
+  position: relative;
+  transition: background-color 0.6s ease;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* ── Sticky text — pinned full-viewport, stops at section end ── */
+.method__center {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+/* ── Text panels — stacked absolute, toggled via JS ── */
+.method__panel {
+  position: absolute;
+  left: 50%;
+  max-width: 520px;
+  padding: 0 24px;
+  text-align: center;
+  opacity: 0;
+  transform: translate(-50%, 20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+}
+
+.method__panel.is-active {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+  z-index: 1;
+}
+
+/* Intro panel */
+.method__heading {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 0 0 20px;
+  color: #111;
+}
+
+.method__description {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #555;
+  margin: 0 0 24px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.method__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border: 1.5px solid #111;
+  border-radius: 10px;
+  background-color: transparent;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #111;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.method__link:hover {
+  background-color: #111;
+  color: #fff;
+}
+
+/* Step panels */
+.method__step-number {
+  display: block;
+  font-size: clamp(4rem, 8vw, 6.5rem);
+  font-weight: 300;
+  color: rgba(17, 17, 17, 0.06);
+  line-height: 1;
+  margin-bottom: 16px;
+  letter-spacing: -0.04em;
+}
+
+.method__step-heading {
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #111;
+  margin: 0 0 20px;
+}
+
+.method__step-text {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: #555;
+  margin: 0;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Pull images up so they start at section top, behind the sticky text */
+.method__images-block {
+  margin-top: -100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Flex column — this is what makes margin-left:auto work ── */
+.method__images-col {
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 20px;
+}
+
+/* ── Image wrappers ── */
+.method__img-wrap {
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+.method__media-asset {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.method__media-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #ddd8cd;
+}
+
+/* ── Sizes ── */
+.method__img-wrap--xs {
+  width: 12vw;
+  height: 12vw;
+}
+
+.method__img-wrap--sm {
+  width: 17vw;
+  height: 17vw;
+}
+
+.method__img-wrap--lg {
+  width: 23vw;
+  height: 23vw;
+}
+
+.method__img-wrap--vt {
+  width: 17vw;
+  height: 21vw;
+}
+
+.method__img-wrap--hz {
+  width: 20vw;
+  height: 12vw;
+}
+
+/* ── Scattered positions — margin-left:auto pushes right in flex col ── */
+
+/* 1 — lg, left */
+.method__img-wrap--1 {
+  margin-left: 5%;
+}
+
+/* 2 — vt, right */
+.method__img-wrap--2 {
+  margin-left: auto;
+  margin-right: 3%;
+}
+
+/* 3 — xs, center-left */
+.method__img-wrap--3 {
+  margin-left: 30%;
+  margin-top: 20px;
+}
+
+/* 4 — lg, left */
+.method__img-wrap--4 {
+  margin-left: 7%;
+  margin-top: 50px;
+}
+
+/* 5 — lg, right */
+.method__img-wrap--5 {
+  margin-left: auto;
+  margin-top: 80px;
+}
+
+/* 6 — lg, left */
+.method__img-wrap--6 {
+  margin-left: 7%;
+  margin-top: -40px;
+}
+
+/* 7 — xs, right */
+.method__img-wrap--7 {
+  margin-left: auto;
+  margin-right: 15%;
+  margin-top: 30px;
+}
+
+/* 8 — xs, left */
+.method__img-wrap--8 {
+  margin-left: 5%;
+  margin-top: 100px;
+}
+
+/* 9 — hz, right */
+.method__img-wrap--9 {
+  margin-left: auto;
+  margin-right: 5%;
+  margin-top: -3vw;
+}
+
+/* 10 — xs, left */
+.method__img-wrap--10 {
+  margin-left: 10%;
+  margin-top: 60px;
+}
+
+/* 11 — lg, right */
+.method__img-wrap--11 {
+  margin-left: auto;
+  margin-right: 5%;
+  margin-top: 30px;
+}
+
+/* 12 — xs, right */
+.method__img-wrap--12 {
+  margin-left: auto;
+  margin-right: 12%;
+  margin-top: 40px;
+}
+
+/* 13 — vt, left */
+.method__img-wrap--13 {
+  margin-left: 8%;
+  margin-top: -2vw;
+}
+
+/* 14 — lg, right */
+.method__img-wrap--14 {
+  margin-left: auto;
+  margin-right: 5%;
+  margin-top: 50px;
+}
+
+/* 15 — xs, left */
+.method__img-wrap--15 {
+  margin-left: 15%;
+  margin-top: 25px;
+}
+
+/* 16 — lg, right */
+.method__img-wrap--16 {
+  margin-left: auto;
+  margin-right: 8%;
+  margin-top: 40px;
+}
+
+/* 17 — xs, left */
+.method__img-wrap--17 {
+  margin-left: 5%;
+  margin-top: -2vw;
+}
+
+/* 18 — hz, right */
+.method__img-wrap--18 {
+  margin-left: auto;
+  margin-right: 10%;
+  margin-top: 50px;
+}
+
+/* ── 1440px+ fluid scaling ── */
+@media screen and (min-width: 1440px) {
+  .method__img-wrap--5  { margin-top: 6vw; }
+  .method__img-wrap--8  { margin-top: 8vw; }
+}
+
+/* ── Tablet ── */
+@media screen and (max-width: 991px) {
+  .method__img-wrap--xs { width: 100px; height: 100px; }
+  .method__img-wrap--sm { width: 160px; height: 160px; }
+  .method__img-wrap--lg { width: 220px; height: 220px; }
+  .method__img-wrap--vt { width: 160px; height: 210px; }
+  .method__img-wrap--hz { width: 200px; height: 115px; }
+  .method__img-wrap--5  { margin-top: 80px; }
+  .method__img-wrap--8  { margin-top: 100px; }
+}
+
+/* ── Mobile ── */
+@media screen and (max-width: 749px) {
+  .method__panel {
+    max-width: 260px;
+  }
+
+  .method__step-number {
+    font-size: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .method__step-heading {
+    font-size: 1.1rem;
+  }
+
+  .method__img-wrap--xs { width: 80px; height: 80px; }
+  .method__img-wrap--sm { width: 130px; height: 130px; }
+  .method__img-wrap--lg { width: 155px; height: 155px; }
+  .method__img-wrap--vt { width: 115px; height: 140px; }
+  .method__img-wrap--hz { width: 170px; height: 90px; }
+
+  .method__img-wrap--3  { margin-left: 10%; margin-top: 20px; }
+  .method__img-wrap--4  { margin-top: 30px; }
+  .method__img-wrap--5  { margin-top: 60px; }
+  .method__img-wrap--6  { margin-top: 40px; margin-left: 3.5%; }
+  .method__img-wrap--8  { margin-top: 60px; }
+  .method__img-wrap--10 { margin-top: 30px; }
+}

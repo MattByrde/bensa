@@ -25,89 +25,43 @@
     <h2 class="section-heading brand-logos__heading typo-h2">{{ section.settings.heading }}</h2>
   {%- endif -%}
 
-  {%- comment -%} Row 1 - scrolls left {%- endcomment -%}
   <div class="brand-logos__marquee">
     <div class="brand-logos__track">
       {%- for block in section.blocks -%}
-        {%- if block.settings.row == '1' -%}
-          <div class="brand-logos__item" {{ block.shopify_attributes }}>
-            {%- if block.settings.logo != blank -%}
-              {%- assign logo_alt = block.settings.alt_text | default: '' | escape -%}
-              {%- if block.settings.link != blank -%}
-                <a href="{{ block.settings.link }}">
-                  {{ block.settings.logo | image_url: width: 600 | image_tag: class: 'brand-logos__img', loading: 'lazy', alt: logo_alt }}
-                </a>
-              {%- else -%}
+        <div class="brand-logos__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.logo != blank -%}
+            {%- assign logo_alt = block.settings.alt_text | default: '' | escape -%}
+            {%- if block.settings.link != blank -%}
+              <a href="{{ block.settings.link }}">
                 {{ block.settings.logo | image_url: width: 600 | image_tag: class: 'brand-logos__img', loading: 'lazy', alt: logo_alt }}
-              {%- endif -%}
+              </a>
             {%- else -%}
-              <div class="brand-logos__placeholder">Logo</div>
+              {{ block.settings.logo | image_url: width: 600 | image_tag: class: 'brand-logos__img', loading: 'lazy', alt: logo_alt }}
             {%- endif -%}
-          </div>
-        {%- endif -%}
+          {%- else -%}
+            <div class="brand-logos__placeholder">Logo</div>
+          {%- endif -%}
+        </div>
       {%- endfor -%}
       {%- for block in section.blocks -%}
-        {%- if block.settings.row == '1' -%}
-          <div class="brand-logos__item" aria-hidden="true">
-            {%- if block.settings.logo != blank -%}
-              {%- assign logo_alt = block.settings.alt_text | default: '' | escape -%}
-              {%- if block.settings.link != blank -%}
-                <a href="{{ block.settings.link }}" tabindex="-1">
-                  {{ block.settings.logo | image_url: width: 300 | image_tag: class: 'brand-logos__img', loading: 'lazy', alt: logo_alt }}
-                </a>
-              {%- else -%}
+        <div class="brand-logos__item" aria-hidden="true">
+          {%- if block.settings.logo != blank -%}
+            {%- assign logo_alt = block.settings.alt_text | default: '' | escape -%}
+            {%- if block.settings.link != blank -%}
+              <a href="{{ block.settings.link }}" tabindex="-1">
                 {{ block.settings.logo | image_url: width: 300 | image_tag: class: 'brand-logos__img', loading: 'lazy', alt: logo_alt }}
-              {%- endif -%}
+              </a>
             {%- else -%}
-              <div class="brand-logos__placeholder">Logo</div>
+              {{ block.settings.logo | image_url: width: 300 | image_tag: class: 'brand-logos__img', loading: 'lazy', alt: logo_alt }}
             {%- endif -%}
-          </div>
-        {%- endif -%}
+          {%- else -%}
+            <div class="brand-logos__placeholder">Logo</div>
+          {%- endif -%}
+        </div>
       {%- endfor -%}
     </div>
   </div>
 
-  {%- comment -%} Row 2 - scrolls right {%- endcomment -%}
-  <div class="brand-logos__marquee">
-    <div class="brand-logos__track brand-logos__track--reverse">
-      {%- for block in section.blocks -%}
-        {%- if block.settings.row == '2' -%}
-          <div class="brand-logos__item" {{ block.shopify_attributes }}>
-            {%- if block.settings.logo != blank -%}
-              {%- assign logo_alt = block.settings.alt_text | default: '' | escape -%}
-              {%- if block.settings.link != blank -%}
-                <a href="{{ block.settings.link }}">
-                  {{ block.settings.logo | image_url: width: 300 | image_tag: class: 'brand-logos__img', loading: 'lazy', alt: logo_alt }}
-                </a>
-              {%- else -%}
-                {{ block.settings.logo | image_url: width: 300 | image_tag: class: 'brand-logos__img', loading: 'lazy', alt: logo_alt }}
-              {%- endif -%}
-            {%- else -%}
-              <div class="brand-logos__placeholder">Logo</div>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-      {%- endfor -%}
-      {%- for block in section.blocks -%}
-        {%- if block.settings.row == '2' -%}
-          <div class="brand-logos__item" aria-hidden="true">
-            {%- if block.settings.logo != blank -%}
-              {%- assign logo_alt = block.settings.alt_text | default: '' | escape -%}
-              {%- if block.settings.link != blank -%}
-                <a href="{{ block.settings.link }}" tabindex="-1">
-                  {{ block.settings.logo | image_url: width: 300 | image_tag: class: 'brand-logos__img', loading: 'lazy', alt: logo_alt }}
-                </a>
-              {%- else -%}
-                {{ block.settings.logo | image_url: width: 300 | image_tag: class: 'brand-logos__img', loading: 'lazy', alt: logo_alt }}
-              {%- endif -%}
-            {%- else -%}
-              <div class="brand-logos__placeholder">Logo</div>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-      {%- endfor -%}
-    </div>
-  </div>
 </div>
 
 {% schema %}
@@ -179,16 +133,6 @@
           "type": "url",
           "id": "link",
           "label": "Link (optional)"
-        },
-        {
-          "type": "select",
-          "id": "row",
-          "label": "Row",
-          "options": [
-            { "value": "1", "label": "Row 1 (scrolls left)" },
-            { "value": "2", "label": "Row 2 (scrolls right)" }
-          ],
-          "default": "1"
         }
       ]
     }
@@ -197,20 +141,13 @@
     {
       "name": "Brand Logos",
       "blocks": [
-        { "type": "logo", "settings": { "row": "1" } },
-        { "type": "logo", "settings": { "row": "1" } },
-        { "type": "logo", "settings": { "row": "1" } },
-        { "type": "logo", "settings": { "row": "1" } },
-        { "type": "logo", "settings": { "row": "1" } },
-        { "type": "logo", "settings": { "row": "1" } },
-        { "type": "logo", "settings": { "row": "1" } },
-        { "type": "logo", "settings": { "row": "2" } },
-        { "type": "logo", "settings": { "row": "2" } },
-        { "type": "logo", "settings": { "row": "2" } },
-        { "type": "logo", "settings": { "row": "2" } },
-        { "type": "logo", "settings": { "row": "2" } },
-        { "type": "logo", "settings": { "row": "2" } },
-        { "type": "logo", "settings": { "row": "2" } }
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
       ]
     }
   ]
