@@ -30,31 +30,20 @@
   {%- endcomment -%}
   <div class="intro-section__grid">
     <div class="intro-section__left">
-      <div class="intro-section__cell intro-section__cell--img1 intro-section__reveal intro-section__reveal--delay-1">
-        {%- assign media_block = section.blocks[0] -%}
-        {%- if media_block and media_block.settings.video != blank -%}
-          {{ media_block.settings.video | video_tag: class: 'intro-section__video', autoplay: true, loop: true, muted: true, playsinline: true }}
-        {%- elsif media_block and media_block.settings.image != blank -%}
-          {{ media_block.settings.image | image_url: width: 600 | image_tag: class: 'intro-section__img', loading: 'lazy' }}
-        {%- else -%}
-          <div class="intro-section__placeholder">
-            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-          </div>
-        {%- endif -%}
-      </div>
-
-      <div class="intro-section__cell intro-section__cell--img2 intro-section__reveal intro-section__reveal--delay-2">
-        {%- assign media_block = section.blocks[1] -%}
-        {%- if media_block and media_block.settings.video != blank -%}
-          {{ media_block.settings.video | video_tag: class: 'intro-section__video', autoplay: true, loop: true, muted: true, playsinline: true }}
-        {%- elsif media_block and media_block.settings.image != blank -%}
-          {{ media_block.settings.image | image_url: width: 600 | image_tag: class: 'intro-section__img', loading: 'lazy' }}
-        {%- else -%}
-          <div class="intro-section__placeholder">
-            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-          </div>
-        {%- endif -%}
-      </div>
+      {%- assign media_blocks = section.blocks | where: 'type', 'media' -%}
+      {%- for block in media_blocks limit: 2 -%}
+        <div class="intro-section__cell intro-section__cell--img{{ forloop.index }} intro-section__reveal intro-section__reveal--delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.video != blank -%}
+            {{ block.settings.video | video_tag: class: 'intro-section__video', autoplay: true, loop: true, muted: true, playsinline: true }}
+          {%- elsif block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 600 | image_tag: class: 'intro-section__img', loading: 'lazy' }}
+          {%- else -%}
+            <div class="intro-section__placeholder">
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
 
       <div class="intro-section__cell intro-section__cell--text intro-section__reveal intro-section__reveal--delay-3">
         {%- if section.settings.description != blank -%}
@@ -80,21 +69,79 @@
     </div>
 
     <div class="intro-section__right">
-      <div class="intro-section__cell intro-section__cell--img3 intro-section__reveal intro-section__reveal--delay-4">
-        {%- assign media_block = section.blocks[2] -%}
-        {%- if media_block and media_block.settings.video != blank -%}
-          {{ media_block.settings.video | video_tag: class: 'intro-section__video', autoplay: true, loop: true, muted: true, playsinline: true }}
-        {%- elsif media_block and media_block.settings.image != blank -%}
-          {{ media_block.settings.image | image_url: width: 400 | image_tag: class: 'intro-section__img', loading: 'lazy' }}
-        {%- else -%}
-          <div class="intro-section__placeholder">
-            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-          </div>
-        {%- endif -%}
-      </div>
+      {%- assign media_blocks = section.blocks | where: 'type', 'media' -%}
+      {%- for block in media_blocks offset: 2 limit: 1 -%}
+        <div class="intro-section__cell intro-section__cell--img3 intro-section__reveal intro-section__reveal--delay-4" {{ block.shopify_attributes }}>
+          {%- if block.settings.video != blank -%}
+            {{ block.settings.video | video_tag: class: 'intro-section__video', autoplay: true, loop: true, muted: true, playsinline: true }}
+          {%- elsif block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 400 | image_tag: class: 'intro-section__img', loading: 'lazy' }}
+          {%- else -%}
+            <div class="intro-section__placeholder">
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
     </div>
   </div>
 </div>
+
+  {%- comment -%} Impact in Numbers {%- endcomment -%}
+  <div class="intro-section__impact intro-section__reveal">
+    <div class="intro-section__impact-header">
+      <h2 class="intro-section__impact-title">{{ section.settings.impact_heading }}</h2>
+    </div>
+    <div class="intro-section__impact-grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'impact' -%}
+          <div class="impact-card" {{ block.shopify_attributes }}>
+            <div class="impact-card__number">{{ block.settings.number }}</div>
+            <div class="impact-card__text">{{ block.settings.text }}</div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} Why Serious Business / Featured Work {%- endcomment -%}
+  <div class="intro-section__features intro-section__reveal">
+    <div class="intro-section__features-left">
+      <h2 class="intro-section__features-title">{{ section.settings.services_heading }}</h2>
+      <div class="intro-section__features-line"></div>
+      {%- if section.settings.services_description != blank -%}
+        <div class="intro-section__features-desc">{{ section.settings.services_description }}</div>
+      {%- endif -%}
+    </div>
+    <div class="intro-section__features-right">
+      <div class="intro-section__features-carousel">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'service' -%}
+            <div class="intro-feature" {{ block.shopify_attributes }}>
+              <div class="intro-feature__media">
+                {%- if block.settings.video != blank -%}
+                  {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true }}
+                {%- elsif block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy' }}
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+              </div>
+              <div class="intro-feature__tags">
+                {%- assign tags = block.settings.number | split: ',' -%}
+                {%- for tag in tags -%}
+                   <span class="intro-feature__tag">{{ tag | strip }}</span>
+                {%- endfor -%}
+              </div>
+              <div class="intro-feature__title">{{ block.settings.title }}</div>
+              <div class="intro-feature__text">{{ block.settings.text }}</div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
 
 <script>
   (function () {
@@ -138,6 +185,17 @@
       "default": "Ispirazione per ogni ambiente"
     },
     {
+      "type": "text",
+      "id": "header_button_label",
+      "label": "Header Button Label",
+      "default": "Learn more"
+    },
+    {
+      "type": "url",
+      "id": "header_button_link",
+      "label": "Header Button Link"
+    },
+    {
       "type": "richtext",
       "id": "description",
       "label": "Description",
@@ -179,6 +237,73 @@
       "unit": "px",
       "label": "Padding Bottom",
       "default": 72
+    },
+    {
+      "type": "textarea",
+      "id": "services_heading",
+      "label": "Services Heading",
+      "default": "FEATURED WORK"
+    },
+    {
+      "type": "textarea",
+      "id": "services_description",
+      "label": "Services Description",
+      "default": "(n.) Some of the work we've done and are proud of. Click to see the whole case study."
+    },
+    {
+      "type": "text",
+      "id": "services_button_label",
+      "label": "Services Button Label",
+      "default": "Learn more"
+    },
+    {
+      "type": "url",
+      "id": "services_button_link",
+      "label": "Services Button Link"
+    },
+    {
+      "type": "textarea",
+      "id": "impact_heading",
+      "label": "Impact Heading",
+      "default": "Kindness has an impact<br><em>in numbers</em>"
+    },
+    {
+      "type": "text",
+      "id": "impact_button_label",
+      "label": "Impact Button Label",
+      "default": "Learn more"
+    },
+    {
+      "type": "url",
+      "id": "impact_button_link",
+      "label": "Impact Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial"
+    },
+    {
+      "type": "image_picker",
+      "id": "testimonial_avatar",
+      "label": "Testimonial Avatar"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_author",
+      "label": "Testimonial Author",
+      "default": "Yannick Simon"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_role",
+      "label": "Testimonial Role",
+      "default": "Brand Manager, Aroulus"
+    },
+    {
+      "type": "textarea",
+      "id": "testimonial_quote",
+      "label": "Testimonial Quote",
+      "default": "\"Being a start-up company, we have mastered jointly with Serious Business the challenge to enhance our brand identity significantly within a short period of time. The in-depth brand knowledge paired with highly creative ambition and the vast network of creatives.\""
     }
   ],
   "blocks": [
@@ -197,16 +322,43 @@
           "label": "Video"
         }
       ]
+    },
+    {
+      "type": "impact",
+      "name": "Impact Card",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number", "default": "95%" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Description text" }
+      ]
+    },
+    {
+      "type": "service",
+      "name": "Service Feature",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Tags (Comma separated)", "default": "strategy, website" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Service Title" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Service description text goes here." },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "video", "id": "video", "label": "Video" }
+      ]
     }
   ],
-  "max_blocks": 3,
   "presets": [
     {
       "name": "Intro",
       "blocks": [
         { "type": "media" },
         { "type": "media" },
-        { "type": "media" }
+        { "type": "media" },
+        { "type": "impact", "settings": { "number": "95%", "text": "Of our customers are still in business and thriving" } },
+        { "type": "impact", "settings": { "number": "40+", "text": "Our startups are featured in global media, such as NY Times, Forbes, TechCrunch, Bloomberg, Hypebeast and Business Insider" } },
+        { "type": "impact", "settings": { "number": "90+", "text": "Startups we've helped on their growth journey over the past 8 years" } },
+        { "type": "impact", "settings": { "number": "240M€", "text": "Of funding subsequently collected over the past 2 years from renowned investors such as Y-Combinator, Atomico and Project A" } },
+        { "type": "impact", "settings": { "number": "8+", "text": "Years of experience delivering world-class branding and design solutions" } },
+        { "type": "service", "settings": { "number": "strategy, e-commerce, website", "title": "Flowers, Ceramics, Bistrot.", "text": "" } },
+        { "type": "service", "settings": { "number": "strategy, website", "title": "Be the friend that found it first", "text": "" } },
+        { "type": "service", "settings": { "number": "strategy, website", "title": "Explore the Italian Coast differently", "text": "" } },
+        { "type": "service", "settings": { "number": "branding, design", "title": "Elevating the digital experience", "text": "" } }
       ]
     }
   ]

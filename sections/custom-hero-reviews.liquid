@@ -37,48 +37,6 @@
       <p class="hero-reviews__description">{{ section.settings.description }}</p>
     {%- endif -%}
   </div>
-
-  {%- comment -%} Reviews grid — static cards {%- endcomment -%}
-  <div class="hero-reviews__grid hero-reviews__reveal hero-reviews__reveal--delay-2">
-    {%- for block in section.blocks -%}
-      <div class="hero-reviews__card" {{ block.shopify_attributes }}>
-        {%- comment -%} Stars {%- endcomment -%}
-        <div class="hero-reviews__stars">
-          {%- assign stars = block.settings.stars | default: 5 -%}
-          {%- for i in (1..5) -%}
-            <svg class="hero-reviews__star{% if i <= stars %} hero-reviews__star--filled{% endif %}" viewBox="0 0 24 24" width="14" height="14">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-          {%- endfor -%}
-        </div>
-
-        {%- comment -%} Review text {%- endcomment -%}
-        {%- if block.settings.text != blank -%}
-          <p class="hero-reviews__review-text">"{{ block.settings.text }}"</p>
-        {%- endif -%}
-
-        {%- comment -%} Divider {%- endcomment -%}
-        <div class="hero-reviews__divider"></div>
-
-        {%- comment -%} Author {%- endcomment -%}
-        <div class="hero-reviews__author">
-          {%- if block.settings.author_image != blank -%}
-            <div class="hero-reviews__author-img">
-              {{ block.settings.author_image | image_url: width: 80 | image_tag: loading: 'lazy' }}
-            </div>
-          {%- endif -%}
-          <div class="hero-reviews__author-info">
-            {%- if block.settings.author_name != blank -%}
-              <span class="hero-reviews__author-name">{{ block.settings.author_name }}</span>
-            {%- endif -%}
-            {%- if block.settings.author_role != blank -%}
-              <span class="hero-reviews__author-role">{{ block.settings.author_role }}</span>
-            {%- endif -%}
-          </div>
-        </div>
-      </div>
-    {%- endfor -%}
-  </div>
 </div>
 
 <script>
@@ -146,16 +104,6 @@
       "default": "Ogni progetto nasce dall'ascolto, dalla cura dei dettagli e dalla passione per il design italiano."
     },
     {
-      "type": "header",
-      "content": "Reviews"
-    },
-    {
-      "type": "text",
-      "id": "reviews_label",
-      "label": "Reviews Section Label",
-      "default": "Recensioni verificate"
-    },
-    {
       "type": "range",
       "id": "padding_top",
       "min": 0,
@@ -176,88 +124,9 @@
       "default": 48
     }
   ],
-  "blocks": [
-    {
-      "type": "review",
-      "name": "Review",
-      "settings": [
-        {
-          "type": "range",
-          "id": "stars",
-          "min": 1,
-          "max": 5,
-          "step": 1,
-          "label": "Star Rating",
-          "default": 5
-        },
-        {
-          "type": "textarea",
-          "id": "text",
-          "label": "Review Text",
-          "default": "Un'esperienza straordinaria. Il team ha trasformato la nostra casa in un luogo che rispecchia perfettamente il nostro stile."
-        },
-        {
-          "type": "image_picker",
-          "id": "author_image",
-          "label": "Author Photo"
-        },
-        {
-          "type": "text",
-          "id": "author_name",
-          "label": "Author Name",
-          "default": "Maria Rossi"
-        },
-        {
-          "type": "text",
-          "id": "author_role",
-          "label": "Author Role",
-          "default": "Cliente privato"
-        }
-      ]
-    }
-  ],
-  "max_blocks": 8,
   "presets": [
     {
-      "name": "Hero Reviews",
-      "blocks": [
-        {
-          "type": "review",
-          "settings": {
-            "stars": 5,
-            "text": "Un'esperienza straordinaria. Il team ha trasformato la nostra casa in un luogo che rispecchia perfettamente il nostro stile.",
-            "author_name": "Maria Rossi",
-            "author_role": "Cliente privato"
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "stars": 5,
-            "text": "Professionalità e attenzione ai dettagli. Ogni scelta è stata curata con gusto e competenza.",
-            "author_name": "Marco Bianchi",
-            "author_role": "Architetto"
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "stars": 5,
-            "text": "Hanno saputo interpretare le nostre esigenze e creare ambienti unici. Consigliatissimo.",
-            "author_name": "Laura Verdi",
-            "author_role": "Interior designer"
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "stars": 4,
-            "text": "Qualità eccellente e un servizio impeccabile dall'inizio alla fine del progetto.",
-            "author_name": "Giuseppe Neri",
-            "author_role": "Cliente privato"
-          }
-        }
-      ]
+      "name": "Hero Reviews"
     }
   ]
 }
