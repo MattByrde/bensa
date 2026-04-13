@@ -1,67 +1,15 @@
 {{ 'section-custom-method.css' | asset_url | stylesheet_tag }}
 
-{%- comment -%} Build a JSON map of panel-index → background color for JS {%- endcomment -%}
-{%- assign panel_colors = '' -%}
-{%- assign pi = 0 -%}
-{%- for block in section.blocks -%}
-  {%- if block.type == 'intro' -%}
-    {%- capture entry -%}"{{ pi }}":"{{ block.settings.background_color | default: section.settings.background_color }}"{%- endcapture -%}
-    {%- if panel_colors != '' -%}{%- assign panel_colors = panel_colors | append: ',' -%}{%- endif -%}
-    {%- assign panel_colors = panel_colors | append: entry -%}
-    {%- assign pi = pi | plus: 1 -%}
-  {%- elsif block.type == 'step' -%}
-    {%- capture entry -%}"{{ pi }}":"{{ block.settings.background_color | default: section.settings.background_color }}"{%- endcapture -%}
-    {%- if panel_colors != '' -%}{%- assign panel_colors = panel_colors | append: ',' -%}{%- endif -%}
-    {%- assign panel_colors = panel_colors | append: entry -%}
-    {%- assign pi = pi | plus: 1 -%}
-  {%- endif -%}
-{%- endfor -%}
-
 {%- style -%}
   #shopify-section-{{ section.id }} {
     background-color: {{ section.settings.background_color }};
   }
 {%- endstyle -%}
 
-<div class="method" data-method-section data-panel-colors='{{ "{" | append: panel_colors | append: "}" }}'>
-  {%- comment -%} Sticky center text {%- endcomment -%}
-  <div class="method__center">
-    {%- assign panel_index = 0 -%}
-    {%- assign step_count = 0 -%}
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'intro' -%}
-        <div class="method__panel" data-method-panel="{{ panel_index }}" {{ block.shopify_attributes }}>
-          {%- if block.settings.heading != blank -%}
-            <h2 class="method__heading">{{ block.settings.heading }}</h2>
-          {%- endif -%}
-          {%- if block.settings.text != blank -%}
-            <p class="method__description">{{ block.settings.text }}</p>
-          {%- endif -%}
-          {%- if block.settings.link_label != blank -%}
-            <a href="{{ block.settings.link | default: '#' }}" class="method__link">
-              {{ block.settings.link_label }}
-            </a>
-          {%- endif -%}
-        </div>
-        {%- assign panel_index = panel_index | plus: 1 -%}
-      {%- elsif block.type == 'step' -%}
-        {%- assign step_count = step_count | plus: 1 -%}
-        <div class="method__panel" data-method-panel="{{ panel_index }}" {{ block.shopify_attributes }}>
-          <span class="method__step-number">{{ step_count }}</span>
-          {%- if block.settings.title != blank -%}
-            <h3 class="method__step-heading">{{ block.settings.title }}</h3>
-          {%- endif -%}
-          {%- if block.settings.text != blank -%}
-            <p class="method__step-text">{{ block.settings.text }}</p>
-          {%- endif -%}
-        </div>
-        {%- assign panel_index = panel_index | plus: 1 -%}
-      {%- endif -%}
-    {%- endfor -%}
-  </div>
+<div class="method" data-method-section>
+  <div class="method__layout">
 
-  {%- comment -%} Scrolling images column {%- endcomment -%}
-  <div class="method__images-block">
+    {%- comment -%} Scattered images — spread across the full section, behind text {%- endcomment -%}
     <div class="method__images-col">
       {%- assign media_index = 0 -%}
       {%- for block in section.blocks -%}
@@ -88,6 +36,58 @@
         {%- endif -%}
       {%- endfor -%}
     </div>
+
+    {%- comment -%} Text column — centered sticky panels {%- endcomment -%}
+    <div class="method__text-col">
+      <div class="method__text-sticky">
+        {%- assign panel_index = 0 -%}
+        {%- assign step_count = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'intro' -%}
+            <div
+              class="method__panel-wrap method__panel-wrap--intro{% if panel_index == 0 %} method__panel-wrap--active{% endif %}"
+              data-method-panel="{{ panel_index }}"
+              data-bg-color="{{ block.settings.background_color | default: section.settings.background_color }}"
+            >
+              <div class="method__panel" {{ block.shopify_attributes }}>
+                {%- if block.settings.heading != blank -%}
+                  <h2 class="method__heading">{{ block.settings.heading }}</h2>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <p class="method__description">{{ block.settings.text }}</p>
+                {%- endif -%}
+                {%- if block.settings.link_label != blank -%}
+                  <a href="{{ block.settings.link | default: '#' }}" class="method__link">
+                    {{ block.settings.link_label }}
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+            {%- assign panel_index = panel_index | plus: 1 -%}
+
+          {%- elsif block.type == 'step' -%}
+            {%- assign step_count = step_count | plus: 1 -%}
+            <div
+              class="method__panel-wrap{% if panel_index == 0 %} method__panel-wrap--active{% endif %}"
+              data-method-panel="{{ panel_index }}"
+              data-bg-color="{{ block.settings.background_color | default: section.settings.background_color }}"
+            >
+              <div class="method__panel" {{ block.shopify_attributes }}>
+                <span class="method__step-number">{{ step_count }}</span>
+                {%- if block.settings.title != blank -%}
+                  <h3 class="method__step-heading">{{ block.settings.title }}</h3>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <p class="method__step-text">{{ block.settings.text }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+            {%- assign panel_index = panel_index | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -96,56 +96,45 @@
     var section = document.querySelector('[data-method-section]');
     if (!section) return;
 
-    var panels = section.querySelectorAll('[data-method-panel]');
-    var mediaItems = section.querySelectorAll('[data-method-media]');
-    var totalPanels = panels.length;
+    var panels = Array.from(section.querySelectorAll('[data-method-panel]'));
+    var mediaItems = Array.from(section.querySelectorAll('[data-method-media]'));
     var ticking = false;
+    var currentPanel = 0;
 
-    if (totalPanels === 0) return;
+    if (panels.length === 0) return;
 
-    // Parse per-panel background colors from data attribute
-    var panelColors = {};
-    try { panelColors = JSON.parse(section.getAttribute('data-panel-colors') || '{}'); } catch(e) {}
+    function getBreakpoints() {
+      var sectionRect = section.getBoundingClientRect();
+      var sectionTop = window.pageYOffset + sectionRect.top;
+      var sectionHeight = sectionRect.height;
+      var viewportH = window.innerHeight;
+      var scrollRange = sectionHeight - viewportH;
+      if (scrollRange <= 0) scrollRange = 1;
+      var step = scrollRange / panels.length;
+      return { sectionTop: sectionTop, scrollRange: scrollRange, step: step };
+    }
 
     function onScroll() {
       if (ticking) return;
       ticking = true;
 
       requestAnimationFrame(function() {
-        var rect = section.getBoundingClientRect();
-        var sectionHeight = section.offsetHeight;
         var viewportH = window.innerHeight;
-        var scrolled = -rect.top;
-        var scrollable = sectionHeight - viewportH;
+        var bp = getBreakpoints();
+        var scrolled = window.pageYOffset;
 
-        if (scrollable <= 0) { ticking = false; return; }
+        var progress = scrolled - bp.sectionTop;
+        var activeIndex = Math.floor(progress / bp.step);
+        activeIndex = Math.max(0, Math.min(panels.length - 1, activeIndex));
 
-        var progress = Math.max(0, Math.min(1, scrolled / scrollable));
-
-        // Hide everything if section hasn't entered viewport yet
-        if (scrolled < -viewportH * 0.3) {
-          panels.forEach(function(p) { p.classList.remove('is-active'); });
-          ticking = false;
-          return;
+        if (activeIndex !== currentPanel) {
+          panels[currentPanel].classList.remove('method__panel-wrap--active');
+          panels[activeIndex].classList.add('method__panel-wrap--active');
+          currentPanel = activeIndex;
         }
 
-        // Intro panel gets only 10% of scroll, rest split equally among steps
-        var activeIndex;
-        if (progress < 0.1) {
-          activeIndex = 0;
-        } else {
-          var stepProgress = (progress - 0.1) / 0.9;
-          activeIndex = Math.min(1 + Math.floor(stepProgress * (totalPanels - 1)), totalPanels - 1);
-        }
-
-        // Apply per-panel background color
-        var color = panelColors[String(activeIndex)] || '';
-        section.style.backgroundColor = color;
-
-        panels.forEach(function(panel) {
-          var idx = parseInt(panel.getAttribute('data-method-panel'));
-          panel.classList.toggle('is-active', idx === activeIndex);
-        });
+        var activeColor = panels[currentPanel].getAttribute('data-bg-color') || '';
+        section.style.backgroundColor = activeColor;
 
         mediaItems.forEach(function(item) {
           var speed = (parseFloat(item.getAttribute('data-parallax-speed')) || 5) / 10;

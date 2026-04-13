@@ -855,16 +855,9 @@
         "service_3"
       ],
       "settings": {
+        "background_color": "#ffffff",
         "subtitle": "I Nostri Servizi",
         "heading": "Pacchetti flessibili pensati per accompagnarti in ogni fase dell'arredamento della tua casa",
-        "section_bg_color": "#202020",
-        "header_bg_color": "#202020",
-        "header_text_color": "#ffffff",
-        "subtitle_color": "#1e8ba8",
-        "card_bg_color": "#202020",
-        "card_text_color": "#ffffff",
-        "cta_bg_color": "#1e8ba8",
-        "cta_text_color": "#ffffff",
         "padding_top": 60,
         "padding_bottom": 0
       }

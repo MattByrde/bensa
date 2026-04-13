@@ -3,7 +3,7 @@
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
-    background-color: {{ section.settings.section_bg_color }};
+    background-color: {{ section.settings.background_color }};
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
@@ -14,21 +14,6 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
-  #shopify-section-{{ section.id }} .packages__header {
-    background-color: {{ section.settings.header_bg_color }};
-    color: {{ section.settings.header_text_color }};
-  }
-  #shopify-section-{{ section.id }} .packages__subtitle {
-    color: {{ section.settings.subtitle_color }};
-  }
-  #shopify-section-{{ section.id }} .packages__card {
-    background-color: {{ section.settings.card_bg_color }};
-    color: {{ section.settings.card_text_color }};
-  }
-  #shopify-section-{{ section.id }} .packages__cta {
-    background-color: {{ section.settings.cta_bg_color }};
-    color: {{ section.settings.cta_text_color }};
-  }
 {%- endstyle -%}
 
 <div class="packages" data-packages-section>
@@ -36,22 +21,16 @@
   <div class="packages__header">
     <div class="packages__header-layout">
       {%- if section.settings.heading != blank -%}
-        <h2 class="packages__heading typo-h2">{{ section.settings.heading }}</h2>
+        <h2 class="packages__heading">{{ section.settings.heading }}</h2>
       {%- endif -%}
-      {%- if section.settings.btn_primary_label != blank or section.settings.btn_secondary_label != blank -%}
-        <div class="packages__header-btns">
-          {%- if section.settings.btn_secondary_label != blank -%}
-            <a href="{{ section.settings.btn_secondary_url | default: '#' }}" class="packages__header-btn packages__header-btn--outline typo-small">
-              {{ section.settings.btn_secondary_label }}
-            </a>
-          {%- endif -%}
-          {%- if section.settings.btn_primary_label != blank -%}
-            <a href="{{ section.settings.btn_primary_url | default: '#' }}" class="packages__header-btn packages__header-btn--primary typo-small">
-              {{ section.settings.btn_primary_label }}
-            </a>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
+      <div class="packages__cta-arrows">
+        <button class="packages__arrow packages__arrow--prev" data-packages-prev aria-label="Previous">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="packages__arrow packages__arrow--next" data-packages-next aria-label="Next">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -61,11 +40,11 @@
       {%- if block.type == 'cta_card' -%}
         <div class="packages__cta" {{ block.shopify_attributes }}>
           {%- if block.settings.heading != blank -%}
-            <h3 class="packages__cta-heading typo-h1">{{ block.settings.heading }}</h3>
+            <h3 class="packages__cta-heading">{{ block.settings.heading }}</h3>
           {%- endif -%}
-          {%- if block.settings.link_label != blank -%}
-            <a href="{{ block.settings.link_url }}" class="packages__cta-link typo-small">
-              {{ block.settings.link_label }}
+          {%- if section.settings.btn_primary_label != blank -%}
+            <a href="{{ section.settings.btn_primary_url | default: '#' }}" class="packages__cta-btn">
+              {{ section.settings.btn_primary_label }}
             </a>
           {%- endif -%}
         </div>
@@ -100,7 +79,7 @@
 
               <div class="packages__card-bottom">
                 {%- if block.settings.title != blank -%}
-                  <h3 class="packages__card-title typo-h1">{{ block.settings.title }}</h3>
+                  <h3 class="packages__card-title">{{ block.settings.title }}</h3>
                 {%- endif -%}
 
                 <div class="packages__card-buttons">
@@ -125,6 +104,7 @@
 
 <script>
   (function () {
+    /* Mute buttons */
     document.querySelectorAll('[data-packages-mute]').forEach(function (btn) {
       var card = btn.closest('.packages__card');
       var video = card && card.querySelector('video');
@@ -136,6 +116,43 @@
         card.classList.toggle('is-unmuted', !video.muted);
       });
     });
+
+    /* Carousel arrows */
+    var carousel = document.querySelector('#shopify-section-{{ section.id }} [data-packages-carousel]');
+    if (!carousel) return;
+
+    var section = document.querySelector('#shopify-section-{{ section.id }}');
+    var prevBtn = section.querySelector('[data-packages-prev]');
+    var nextBtn = section.querySelector('[data-packages-next]');
+    var track = carousel.querySelector('[data-packages-track]');
+    if (!track) return;
+
+    function getScrollAmount() {
+      var card = track.querySelector('.packages__card');
+      return card ? card.offsetWidth + 16 : 400;
+    }
+
+    function updateArrows() {
+      var scrollLeft = carousel.scrollLeft;
+      var maxScroll = carousel.scrollWidth - carousel.clientWidth;
+      if (prevBtn) prevBtn.classList.toggle('is-hidden', scrollLeft <= 2);
+      if (nextBtn) nextBtn.classList.toggle('is-hidden', scrollLeft >= maxScroll - 2);
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function () {
+        carousel.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function () {
+        carousel.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+      });
+    }
+
+    carousel.addEventListener('scroll', updateArrows, { passive: true });
+    updateArrows();
   })();
 </script>
 
@@ -145,6 +162,12 @@
   "tag": "section",
   "class": "section-packages",
   "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
     {
       "type": "text",
       "id": "subtitle",
@@ -180,58 +203,6 @@
       "type": "url",
       "id": "btn_primary_url",
       "label": "Right Button URL"
-    },
-    {
-      "type": "header",
-      "content": "Colors"
-    },
-    {
-      "type": "color",
-      "id": "section_bg_color",
-      "label": "Section Background",
-      "default": "#202020"
-    },
-    {
-      "type": "color",
-      "id": "header_bg_color",
-      "label": "Header Background",
-      "default": "#202020"
-    },
-    {
-      "type": "color",
-      "id": "header_text_color",
-      "label": "Header Text Color",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "subtitle_color",
-      "label": "Subtitle Color",
-      "default": "#1E8BA8"
-    },
-    {
-      "type": "color",
-      "id": "card_bg_color",
-      "label": "Card Background",
-      "default": "#202020"
-    },
-    {
-      "type": "color",
-      "id": "card_text_color",
-      "label": "Card Text Color",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "cta_bg_color",
-      "label": "CTA Card Background",
-      "default": "#1E8BA8"
-    },
-    {
-      "type": "color",
-      "id": "cta_text_color",
-      "label": "CTA Card Text Color",
-      "default": "#FFFFFF"
     },
     {
       "type": "range",

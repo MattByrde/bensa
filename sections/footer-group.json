@@ -5,8 +5,8 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "bg_color": "#202020",
-        "text_color": "#ffffff"
+        "bg_color": "#ffffff",
+        "text_color": "#202020"
       }
     }
   },
