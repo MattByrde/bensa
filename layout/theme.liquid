@@ -30,11 +30,14 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Jost:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Jost:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Space+Grotesk:wght@300..700&family=Archivo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
   {{ 'base.css' | asset_url | stylesheet_tag }}
 
   <style>
+    {{ settings.font_heading | font_face: font_display: 'swap' }}
+    {{ settings.font_body | font_face: font_display: 'swap' }}
+
     :root {
       --color-bg: {{ settings.color_background }};
       --color-text: {{ settings.color_text }};
@@ -44,8 +47,8 @@
       --color-btn-bg: {{ settings.color_button_bg }};
       --color-btn-text: {{ settings.color_button_text }};
       --color-btn-hover: {{ settings.color_button_hover }};
-      --font-heading: 'Jost', sans-serif;
-      --font-body: 'DM Sans', sans-serif;
+      --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+      --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
       --font-body-size: {{ settings.font_body_size }}px;
     }
   </style>

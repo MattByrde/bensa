@@ -196,7 +196,7 @@
 }
 
 .poster__label-name {
-  font-family: var(--font-heading, 'Outfit', sans-serif);
+  font-family: var(--font-heading);
   font-size: 0.8rem;
   font-weight: 700;
   color: #202020;

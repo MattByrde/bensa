@@ -1,6 +1,6 @@
 .brands-grid-section {
-  padding: 40px 20px 60px;
-  max-width: 1475px;
+  padding: 32px 20px 40px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -11,9 +11,13 @@
 }
 
 .brands-grid-section__heading {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-family: var(--font-heading);
+  font-size: clamp(2.35rem, 3.8vw, 3.15rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #111;
   margin: 0 0 30px;
-  line-height: 1.2;
 }
 
 .brands-grid {
@@ -24,7 +28,7 @@
 
 .brands-grid__item {
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: 0;
   min-height: 140px;
   display: flex;
   flex-direction: column;

@@ -108,16 +108,20 @@
   <div class="intro-section__features intro-section__reveal">
     <div class="intro-section__features-left">
       <h2 class="intro-section__features-title">{{ section.settings.services_heading }}</h2>
-      <div class="intro-section__features-line"></div>
-      {%- if section.settings.services_description != blank -%}
+{%- if section.settings.services_description != blank -%}
         <div class="intro-section__features-desc">{{ section.settings.services_description }}</div>
+      {%- endif -%}
+      {%- if section.settings.services_button_label != blank -%}
+        <a href="{{ section.settings.services_button_link }}" class="btn btn--accent intro-section__features-btn">
+          {{ section.settings.services_button_label }}
+        </a>
       {%- endif -%}
     </div>
     <div class="intro-section__features-right">
-      <div class="intro-section__features-carousel">
+      <div class="intro-section__features-carousel" data-intro-carousel>
         {%- for block in section.blocks -%}
           {%- if block.type == 'service' -%}
-            <div class="intro-feature" {{ block.shopify_attributes }}>
+            <a class="intro-feature" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
               <div class="intro-feature__media">
                 {%- if block.settings.video != blank -%}
                   {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true }}
@@ -135,9 +139,17 @@
               </div>
               <div class="intro-feature__title">{{ block.settings.title }}</div>
               <div class="intro-feature__text">{{ block.settings.text }}</div>
-            </div>
+            </a>
           {%- endif -%}
         {%- endfor -%}
+      </div>
+      <div class="intro-section__features-nav">
+        <button class="intro-section__features-arrow intro-section__features-arrow--prev" data-intro-prev aria-label="Previous" disabled>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="intro-section__features-arrow intro-section__features-arrow--next" data-intro-next aria-label="Next">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </div>
   </div>
@@ -163,6 +175,73 @@
     );
 
     reveals.forEach((el) => observer.observe(el));
+
+    /* ── Features carousel arrows ── */
+    var carousel = section.querySelector('[data-intro-carousel]');
+    var prevBtn = section.querySelector('[data-intro-prev]');
+    var nextBtn = section.querySelector('[data-intro-next]');
+
+    if (carousel && prevBtn && nextBtn) {
+      var cards = carousel.querySelectorAll('.intro-feature');
+      var currentIndex = 0;
+
+      function getCardStep() {
+        if (!cards.length) return 350;
+        return cards[0].offsetWidth + 20; /* card width + gap */
+      }
+
+      function goTo(index) {
+        var maxIndex = cards.length - 1;
+        currentIndex = Math.max(0, Math.min(index, maxIndex));
+        carousel.scrollTo({ left: currentIndex * getCardStep(), behavior: 'smooth' });
+      }
+
+      function updateArrows() {
+        var scrollLeft = Math.round(carousel.scrollLeft);
+        var step = getCardStep();
+        currentIndex = Math.round(scrollLeft / step);
+        prevBtn.disabled = currentIndex <= 0;
+        nextBtn.disabled = currentIndex >= cards.length - 1;
+      }
+
+      prevBtn.addEventListener('click', function () {
+        goTo(currentIndex - 1);
+      });
+
+      nextBtn.addEventListener('click', function () {
+        goTo(currentIndex + 1);
+      });
+
+      carousel.addEventListener('scroll', updateArrows, { passive: true });
+      updateArrows();
+
+      /* ── Drag to scroll ── */
+      var isDragging = false;
+      var startX = 0;
+      var scrollStart = 0;
+
+      carousel.addEventListener('mousedown', function (e) {
+        isDragging = true;
+        startX = e.pageX;
+        scrollStart = carousel.scrollLeft;
+        carousel.style.cursor = 'grabbing';
+        carousel.style.scrollSnapType = 'none';
+        e.preventDefault();
+      });
+
+      window.addEventListener('mousemove', function (e) {
+        if (!isDragging) return;
+        var dx = e.pageX - startX;
+        carousel.scrollLeft = scrollStart - dx;
+      });
+
+      window.addEventListener('mouseup', function () {
+        if (!isDragging) return;
+        isDragging = false;
+        carousel.style.cursor = '';
+        carousel.style.scrollSnapType = 'x mandatory';
+      });
+    }
   })();
 </script>
 
@@ -248,13 +327,13 @@
       "type": "textarea",
       "id": "services_description",
       "label": "Services Description",
-      "default": "(n.) Some of the work we've done and are proud of. Click to see the whole case study."
+      "default": "Una selezione dei nostri progetti più rappresentativi, dove design e funzionalità si incontrano per creare ambienti unici."
     },
     {
       "type": "text",
       "id": "services_button_label",
       "label": "Services Button Label",
-      "default": "Learn more"
+      "default": "Scopri tutti i servizi"
     },
     {
       "type": "url",
@@ -339,7 +418,8 @@
         { "type": "text", "id": "title", "label": "Title", "default": "Service Title" },
         { "type": "textarea", "id": "text", "label": "Text", "default": "Service description text goes here." },
         { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "video", "id": "video", "label": "Video" }
+        { "type": "video", "id": "video", "label": "Video" },
+        { "type": "url", "id": "link", "label": "Link" }
       ]
     }
   ],

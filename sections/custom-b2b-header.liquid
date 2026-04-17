@@ -1,0 +1,194 @@
+{{ 'section-custom-b2b-header.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="b2b-header">
+  <div class="b2b-header__top">
+    <div class="b2b-header__heading-wrap">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="b2b-header__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
+    <div class="b2b-header__desc-wrap">
+      {%- if section.settings.description != blank -%}
+        <div class="b2b-header__desc">{{ section.settings.description }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="b2b-header__media-row">
+    {%- assign media_blocks = section.blocks | where: 'type', 'media' -%}
+    {%- for block in media_blocks limit: 2 -%}
+      <div class="b2b-header__media b2b-header__media--{{ forloop.index }}" {{ block.shopify_attributes }}>
+        {%- if block.settings.video != blank -%}
+          <video
+            class="b2b-header__video"
+            src="{{ block.settings.video.sources[1].url | default: block.settings.video.sources[0].url }}"
+            poster="{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 1200 }}{%- endif -%}"
+            loop muted playsinline preload="metadata"
+            data-b2b-header-video
+          ></video>
+          <div class="b2b-header__controls">
+            <button class="b2b-header__control-btn" data-b2b-header-play aria-label="Play / Pausa">
+              <svg class="b2b-header__icon-pause" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="4" height="12" rx="1" fill="currentColor"/><rect x="9" y="2" width="4" height="12" rx="1" fill="currentColor"/></svg>
+              <svg class="b2b-header__icon-play" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 2.5L13 8L4 13.5V2.5Z" fill="currentColor"/></svg>
+            </button>
+            <button class="b2b-header__control-btn" data-b2b-header-mute aria-label="Muto / Riattiva audio">
+              <svg class="b2b-header__icon-muted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><line x1="11" y1="5" x2="15" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="5" x2="11" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <svg class="b2b-header__icon-unmuted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><path d="M11 5.5C11.8 6.3 12.25 7.4 12.25 8.5C12.25 9.6 11.8 10.7 11 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 3.5C14.3 4.8 15 6.6 15 8.5C15 10.4 14.3 12.2 13 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        {%- elsif block.settings.image != blank -%}
+          {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'b2b-header__img' }}
+        {%- else -%}
+          <div class="b2b-header__placeholder"></div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+<script>
+  (function () {
+    var section = document.querySelector('#shopify-section-{{ section.id }}');
+    if (!section) return;
+
+    section.querySelectorAll('.b2b-header__media').forEach(function (wrap) {
+      var video = wrap.querySelector('[data-b2b-header-video]');
+      if (!video) return;
+
+      if (window.IntersectionObserver) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              video.play().catch(function () {});
+              wrap.classList.add('is-playing');
+            } else {
+              video.pause();
+              wrap.classList.remove('is-playing');
+            }
+          });
+        }, { threshold: 0.4 }).observe(wrap);
+      }
+
+      var playBtn = wrap.querySelector('[data-b2b-header-play]');
+      var muteBtn = wrap.querySelector('[data-b2b-header-mute]');
+
+      if (playBtn) {
+        playBtn.addEventListener('click', function () {
+          if (video.paused) {
+            video.play().catch(function () {});
+            wrap.classList.add('is-playing');
+          } else {
+            video.pause();
+            wrap.classList.remove('is-playing');
+          }
+        });
+      }
+
+      if (muteBtn) {
+        muteBtn.addEventListener('click', function () {
+          video.muted = !video.muted;
+          wrap.classList.toggle('is-unmuted', !video.muted);
+        });
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "B2B Header",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#111111"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Sei un Architetto, Geometra o Professionista del Settore?"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>La poltrona Tove offre un comfort moderno grazie alla sua seduta morbida e alla sua forma organica, che la rendono perfetta per il relax. Il suo design compatto è ideale anche per gli spazi più piccoli.</p>"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "media",
+      "name": "Image / Video",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (Shopify)",
+          "info": "Ha priorità sull'immagine."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Immagine / Poster video"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "B2B Header",
+      "blocks": [
+        { "type": "media" },
+        { "type": "media" }
+      ]
+    }
+  ]
+}
+{% endschema %}

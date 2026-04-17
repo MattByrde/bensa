@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: 1fr;
   width: 100%;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid #555;
+  border-bottom: 1px solid #555;
 }
 
 @media screen and (min-width: 750px) {
@@ -17,14 +17,29 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 380px;
-  padding: 36px 32px;
+  min-height: 280px;
+  padding: 28px 20px;
   overflow: hidden;
+  border-top: 1px solid #555;
+}
+
+@media screen and (min-width: 750px) {
+  .info-cards__card + .info-cards__card {
+    border-top: none;
+    border-left: 1px solid #555;
+  }
+  .info-cards__card:first-child {
+    border-top: none;
+  }
+}
+
+.info-cards__card:first-child {
+  border-top: none;
 }
 
 @media screen and (min-width: 750px) {
   .info-cards__card {
-    min-height: 480px;
+    min-height: 380px;
     padding: 44px 40px;
   }
 }
@@ -63,10 +78,11 @@
 
 .info-cards__subtitle {
   margin: 0;
-  font-weight: 300;
-  letter-spacing: 0.2em;
-  font-size: 0.65rem;
-  opacity: 0.5;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  opacity: 0.6;
 }
 
 .info-cards__bottom {
@@ -82,9 +98,11 @@
 }
 
 .info-cards__heading {
+  font-family: var(--font-heading);
   margin: 0 0 28px 0;
+  font-size: clamp(2.35rem, 3.8vw, 3.15rem);
   font-weight: 400;
-  line-height: 1.15;
+  line-height: 1.1;
   letter-spacing: -0.02em;
 }
 
@@ -167,4 +185,33 @@
 
 .info-cards__card--light {
   color: var(--color-text, #202020);
+}
+
+/* ── Scroll reveal ── */
+.info-cards__reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.info-cards__reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.info-cards__reveal--delay-1 {
+  transition-delay: 0.1s;
+}
+
+.info-cards__reveal--delay-2 {
+  transition-delay: 0.25s;
+}
+
+.info-cards__reveal--delay-3 {
+  transition-delay: 0.4s;
+}
+
+.info-cards__reveal--delay-4 {
+  transition-delay: 0.55s;
 }
