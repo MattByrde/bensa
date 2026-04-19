@@ -16,73 +16,84 @@
 {%- endstyle -%}
 
 <div class="intro-section">
-  {%- comment -%} Header {%- endcomment -%}
-  <div class="intro-section__header intro-section__reveal">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="intro-section__heading">{{ section.settings.heading }}</h2>
-    {%- endif -%}
-  </div>
-
-  {%- comment -%}
-    4-column grid:
-    Left 3 cols: img1 | img2 | text card
-    Right 1 col: img3
-  {%- endcomment -%}
-  <div class="intro-section__grid">
-    <div class="intro-section__left">
-      {%- assign media_blocks = section.blocks | where: 'type', 'media' -%}
-      {%- for block in media_blocks limit: 2 -%}
-        <div class="intro-section__cell intro-section__cell--img{{ forloop.index }} intro-section__reveal intro-section__reveal--delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
-          {%- if block.settings.video != blank -%}
-            {{ block.settings.video | video_tag: class: 'intro-section__video', autoplay: true, loop: true, muted: true, playsinline: true }}
-          {%- elsif block.settings.image != blank -%}
-            {{ block.settings.image | image_url: width: 600 | image_tag: class: 'intro-section__img', loading: 'lazy' }}
-          {%- else -%}
-            <div class="intro-section__placeholder">
-              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-            </div>
-          {%- endif -%}
-        </div>
-      {%- endfor -%}
-
-      <div class="intro-section__cell intro-section__cell--text intro-section__reveal intro-section__reveal--delay-3">
-        {%- if section.settings.description != blank -%}
-          <div class="intro-section__description">
-            {{ section.settings.description }}
-          </div>
+  <div class="intro-section__top">
+    {%- assign media_blocks = section.blocks | where: 'type', 'media' -%}
+    
+    <div class="intro-section__cell intro-section__col-1 intro-section__reveal">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="intro-section__heading text-uppercase">{{ section.settings.heading | newline_to_br }}</h2>
+      {%- endif -%}
+      
+      {%- if media_blocks[1] != blank -%}
+      <div class="intro-section__media-wrap intro-section__media-wrap--2" {{ media_blocks[1].shopify_attributes }}>
+        {%- if media_blocks[1].settings.video != blank -%}
+          {{ media_blocks[1].settings.video | video_tag: class: 'intro-section__video', autoplay: true, loop: true, muted: true, playsinline: true }}
+        {%- elsif media_blocks[1].settings.image != blank -%}
+          {{ media_blocks[1].settings.image | image_url: width: 800 | image_tag: class: 'intro-section__img', loading: 'lazy' }}
+        {%- else -%}
+          <div class="intro-section__placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
         {%- endif -%}
-        {%- if section.settings.quote != blank -%}
-          <div class="intro-section__quote-wrap">
-            <blockquote class="intro-section__quote">
-              {{ section.settings.quote }}
-            </blockquote>
-            {%- if section.settings.signature_image != blank -%}
-              <div class="intro-section__signature">
-                {{ section.settings.signature_image | image_url: width: 200 | image_tag: class: 'intro-section__signature-img', loading: 'lazy' }}
-              </div>
-            {%- elsif section.settings.signature_text != blank -%}
-              <p class="intro-section__signature-text">{{ section.settings.signature_text }}</p>
-            {%- endif -%}
-          </div>
+      </div>
+      {%- endif -%}
+    </div>
+
+    <div class="intro-section__cell intro-section__col-2 intro-section__reveal intro-section__reveal--delay-1">
+      {%- if media_blocks[0] != blank -%}
+      <div class="intro-section__media-wrap intro-section__media-wrap--1" {{ media_blocks[0].shopify_attributes }}>
+        {%- if media_blocks[0].settings.video != blank -%}
+          {{ media_blocks[0].settings.video | video_tag: class: 'intro-section__video', autoplay: true, loop: true, muted: true, playsinline: true }}
+        {%- elsif media_blocks[0].settings.image != blank -%}
+          {{ media_blocks[0].settings.image | image_url: width: 600 | image_tag: class: 'intro-section__img', loading: 'lazy' }}
+        {%- else -%}
+          <div class="intro-section__placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        {%- endif -%}
+      </div>
+      {%- endif -%}
+
+      <div class="intro-section__text-block">
+        {%- if section.settings.description != blank -%}
+          <div class="intro-section__description typo-body">{{ section.settings.description }}</div>
+        {%- endif -%}
+        
+        {%- if section.settings.header_button_label != blank -%}
+          <a href="{{ section.settings.header_button_link | default: '#' }}" class="intro-section__link typo-small">
+            {{ section.settings.header_button_label }} 
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M1 5.5h10M7.5 2l3.5 3.5L7.5 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         {%- endif -%}
       </div>
     </div>
 
-    <div class="intro-section__right">
-      {%- assign media_blocks = section.blocks | where: 'type', 'media' -%}
-      {%- for block in media_blocks offset: 2 limit: 1 -%}
-        <div class="intro-section__cell intro-section__cell--img3 intro-section__reveal intro-section__reveal--delay-4" {{ block.shopify_attributes }}>
-          {%- if block.settings.video != blank -%}
-            {{ block.settings.video | video_tag: class: 'intro-section__video', autoplay: true, loop: true, muted: true, playsinline: true }}
-          {%- elsif block.settings.image != blank -%}
-            {{ block.settings.image | image_url: width: 400 | image_tag: class: 'intro-section__img', loading: 'lazy' }}
-          {%- else -%}
-            <div class="intro-section__placeholder">
-              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-            </div>
-          {%- endif -%}
-        </div>
-      {%- endfor -%}
+    <div class="intro-section__cell intro-section__col-3 intro-section__reveal intro-section__reveal--delay-2">
+      {%- if media_blocks[2] != blank -%}
+      <div class="intro-section__media-wrap intro-section__media-wrap--3" {{ media_blocks[2].shopify_attributes }}>
+        {%- if media_blocks[2].settings.video != blank -%}
+          {{ media_blocks[2].settings.video | video_tag: class: 'intro-section__video', autoplay: true, loop: true, muted: true, playsinline: true }}
+        {%- elsif media_blocks[2].settings.image != blank -%}
+          {{ media_blocks[2].settings.image | image_url: width: 800 | image_tag: class: 'intro-section__img', loading: 'lazy' }}
+        {%- else -%}
+          <div class="intro-section__placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        {%- endif -%}
+      </div>
+      {%- endif -%}
+
+      {%- if section.settings.quote != blank -%}
+        <div class="intro-section__caption typo-caption text-uppercase">{{ section.settings.quote }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="intro-section__cell intro-section__col-4 intro-section__reveal intro-section__reveal--delay-3">
+      {%- if media_blocks[3] != blank -%}
+      <div class="intro-section__media-wrap intro-section__media-wrap--4" {{ media_blocks[3].shopify_attributes }}>
+        {%- if media_blocks[3].settings.video != blank -%}
+          {{ media_blocks[3].settings.video | video_tag: class: 'intro-section__video', autoplay: true, loop: true, muted: true, playsinline: true }}
+        {%- elsif media_blocks[3].settings.image != blank -%}
+          {{ media_blocks[3].settings.image | image_url: width: 800 | image_tag: class: 'intro-section__img', loading: 'lazy' }}
+        {%- else -%}
+          <div class="intro-section__placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        {%- endif -%}
+      </div>
+      {%- endif -%}
     </div>
   </div>
 </div>
@@ -90,7 +101,7 @@
   {%- comment -%} Impact in Numbers {%- endcomment -%}
   <div class="intro-section__impact intro-section__reveal">
     <div class="intro-section__impact-header">
-      <h2 class="intro-section__impact-title">{{ section.settings.impact_heading }}</h2>
+      <h3 class="intro-section__impact-title">{{ section.settings.impact_heading | remove: '<p>' | remove: '</p>' | replace: '&lt;', '<' | replace: '&gt;', '>' }}</h3>
     </div>
     <div class="intro-section__impact-grid">
       {%- for block in section.blocks -%}
@@ -106,18 +117,20 @@
 
   {%- comment -%} Why Serious Business / Featured Work {%- endcomment -%}
   <div class="intro-section__features intro-section__reveal">
-    <div class="intro-section__features-left">
-      <h2 class="intro-section__features-title">{{ section.settings.services_heading }}</h2>
-{%- if section.settings.services_description != blank -%}
-        <div class="intro-section__features-desc">{{ section.settings.services_description }}</div>
-      {%- endif -%}
-      {%- if section.settings.services_button_label != blank -%}
-        <a href="{{ section.settings.services_button_link }}" class="btn btn--accent intro-section__features-btn">
-          {{ section.settings.services_button_label }}
-        </a>
-      {%- endif -%}
+    <div class="intro-section__features-header">
+      <h3 class="intro-section__features-title">{{ section.settings.services_heading | remove: '<p>' | remove: '</p>' | replace: '&lt;', '<' | replace: '&gt;', '>' }}</h3>
+      <div class="intro-section__features-desc-wrap">
+        {%- if section.settings.services_description != blank -%}
+          <div class="intro-section__features-desc typo-body">{{ section.settings.services_description }}</div>
+        {%- endif -%}
+        {%- if section.settings.services_button_label != blank -%}
+          <a href="{{ section.settings.services_button_link }}" class="intro-section__link typo-small">
+            {{ section.settings.services_button_label }}
+          </a>
+        {%- endif -%}
+      </div>
     </div>
-    <div class="intro-section__features-right">
+    <div class="intro-section__features-wrapper">
       <div class="intro-section__features-carousel" data-intro-carousel>
         {%- for block in section.blocks -%}
           {%- if block.type == 'service' -%}
@@ -161,20 +174,25 @@
     if (!section) return;
 
     const reveals = section.querySelectorAll('.intro-section__reveal');
+    const inEditor = window.Shopify && window.Shopify.designMode;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
-    );
+    if (inEditor) {
+      reveals.forEach((el) => el.classList.add('is-visible'));
+    } else {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+      );
 
-    reveals.forEach((el) => observer.observe(el));
+      reveals.forEach((el) => observer.observe(el));
+    }
 
     /* ── Features carousel arrows ── */
     var carousel = section.querySelector('[data-intro-carousel]');
@@ -215,32 +233,64 @@
       carousel.addEventListener('scroll', updateArrows, { passive: true });
       updateArrows();
 
-      /* ── Drag to scroll ── */
-      var isDragging = false;
-      var startX = 0;
-      var scrollStart = 0;
+      /* ── Drag to scroll (disabled in Theme Editor) ── */
+      if (!inEditor) {
+        var isPointerDown = false;
+        var isDragging = false;
+        var startX = 0;
+        var scrollStart = 0;
+        var DRAG_THRESHOLD = 6;
 
-      carousel.addEventListener('mousedown', function (e) {
-        isDragging = true;
-        startX = e.pageX;
-        scrollStart = carousel.scrollLeft;
-        carousel.style.cursor = 'grabbing';
-        carousel.style.scrollSnapType = 'none';
-        e.preventDefault();
-      });
+        carousel.addEventListener('mousedown', function (e) {
+          isPointerDown = true;
+          isDragging = false;
+          startX = e.pageX;
+          scrollStart = carousel.scrollLeft;
+        });
 
-      window.addEventListener('mousemove', function (e) {
-        if (!isDragging) return;
-        var dx = e.pageX - startX;
-        carousel.scrollLeft = scrollStart - dx;
-      });
+        window.addEventListener('mousemove', function (e) {
+          if (!isPointerDown) return;
+          var dx = e.pageX - startX;
+          if (!isDragging && Math.abs(dx) > DRAG_THRESHOLD) {
+            isDragging = true;
+            carousel.style.cursor = 'grabbing';
+            carousel.style.scrollSnapType = 'none';
+          }
+          if (isDragging) {
+            carousel.scrollLeft = scrollStart - dx;
+            e.preventDefault();
+          }
+        });
 
-      window.addEventListener('mouseup', function () {
-        if (!isDragging) return;
-        isDragging = false;
-        carousel.style.cursor = '';
-        carousel.style.scrollSnapType = 'x mandatory';
-      });
+        window.addEventListener('mouseup', function () {
+          if (!isPointerDown) return;
+          isPointerDown = false;
+          if (isDragging) {
+            isDragging = false;
+            carousel.style.cursor = '';
+            carousel.style.scrollSnapType = 'x mandatory';
+          }
+        });
+
+        carousel.addEventListener('click', function (e) {
+          if (isDragging) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }, true);
+      }
+
+      /* ── Theme Editor: scroll selected block into view ── */
+      if (inEditor) {
+        document.addEventListener('shopify:block:select', function (event) {
+          var block = event.target;
+          if (!carousel.contains(block)) return;
+          var blockRect = block.getBoundingClientRect();
+          var carouselRect = carousel.getBoundingClientRect();
+          var offset = blockRect.left - carouselRect.left + carousel.scrollLeft;
+          carousel.scrollTo({ left: offset - 20, behavior: 'smooth' });
+        });
+      }
     }
   })();
 </script>
@@ -318,22 +368,22 @@
       "default": 72
     },
     {
-      "type": "textarea",
+      "type": "richtext",
       "id": "services_heading",
       "label": "Services Heading",
-      "default": "FEATURED WORK"
+      "default": "<p><em>I nostri progetti</em>, dal primo schizzo alla consegna</p>"
     },
     {
-      "type": "textarea",
+      "type": "richtext",
       "id": "services_description",
       "label": "Services Description",
-      "default": "Una selezione dei nostri progetti più rappresentativi, dove design e funzionalità si incontrano per creare ambienti unici."
+      "default": "<p>Una selezione di ambienti che abbiamo realizzato negli ultimi anni. Ogni progetto nasce dall'ascolto, si sviluppa attraverso la scelta dei materiali e prende forma grazie al lavoro dei nostri artigiani e partner di fiducia.</p>"
     },
     {
       "type": "text",
       "id": "services_button_label",
       "label": "Services Button Label",
-      "default": "Scopri tutti i servizi"
+      "default": "Scopri tutti i progetti"
     },
     {
       "type": "url",
@@ -341,10 +391,10 @@
       "label": "Services Button Link"
     },
     {
-      "type": "textarea",
+      "type": "richtext",
       "id": "impact_heading",
       "label": "Impact Heading",
-      "default": "Kindness has an impact<br><em>in numbers</em>"
+      "default": "<p>Kindness has an impact <em>in numbers</em></p>"
     },
     {
       "type": "text",
@@ -427,6 +477,7 @@
     {
       "name": "Intro",
       "blocks": [
+        { "type": "media" },
         { "type": "media" },
         { "type": "media" },
         { "type": "media" },

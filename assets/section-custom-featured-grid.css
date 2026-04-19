@@ -1,7 +1,8 @@
 .cfg-wrapper {
-    max-width: 1350px;
+    max-width: 1280px;
     margin: 0 auto;
     padding: 0 20px;
+    box-sizing: content-box;
 }
 
 @media screen and (min-width: 750px) {
@@ -10,21 +11,32 @@
     }
 }
 
+@media screen and (min-width: 1360px) {
+    .cfg-wrapper {
+        padding: 0;
+    }
+}
+
+.cfg-grid[style],
 .cfg-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
     gap: 1rem;
+    max-width: 100% !important;
+    margin: 0 auto;
 }
 
 @media (max-width: 989px) {
     .cfg-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
 @media (max-width: 549px) {
     .cfg-grid {
         grid-template-columns: 1fr;
+        gap: 0.75rem;
     }
 }
 
@@ -81,8 +93,10 @@
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 0;
-    padding: 24px;
-    min-height: 220px;
+    padding: 18px;
+    min-height: clamp(170px, 18vw, 210px);
+    height: 100%;
+    box-sizing: border-box;
     text-decoration: none;
     color: inherit;
     overflow: hidden;
@@ -95,30 +109,40 @@
 }
 
 .cfg-card-title {
-    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+    font-size: clamp(0.9rem, 1.3vw, 1.05rem);
     font-weight: 500;
-    margin: 0 0 auto;
+    margin: 0;
     line-height: 1.3;
     color: #111;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
 }
 
 .cfg-card-description {
-    font-size: 0.85rem;
-    line-height: 1.55;
-    margin: 16px 0 0;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    margin: 8px 0 0;
     color: #333;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 .cfg-card-footer {
     margin-top: auto;
-    padding-top: 20px;
+    padding-top: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 8px;
+    min-width: 0;
 }
 
 .cfg-card-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-size: 0.65rem;
     font-weight: 300;
     text-transform: uppercase;
@@ -148,6 +172,7 @@
 
 @media (max-width: 549px) {
     .cfg-card {
-        min-height: 180px;
+        min-height: 160px;
+        padding: 16px;
     }
 }

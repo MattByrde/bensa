@@ -32,6 +32,11 @@ body {
   overflow-x: hidden;
 }
 
+em {
+  font-family: 'Merriweather', Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+}
+
 img,
 picture,
 video,
@@ -3258,10 +3263,10 @@ p+p {
     border-top: 0px solid #e0e0e0!important;
 }
 
-.section-announcement {
+.template-index .section-announcement {
   height: 31px;
 }
 
-.section-header {
-  margin-top:31px;
+.template-index .section-header {
+  margin-top: 31px;
 }

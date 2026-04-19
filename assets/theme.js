@@ -345,6 +345,7 @@
             isTransparent = true;
             header.classList.add('is-transparent');
           }
+
         }
       };
 

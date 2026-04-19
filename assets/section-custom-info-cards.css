@@ -100,10 +100,10 @@
 .info-cards__heading {
   font-family: var(--font-heading);
   margin: 0 0 28px 0;
-  font-size: clamp(2.35rem, 3.8vw, 3.15rem);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
   font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 /* Center variant for light card */
@@ -130,42 +130,43 @@
 .info-cards__btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
   text-decoration: none;
-  padding: 14px 28px;
+  padding: 0.5rem 1.25rem;
   border-radius: 10px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-family: var(--font-body);
+  font-size: 0.83rem;
+  font-weight: 600;
+  letter-spacing: 0;
   text-transform: uppercase;
-  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-/* Light button (for dark/image backgrounds) — matches hero secondary */
+/* Light button (for dark/image backgrounds) */
 .info-cards__btn--light {
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
   color: #fff;
   background: transparent;
 }
 
 .info-cards__btn--light:hover {
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-/* Dark button (for light backgrounds) */
-.info-cards__btn--dark {
-  border: 1.5px solid #111;
+  background: #fff;
   color: #111;
-  background: transparent;
+  border-color: #fff;
 }
 
-.info-cards__btn--dark:hover {
-  background: #111;
+/* Dark button (accent-styled — matches navbar/community CTA) */
+.info-cards__btn--dark {
+  border: 1.5px solid var(--color-accent, #1E8BA8);
+  background-color: var(--color-accent, #1E8BA8);
   color: #fff;
 }
 
-/* White filled button (second button) */
+.info-cards__btn--dark:hover {
+  background-color: transparent;
+  color: var(--color-accent, #1E8BA8);
+}
+
+/* White filled (for dark backgrounds — matches community CTA) */
 .info-cards__btn--white {
   background: #fff;
   color: #111;
@@ -175,7 +176,7 @@
 .info-cards__btn--white:hover {
   background: transparent;
   color: #fff;
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: #fff;
 }
 
 /* Color schemes */

@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "contact_form": {
+      "type": "custom-contact-form",
+      "settings": {
+        "thanks_kicker": "Grazie!",
+        "thanks_title": "Abbiamo ricevuto la tua richiesta",
+        "thanks_text": "Ti risponderemo al più presto. Nel frattempo, puoi esplorare le nostre collezioni o venirci a trovare in showroom."
+      }
+    }
+  },
+  "order": [
+    "contact_form"
+  ]
+}

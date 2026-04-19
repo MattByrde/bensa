@@ -23,7 +23,7 @@
   <div class="scattered-about__content">
     <div class="scattered-about__left">
       {%- if section.settings.main_heading != blank -%}
-        <h2 class="scattered-about__heading">{{ section.settings.main_heading }}</h2>
+        <h3 class="scattered-about__heading">{{ section.settings.main_heading }}</h3>
       {%- endif -%}
       {%- if section.settings.header_btn_label != blank -%}
         <a href="{{ section.settings.header_btn_link | default: '#' }}" class="scattered-about__btn">

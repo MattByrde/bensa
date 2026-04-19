@@ -1,0 +1,374 @@
+{{ 'section-custom-contact-form.css' | asset_url | stylesheet_tag }}
+
+<section class="cf" data-cf>
+  <div class="cf__progress" aria-hidden="true">
+    <div class="cf__progress-bar" data-cf-progress></div>
+  </div>
+
+  {%- form 'contact', id: 'cf-form', class: 'cf__form', novalidate: 'novalidate' -%}
+    {%- if form.posted_successfully? -%}
+      <div class="cf__step is-active">
+        <div class="cf__step-inner cf__step-inner--center">
+          <span class="cf__kicker">{{ section.settings.thanks_kicker }}</span>
+          <h2 class="cf__title">{{ section.settings.thanks_title }}</h2>
+          <p class="cf__text">{{ section.settings.thanks_text }}</p>
+        </div>
+      </div>
+    {%- else -%}
+
+      {%- if form.errors -%}
+        <div class="cf__errors" role="alert">
+          {%- for field in form.errors -%}
+            <p>{{ form.errors.translated_fields[field] | capitalize }} {{ form.errors.messages[field] }}</p>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <input type="hidden" name="contact[Tipo cliente]" data-cf-hidden="client_type">
+      <input type="hidden" name="contact[Servizio]" data-cf-hidden="service">
+      <input type="hidden" name="contact[Ambienti]" data-cf-hidden="rooms">
+
+      {%- comment -%} Step 1 — Chi sei? {%- endcomment -%}
+      <div class="cf__step is-active" data-cf-step="0">
+        <div class="cf__step-inner">
+          <span class="cf__kicker">01 — Inizia qui</span>
+          <h2 class="cf__title">Chi sei?</h2>
+          <p class="cf__text">Scegli un'opzione per continuare.</p>
+          <div class="cf__choices cf__choices--2">
+            <button type="button" class="cf__choice" data-cf-choice data-target="client_type" data-value="Privato" data-next="1">
+              <span class="cf__choice-key">P</span>
+              <span class="cf__choice-label">Privato</span>
+            </button>
+            <button type="button" class="cf__choice" data-cf-choice data-target="client_type" data-value="Professionista" data-next="1">
+              <span class="cf__choice-key">A</span>
+              <span class="cf__choice-label">Professionista</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} Step 2a — Di cosa hai bisogno? (Privato) {%- endcomment -%}
+      <div class="cf__step" data-cf-step="1" data-cf-show-when="client_type:Privato">
+        <div class="cf__step-inner">
+          <span class="cf__kicker">02 — Di cosa hai bisogno?</span>
+          <h2 class="cf__title">Come possiamo aiutarti?</h2>
+          <p class="cf__text">Seleziona il servizio più adatto al tuo progetto.</p>
+          <div class="cf__choices cf__choices--3">
+            <button type="button" class="cf__choice" data-cf-choice data-target="service" data-value="Ristrutturazione" data-next="2">
+              <span class="cf__choice-key">1</span>
+              <span class="cf__choice-label">Ristrutturazione</span>
+            </button>
+            <button type="button" class="cf__choice" data-cf-choice data-target="service" data-value="Progettazione" data-next="2">
+              <span class="cf__choice-key">2</span>
+              <span class="cf__choice-label">Progettazione</span>
+            </button>
+            <button type="button" class="cf__choice" data-cf-choice data-target="service" data-value="Mobili su misura" data-next="2">
+              <span class="cf__choice-key">3</span>
+              <span class="cf__choice-label">Mobili su misura</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} Step 2b — Di cosa hai bisogno? (Professionista) {%- endcomment -%}
+      <div class="cf__step" data-cf-step="1" data-cf-show-when="client_type:Professionista">
+        <div class="cf__step-inner">
+          <span class="cf__kicker">02 — Di cosa hai bisogno?</span>
+          <h2 class="cf__title">Collabora con noi</h2>
+          <p class="cf__text">Scegli la tipologia di collaborazione.</p>
+          <div class="cf__choices cf__choices--3">
+            <button type="button" class="cf__choice" data-cf-choice data-target="service" data-value="Fornitura mobili" data-next="2">
+              <span class="cf__choice-key">1</span>
+              <span class="cf__choice-label">Fornitura mobili</span>
+            </button>
+            <button type="button" class="cf__choice" data-cf-choice data-target="service" data-value="Progetto chiavi in mano" data-next="2">
+              <span class="cf__choice-key">2</span>
+              <span class="cf__choice-label">Progetto chiavi in mano</span>
+            </button>
+            <button type="button" class="cf__choice" data-cf-choice data-target="service" data-value="Partnership continuativa" data-next="2">
+              <span class="cf__choice-key">3</span>
+              <span class="cf__choice-label">Partnership continuativa</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} Step 3 — Ambienti (multi-select) {%- endcomment -%}
+      <div class="cf__step" data-cf-step="2">
+        <div class="cf__step-inner">
+          <span class="cf__kicker">03 — Ambienti</span>
+          <h2 class="cf__title">Per quali ambienti?</h2>
+          <p class="cf__text">Puoi selezionare più opzioni.</p>
+          <div class="cf__choices cf__choices--3" data-cf-multi="rooms">
+            {%- assign rooms = 'Cucina,Zona giorno,Zona notte,Bagno,Ufficio,Altro' | split: ',' -%}
+            {%- for room in rooms -%}
+              <button type="button" class="cf__choice cf__choice--toggle" data-cf-toggle data-value="{{ room }}">
+                <span class="cf__choice-key">{{ forloop.index }}</span>
+                <span class="cf__choice-label">{{ room }}</span>
+              </button>
+            {%- endfor -%}
+          </div>
+          <div class="cf__actions">
+            <button type="button" class="cf__btn cf__btn--primary" data-cf-next="3">
+              Continua
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} Step 4 — Nome {%- endcomment -%}
+      <div class="cf__step" data-cf-step="3">
+        <div class="cf__step-inner">
+          <span class="cf__kicker">04 — Ti presenti?</span>
+          <h2 class="cf__title">Come ti chiami?</h2>
+          <p class="cf__text">Nome e cognome.</p>
+          <label class="cf__field">
+            <input
+              type="text"
+              name="contact[name]"
+              autocomplete="name"
+              class="cf__input"
+              placeholder="Mario Rossi"
+              data-cf-required
+              data-cf-next="4"
+            >
+          </label>
+          <div class="cf__actions">
+            <button type="button" class="cf__btn cf__btn--primary" data-cf-next="4">
+              Continua
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} Step 5 — Email + Telefono + Submit {%- endcomment -%}
+      <div class="cf__step" data-cf-step="4">
+        <div class="cf__step-inner">
+          <span class="cf__kicker">05 — Come ti contattiamo?</span>
+          <h2 class="cf__title">Lasciaci i tuoi contatti</h2>
+          <p class="cf__text">Ti risponderemo entro 24 ore lavorative.</p>
+          <label class="cf__field">
+            <span class="cf__label">Email</span>
+            <input
+              type="email"
+              name="contact[email]"
+              autocomplete="email"
+              class="cf__input"
+              placeholder="tu@esempio.it"
+              required
+              data-cf-required
+            >
+          </label>
+          <label class="cf__field">
+            <span class="cf__label">Telefono</span>
+            <input
+              type="tel"
+              name="contact[phone]"
+              autocomplete="tel"
+              class="cf__input"
+              placeholder="+39 000 000 0000"
+              data-cf-required
+            >
+          </label>
+          <label class="cf__field">
+            <span class="cf__label">Messaggio (facoltativo)</span>
+            <textarea
+              name="contact[body]"
+              class="cf__input cf__input--textarea"
+              rows="3"
+              placeholder="Dicci qualcosa di più sul tuo progetto…"
+            ></textarea>
+          </label>
+          <div class="cf__actions">
+            <button type="submit" class="cf__btn cf__btn--primary">
+              Invia richiesta
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} Shared nav {%- endcomment -%}
+      <div class="cf__nav">
+        <button type="button" class="cf__nav-btn" data-cf-back aria-label="Indietro">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 12L3 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="cf__nav-count"><span data-cf-current>1</span> / <span data-cf-total>5</span></span>
+      </div>
+
+    {%- endif -%}
+  {%- endform -%}
+</section>
+
+<script>
+(function(){
+  const root = document.querySelector('[data-cf]');
+  if (!root) return;
+
+  const steps = Array.from(root.querySelectorAll('[data-cf-step]'));
+  if (!steps.length) return;
+
+  const progressBar = root.querySelector('[data-cf-progress]');
+  const backBtn = root.querySelector('[data-cf-back]');
+  const currentEl = root.querySelector('[data-cf-current]');
+  const totalEl = root.querySelector('[data-cf-total]');
+  const hiddens = {};
+  root.querySelectorAll('[data-cf-hidden]').forEach(i => { hiddens[i.dataset.cfHidden] = i; });
+  const state = { client_type: '', service: '', rooms: [] };
+  const history = [0];
+
+  function setTotal() {
+    const visible = steps.filter(s => isStepApplicable(parseInt(s.dataset.cfStep, 10)));
+    if (totalEl) totalEl.textContent = visible.length;
+  }
+
+  function isStepApplicable(index) {
+    const matches = steps.filter(s => parseInt(s.dataset.cfStep, 10) === index);
+    return matches.some(s => {
+      const cond = s.dataset.cfShowWhen;
+      if (!cond) return true;
+      const [key, val] = cond.split(':');
+      return state[key] === val;
+    });
+  }
+
+  function getStepElement(index) {
+    return steps.find(s => {
+      if (parseInt(s.dataset.cfStep, 10) !== index) return false;
+      const cond = s.dataset.cfShowWhen;
+      if (!cond) return true;
+      const [key, val] = cond.split(':');
+      return state[key] === val;
+    });
+  }
+
+  function show(index) {
+    steps.forEach(s => s.classList.remove('is-active'));
+    const target = getStepElement(index);
+    if (!target) return;
+    target.classList.add('is-active');
+    const firstInput = target.querySelector('input, textarea');
+    if (firstInput) setTimeout(() => firstInput.focus(), 220);
+    updateProgress(index);
+    updateCount(index);
+  }
+
+  function updateProgress(index) {
+    const total = steps.filter(s => isStepApplicable(parseInt(s.dataset.cfStep, 10))).length || 1;
+    const pct = Math.min(100, ((index + 1) / total) * 100);
+    if (progressBar) progressBar.style.width = pct + '%';
+  }
+
+  function updateCount(index) {
+    if (!currentEl) return;
+    currentEl.textContent = index + 1;
+  }
+
+  function goNext(nextIndex) {
+    history.push(nextIndex);
+    setTotal();
+    show(nextIndex);
+  }
+
+  function goBack() {
+    if (history.length <= 1) return;
+    history.pop();
+    show(history[history.length - 1]);
+  }
+
+  root.querySelectorAll('[data-cf-choice]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.target;
+      const value = btn.dataset.value;
+      const next = parseInt(btn.dataset.next, 10);
+      state[target] = value;
+      if (hiddens[target]) hiddens[target].value = value;
+      btn.parentElement.querySelectorAll('[data-cf-choice]').forEach(b => b.classList.remove('is-selected'));
+      btn.classList.add('is-selected');
+      setTimeout(() => goNext(next), 180);
+    });
+  });
+
+  root.querySelectorAll('[data-cf-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const value = btn.dataset.value;
+      const idx = state.rooms.indexOf(value);
+      if (idx > -1) state.rooms.splice(idx, 1); else state.rooms.push(value);
+      btn.classList.toggle('is-selected', state.rooms.indexOf(value) > -1);
+      if (hiddens.rooms) hiddens.rooms.value = state.rooms.join(', ');
+    });
+  });
+
+  root.querySelectorAll('[data-cf-next]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const next = parseInt(btn.dataset.cfNext, 10);
+      const currentStep = btn.closest('[data-cf-step]');
+      const required = currentStep.querySelectorAll('[data-cf-required]');
+      let valid = true;
+      required.forEach(i => {
+        if (!i.value.trim()) { valid = false; i.classList.add('has-error'); }
+        else i.classList.remove('has-error');
+      });
+      if (currentStep.querySelector('[data-cf-multi]') && state.rooms.length === 0) {
+        valid = false;
+        currentStep.querySelector('[data-cf-multi]').classList.add('has-error');
+      }
+      if (!valid) return;
+      goNext(next);
+    });
+  });
+
+  root.querySelectorAll('[data-cf-required]').forEach(input => {
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && input.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        const next = parseInt(input.dataset.cfNext, 10);
+        if (!isNaN(next)) {
+          if (!input.value.trim()) { input.classList.add('has-error'); return; }
+          input.classList.remove('has-error');
+          goNext(next);
+        }
+      }
+    });
+  });
+
+  if (backBtn) backBtn.addEventListener('click', goBack);
+
+  setTotal();
+  updateProgress(0);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "class": "section-custom-contact-form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "thanks_kicker",
+      "label": "Thank-you kicker",
+      "default": "Grazie!"
+    },
+    {
+      "type": "text",
+      "id": "thanks_title",
+      "label": "Thank-you title",
+      "default": "Abbiamo ricevuto la tua richiesta"
+    },
+    {
+      "type": "textarea",
+      "id": "thanks_text",
+      "label": "Thank-you text",
+      "default": "Ti risponderemo al più presto. Nel frattempo, puoi esplorare le nostre collezioni o venirci a trovare in showroom."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact form"
+    }
+  ]
+}
+{% endschema %}
