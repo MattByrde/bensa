@@ -185,7 +185,8 @@
 }
 
 .info-cards__card--light {
-  color: var(--color-text, #202020);
+  background-color: var(--color-accent, #1E8BA8) !important;
+  color: #fff;
 }
 
 /* ── Scroll reveal ── */
