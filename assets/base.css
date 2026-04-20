@@ -1149,7 +1149,6 @@ p+p {
   position: relative;
   aspect-ratio: 4/3;
   overflow: hidden;
-  border-radius: 8px;
 }
 
 .site-nav__promo-img-box img {
@@ -1178,7 +1177,6 @@ p+p {
   width: 100%;
   background: rgba(0, 0, 0, 0.08);
   border: 0px solid rgba(0, 0, 0, 0.08);
-  border-radius: 6px;
   overflow: hidden;
 }
 
@@ -1237,56 +1235,66 @@ p+p {
 
 /* Mega Menu – Image Cards (Chi Siamo) */
 .site-nav__mega-inner--cards {
-  align-items: center;
+  align-items: flex-start;
   gap: 3rem;
+  padding: 32px 40px 36px;
 }
 
 .site-nav__mega-intro {
-  flex: 0 0 220px;
+  flex: 0 0 260px;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 12px;
+  padding-right: 2rem;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .site-nav__mega-intro-title {
   margin: 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--color-text, #202020);
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: #111;
 }
 
 .site-nav__mega-intro-desc {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   line-height: 1.5;
-  color: #666;
+  color: #555;
 }
 
 .site-nav__mega-intro-btn {
   display: inline-flex;
   align-items: center;
   align-self: flex-start;
-  gap: 8px;
+  gap: 6px;
   margin-top: 0.5rem;
-  padding: 12px 24px;
-  border: 1.5px solid rgba(0, 0, 0, 0.3);
+  padding: 0.5rem 1.25rem;
+  border: 1.5px solid var(--color-accent, #1E8BA8);
   border-radius: 10px;
-  color: var(--color-text, #202020);
-  background: transparent;
+  background-color: var(--color-accent, #1E8BA8);
+  color: #fff;
+  font-size: 0.83rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: uppercase;
   text-decoration: none;
-  transition: opacity 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .site-nav__mega-intro-btn:hover {
-  background: rgba(0, 0, 0, 0.05);
-  opacity: 0.8;
+  background-color: #17748d;
+  border-color: #17748d;
+  color: #fff;
 }
 
 .site-nav__mega-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  gap: 20px;
   width: 100%;
   max-width: 960px;
   margin: 0 auto;
@@ -1297,32 +1305,29 @@ p+p {
   flex-direction: column;
   text-decoration: none;
   color: var(--color-text);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .site-nav__mega-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
 }
 
 .site-nav__mega-card-img {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
   background: #f0ede6;
-  border-radius: 8px;
 }
 
 .site-nav__mega-card-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .site-nav__mega-card:hover .site-nav__mega-card-img img {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
 .site-nav__mega-card-placeholder {
@@ -1333,11 +1338,18 @@ p+p {
 
 .site-nav__mega-card-title {
   display: block;
-  padding: 0.75rem 0.25rem 0;
-  font-family: var(--font-heading);
+  padding: 14px 0 0;
+  font-family: var(--font-body);
   font-weight: 500;
   font-size: 0.9375rem;
-  text-align: center;
+  line-height: 1.3;
+  color: #111;
+  text-align: left;
+  transition: color 0.2s ease;
+}
+
+.site-nav__mega-card:hover .site-nav__mega-card-title {
+  color: var(--color-accent, #1E8BA8);
 }
 
 /* Icons (Row 2 right side) */

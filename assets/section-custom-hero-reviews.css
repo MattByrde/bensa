@@ -52,17 +52,6 @@
   text-align: center;
 }
 
-.hero-reviews__subtitle {
-  display: block;
-  font-family: var(--font-heading);
-  font-weight: 300;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0 0 16px;
-}
-
 .hero-reviews__heading {
   font-family: var(--font-heading);
   font-size: clamp(2.8rem, 5.5vw, 4rem);

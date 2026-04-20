@@ -27,9 +27,6 @@
 
   {%- comment -%} Hero content {%- endcomment -%}
   <div class="hero-reviews__content hero-reviews__reveal">
-    {%- if section.settings.subtitle != blank -%}
-      <p class="hero-reviews__subtitle">{{ section.settings.subtitle }}</p>
-    {%- endif -%}
     {%- if section.settings.heading != blank -%}
       <h2 class="hero-reviews__heading">{{ section.settings.heading }}</h2>
     {%- endif -%}
@@ -45,7 +42,6 @@
       {%- if section.settings.button_label_2 != blank -%}
         <a href="{{ section.settings.button_link_2 | default: '#' }}" class="hero-reviews__btn hero-reviews__btn--secondary typo-btn">
           {{ section.settings.button_label_2 }}
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       {%- endif -%}
     </div>
@@ -107,12 +103,6 @@
     {
       "type": "header",
       "content": "Content"
-    },
-    {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Subtitle",
-      "default": "Cosa dicono i nostri clienti"
     },
     {
       "type": "text",

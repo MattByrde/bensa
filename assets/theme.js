@@ -286,6 +286,8 @@
     init() {
       const header = document.querySelector('.site-header');
       if (!header) return;
+      if (header.dataset.stickyInit === '1') return;
+      header.dataset.stickyInit = '1';
 
       const navRow = header.querySelector('.site-header__row--nav');
       const searchRow = header.querySelector('.site-header__row--search');
@@ -381,7 +383,7 @@
   };
 
   /* ---- Init ---- */
-  document.addEventListener('DOMContentLoaded', () => {
+  const initAll = () => {
     mobileNav.init();
     quantitySelectors.init();
     productTabs.init();
@@ -391,6 +393,38 @@
     variantPicker.init();
     announcementBar.init();
     stickyHeader.init();
+  };
+
+  document.addEventListener('DOMContentLoaded', initAll);
+
+  /* ---- Theme Editor lifecycle ---- */
+  document.addEventListener('shopify:section:load', (event) => {
+    const id = event.detail && event.detail.sectionId;
+    if (!id) { initAll(); return; }
+    if (id.indexOf('header') !== -1 || id.indexOf('announcement') !== -1) {
+      announcementBar.init();
+      stickyHeader.init();
+      mobileNav.init();
+    } else {
+      initAll();
+    }
+  });
+
+  document.addEventListener('shopify:section:unload', () => {
+    /* Reset any classes the editor might leave orphaned */
+    const header = document.querySelector('.site-header');
+    if (header) header.classList.remove('is-transparent');
+    const headerGroup = document.querySelector('.shopify-section-group-header-group');
+    if (headerGroup) headerGroup.classList.remove('is-over-hero');
+  });
+
+  document.addEventListener('shopify:block:select', (event) => {
+    const target = event.target;
+    if (!target) return;
+    /* Re-run sticky/transparent logic in case header DOM changed */
+    if (target.closest('.site-header') || target.closest('.announcement-bar')) {
+      stickyHeader.init();
+    }
   });
 
   /* Expose ajaxCart for use in templates */

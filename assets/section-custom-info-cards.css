@@ -17,7 +17,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 280px;
+  min-height: 240px;
   padding: 28px 20px;
   overflow: hidden;
   border-top: 1px solid #555;
@@ -39,21 +39,38 @@
 
 @media screen and (min-width: 750px) {
   .info-cards__card {
-    min-height: 380px;
+    min-height: 320px;
     padding: 44px 40px;
   }
 }
 
-/* Background image overlay — matches hero gradient style */
+/* Background image overlay — dark lower third + subtle top tint */
 .info-cards__card--has-image::before {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 30%),
-    linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 50%);
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.45) 30%,
+      rgba(0, 0, 0, 0.15) 60%,
+      rgba(0, 0, 0, 0) 85%
+    );
   z-index: 1;
   pointer-events: none;
+  transition: background 0.3s ease;
+}
+
+.info-cards__card--has-image:hover::before {
+  background:
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.78) 0%,
+      rgba(0, 0, 0, 0.5) 30%,
+      rgba(0, 0, 0, 0.18) 60%,
+      rgba(0, 0, 0, 0) 85%
+    );
 }
 
 .info-cards__bg {
@@ -99,7 +116,7 @@
 
 .info-cards__heading {
   font-family: var(--font-heading);
-  margin: 0 0 28px 0;
+  margin: 0 0 15px 0;
   font-size: clamp(1.5rem, 2.6vw, 2.25rem);
   font-weight: 400;
   line-height: 1.2;
@@ -162,8 +179,47 @@
 }
 
 .info-cards__btn--dark:hover {
+  background-color: #17748d;
+  border-color: #17748d;
+  color: #fff;
+}
+
+/* On accent-bg (light) cards, swap dark button to white-filled for contrast */
+.info-cards__card--light .info-cards__btn--dark {
+  border-color: #fff;
+  background-color: #fff;
+  color: #111;
+}
+
+.info-cards__card--light .info-cards__btn--dark:hover {
   background-color: transparent;
+  color: #fff;
+  border-color: #fff;
+}
+
+/* On accent-bg (light) cards, light button (outlined) uses white border */
+.info-cards__card--light .info-cards__btn--light {
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #fff;
+}
+
+.info-cards__card--light .info-cards__btn--light:hover {
+  background-color: #fff;
   color: var(--color-accent, #1E8BA8);
+  border-color: #fff;
+}
+
+/* On accent-bg (light) cards, white button becomes outlined for contrast */
+.info-cards__card--light .info-cards__btn--white {
+  background-color: transparent;
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #fff;
+}
+
+.info-cards__card--light .info-cards__btn--white:hover {
+  background-color: #fff;
+  color: var(--color-accent, #1E8BA8);
+  border-color: #fff;
 }
 
 /* White filled (for dark backgrounds — matches community CTA) */
