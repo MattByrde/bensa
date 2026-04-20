@@ -1,5 +1,4 @@
-<link rel="stylesheet" href="{{ 'section-custom-info-cards.css' | asset_url }}" media="print" onload="this.media='all'">
-<noscript>{{ 'section-custom-info-cards.css' | asset_url | stylesheet_tag }}</noscript>
+{{ 'section-custom-info-cards.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
@@ -41,7 +40,7 @@
 
       <div class="info-cards__bottom">
         {%- if block.settings.heading != blank -%}
-          <h3 class="info-cards__heading">{{ block.settings.heading }}</h3>
+          <h3 class="typo-section-heading info-cards__heading">{{ block.settings.heading }}</h3>
         {%- endif -%}
 
         <div class="info-cards__buttons">

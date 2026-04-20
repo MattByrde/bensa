@@ -25,13 +25,13 @@
 
 .b2b-header__heading {
   font-family: var(--font-heading);
-  font-size: clamp(2.35rem, 3.8vw, 3.15rem);
+  font-size: clamp(2.115rem, 3.42vw, 2.835rem);
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin: 0;
   color: inherit;
-  max-width: 600px;
+  max-width: 800px;
 }
 
 .b2b-header__desc-wrap {
@@ -143,3 +143,26 @@
 .b2b-header__icon-muted   { display: block; }
 .is-unmuted .b2b-header__icon-unmuted { display: block; }
 .is-unmuted .b2b-header__icon-muted   { display: none; }
+
+/* ── Sub-1700 luxury scale (PF ratio, 8px grid) ── */
+@media screen and (min-width: 990px) and (max-width: 1699.98px) {
+  .b2b-header__top {
+    gap: 64px;
+    margin-bottom: 64px;
+  }
+
+  .b2b-header__media-row {
+    gap: 32px;
+  }
+
+  .b2b-header__heading {
+    font-size: clamp(2.13rem, 3vw, 2.82rem);
+    letter-spacing: -0.015em;
+  }
+
+  .b2b-header__desc {
+    font-size: 0.78rem;
+    max-width: 62ch;
+    line-height: 1.6;
+  }
+}

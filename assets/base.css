@@ -15,13 +15,9 @@
 html {
   font-size: var(--font-body-size, 16px);
   -webkit-text-size-adjust: 100%;
+  overflow-anchor: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-}
 
 body {
   font-family: var(--font-body);
@@ -30,11 +26,17 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  overflow-anchor: none;
 }
 
-em {
+em,
+.info-cards__heading strong,
+h3 strong,
+h2 strong{
   font-family: 'Merriweather', Georgia, 'Times New Roman', serif;
   font-weight: 700;
+  font-style: normal;
+  
 }
 
 img,
@@ -181,6 +183,37 @@ h6 {
 @media (min-width: 750px) {
   .typo-h2 {
     font-size: 2.75rem;
+  }
+}
+
+/* Section heading: shared H3-tier title used across home sections.
+   Responsive clamp at base, shrunk 10% in the 990–1699.98px band. */
+.typo-section-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+@media screen and (min-width: 990px) and (max-width: 1699.98px) {
+  .typo-section-heading {
+    font-size: clamp(1.63rem, 2.07vw, 2.17rem);
+  }
+}
+
+/* Card title: H4-tier — shared title styling for card/cell headings
+   across home sections (services grid, bento cells, values cards, feature cards). */
+.typo-card-title {
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+@media screen and (max-width: 1699.98px) {
+  .typo-card-title {
+    font-size: 1.25rem;
   }
 }
 
@@ -578,12 +611,21 @@ p+p {
 }
 
 .shopify-section-group-header-group.is-over-hero,
-.template-index .shopify-section-group-header-group {
+.template-index .shopify-section-group-header-group,
+.template-page-chi-siamo .shopify-section-group-header-group {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 100;
+}
+
+.template-page-chi-siamo .section-announcement {
+  height: 31px;
+}
+
+.template-page-chi-siamo .section-header {
+  margin-top: 31px;
 }
 
 .site-header {
@@ -643,7 +685,8 @@ p+p {
 }
 
 /* ── Transparent header over hero ── */
-.is-over-hero .announcement-bar {
+.is-over-hero .announcement-bar,
+.template-page-chi-siamo .announcement-bar {
   background-color: transparent;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
@@ -716,9 +759,6 @@ p+p {
   background-color: transparent;
 }
 
-.site-header.is-scrolled .site-header__row--nav {
-  min-height: 50px;
-}
 
 
 .site-header.is-scrolled .site-header__icon.site-header__icon--scroll-cart {

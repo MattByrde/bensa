@@ -1,231 +1,255 @@
-/* ── Team Poster Carousel ── */
-.team-carousel {
-  overflow: clip;
-}
-
-.team-carousel__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0 1rem;
-  margin-bottom: 2rem;
+/* ── Team Grid ── */
+.team {
+  max-width: none;
+  margin: 0;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 @media screen and (min-width: 750px) {
-  .team-carousel__header {
-    padding: 0 2rem;
-    margin-bottom: 2.5rem;
+  .team {
+    padding: 0 40px;
   }
 }
 
-.team-carousel__heading {
-  text-align: left;
-  margin: 0;
+/* ── Top label ── */
+.team__top-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
 }
 
-/* ── Nav arrows ── */
-.team-carousel__nav {
-  display: flex;
-  gap: 6px;
+.team__top-bullet {
+  width: 10px;
+  height: 10px;
+  background: var(--color-accent, #1E8BA8);
   flex-shrink: 0;
 }
 
-.team-carousel__arrow {
+.team__top-label {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #111;
+}
+
+.team__top-label em,
+.team__top-label i {
+  font-style: italic;
+}
+
+/* ── Layout: sticky intro on the left, cards on the right ── */
+.team__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+@media screen and (min-width: 990px) {
+  .team__layout {
+    grid-template-columns: 1fr 2fr;
+    gap: 96px;
+    align-items: start;
+  }
+}
+
+.team__intro {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background: #fff;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 375px;
 }
 
-.team-carousel__arrow:hover {
-  background: #f5f5f5;
-  border-color: #999;
+@media screen and (min-width: 990px) {
+  .team__intro {
+    position: sticky;
+    top: 80px;
+  }
 }
 
-/* ── Carousel viewport ── */
-.team-carousel__viewport {
-  position: relative;
-  overflow: visible;
-    padding-left: 2rem;
-      padding-right: 1rem;
+.team__body {
+  min-width: 0;
 }
 
-.team-carousel__viewport.is-dragging {
-  cursor: grabbing;
+.team__intro-btn {
+  align-self: flex-start;
+  margin-top: 4px;
 }
 
-.team-carousel__track {
+.team__intro-buttons {
   display: flex;
-  gap: 16px;
-  will-change: transform;
-  padding-left: 1rem;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.team-carousel__track::after {
-  content: '';
-  flex: 0 0 1rem;
-}
-
-@media screen and (min-width: 750px) {
-  .team-carousel__track {
-    padding-left: 2rem;
-  }
-
-  .team-carousel__track::after {
-    flex: 0 0 2rem;
+@media screen and (min-width: 990px) {
+  .team__intro-buttons {
+    margin-top: 30rem;
   }
 }
 
-@media screen and (min-width: 750px) {
-  .team-carousel__track {
-    padding-left: 2rem;
-  }
+.team__heading {
+  color: #111;
+  margin: 0;
+  max-width: 600px;
 }
 
-.team-carousel__track.is-sliding {
-  transition: transform 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.team__heading em,
+.team__heading i {
+  font-style: italic;
 }
 
-.team-carousel__track.no-transition {
-  transition: none !important;
+.team__description {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #333;
+  margin: 0;
 }
 
-/* ── Card ── */
-.team-carousel__card {
-  flex: 0 0 220px;
+/* ── Sub label (e.g. "Our Experts") ── */
+.team__sub-label {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: #111;
+  margin: 32px 0 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #d6d0c8;
 }
 
-@media screen and (min-width: 750px) {
-  .team-carousel__card {
-    flex: 0 0 280px;
+.team__sub-label:first-child {
+  margin-top: 0;
+}
+
+/* ── Grid of people ── */
+.team__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 16px 0;
+}
+
+.team__grid:last-child {
+  padding-bottom: 0;
+}
+
+@media screen and (min-width: 550px) {
+  .team__grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media screen and (min-width: 990px) {
-  .team-carousel__card {
-    flex: 0 0 300px;
+  .team__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px 24px;
   }
 }
 
-/* ── Poster (reuse existing styles) ── */
-.poster {
-  position: relative;
-  border-radius: 14px;
+@media screen and (min-width: 1200px) {
+  .team__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ── Person card (exact intro-feature chrome) ── */
+.team-card {
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  gap: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.team-card__photo {
+  width: 100%;
+  aspect-ratio: 4 / 4;
+  border-radius: 8px;
   overflow: hidden;
-  aspect-ratio: 3 / 4;
-  background: #e5e0da;
+  background-color: #e0e0e0;
 }
 
-.poster__tag {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 2;
-  display: inline-flex;
-  padding: 3px 10px;
-  border-radius: 10px;
-  font-size: 0.6875rem;
-  font-family: var(--font-body);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  line-height: 1.4;
-}
-
-.poster__img {
-  position: absolute;
-  inset: 0;
+.team-card__photo img,
+.team-card__photo svg {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: top;
   display: block;
 }
 
-.poster__placeholder {
-  position: absolute;
-  inset: 0;
-  display: flex;
+.team-card__role {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #111;
+  margin: 0;
+}
+
+.team-card__name {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: #555;
+  margin: 0;
+}
+
+.team__btn {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-}
-
-.poster__placeholder svg {
-  width: 40px;
-  height: 40px;
-  opacity: 0.2;
-}
-
-.poster__gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.55) 0%,
-    rgba(0, 0, 0, 0.1) 42%,
-    transparent 65%
-  );
-  pointer-events: none;
-}
-
-.poster__label {
-  position: absolute;
-  bottom: 12px;
-  left: 12px;
-  background: #fff;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  padding: 14px 28px;
   border-radius: 10px;
-  padding: 10px 20px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.poster__label-name {
-  font-family: var(--font-heading);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  color: #202020;
-  letter-spacing: 0.01em;
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1.5px solid transparent;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.poster__label-text {
-  margin: 0;
-  font-size: 0.7rem;
-  line-height: 1.4;
-  color: #555;
-  font-weight: 400;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.team__btn--primary {
+  background: var(--color-accent, #1E8BA8);
+  color: #fff;
+  border-color: var(--color-accent, #1E8BA8);
 }
 
-.poster__label-sub {
-  margin: 0;
-  font-size: 0.65rem;
-  color: #888;
-  line-height: 1.5;
+.team__btn--primary:hover {
+  background: #17748d;
+  border-color: #17748d;
 }
 
-.poster__label-sub br {
-  display: none;
+.team__btn--outline {
+  background: transparent;
+  color: var(--color-accent, #1E8BA8);
+  border-color: var(--color-accent, #1E8BA8);
+}
+
+.team__btn--outline:hover {
+  background: var(--color-accent, #1E8BA8);
+  color: #fff;
+}
+
+@media screen and (min-width: 990px) and (max-width: 1699.98px) {
+  .team__btn {
+    font-size: 0.7rem;
+    padding: 10px 24px;
+  }
+}
+
+/* ── Sub-1700 luxury scale ── */
+@media screen and (min-width: 990px) and (max-width: 1699.98px) {
+  .team__description {
+    font-size: 0.78rem;
+  }
 }

@@ -18,7 +18,7 @@
   <div class="community__inner">
     <div class="community__header">
       {%- if section.settings.heading != blank -%}
-        <h3 class="community__heading">{{ section.settings.heading }}</h3>
+        <h2 class="typo-section-heading community__heading">{{ section.settings.heading | remove: '<p>' | remove: '</p>' }}</h2>
       {%- endif -%}
       {%- if section.settings.cta_label != blank -%}
         <a href="{{ section.settings.cta_link | default: '#' }}" class="community__cta">
@@ -252,10 +252,10 @@
       "default": "#1E8BA8"
     },
     {
-      "type": "text",
+      "type": "richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "La parola ai nostri designer"
+      "default": "<p>I consigli dei nostri <em>Esperti</em></p>"
     },
     {
       "type": "text",

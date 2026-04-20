@@ -1,5 +1,4 @@
-<link rel="stylesheet" href="{{ 'section-custom-featured-grid.css' | asset_url }}" media="print" onload="this.media='all'">
-<noscript>{{ 'section-custom-featured-grid.css' | asset_url | stylesheet_tag }}</noscript>
+{{ 'section-custom-featured-grid.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
@@ -22,7 +21,7 @@
     {%- comment -%} Service Cards {%- endcomment -%}
     {%- for block in section.blocks -%}
       <a href="{{ block.settings.link | default: '#' }}" class="cfg-card" {{ block.shopify_attributes }}>
-        <h3 class="cfg-card-title">{{ block.settings.title }}</h3>
+        <h4 class="typo-card-title cfg-card-title">{{ block.settings.title }}</h4>
 
         {%- if block.settings.description != blank -%}
           <p class="cfg-card-description">{{ block.settings.description }}</p>

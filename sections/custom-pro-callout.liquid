@@ -22,14 +22,68 @@
     {%- endif -%}
   </div>
 
-  <div class="pro-callout__media">
+  <div class="pro-callout__media"{% if section.settings.video != blank %} data-pro-callout-media{% endif %}>
     {%- if section.settings.video != blank -%}
-      {{ section.settings.video | video_tag: image_size: '2400x', autoplay: true, loop: true, muted: true, controls: false, class: 'pro-callout__video' }}
+      {{ section.settings.video | video_tag: image_size: '2400x', autoplay: true, loop: true, muted: true, controls: false, class: 'pro-callout__video', data-pro-callout-video: '' }}
+
+      <div class="pro-callout__overlay">
+        <button type="button" class="pro-callout__playbtn" data-pro-callout-toggle aria-label="Play/Pause">
+          <svg class="pro-callout__icon-play" width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 2.5L13 8L4 13.5V2.5Z" fill="currentColor"/></svg>
+          <svg class="pro-callout__icon-pause" width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="3" y="2" width="4" height="12" rx="1" fill="currentColor"/><rect x="9" y="2" width="4" height="12" rx="1" fill="currentColor"/></svg>
+        </button>
+      </div>
+
+      <div class="pro-callout__top">
+        <button type="button" class="pro-callout__mutebtn" data-pro-callout-mute aria-label="Mute/Unmute">
+          <svg class="pro-callout__icon-muted" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><line x1="11" y1="5" x2="15" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="5" x2="11" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <svg class="pro-callout__icon-unmuted" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><path d="M11 5.5C11.8 6.3 12.25 7.4 12.25 8.5C12.25 9.6 11.8 10.7 11 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 3.5C14.3 4.8 15 6.6 15 8.5C15 10.4 14.3 12.2 13 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
     {%- elsif section.settings.image != blank -%}
       {{ section.settings.image | image_url: width: 2400 | image_tag: loading: 'lazy', widths: '750, 1100, 1500, 2000, 2400', alt: section.settings.heading }}
     {%- endif -%}
   </div>
+
+  {%- if section.settings.subtext != blank -%}
+    <p class="pro-callout__subtext">{{ section.settings.subtext }}</p>
+  {%- endif -%}
 </div>
+
+{%- if section.settings.video != blank -%}
+<script>
+(function () {
+  var section = document.querySelector('#shopify-section-{{ section.id }}');
+  if (!section) return;
+
+  var media = section.querySelector('[data-pro-callout-media]');
+  var video = section.querySelector('[data-pro-callout-video]');
+  var toggleBtn = section.querySelector('[data-pro-callout-toggle]');
+  var muteBtn = section.querySelector('[data-pro-callout-mute]');
+  if (!media || !video) return;
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', function () {
+      if (video.paused) {
+        video.play().catch(function () {});
+      } else {
+        video.pause();
+      }
+    });
+  }
+
+  video.addEventListener('play', function () { media.classList.add('is-playing'); });
+  video.addEventListener('pause', function () { media.classList.remove('is-playing'); });
+  if (!video.paused) media.classList.add('is-playing');
+
+  if (muteBtn) {
+    muteBtn.addEventListener('click', function () {
+      video.muted = !video.muted;
+      media.classList.toggle('is-unmuted', !video.muted);
+    });
+  }
+})();
+</script>
+{%- endif -%}
 
 {% schema %}
 {
@@ -59,6 +113,11 @@
       "type": "url",
       "id": "cta_link",
       "label": "CTA link"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Testo sotto media"
     },
     {
       "type": "video",

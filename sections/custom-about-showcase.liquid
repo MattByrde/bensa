@@ -19,7 +19,7 @@
   {%- comment -%} Header row: heading + description {%- endcomment -%}
   <div class="about-showcase__header">
     {%- if section.settings.heading != blank -%}
-      <h3 class="about-showcase__heading">{{ section.settings.heading }}</h3>
+      <h3 class="typo-section-heading about-showcase__heading">{{ section.settings.heading }}</h3>
     {%- endif -%}
     <div class="about-showcase__intro">
       {%- if section.settings.description != blank -%}
@@ -52,7 +52,7 @@
         {%- when 'text' -%}
           <div class="about-showcase__cell about-showcase__cell--text about-showcase__cell--{{ block.settings.size }}" {{ block.shopify_attributes }}>
             {%- if block.settings.title != blank -%}
-              <h3 class="about-showcase__cell-title">{{ block.settings.title }}</h3>
+              <h4 class="typo-card-title about-showcase__cell-title">{{ block.settings.title }}</h4>
             {%- endif -%}
             {%- if block.settings.text != blank -%}
               <p class="about-showcase__cell-text">{{ block.settings.text }}</p>

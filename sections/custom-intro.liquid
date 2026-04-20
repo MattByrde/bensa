@@ -101,7 +101,7 @@
   {%- comment -%} Impact in Numbers {%- endcomment -%}
   <div class="intro-section__impact intro-section__reveal">
     <div class="intro-section__impact-header">
-      <h3 class="intro-section__impact-title">{{ section.settings.impact_heading | remove: '<p>' | remove: '</p>' | replace: '&lt;', '<' | replace: '&gt;', '>' }}</h3>
+      <h3 class="typo-section-heading intro-section__impact-title">{{ section.settings.impact_heading | remove: '<p>' | remove: '</p>' | replace: '&lt;', '<' | replace: '&gt;', '>' }}</h3>
     </div>
     <div class="intro-section__impact-grid">
       {%- for block in section.blocks -%}
@@ -118,7 +118,7 @@
   {%- comment -%} Why Serious Business / Featured Work {%- endcomment -%}
   <div class="intro-section__features intro-section__reveal">
     <div class="intro-section__features-header">
-      <h3 class="intro-section__features-title">{{ section.settings.services_heading | remove: '<p>' | remove: '</p>' | replace: '&lt;', '<' | replace: '&gt;', '>' }}</h3>
+      <h3 class="typo-section-heading intro-section__features-title">{{ section.settings.services_heading | remove: '<p>' | remove: '</p>' | replace: '&lt;', '<' | replace: '&gt;', '>' }}</h3>
       <div class="intro-section__features-desc-wrap">
         {%- if section.settings.services_description != blank -%}
           <div class="intro-section__features-desc typo-body">{{ section.settings.services_description }}</div>
@@ -150,7 +150,7 @@
                    <span class="intro-feature__tag">{{ tag | strip }}</span>
                 {%- endfor -%}
               </div>
-              <div class="intro-feature__title">{{ block.settings.title }}</div>
+              <h4 class="typo-card-title intro-feature__title">{{ block.settings.title }}</h4>
               <div class="intro-feature__text">{{ block.settings.text }}</div>
             </a>
           {%- endif -%}

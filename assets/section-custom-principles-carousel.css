@@ -1,7 +1,15 @@
 .principles-carousel {
-  padding: 0 0 40px;
-  max-width: 100%;
+  padding: 0 20px 40px;
+  max-width: none;
+  margin: 0;
+  box-sizing: border-box;
   overflow: hidden;
+}
+
+@media screen and (min-width: 750px) {
+  .principles-carousel {
+    padding: 0 40px 40px;
+  }
 }
 
 .principles-carousel__track {
@@ -11,7 +19,6 @@
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  padding: 0 40px;
   cursor: grab;
 }
 
@@ -25,7 +32,7 @@
 
 .principles-carousel__slide {
   flex: 0 0 calc((100% - 5rem) / 6);
-  min-width: 220px;
+  min-width: 180px;
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
@@ -49,10 +56,16 @@
 }
 
 .principles-carousel__text p {
-  font-size: clamp(1rem, 1.2vw, 1.15rem);
-  line-height: 1.25;
-  color: #8a8278;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #333;
   margin: 0;
+}
+
+@media screen and (min-width: 990px) and (max-width: 1699.98px) {
+  .principles-carousel__text p {
+    font-size: 0.78rem;
+  }
 }
 
 .principles-carousel__slide--active .principles-carousel__text p,
@@ -64,7 +77,6 @@
   width: 100%;
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  border-radius: 4px;
   position: relative;
 }
 
@@ -103,16 +115,12 @@
 
 @media (max-width: 989px) {
   .principles-carousel__slide {
-    flex: 0 0 calc((100% - 2rem) / 3);
+    flex: 0 0 calc((100% - 1rem) / 2);
     min-width: 200px;
   }
 }
 
 @media (max-width: 749px) {
-  .principles-carousel__track {
-    padding: 0 20px;
-  }
-
   .principles-carousel__slide {
     flex: 0 0 70%;
     min-width: 0;

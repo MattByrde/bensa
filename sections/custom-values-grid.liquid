@@ -8,7 +8,7 @@
 
 <div class="values-section" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
   {%- if section.settings.heading != blank -%}
-    <h3 class="values-section__heading">{{ section.settings.heading | remove: '<p>' | remove: '</p>' | replace: '&lt;', '<' | replace: '&gt;', '>' }}</h3>
+    <h3 class="typo-section-heading values-section__heading">{{ section.settings.heading | remove: '<p>' | remove: '</p>' }}</h3>
   {%- endif -%}
 
   <div class="values-grid">
@@ -18,7 +18,7 @@
         {%- when 'text_card' -%}
           <div class="values-card values-card--text" {{ block.shopify_attributes }}>
             {%- if block.settings.title != blank -%}
-              <h3 class="values-card__title">{{ block.settings.title }}</h3>
+              <h4 class="typo-card-title values-card__title">{{ block.settings.title }}</h4>
             {%- endif -%}
             {%- if block.settings.description != blank -%}
               <p class="values-card__description">{{ block.settings.description }}</p>

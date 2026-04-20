@@ -1,6 +1,6 @@
 .pro-callout {
   padding: 40px 20px;
-  max-width: 1600px;
+  max-width: 1280px;
   margin: 0 auto;
   box-sizing: content-box;
 }
@@ -29,13 +29,20 @@
 
 .pro-callout__heading {
   font-family: var(--font-heading);
-  font-size: clamp(1.75rem, 3.4vw, 3rem);
+  font-size: clamp(2.115rem, 3.42vw, 2.835rem);
   font-weight: 400;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   margin: 0;
   color: #111;
-  max-width: 900px;
+  max-width: 500px;
+}
+
+@media screen and (min-width: 990px) and (max-width: 1699.98px) {
+  .pro-callout__heading {
+    font-size: clamp(2.13rem, 3vw, 2.82rem);
+    letter-spacing: -0.015em;
+  }
 }
 
 @media screen and (min-width: 990px) {
@@ -55,9 +62,9 @@
   overflow: hidden;
 }
 
-.pro-callout__media img,
-.pro-callout__media svg,
-.pro-callout__media video,
+.pro-callout__media > img,
+.pro-callout__media > svg,
+.pro-callout__media > video,
 .pro-callout__video {
   position: absolute;
   inset: 0;
@@ -65,6 +72,93 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* ── Bottom overlay + play/pause (community-style) ── */
+.pro-callout__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 16px;
+  background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.55) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.pro-callout__playbtn {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  color: #111;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  padding: 0;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.pro-callout__playbtn:hover {
+  background: #fff;
+}
+
+.pro-callout__icon-pause { display: none; }
+.pro-callout__media.is-playing .pro-callout__icon-play { display: none; }
+.pro-callout__media.is-playing .pro-callout__icon-pause { display: block; }
+
+/* ── Top-right mute button (community-style) ── */
+.pro-callout__top {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+  display: flex;
+  gap: 6px;
+}
+
+.pro-callout__mutebtn {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s ease;
+}
+
+.pro-callout__mutebtn:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.pro-callout__icon-unmuted { display: none; }
+.pro-callout__media.is-unmuted .pro-callout__icon-muted { display: none; }
+.pro-callout__media.is-unmuted .pro-callout__icon-unmuted { display: block; }
+
+.pro-callout__subtext {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #333;
+  margin: 44px 0 0;
+  max-width: 40ch;
+  text-align: left;
+}
+
+@media screen and (min-width: 990px) and (max-width: 1699.98px) {
+  .pro-callout__subtext {
+    font-size: 0.78rem;
+  }
 }
 
 .pro-callout__cta {

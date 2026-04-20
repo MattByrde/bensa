@@ -5,7 +5,6 @@
     background-color: {{ section.settings.background_color }};
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-    transition: background-color 0.8s ease;
   }
   @media screen and (min-width: 750px) {
     #shopify-section-{{ section.id }} {
@@ -13,149 +12,99 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
-  @media (prefers-reduced-motion: reduce) {
-    #shopify-section-{{ section.id }} {
-      transition: none;
-    }
-  }
 {%- endstyle -%}
 
-<section class="timeline" data-timeline>
+<div class="timeline">
   <div class="timeline__inner">
-    <div class="timeline__header timeline__reveal">
-      {%- if section.settings.kicker != blank -%}
-        <span class="timeline__kicker">{{ section.settings.kicker }}</span>
-      {%- endif -%}
-      {%- if section.settings.heading != blank -%}
-        <h3 class="timeline__heading">{{ section.settings.heading | remove: '<p>' | remove: '</p>' | replace: '&lt;', '<' | replace: '&gt;', '>' }}</h3>
-      {%- endif -%}
-      {%- if section.settings.description != blank -%}
-        <p class="timeline__description">{{ section.settings.description }}</p>
-      {%- endif -%}
-    </div>
 
-    <div class="timeline__spine" aria-hidden="true"></div>
+    {%- comment -%} Section header — matches about-showcase / values-grid pattern {%- endcomment -%}
+    {%- if section.settings.kicker != blank or section.settings.heading != blank or section.settings.description != blank -%}
+      <div class="timeline__header">
+        {%- if section.settings.kicker != blank -%}
+          <span class="timeline__kicker">{{ section.settings.kicker }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="typo-section-heading timeline__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="timeline__description">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
 
     <ol class="timeline__list">
       {%- for block in section.blocks -%}
         {%- if block.type == 'milestone' -%}
-          <li class="timeline__item timeline__reveal" data-bg-color="{{ block.settings.bg_color }}" {{ block.shopify_attributes }}>
-            <div class="timeline__cell timeline__col-1">
-              {%- if block.settings.label != blank -%}
-                <span class="timeline__item-kicker">{{ block.settings.label }}</span>
-              {%- endif -%}
-              {%- if block.settings.year != blank -%}
-                <span class="timeline__year">{{ block.settings.year }}</span>
-              {%- endif -%}
-              {%- if block.settings.title != blank -%}
-                <h4 class="timeline__item-title">{{ block.settings.title }}</h4>
-              {%- endif -%}
+          <li class="timeline__item timeline__reveal" {{ block.shopify_attributes }}>
 
-              {%- if block.settings.image_secondary != blank -%}
-                <div class="timeline__media-wrap timeline__media-wrap--2">
-                  {{ block.settings.image_secondary | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 600, 800', alt: block.settings.title }}
-                </div>
-              {%- endif -%}
-            </div>
-
-            <div class="timeline__cell timeline__col-2">
-              {%- if block.settings.image_primary != blank -%}
-                <div class="timeline__media-wrap timeline__media-wrap--1">
-                  {{ block.settings.image_primary | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '400, 600, 800, 1000', alt: block.settings.title }}
-                </div>
-              {%- endif -%}
-
-              <div class="timeline__text-block">
-                {%- if block.settings.description != blank -%}
-                  <p class="timeline__item-text">{{ block.settings.description }}</p>
+            {%- comment -%} Left column: year + label + title + text {%- endcomment -%}
+            <div class="timeline__col-text">
+              <div class="timeline__meta">
+                {%- if block.settings.label != blank -%}
+                  <span class="timeline__item-kicker">{{ block.settings.label }}</span>
                 {%- endif -%}
-                {%- if block.settings.caption != blank -%}
-                  <span class="timeline__caption">{{ block.settings.caption }}</span>
+                {%- if block.settings.year != blank -%}
+                  <span class="timeline__year">{{ block.settings.year }}</span>
                 {%- endif -%}
               </div>
-            </div>
-
-            <div class="timeline__cell timeline__col-3">
-              {%- if block.settings.image_tertiary != blank -%}
-                <div class="timeline__media-wrap timeline__media-wrap--3">
-                  {{ block.settings.image_tertiary | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 600, 800', alt: block.settings.title }}
-                </div>
+              {%- if block.settings.title != blank -%}
+                <h3 class="typo-card-title timeline__item-title">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="timeline__item-text">{{ block.settings.description }}</p>
+              {%- endif -%}
+              {%- if block.settings.caption != blank -%}
+                <span class="timeline__caption">{{ block.settings.caption }}</span>
               {%- endif -%}
             </div>
 
-            <div class="timeline__cell timeline__col-4">
-              {%- if block.settings.image_quaternary != blank -%}
-                <div class="timeline__media-wrap timeline__media-wrap--4">
-                  {{ block.settings.image_quaternary | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 600, 800', alt: block.settings.title }}
-                </div>
-              {%- endif -%}
-            </div>
+            {%- comment -%} Right column: up to 2 images {%- endcomment -%}
+            {%- if block.settings.image_primary != blank or block.settings.image_secondary != blank -%}
+              <div class="timeline__col-media">
+                {%- if block.settings.image_primary != blank -%}
+                  <div class="timeline__media-wrap timeline__media-wrap--primary">
+                    {{ block.settings.image_primary | image_url: width: 900 | image_tag: loading: 'lazy', widths: '400, 600, 900', alt: block.settings.title }}
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.image_secondary != blank -%}
+                  <div class="timeline__media-wrap timeline__media-wrap--secondary">
+                    {{ block.settings.image_secondary | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 500, 600', alt: block.settings.title }}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
           </li>
         {%- endif -%}
       {%- endfor -%}
     </ol>
+
   </div>
-</section>
+</div>
 
 <script>
   (function () {
-    var section = document.currentScript.closest('[data-timeline]') || document.querySelector('[data-timeline]');
+    var section = document.currentScript.closest('.timeline') || document.querySelector('.timeline');
     if (!section) return;
 
     var reveals = section.querySelectorAll('.timeline__reveal');
-    var items = section.querySelectorAll('.timeline__item[data-bg-color]');
-    var wrapper = section.closest('.shopify-section') || section;
     var inEditor = window.Shopify && window.Shopify.designMode;
 
-    if (!('IntersectionObserver' in window)) {
+    if (!('IntersectionObserver' in window) || inEditor) {
       reveals.forEach(function (el) { el.classList.add('is-visible'); });
       return;
     }
 
-    if (inEditor) {
-      reveals.forEach(function (el) { el.classList.add('is-visible'); });
-    } else {
-      var revealObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-      reveals.forEach(function (el) { revealObserver.observe(el); });
-    }
-
-    /* ── Scroll-driven background color ── */
-    if (items.length) {
-      var activeColor = items[0].getAttribute('data-bg-color') || '';
-      if (activeColor) wrapper.style.backgroundColor = activeColor;
-
-      var bgObserver = new IntersectionObserver(function (entries) {
-        var best = null;
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting && (!best || entry.intersectionRatio > best.intersectionRatio)) {
-            best = entry;
-          }
-        });
-        if (!best) return;
-        var visible = Array.from(items).filter(function (el) {
-          var r = el.getBoundingClientRect();
-          return r.bottom > 0 && r.top < window.innerHeight;
-        });
-        if (!visible.length) return;
-        var top = visible.reduce(function (a, b) {
-          return a.getBoundingClientRect().top < b.getBoundingClientRect().top ? a : b;
-        });
-        var color = top.getAttribute('data-bg-color');
-        if (color && color !== activeColor) {
-          activeColor = color;
-          wrapper.style.backgroundColor = color;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
         }
-      }, { threshold: [0, 0.25, 0.5, 0.75, 1], rootMargin: '-30% 0px -30% 0px' });
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-      items.forEach(function (el) { bgObserver.observe(el); });
-    }
+    reveals.forEach(function (el) { observer.observe(el); });
   })();
 </script>
 
@@ -218,7 +167,7 @@
         {
           "type": "text",
           "id": "label",
-          "label": "Small label (above year)",
+          "label": "Small label",
           "default": "CAPITOLO 01"
         },
         {
@@ -245,34 +194,14 @@
           "label": "Caption (optional)"
         },
         {
-          "type": "color",
-          "id": "bg_color",
-          "label": "Background color (scroll animation)",
-          "default": "#f5f0e8"
-        },
-        {
-          "type": "header",
-          "content": "Images (4-column masonry)"
-        },
-        {
           "type": "image_picker",
           "id": "image_primary",
-          "label": "Image 1 — large (col 2)"
+          "label": "Image 1 — large"
         },
         {
           "type": "image_picker",
           "id": "image_secondary",
-          "label": "Image 2 — under title (col 1)"
-        },
-        {
-          "type": "image_picker",
-          "id": "image_tertiary",
-          "label": "Image 3 — tall (col 3)"
-        },
-        {
-          "type": "image_picker",
-          "id": "image_quaternary",
-          "label": "Image 4 — tall (col 4)"
+          "label": "Image 2 — small"
         }
       ]
     }

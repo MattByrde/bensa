@@ -1,0 +1,175 @@
+{{ 'section-custom-about-intro.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+  #shopify-section-{{ section.id }} .about-intro {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<div class="about-intro">
+  <div class="about-intro__inner">
+    {%- if section.settings.heading_light != blank or section.settings.heading_bold != blank -%}
+      <h3 class="typo-section-heading about-intro__heading">
+        {%- if section.settings.heading_light != blank -%}
+          {{ section.settings.heading_light }}
+        {%- endif -%}
+        {% if section.settings.heading_light != blank and section.settings.heading_bold != blank %} {% endif %}
+        {%- if section.settings.heading_bold != blank -%}
+          <strong>{{ section.settings.heading_bold }}</strong>
+        {%- endif -%}
+      </h3>
+    {%- endif -%}
+
+    {%- if section.settings.subtitle_left != blank or section.settings.subtitle_right != blank -%}
+      <div class="about-intro__subtitle-row">
+        {%- if section.settings.subtitle_left != blank -%}
+          <p class="about-intro__subtitle">{{ section.settings.subtitle_left }}</p>
+        {%- endif -%}
+        {%- if section.settings.subtitle_right != blank -%}
+          <p class="about-intro__subtitle">{{ section.settings.subtitle_right }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="about-intro__columns">
+        {%- for block in section.blocks -%}
+          <div class="about-intro__col" {{ block.shopify_attributes }}>
+            {%- if block.settings.number != blank -%}
+              <span class="about-intro__col-number">{{ block.settings.number }}</span>
+            {%- endif -%}
+            <div class="about-intro__col-content">
+              {%- if block.settings.title != blank -%}
+                <p class="about-intro__col-title">{{ block.settings.title }}</p>
+              {%- endif -%}
+              {%- if block.settings.text_1 != blank -%}
+                <p class="about-intro__col-text">{{ block.settings.text_1 }}</p>
+              {%- endif -%}
+              {%- if block.settings.text_2 != blank -%}
+                <p class="about-intro__col-text">{{ block.settings.text_2 }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "About Intro",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Colore sfondo",
+      "default": "#f5f3ec"
+    },
+    {
+      "type": "text",
+      "id": "heading_light",
+      "label": "Titolo (light)",
+      "default": "La nostra"
+    },
+    {
+      "type": "text",
+      "id": "heading_bold",
+      "label": "Titolo (bold)",
+      "default": "storia di famiglia."
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle_left",
+      "label": "Sottotitolo (sinistra)",
+      "default": "Da oltre trent'anni arrediamo le case italiane con passione, scegliendo ogni pezzo come se fosse destinato alla nostra."
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle_right",
+      "label": "Sottotitolo (destra)",
+      "default": "Lavoriamo con artigiani e brand selezionati, costruendo relazioni che durano nel tempo — come i mobili che vi consegniamo."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Colonna",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Numero",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titolo"
+        },
+        {
+          "type": "textarea",
+          "id": "text_1",
+          "label": "Paragrafo 1"
+        },
+        {
+          "type": "textarea",
+          "id": "text_2",
+          "label": "Paragrafo 2"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "About Intro",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "number": "01",
+            "title": "Radici a Monza.",
+            "text_1": "Siamo nati nel 1987 come piccola bottega di famiglia e oggi siamo un punto di riferimento per l'arredamento di qualità in Lombardia."
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "number": "02",
+            "title": "Persone, non cataloghi.",
+            "text_1": "Vi accogliamo in showroom, ascoltiamo il vostro progetto e vi accompagniamo in ogni scelta — perché arredare casa è una cosa intima."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

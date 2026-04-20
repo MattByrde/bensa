@@ -81,3 +81,895 @@ shopify theme pull
 
 Built by Simpol.
 # bensa
+
+
+
+
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "home_hero": {
+      "type": "custom-home-hero",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "video": "shopify://files/videos/Untitled.mp4",
+            "video_url": "",
+            "subtitle": "Bensa Arredamenti",
+            "heading": "Progettiamo ambienti che raccontano chi sei",
+            "subtext": "Da oltre 40 anni trasformiamo visioni in spazi unici. Consulenza, progettazione e realizzazione completa per la tua casa o il tuo studio.",
+            "button_label": "Prenota un appuntamento",
+            "button_link": "",
+            "button_label_2": "Le nostre realizzazioni",
+            "button_link_2": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_1"
+      ],
+      "settings": {
+        "height": 100
+      }
+    },
+    "brand_logos": {
+      "type": "custom-brand-logos",
+      "blocks": {
+        "logo_1": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo01.avif",
+            "alt_text": "",
+            "link": ""
+          }
+        },
+        "logo_2": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo02.avif",
+            "alt_text": "",
+            "link": ""
+          }
+        },
+        "logo_3": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo07.avif",
+            "alt_text": "",
+            "link": ""
+          }
+        },
+        "logo_4": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo08.png",
+            "alt_text": "",
+            "link": ""
+          }
+        },
+        "logo_5": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo06.png",
+            "alt_text": "",
+            "link": ""
+          }
+        },
+        "logo_6": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo04.png",
+            "alt_text": "",
+            "link": ""
+          }
+        },
+        "logo_7": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo03.avif",
+            "alt_text": "",
+            "link": ""
+          }
+        },
+        "logo_8": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/6920864fe2ceb88861c0efac_Untitled_Project_-_13.png",
+            "alt_text": "",
+            "link": ""
+          }
+        },
+        "logo_9": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/6920860a0360193cb8457f00_68342c56afdf6b32c81747d8_flexform.svg",
+            "alt_text": "",
+            "link": ""
+          }
+        },
+        "logo_10": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/692085ffdf06d8d7323afd82_68342c56afdf6b32c81747d1__gubi.avif",
+            "alt_text": "",
+            "link": ""
+          }
+        },
+        "logo_11": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/6920863b510a2cb3ca965914_Untitled_Project_-_12.png",
+            "alt_text": "",
+            "link": ""
+          }
+        },
+        "logo_12": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/69208613465734e2657d7224_68342c56afdf6b32c81747d5__bocci.avif",
+            "alt_text": "",
+            "link": ""
+          }
+        },
+        "logo_13": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo01.avif",
+            "alt_text": "",
+            "link": ""
+          }
+        },
+        "logo_14": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/logo02.avif",
+            "alt_text": "",
+            "link": "#"
+          }
+        }
+      },
+      "block_order": [
+        "logo_1",
+        "logo_2",
+        "logo_3",
+        "logo_4",
+        "logo_5",
+        "logo_6",
+        "logo_7",
+        "logo_8",
+        "logo_9",
+        "logo_10",
+        "logo_11",
+        "logo_12",
+        "logo_13",
+        "logo_14"
+      ],
+      "settings": {
+        "heading": "",
+        "background_color": "#ffffff",
+        "speed": 40,
+        "padding_top": 88,
+        "padding_bottom": 0
+      }
+    },
+    "custom_featured_grid": {
+      "type": "custom-featured-grid",
+      "blocks": {
+        "card_1": {
+          "type": "service_card",
+          "settings": {
+            "title": "Progettazione d'interni",
+            "description": "Progettiamo insieme il tuo spazio ideale, dal concept alla realizzazione.",
+            "label": "DESIGN",
+            "link_label": "Scopri di più",
+            "link": ""
+          }
+        },
+        "card_2": {
+          "type": "service_card",
+          "settings": {
+            "title": "Consulenza personalizzata",
+            "description": "Ti guidiamo nella scelta dei materiali, colori e stili più adatti.",
+            "label": "SUPPORTO",
+            "link_label": "Scopri di più",
+            "link": ""
+          }
+        },
+        "card_3": {
+          "type": "service_card",
+          "settings": {
+            "title": "Consegna e montaggio",
+            "description": "Consegna rapida e installazione professionale a domicilio.",
+            "label": "LOGISTICA",
+            "link_label": "Scopri di più",
+            "link": ""
+          }
+        },
+        "card_4": {
+          "type": "service_card",
+          "settings": {
+            "title": "Preventivi su misura",
+            "description": "Preventivi gratuiti e senza impegno per ogni progetto.",
+            "label": "PREVENTIVI",
+            "link_label": "Scopri di più",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4"
+      ],
+      "settings": {
+        "background_color": "#ffffff",
+        "subtitle": "COSA FACCIAMO",
+        "heading": "I nostri servizi",
+        "button_label": "TUTTI I SERVIZI",
+        "button_link": "",
+        "padding_top": 100,
+        "padding_bottom": 0
+      }
+    },
+    "about_showcase": {
+      "type": "custom-about-showcase",
+      "blocks": {
+        "img_1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/03_categories_3.avif",
+            "size": "small"
+          }
+        },
+        "img_2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/05.webp",
+            "size": "small"
+          }
+        },
+        "text_1": {
+          "type": "text",
+          "settings": {
+            "title": "Ambienti su misura",
+            "text": "Creiamo ambienti che combinano bellezza e funzionalità, selezionando i migliori marchi per ogni progetto.",
+            "size": "small"
+          }
+        },
+        "img_3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/07_categories_2--1.avif",
+            "size": "small"
+          }
+        },
+        "text_LyYfXY": {
+          "type": "text",
+          "settings": {
+            "title": "Il tuo partner ideale",
+            "text": "Creiamo ambienti che combinano bellezza e funzionalità, selezionando i migliori marchi per ogni progetto.",
+            "size": "small"
+          }
+        },
+        "img_4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/bannerpoland.webp",
+            "size": "medium"
+          }
+        },
+        "img_5": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/02.webp",
+            "size": "small"
+          }
+        }
+      },
+      "block_order": [
+        "img_1",
+        "img_2",
+        "text_1",
+        "img_3",
+        "text_LyYfXY",
+        "img_4",
+        "img_5"
+      ],
+      "settings": {
+        "background_color": "#ffffff",
+        "heading": "Da <em>Bensa Arredamenti </em>offriamo servizi per privati e professionisti assicurando che il risultato finale superi le vostre aspettative.",
+        "description": "Vi aiutiamo a creare spazi unici e funzionali che rispecchiano la vostra personalità, combinando estetica e comfort con la massima cura per ogni dettaglio.",
+        "link_label": "SCOPRI CHI SIAMO",
+        "link": "",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "custom_intro_XQDndi": {
+      "type": "custom-intro",
+      "blocks": {
+        "media_YXxi9m": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/635e37e0d216240e46a8442ddbae27deebac0fb9-1920x1440.avif",
+            "video": "shopify://files/videos/4dac471209334f76a5bce41444f79e97.HD-720p-1.6Mbps-76518338.mp4"
+          }
+        },
+        "media_hej3jd": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/polo.webp"
+          }
+        },
+        "media_7pf9kj": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/05.webp"
+          }
+        },
+        "media_9Gikpj": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/03.webp"
+          }
+        },
+        "impact_tRm8mX": {
+          "type": "impact",
+          "settings": {
+            "number": "95%",
+            "text": "Of our customers are still in business and thriving"
+          }
+        },
+        "impact_fCUjRR": {
+          "type": "impact",
+          "settings": {
+            "number": "40+",
+            "text": "Our startups are featured in global media, such as NY Times, Forbes, TechCrunch, Bloomberg, Hypebeast and Business Insider"
+          }
+        },
+        "impact_ztUWNa": {
+          "type": "impact",
+          "settings": {
+            "number": "90+",
+            "text": "Startups we've helped on their growth journey over the past 8 years"
+          }
+        },
+        "impact_jcxqxG": {
+          "type": "impact",
+          "settings": {
+            "number": "240M€",
+            "text": "Of funding subsequently collected over the past 2 years from renowned investors such as Y-Combinator, Atomico and Project A"
+          }
+        },
+        "impact_kY6GBd": {
+          "type": "impact",
+          "settings": {
+            "number": "8+",
+            "text": "Years of experience delivering world-class branding and design solutions"
+          }
+        },
+        "service_WtdciQ": {
+          "type": "service",
+          "settings": {
+            "number": "progettazione, interior design",
+            "title": "Progettazione d'interni",
+            "text": "Disegniamo ogni ambiente a partire dai tuoi ritmi e dalle caratteristiche della tua casa, con rendering 3D e scelta guidata di materiali e finiture.",
+            "video": "shopify://files/videos/vid04.mp4",
+            "link": ""
+          }
+        },
+        "service_qxeFem": {
+          "type": "service",
+          "settings": {
+            "number": "ristrutturazione, cantiere",
+            "title": "Ristrutturazione chiavi in mano",
+            "text": "Coordiniamo progettisti, artigiani e imprese per restituirti la casa finita nei tempi concordati, con un unico referente.",
+            "image": "shopify://shop_images/04.webp",
+            "link": ""
+          }
+        },
+        "service_iRV9fd": {
+          "type": "service",
+          "settings": {
+            "number": "artigianato, su misura",
+            "title": "Mobili su misura",
+            "text": "Dagli armadi a parete alle cucine su disegno, ogni elemento è realizzato dai nostri falegnami con finiture selezionate insieme a te.",
+            "video": "shopify://files/videos/4dac471209334f76a5bce41444f79e97.HD-720p-1.6Mbps-76518338.mp4",
+            "link": ""
+          }
+        },
+        "service_yXLJqB": {
+          "type": "service",
+          "settings": {
+            "number": "consulenza, showroom",
+            "title": "Consulenza personalizzata",
+            "text": "Vieni in showroom a toccare materiali, tessuti e finiture: i nostri consulenti ti guidano nella scelta fra oltre 50 brand italiani e internazionali.",
+            "image": "shopify://shop_images/07_categories_2--1.avif",
+            "link": ""
+          }
+        },
+        "service_Vj6xRH": {
+          "type": "service",
+          "settings": {
+            "number": "logistica, montaggio",
+            "title": "Consegna e montaggio",
+            "text": "Consegna puntuale e installazione professionale a domicilio: la tua casa è pronta da vivere il giorno stesso.",
+            "video": "shopify://files/videos/vid04.mp4",
+            "link": ""
+          }
+        },
+        "service_FhhdkP": {
+          "type": "service",
+          "settings": {
+            "number": "assistenza, garanzia",
+            "title": "Assistenza post-vendita",
+            "text": "Restiamo al tuo fianco anche dopo la consegna: manutenzione, piccole modifiche e interventi in garanzia gestiti direttamente da noi.",
+            "image": "shopify://shop_images/01.webp",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "media_YXxi9m",
+        "media_hej3jd",
+        "media_7pf9kj",
+        "media_9Gikpj",
+        "impact_tRm8mX",
+        "impact_fCUjRR",
+        "impact_ztUWNa",
+        "impact_jcxqxG",
+        "impact_kY6GBd",
+        "service_WtdciQ",
+        "service_qxeFem",
+        "service_iRV9fd",
+        "service_yXLJqB",
+        "service_Vj6xRH",
+        "service_FhhdkP"
+      ],
+      "name": "Intro",
+      "settings": {
+        "background_color": "#f5f0e8",
+        "heading": "Ispirazione per ogni ambiente.",
+        "header_button_label": "Learn more",
+        "header_button_link": "",
+        "description": "<p>Il nostro fondatore, Marco Bensa, con decenni di esperienza nel mondo dell'arredamento d'interni, ha dedicato la sua vita alla ricerca della qualità e del design italiano.</p>",
+        "quote": "\"La mia passione per il design e l'attenzione ai dettagli si riflettono in ogni ambiente che creiamo.\"",
+        "signature_text": "Marco Bensa",
+        "padding_top": 100,
+        "padding_bottom": 100,
+        "services_heading": "<p>&lt;em&gt;Servizi&lt;/em&gt; pensati per la tua casa.<br/></p>",
+        "services_description": "<p>Dalla prima consulenza alla consegna chiavi in mano, ti accompagniamo lungo un percorso su misura per trasformare la tua casa in un ambiente autentico e funzionale.<br/></p>",
+        "services_button_label": "Richiedi una consulenza",
+        "services_button_link": "",
+        "impact_heading": "<p>Da oltre <em>30 anni</em> siamo leader del settore.</p>",
+        "impact_button_label": "Learn more",
+        "impact_button_link": "",
+        "testimonial_author": "Yannick Simon",
+        "testimonial_role": "Brand Manager, Aroulus",
+        "testimonial_quote": "\"Being a start-up company, we have mastered jointly with Serious Business the challenge to enhance our brand identity significantly within a short period of time. The in-depth brand knowledge paired with highly creative ambition and the vast network of creatives.\""
+      }
+    },
+    "custom_hero_reviews_TPiGF8": {
+      "type": "custom-hero-reviews",
+      "name": "Hero Reviews",
+      "settings": {
+        "height": 65,
+        "image": "shopify://shop_images/equipo2_6139e7e6-005f-4acb-b952-6e1c6efa9280.webp",
+        "subtitle": "Cosa dicono i nostri clienti",
+        "heading": "Spazi che raccontano chi sei",
+        "description": "Ogni progetto nasce dall'ascolto, dalla cura dei dettagli e dalla passione per il design italiano.",
+        "button_label": "Prenota un appuntamento",
+        "button_link": "",
+        "button_label_2": "Le nostre realizzazioni",
+        "button_link_2": "",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "custom_community_gp9YjC": {
+      "type": "custom-community",
+      "blocks": {
+        "reel_wqfUii": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/bensa.02.mp4",
+            "video_url": "",
+            "caption": "@bensaarredi"
+          }
+        },
+        "reel_L7h8BA": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/vid04.mp4",
+            "video_url": "",
+            "caption": "@bensaarredi"
+          }
+        },
+        "reel_mfVC4L": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/SnapInsta.to_AQONDVA6gWqI8YluUjaOt5mMS4p8O84r-re_89DadKDqr8CO8imTLcJxcJXZoQtQVQn5mz17vvFdSeEWn_8DEfMo (1).mp4",
+            "video_url": "",
+            "caption": "@bensaarredi"
+          }
+        },
+        "reel_JQpc9V": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/Untitled.mp4",
+            "video_url": "",
+            "caption": "@bensaarredi"
+          }
+        },
+        "reel_3BkpNX": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/vide02.mp4",
+            "video_url": "",
+            "caption": "@bensaarredi"
+          }
+        },
+        "reel_xDwRyD": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/bensa.02.mp4",
+            "video_url": "",
+            "caption": "@bensaarredi"
+          }
+        },
+        "reel_NxJFGF": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/Untitled.mp4",
+            "video_url": "",
+            "poster": "shopify://shop_images/polo.webp",
+            "caption": "@bensaarredi"
+          }
+        },
+        "reel_fjbXdB": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/SnapInsta.to_AQONDVA6gWqI8YluUjaOt5mMS4p8O84r-re_89DadKDqr8CO8imTLcJxcJXZoQtQVQn5mz17vvFdSeEWn_8DEfMo (1).mp4",
+            "video_url": "",
+            "caption": "@bensaarredi"
+          }
+        }
+      },
+      "block_order": [
+        "reel_wqfUii",
+        "reel_L7h8BA",
+        "reel_mfVC4L",
+        "reel_JQpc9V",
+        "reel_3BkpNX",
+        "reel_xDwRyD",
+        "reel_NxJFGF",
+        "reel_fjbXdB"
+      ],
+      "name": "Community",
+      "settings": {
+        "background_color": "#1e8ba8",
+        "heading": "I consigli dei nostri Esperti",
+        "cta_label": "Parla con noi",
+        "cta_link": "",
+        "padding_top": 68,
+        "padding_bottom": 88
+      }
+    },
+    "custom_b2b_header_cdRRNy": {
+      "type": "custom-b2b-header",
+      "blocks": {
+        "media_C4V83f": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/bannerpoland.webp"
+          }
+        },
+        "media_MWbYCB": {
+          "type": "media",
+          "settings": {
+            "video": "shopify://files/videos/4dac471209334f76a5bce41444f79e97.HD-720p-1.6Mbps-76518338.mp4"
+          }
+        }
+      },
+      "block_order": [
+        "media_C4V83f",
+        "media_MWbYCB"
+      ],
+      "name": "B2B Header",
+      "settings": {
+        "background_color": "#ffffff",
+        "text_color": "#111111",
+        "heading": "Sei un Architetto, Geometra o Professionista del Settore?",
+        "description": "<p>La poltrona Tove offre un comfort moderno grazie alla sua seduta morbida e alla sua forma organica, che la rendono perfetta per il relax. Il suo design compatto è ideale anche per gli spazi più piccoli.</p>",
+        "padding_top": 96,
+        "padding_bottom": 60
+      }
+    },
+    "custom_packages_qt3cKa": {
+      "type": "custom-packages",
+      "blocks": {
+        "service_fxFPay": {
+          "type": "service",
+          "settings": {
+            "title": "Progettazione d'Interni",
+            "text": "Consulenza completa per la progettazione degli spazi, dalla scelta dei materiali alla definizione delle finiture, con rendering 3D e supporto tecnico dedicato."
+          }
+        },
+        "service_BLB3Vy": {
+          "type": "service",
+          "settings": {
+            "title": "Progettazione d'Interni",
+            "text": "Consulenza completa per la progettazione degli spazi, dalla scelta dei materiali alla definizione delle finiture, con rendering 3D e supporto tecnico dedicato."
+          }
+        },
+        "service_aPcMEG": {
+          "type": "service",
+          "settings": {
+            "title": "Arredamento su Misura",
+            "text": "Soluzioni personalizzate per ogni ambiente, con accesso a oltre 50 brand italiani e internazionali. Dal living alla zona notte, ogni dettaglio è curato."
+          }
+        },
+        "service_zedwME": {
+          "type": "service",
+          "settings": {
+            "title": "Ristrutturazioni Chiavi in Mano",
+            "text": "Gestione completa del progetto di ristrutturazione: rilievo misure, coordinamento dei lavori, consegna e montaggio con personale qualificato."
+          }
+        }
+      },
+      "block_order": [
+        "service_fxFPay",
+        "service_BLB3Vy",
+        "service_aPcMEG",
+        "service_zedwME"
+      ],
+      "name": "Services List",
+      "settings": {
+        "background_color": "#ffffff",
+        "text_color": "#111111",
+        "main_heading": "<p>Supporto completo —<br/>Per i tuoi <em>Clienti.</em></p>",
+        "header_btn_label": "Scopri i nostri servizi",
+        "header_btn_link": "",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "custom_values_grid_bTjPFP": {
+      "type": "custom-values-grid",
+      "blocks": {
+        "text_card_mfhQrm": {
+          "type": "text_card",
+          "settings": {
+            "title": "Viaggio appassionato",
+            "description": "Il nostro viaggio è una storia di vero amore per il design, che ha dato vita a un marchio elegante e diversificato."
+          }
+        },
+        "text_card_L3BXLE": {
+          "type": "text_card",
+          "settings": {
+            "title": "Squadra unita",
+            "description": "La nostra forza risiede nello spirito collaborativo e in una curiosità insaziabile."
+          }
+        },
+        "image_card_zixbci": {
+          "type": "image_card",
+          "settings": {
+            "image": "shopify://shop_images/01_9f2ed9f1-2262-4865-8937-29588c150ce0.webp"
+          }
+        },
+        "text_card_eJmUyR": {
+          "type": "text_card",
+          "settings": {
+            "title": "Ispirazioni globali",
+            "description": "Le nostre esperienze, ricche e internazionali, attingono dalla varietà delle culture mondiali."
+          }
+        },
+        "image_card_wrqbwX": {
+          "type": "image_card",
+          "settings": {
+            "image": "shopify://shop_images/06.webp"
+          }
+        },
+        "text_card_d78txT": {
+          "type": "text_card",
+          "settings": {
+            "title": "Sviluppo sostenibile",
+            "description": "Diamo priorità alla sostenibilità, abbracciando pratiche ecologiche insieme alla migliore maestria artigianale."
+          }
+        },
+        "image_card_gR9wfM": {
+          "type": "image_card",
+          "settings": {
+            "image": "shopify://shop_images/about-us-03.webp"
+          }
+        },
+        "text_card_NbUdxh": {
+          "type": "text_card",
+          "settings": {
+            "title": "Invito alla creatività",
+            "description": "Le nostre collezioni invitano alla creazione di interni armoniosi e confortevoli."
+          }
+        }
+      },
+      "block_order": [
+        "text_card_mfhQrm",
+        "text_card_L3BXLE",
+        "image_card_zixbci",
+        "text_card_eJmUyR",
+        "image_card_wrqbwX",
+        "text_card_d78txT",
+        "image_card_gR9wfM",
+        "text_card_NbUdxh"
+      ],
+      "name": "Values Grid",
+      "settings": {
+        "bg_color": "#ffffff",
+        "heading": "I <em>Valori</em> che ci guidano",
+        "padding_top": 0,
+        "padding_bottom": 100
+      }
+    },
+    "tiktok_viral": {
+      "type": "custom-portfolio-works",
+      "blocks": {
+        "portfolio_item_cMGQDg": {
+          "type": "portfolio_item",
+          "settings": {
+            "title_word_1": "Liminal",
+            "title_word_2": "Dreaming",
+            "subtitle": "The Drake Hotel, Modern Wing Lobby",
+            "btn_label": "EXPLORE",
+            "btn_link": "",
+            "video_url": "",
+            "image": "shopify://shop_images/01.webp",
+            "description": "ART, DESIGN, AND NATURE COME TOGETHER IN ONE TOUR DE FORCE."
+          }
+        },
+        "portfolio_item_KAQkCC": {
+          "type": "portfolio_item",
+          "settings": {
+            "title_word_1": "Liminal",
+            "title_word_2": "Dreaming",
+            "subtitle": "The Drake Hotel, Modern Wing Lobby",
+            "btn_label": "EXPLORE",
+            "btn_link": "",
+            "video": "shopify://files/videos/vid04.mp4",
+            "video_url": "",
+            "description": "ART, DESIGN, AND NATURE COME TOGETHER IN ONE TOUR DE FORCE."
+          }
+        },
+        "work_1": {
+          "type": "portfolio_item",
+          "settings": {
+            "title_word_1": "Liminal",
+            "title_word_2": "Dreaming",
+            "subtitle": "The Drake Hotel, Modern Wing Lobby",
+            "btn_label": "EXPLORE",
+            "btn_link": "",
+            "video_url": "",
+            "image": "shopify://shop_images/heropro.jpg",
+            "description": "ART AND DESIGN SEAMLESSLY COME TOGETHER IN OUR PUBLIC SPACES AND GUEST ROOMS, SPARKING CREATIVITY AND CONVERSATION."
+          }
+        },
+        "work_2": {
+          "type": "portfolio_item",
+          "settings": {
+            "title_word_1": "Suspended",
+            "title_word_2": "Flora",
+            "subtitle": "Drake Devonshire, Glass Box Roof",
+            "btn_label": "EXPLORE",
+            "btn_link": "",
+            "video_url": "",
+            "image": "shopify://shop_images/Micadoni-MIC_CH_257_F1_ECHO1-BG_1920x1437_crop_center_d5058349-50fa-425e-b6e2-c3d249227ffc.webp",
+            "description": "ART, DESIGN, AND NATURE COME TOGETHER IN ONE TOUR DE FORCE — DARE WE SAY, EVERY ROOM, EVERY CORNER, AND EVERY PIECE OF ART."
+          }
+        }
+      },
+      "block_order": [
+        "portfolio_item_cMGQDg",
+        "portfolio_item_KAQkCC",
+        "work_1",
+        "work_2"
+      ],
+      "settings": {
+        "heading": "Le nostre Realizzazioni",
+        "background_color": "#f5f3ec",
+        "text_color": "#111111",
+        "padding_top": 60,
+        "padding_bottom": 68
+      }
+    },
+    "info_cards": {
+      "type": "custom-info-cards",
+      "blocks": {
+        "card_about": {
+          "type": "info_card",
+          "settings": {
+            "image": "shopify://shop_images/06_image-with-hotspots.avif",
+            "light_background": false,
+            "bg_color": "#ffffff",
+            "subtitle": "SCOPRI CHI SIAMO",
+            "heading": "Il nostro Team",
+            "button_label_1": "Scopri di più",
+            "button_link_1": "",
+            "button_label_2": "",
+            "button_link_2": ""
+          }
+        },
+        "card_membership": {
+          "type": "info_card",
+          "settings": {
+            "image": "shopify://shop_images/showroom.jpg",
+            "light_background": false,
+            "bg_color": "#f5f3ec",
+            "subtitle": "QUALITÀ ARTIGIANALE",
+            "heading": "Vieni in Showrrom",
+            "button_label_1": "",
+            "button_link_1": "",
+            "button_label_2": "Prenota Visita",
+            "button_link_2": ""
+          }
+        },
+        "card_sustainability": {
+          "type": "info_card",
+          "settings": {
+            "image": "shopify://shop_images/test03.avif",
+            "light_background": false,
+            "bg_color": "#f5f3ec",
+            "subtitle": "IL NOSTRO IMPEGNO",
+            "heading": "Il nostro Outlet",
+            "button_label_1": "Acquista ora",
+            "button_link_1": "",
+            "button_label_2": "",
+            "button_link_2": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_about",
+        "card_membership",
+        "card_sustainability"
+      ],
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "image": "shopify://shop_images/test03.avif",
+        "height": 60,
+        "subtitle": "Resta Aggiornato",
+        "heading": "Resta in contatto",
+        "text": "Iscriviti per ricevere aggiornamenti sulle nuove collezioni, consigli di design e offerte esclusive.",
+        "privacy_text": "<p>By signing up, you agree to our <a href=\"/policies/privacy-policy\">Privacy Policy</a> and consent to receive marketing communications.</p>"
+      }
+    }
+  },
+  "order": [
+    "home_hero",
+    "brand_logos",
+    "custom_featured_grid",
+    "about_showcase",
+    "custom_intro_XQDndi",
+    "custom_hero_reviews_TPiGF8",
+    "custom_community_gp9YjC",
+    "custom_b2b_header_cdRRNy",
+    "custom_packages_qt3cKa",
+    "custom_values_grid_bTjPFP",
+    "tiktok_viral",
+    "info_cards",
+    "newsletter"
+  ]
+}

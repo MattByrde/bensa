@@ -100,61 +100,95 @@
     var mediaItems = Array.from(section.querySelectorAll('[data-method-media]'));
     var ticking = false;
     var currentPanel = 0;
+    var currentColor = '';
 
     if (panels.length === 0) return;
 
-    function getBreakpoints() {
+    var metrics = {
+      sectionTop: 0,
+      sectionHeight: 0,
+      viewportH: 0,
+      step: 1,
+      mediaStarts: []
+    };
+
+    function recomputeMetrics() {
       var sectionRect = section.getBoundingClientRect();
-      var sectionTop = window.pageYOffset + sectionRect.top;
-      var sectionHeight = sectionRect.height;
-      var viewportH = window.innerHeight;
-      var scrollRange = sectionHeight - viewportH;
+      metrics.sectionTop = window.pageYOffset + sectionRect.top;
+      metrics.sectionHeight = sectionRect.height;
+      metrics.viewportH = window.innerHeight;
+      var scrollRange = metrics.sectionHeight - metrics.viewportH;
       if (scrollRange <= 0) scrollRange = 1;
-      var step = scrollRange / panels.length;
-      return { sectionTop: sectionTop, scrollRange: scrollRange, step: step };
-    }
-
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-
-      requestAnimationFrame(function() {
-        var viewportH = window.innerHeight;
-        var bp = getBreakpoints();
-        var scrolled = window.pageYOffset;
-
-        var progress = scrolled - bp.sectionTop;
-        var activeIndex = Math.floor(progress / bp.step);
-        activeIndex = Math.max(0, Math.min(panels.length - 1, activeIndex));
-
-        if (activeIndex !== currentPanel) {
-          panels[currentPanel].classList.remove('method__panel-wrap--active');
-          panels[activeIndex].classList.add('method__panel-wrap--active');
-          currentPanel = activeIndex;
-        }
-
-        var activeColor = panels[currentPanel].getAttribute('data-bg-color') || '';
-        section.style.backgroundColor = activeColor;
-
-        mediaItems.forEach(function(item) {
-          var speed = (parseFloat(item.getAttribute('data-parallax-speed')) || 5) / 10;
-          var y = scrolled * speed * 0.1;
-
-          var itemRect = item.getBoundingClientRect();
-          var itemCenter = itemRect.top + itemRect.height / 2;
-          var reveal = Math.max(0, Math.min(1, (viewportH - itemCenter) / (viewportH * 0.35)));
-          var eased = 1 - Math.pow(1 - reveal, 3);
-
-          item.style.opacity = String(eased);
-          item.style.transform = 'translateY(' + (-(y) + 40 * (1 - eased)) + 'px) scale(' + (0.9 + 0.1 * eased) + ')';
-        });
-
-        ticking = false;
+      metrics.step = scrollRange / panels.length;
+      metrics.mediaStarts = mediaItems.map(function (item) {
+        var r = item.getBoundingClientRect();
+        return {
+          top: window.pageYOffset + r.top,
+          height: r.height,
+          speed: (parseFloat(item.getAttribute('data-parallax-speed')) || 5) / 10
+        };
       });
     }
 
+    function update() {
+      ticking = false;
+      var scrolled = window.pageYOffset;
+      var viewportH = metrics.viewportH;
+
+      // Skip work when the section is fully offscreen
+      var sectionBottom = metrics.sectionTop + metrics.sectionHeight;
+      if (scrolled + viewportH < metrics.sectionTop || scrolled > sectionBottom) return;
+
+      var progress = scrolled - metrics.sectionTop;
+      var activeIndex = Math.floor(progress / metrics.step);
+      if (activeIndex < 0) activeIndex = 0;
+      else if (activeIndex > panels.length - 1) activeIndex = panels.length - 1;
+
+      if (activeIndex !== currentPanel) {
+        panels[currentPanel].classList.remove('method__panel-wrap--active');
+        panels[activeIndex].classList.add('method__panel-wrap--active');
+        currentPanel = activeIndex;
+      }
+
+      var activeColor = panels[currentPanel].getAttribute('data-bg-color') || '';
+      if (activeColor !== currentColor) {
+        section.style.backgroundColor = activeColor;
+        currentColor = activeColor;
+      }
+
+      for (var i = 0; i < mediaItems.length; i++) {
+        var item = mediaItems[i];
+        var m = metrics.mediaStarts[i];
+        if (!m) continue;
+        var itemCenterDoc = m.top + m.height / 2;
+        var itemCenterViewport = itemCenterDoc - scrolled;
+        var reveal = (viewportH - itemCenterViewport) / (viewportH * 0.35);
+        if (reveal < 0) reveal = 0;
+        else if (reveal > 1) reveal = 1;
+        var eased = 1 - Math.pow(1 - reveal, 3);
+        var y = scrolled * m.speed * 0.1;
+        item.style.opacity = eased;
+        item.style.transform = 'translateY(' + (-(y) + 40 * (1 - eased)) + 'px) scale(' + (0.9 + 0.1 * eased) + ')';
+      }
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(recomputeMetrics);
+      ro.observe(section);
+    }
+    window.addEventListener('resize', recomputeMetrics, { passive: true });
+    window.addEventListener('load', recomputeMetrics);
+
+    recomputeMetrics();
     window.addEventListener('scroll', onScroll, { passive: true });
-    requestAnimationFrame(function() { onScroll(); });
+    requestAnimationFrame(update);
   });
 </script>
 

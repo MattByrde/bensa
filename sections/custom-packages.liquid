@@ -23,7 +23,7 @@
   <div class="scattered-about__content">
     <div class="scattered-about__left">
       {%- if section.settings.main_heading != blank -%}
-        <h3 class="scattered-about__heading">{{ section.settings.main_heading }}</h3>
+        <h3 class="typo-section-heading scattered-about__heading">{{ section.settings.main_heading }}</h3>
       {%- endif -%}
       {%- if section.settings.header_btn_label != blank -%}
         <a href="{{ section.settings.header_btn_link | default: '#' }}" class="scattered-about__btn">
@@ -37,7 +37,7 @@
           <div class="scattered-about__service-number">{{ forloop.index | prepend: '00' | slice: -2, 2 }}</div>
           <div class="scattered-about__service-body">
             {%- if block.settings.title != blank -%}
-              <h3 class="scattered-about__service-title">{{ block.settings.title }}</h3>
+              <h3 class="typo-card-title values-card__title scattered-about__service-title">{{ block.settings.title }}</h3>
             {%- endif -%}
             {%- if block.settings.text != blank -%}
               <div class="scattered-about__service-text">{{ block.settings.text }}</div>

@@ -295,7 +295,7 @@
       if (!navRow) return;
 
       // Transparent header over hero
-      const hero = document.querySelector('[data-home-hero]');
+      const hero = document.querySelector('[data-home-hero], [data-about-carousel]');
       const headerGroup = document.querySelector('.shopify-section-group-header-group');
       const hasHero = !!hero;
 
@@ -313,15 +313,24 @@
       let isFixed = false;
       let isScrolled = false;
       let isTransparent = hasHero;
+      let navHeight = navRow.offsetHeight;
+      let heroBottom = hasHero ? hero.offsetHeight - navHeight : 0;
+      let ticking = false;
+
+      const recomputeMetrics = () => {
+        navHeight = navRow.offsetHeight;
+        if (hasHero) heroBottom = hero.offsetHeight - navHeight;
+      };
 
       const update = () => {
+        ticking = false;
         const y = window.scrollY;
 
         // Fix nav row as soon as any scroll happens
         if (!isFixed && y > 0) {
           isFixed = true;
           navRow.classList.add('is-nav-fixed');
-          if (spacer) spacer.style.height = navRow.offsetHeight + 'px';
+          if (spacer) spacer.style.height = navHeight + 'px';
         } else if (isFixed && y <= 0) {
           isFixed = false;
           navRow.classList.remove('is-nav-fixed');
@@ -337,28 +346,41 @@
           header.classList.remove('is-scrolled');
         }
 
-        // Transparent header: clean toggle at hero boundary
+        // Transparent header: go opaque soon after hero exits, but only go
+        // transparent again when ~30% of the hero is back in view (prevents
+        // white-on-light flash when scrolling up into the hero boundary).
         if (hasHero) {
-          const heroBottom = hero.offsetHeight - navRow.offsetHeight;
-          if (isTransparent && y > heroBottom) {
+          const opaqueAt = heroBottom + 40;
+          const transparentAt = heroBottom - Math.max(80, Math.round(hero.offsetHeight * 0.3));
+          if (isTransparent && y > opaqueAt) {
             isTransparent = false;
             header.classList.remove('is-transparent');
-          } else if (!isTransparent && y <= heroBottom) {
+          } else if (!isTransparent && y < transparentAt) {
             isTransparent = true;
             header.classList.add('is-transparent');
           }
-
         }
       };
 
-      // Keep spacer in sync if nav height changes (e.g. is-scrolled min-height tweak)
-      if (window.ResizeObserver && spacer) {
-        new ResizeObserver(() => {
-          if (isFixed) spacer.style.height = navRow.offsetHeight + 'px';
-        }).observe(navRow);
+      const onScroll = () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      };
+
+      // Keep spacer + cached metrics in sync if nav/hero height changes
+      if (window.ResizeObserver) {
+        const ro = new ResizeObserver(() => {
+          recomputeMetrics();
+          if (isFixed && spacer) spacer.style.height = navHeight + 'px';
+        });
+        ro.observe(navRow);
+        if (hasHero) ro.observe(hero);
       }
 
-      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', recomputeMetrics, { passive: true });
       update();
     }
   };
@@ -381,6 +403,23 @@
       }
     }
   };
+
+  /* ---- Horizontal scroll containers: prevent vertical wheel hijack ---- */
+  document.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+    let el = e.target;
+    while (el && el !== document.documentElement) {
+      if (el.scrollWidth > el.clientWidth) {
+        const ox = getComputedStyle(el).overflowX;
+        if (ox === 'auto' || ox === 'scroll') {
+          e.preventDefault();
+          window.scrollBy({ top: e.deltaY, behavior: 'instant' });
+          return;
+        }
+      }
+      el = el.parentElement;
+    }
+  }, { passive: false });
 
   /* ---- Init ---- */
   const initAll = () => {

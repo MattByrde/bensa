@@ -101,175 +101,40 @@
     document.querySelectorAll('[data-about-carousel]').forEach(function (carousel) {
       var scroller = carousel.querySelector('[data-about-scroller]');
       var track = carousel.querySelector('[data-about-track]');
-      if (!scroller || !track || track.children.length < 2) return;
+      if (!scroller || !track) return;
 
-      var origCards = Array.from(track.children);
-      var n = origCards.length;
+      var n = track.children.length;
+      if (n < 1) return;
 
-      /* ── Infinite loop: clone before + after ── */
-      origCards.forEach(function (c) {
-        track.appendChild(c.cloneNode(true));
-      });
-      origCards.forEach(function (c) {
-        track.insertBefore(c.cloneNode(true), track.firstChild);
-      });
+      function cardW() { return scroller.clientWidth; }
 
-      var gap = parseFloat(getComputedStyle(track).gap) || 0;
-
-      function cardW() {
-        return track.children[0].offsetWidth + gap;
-      }
-
-      function jumpToMiddle(instant) {
-        var w = cardW();
-        if (instant) {
-          scroller.style.scrollBehavior = 'auto';
-          scroller.scrollLeft = w * n;
-          scroller.style.scrollBehavior = '';
-        }
-      }
-
-      requestAnimationFrame(function () { requestAnimationFrame(function () { jumpToMiddle(true); updateDots(); }); });
-
-      var ticking = false;
-      scroller.addEventListener('scroll', function () {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(function () {
-          ticking = false;
-          var w = cardW();
-          var sl = scroller.scrollLeft;
-          var total = w * n;
-          if (sl < w * 0.5) {
-            scroller.style.scrollBehavior = 'auto';
-            scroller.scrollLeft = sl + total;
-            scroller.style.scrollBehavior = '';
-          } else if (sl >= w * (n * 2 - 0.5)) {
-            scroller.style.scrollBehavior = 'auto';
-            scroller.scrollLeft = sl - total;
-            scroller.style.scrollBehavior = '';
-          }
-          updateDots();
-        });
-      });
-
-      /* ── Dots ── */
       var dots = carousel.querySelectorAll('[data-dot-index]');
-
       function updateDots() {
-        var w = cardW();
-        if (!w) return;
-        var idx = Math.round(scroller.scrollLeft / w) % n;
-        if (idx < 0) idx += n;
-        dots.forEach(function (d, i) {
-          d.classList.toggle('is-active', i === idx);
-        });
+        var idx = Math.round(scroller.scrollLeft / cardW());
+        if (idx < 0) idx = 0;
+        if (idx >= n) idx = n - 1;
+        dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); });
       }
+
+      scroller.addEventListener('scroll', updateDots, { passive: true });
 
       dots.forEach(function (dot) {
         dot.addEventListener('click', function () {
-          stopAuto();
           var idx = parseInt(dot.dataset.dotIndex, 10);
-          var w = cardW();
-          scroller.scrollTo({ left: w * (n + idx), behavior: 'smooth' });
-          setTimeout(startAuto, 4000);
+          scroller.scrollTo({ left: cardW() * idx, behavior: 'smooth' });
         });
       });
 
-      /* ── Drag / swipe ── */
-      var isDragging = false;
-      var startX = 0;
-      var scrollStart = 0;
-      var velocity = 0;
-      var lastX = 0;
-      var lastTime = 0;
-
-      function onPointerDown(e) {
-        isDragging = true;
-        startX = e.pageX || e.touches[0].pageX;
-        scrollStart = scroller.scrollLeft;
-        lastX = startX;
-        lastTime = Date.now();
-        velocity = 0;
-        scroller.style.scrollSnapType = 'none';
-        scroller.style.cursor = 'grabbing';
-        scroller.classList.add('is-dragging');
-      }
-
-      function onPointerMove(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-        var x = e.pageX || e.touches[0].pageX;
-        var now = Date.now();
-        var dt = now - lastTime;
-        if (dt > 0) velocity = (lastX - x) / dt;
-        lastX = x;
-        lastTime = now;
-        scroller.scrollLeft = scrollStart - (x - startX);
-      }
-
-      function onPointerUp() {
-        if (!isDragging) return;
-        isDragging = false;
-        scroller.style.cursor = '';
-        scroller.classList.remove('is-dragging');
-        var w = cardW();
-        var momentum = velocity * 300;
-        var target = Math.round((scroller.scrollLeft + momentum) / w) * w;
-        scroller.style.scrollSnapType = '';
-        scroller.scrollTo({ left: target, behavior: 'smooth' });
-      }
-
-      scroller.addEventListener('mousedown', onPointerDown);
-      scroller.addEventListener('mousemove', onPointerMove);
-      scroller.addEventListener('mouseup', onPointerUp);
-      scroller.addEventListener('mouseleave', onPointerUp);
-      scroller.addEventListener('touchstart', onPointerDown, { passive: true });
-      scroller.addEventListener('touchmove', onPointerMove, { passive: false });
-      scroller.addEventListener('touchend', onPointerUp);
-
-      scroller.addEventListener('click', function (e) {
-        if (Math.abs(lastX - startX) > 5) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      }, true);
-
-      /* ── Arrows ── */
       var prevBtn = carousel.querySelector('[data-about-prev]');
       var nextBtn = carousel.querySelector('[data-about-next]');
-      if (prevBtn) {
-        prevBtn.addEventListener('click', function () {
-          stopAuto();
-          scroller.scrollBy({ left: -cardW(), behavior: 'smooth' });
-          setTimeout(startAuto, 4000);
-        });
-      }
-      if (nextBtn) {
-        nextBtn.addEventListener('click', function () {
-          stopAuto();
-          scroller.scrollBy({ left: cardW(), behavior: 'smooth' });
-          setTimeout(startAuto, 4000);
-        });
-      }
+      if (prevBtn) prevBtn.addEventListener('click', function () {
+        scroller.scrollBy({ left: -cardW(), behavior: 'smooth' });
+      });
+      if (nextBtn) nextBtn.addEventListener('click', function () {
+        scroller.scrollBy({ left: cardW(), behavior: 'smooth' });
+      });
 
-      /* ── Auto-play ── */
-      var autoInterval = null;
-      function startAuto() {
-        stopAuto();
-        autoInterval = setInterval(function () {
-          scroller.scrollBy({ left: cardW(), behavior: 'smooth' });
-        }, 7000);
-      }
-      function stopAuto() {
-        if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
-      }
-
-      startAuto();
-      carousel.addEventListener('mouseenter', stopAuto);
-      carousel.addEventListener('mouseleave', startAuto);
-      scroller.addEventListener('touchstart', stopAuto, { passive: true });
-      scroller.addEventListener('touchend', function () { setTimeout(startAuto, 4000); });
+      updateDots();
     });
   })();
 </script>

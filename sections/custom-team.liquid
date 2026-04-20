@@ -15,227 +15,153 @@
   }
 {%- endstyle -%}
 
-<div class="team-carousel">
-  <div class="team-carousel__header">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="section-heading team-carousel__heading typo-h2">{{ section.settings.heading }}</h2>
+<div class="team">
+  <div class="team__layout">
+    {%- if section.settings.heading != blank or section.settings.description != blank -%}
+      <div class="team__intro">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="typo-section-heading team__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="team__description">{{ section.settings.description }}</p>
+        {%- endif -%}
+        {%- if section.settings.intro_button_label != blank or section.settings.intro_button_2_label != blank -%}
+          <div class="team__intro-buttons">
+            {%- if section.settings.intro_button_label != blank -%}
+              <a href="{{ section.settings.intro_button_link | default: '#' }}" class="team__btn team__btn--primary">
+                {{ section.settings.intro_button_label }}
+              </a>
+            {%- endif -%}
+            {%- if section.settings.intro_button_2_label != blank -%}
+              <a href="{{ section.settings.intro_button_2_link | default: '#' }}" class="team__btn team__btn--outline">
+                {{ section.settings.intro_button_2_label }}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
     {%- endif -%}
-    <div class="team-carousel__nav" data-team-nav>
-      <button class="team-carousel__arrow team-carousel__arrow--prev" data-team-prev aria-label="Previous">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button class="team-carousel__arrow team-carousel__arrow--next" data-team-next aria-label="Next">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
+
+    <div class="team__body">
+    {%- if section.blocks.size > 0 -%}
+    {%- liquid
+      assign has_sub_label = false
+      for block in section.blocks
+        if block.type == 'sub_label'
+          assign has_sub_label = true
+          break
+        endif
+      endfor
+    -%}
+
+    {%- if has_sub_label -%}
+      {%- assign open_grid = false -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'sub_label' -%}
+          {%- if open_grid -%}
+            </div>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <div class="team__sub-label" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+          {%- endif -%}
+          <div class="team__grid">
+          {%- assign open_grid = true -%}
+        {%- elsif block.type == 'person' -%}
+          {%- unless open_grid -%}
+            <div class="team__grid">
+            {%- assign open_grid = true -%}
+          {%- endunless -%}
+          <div class="team-card" {{ block.shopify_attributes }}>
+            <div class="team-card__photo" style="background-color: {{ block.settings.fallback_color }};">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: block.settings.name }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            {%- if block.settings.role != blank -%}
+              <div class="team-card__role">{{ block.settings.role }}</div>
+            {%- endif -%}
+            {%- if block.settings.name != blank -%}
+              <div class="team-card__name">{{ block.settings.name }}</div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if open_grid -%}
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <div class="team__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'person' -%}
+            <div class="team-card" {{ block.shopify_attributes }}>
+              <div class="team-card__photo" style="background-color: {{ block.settings.fallback_color }};">
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: block.settings.name }}
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+              </div>
+              {%- if block.settings.role != blank -%}
+                <div class="team-card__role">{{ block.settings.role }}</div>
+              {%- endif -%}
+              {%- if block.settings.name != blank -%}
+                <div class="team-card__name">{{ block.settings.name }}</div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+    {%- endif -%}
     </div>
   </div>
 
-  {%- if section.blocks.size > 0 -%}
-    <div class="team-carousel__viewport" data-team-carousel data-total="{{ section.blocks.size }}">
-      <div class="team-carousel__track" data-team-track>
-        {%- for block in section.blocks -%}
-          <div class="team-carousel__card" data-team-card {{ block.shopify_attributes }}>
-            <div class="poster" style="background-color: {{ block.settings.fallback_color }};">
-              {%- if block.settings.tag != blank -%}
-                <span class="poster__tag">{{ block.settings.tag }}</span>
-              {%- endif -%}
-              {%- if block.settings.image != blank -%}
-                {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: block.settings.title, class: 'poster__img' }}
-              {%- else -%}
-                <div class="poster__placeholder">
-                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                </div>
-              {%- endif -%}
 
-              <div class="poster__gradient"></div>
-
-              <div class="poster__label">
-                {%- if block.settings.title != blank -%}
-                  <span class="poster__label-name">{{ block.settings.title }}</span>
-                {%- endif -%}
-                {%- if block.settings.bottom_text != blank -%}
-                  <p class="poster__label-text">{{ block.settings.bottom_text }}</p>
-                {%- endif -%}
-                {%- if block.settings.sub_text != blank -%}
-                  <p class="poster__label-sub">{{ block.settings.sub_text | newline_to_br }}</p>
-                {%- endif -%}
-              </div>
-            </div>
-          </div>
-        {%- endfor -%}
-      </div>
-    </div>
-  {%- endif -%}
 </div>
-
-<script>
-  (function () {
-    document.querySelectorAll('[data-team-carousel]').forEach(function (carousel) {
-      var section = carousel.closest('.team-carousel');
-      var track = carousel.querySelector('[data-team-track]');
-      var prevBtn = section.querySelector('[data-team-prev]');
-      var nextBtn = section.querySelector('[data-team-next]');
-      var cards = Array.from(track.querySelectorAll('[data-team-card]'));
-      var total = cards.length;
-      if (total < 1) return;
-
-      var currentPos = 0;
-      var animating = false;
-      var currentTx = 0;
-
-      function getMaxPos() {
-        var trackW = track.scrollWidth;
-        var viewW = carousel.offsetWidth;
-        if (trackW <= viewW) return 0;
-        /* Find the last card index where scrolling makes sense */
-        for (var i = total - 1; i >= 0; i--) {
-          var tx = -cards[i].offsetLeft;
-          if (Math.abs(tx) <= trackW - viewW) return i;
-        }
-        return 0;
-      }
-
-      function getTx(pos) {
-        var card = cards[pos];
-        if (!card) return 0;
-        return -card.offsetLeft;
-      }
-
-      function clampTx(tx) {
-        var maxScroll = track.scrollWidth - carousel.offsetWidth;
-        if (maxScroll < 0) maxScroll = 0;
-        if (tx > 0) tx = 0;
-        if (tx < -maxScroll) tx = -maxScroll;
-        return tx;
-      }
-
-      function setTx(tx, animated) {
-        tx = clampTx(tx);
-        currentTx = tx;
-        if (animated) {
-          track.classList.add('is-sliding');
-          track.style.transform = 'translateX(' + tx + 'px)';
-        } else {
-          track.classList.remove('is-sliding');
-          track.style.transform = 'translateX(' + tx + 'px)';
-        }
-      }
-
-      function updateButtons() {
-        var maxPos = getMaxPos();
-        if (prevBtn) prevBtn.disabled = currentPos <= 0;
-        if (nextBtn) nextBtn.disabled = currentPos >= maxPos;
-      }
-
-      function goTo(pos, animated) {
-        var maxPos = getMaxPos();
-        if (pos < 0) pos = 0;
-        if (pos > maxPos) pos = maxPos;
-        currentPos = pos;
-        setTx(getTx(pos), animated);
-        updateButtons();
-        if (animated) {
-          animating = true;
-          setTimeout(function () {
-            track.classList.remove('is-sliding');
-            animating = false;
-          }, 320);
-        }
-      }
-
-      function goNext() { if (!animating) goTo(currentPos + 1, true); }
-      function goPrev() { if (!animating) goTo(currentPos - 1, true); }
-
-      if (prevBtn) prevBtn.addEventListener('click', goPrev);
-      if (nextBtn) nextBtn.addEventListener('click', goNext);
-
-      /* Mouse drag */
-      var isDragging = false;
-      var dragStartX = 0;
-      var dragStartTx = 0;
-      var DRAG_THRESHOLD = 50;
-
-      carousel.addEventListener('mousedown', function (e) {
-        if (e.button !== 0) return;
-        isDragging = true;
-        dragStartX = e.clientX;
-        dragStartTx = currentTx;
-        track.classList.remove('is-sliding');
-        carousel.classList.add('is-dragging');
-        e.preventDefault();
-      });
-
-      document.addEventListener('mousemove', function (e) {
-        if (!isDragging) return;
-        var delta = e.clientX - dragStartX;
-        var tx = clampTx(dragStartTx + delta);
-        currentTx = tx;
-        track.style.transform = 'translateX(' + tx + 'px)';
-      });
-
-      document.addEventListener('mouseup', function (e) {
-        if (!isDragging) return;
-        isDragging = false;
-        carousel.classList.remove('is-dragging');
-        var delta = e.clientX - dragStartX;
-        if (Math.abs(delta) > DRAG_THRESHOLD) {
-          if (delta < 0) goNext();
-          else goPrev();
-        } else {
-          goTo(currentPos, true);
-        }
-      });
-
-      /* Touch swipe */
-      var touchStartX = 0;
-      carousel.addEventListener('touchstart', function (e) {
-        touchStartX = e.touches[0].clientX;
-        dragStartTx = currentTx;
-        track.classList.remove('is-sliding');
-      }, { passive: true });
-
-      carousel.addEventListener('touchmove', function (e) {
-        var delta = e.touches[0].clientX - touchStartX;
-        var tx = clampTx(dragStartTx + delta);
-        currentTx = tx;
-        track.style.transform = 'translateX(' + tx + 'px)';
-      }, { passive: true });
-
-      carousel.addEventListener('touchend', function (e) {
-        var delta = e.changedTouches[0].clientX - touchStartX;
-        if (Math.abs(delta) > DRAG_THRESHOLD) {
-          if (delta < 0) goNext();
-          else goPrev();
-        } else {
-          goTo(currentPos, true);
-        }
-      });
-
-      window.addEventListener('resize', function () {
-        goTo(currentPos, false);
-      });
-
-      goTo(0, false);
-    });
-  })();
-</script>
 
 {% schema %}
 {
-  "name": "Team Poster Carousel",
+  "name": "Team Grid",
   "tag": "section",
   "class": "section",
   "settings": [
     {
-      "type": "text",
+      "type": "header",
+      "content": "Intro"
+    },
+    {
+      "type": "richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "Il nostro team"
+      "info": "Use italic for emphasised words",
+      "default": "<p>Built By World-Class <em>Business</em> Experts</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Our team combines strategic insight with hands-on execution capabilities, supporting clients through every phase of complex financial decisions — from early structuring to delivery and long-term asset management."
+    },
+    {
+      "type": "text",
+      "id": "intro_button_label",
+      "label": "Intro button label"
+    },
+    {
+      "type": "url",
+      "id": "intro_button_link",
+      "label": "Intro button link"
+    },
+    {
+      "type": "header",
+      "content": "Section"
     },
     {
       "type": "color",
       "id": "bg_color",
-      "label": "Background Color",
+      "label": "Background color",
       "default": "#ffffff"
     },
     {
@@ -261,59 +187,66 @@
   ],
   "blocks": [
     {
-      "type": "poster",
-      "name": "Poster Card",
+      "type": "sub_label",
+      "name": "Sub label (divider)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Label text",
+          "info": "Divides the grid by role (e.g. 'Founders', 'Designers')",
+          "default": "Our Experts"
+        }
+      ]
+    },
+    {
+      "type": "person",
+      "name": "Person",
       "settings": [
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Background Image"
+          "label": "Photo"
         },
         {
           "type": "color",
           "id": "fallback_color",
-          "label": "Fallback Background Color",
-          "default": "#e8e2d9",
-          "info": "Shown when no image is set."
+          "label": "Fallback color",
+          "default": "#e8e2d9"
         },
         {
           "type": "text",
-          "id": "title",
-          "label": "Name / Label",
-          "default": "Violi"
+          "id": "role",
+          "label": "Role",
+          "info": "Shown above the name (bold italic)",
+          "default": "Employee"
         },
         {
           "type": "text",
-          "id": "tag",
-          "label": "Tag",
-          "info": "Small label in the top-right corner"
-        },
-        {
-          "type": "textarea",
-          "id": "bottom_text",
-          "label": "Description",
-          "default": "Proponiamo a tutti i nostri clienti una gamma di prodotti delle migliori marche."
-        },
-        {
-          "type": "textarea",
-          "id": "sub_text",
-          "label": "Contact / Sub Info",
-          "default": "info@bensa.com"
+          "id": "name",
+          "label": "Name",
+          "default": "Anna Smith"
         }
       ]
     }
   ],
-  "max_blocks": 12,
+  "max_blocks": 30,
   "presets": [
     {
-      "name": "Team Poster Carousel",
+      "name": "Team Grid",
       "blocks": [
-        { "type": "poster", "settings": { "fallback_color": "#f0ece5", "title": "Violi", "bottom_text": "Proponiamo a tutti i nostri clienti una gamma di prodotti delle migliori marche.", "sub_text": "info@bensa.com" } },
-        { "type": "poster", "settings": { "fallback_color": "#ddd5c8", "title": "Design", "bottom_text": "Design e qualità per ogni spazio.", "sub_text": "info@bensa.com" } },
-        { "type": "poster", "settings": { "fallback_color": "#c9bfb3", "title": "Su misura", "bottom_text": "Arredi su misura per il tuo stile di vita.", "sub_text": "info@bensa.com" } },
-        { "type": "poster", "settings": { "fallback_color": "#e0d8cf", "title": "Moderno", "bottom_text": "Soluzioni moderne per ambienti contemporanei.", "sub_text": "info@bensa.com" } },
-        { "type": "poster", "settings": { "fallback_color": "#d4ccc4", "title": "Complementi", "bottom_text": "Scopri i nostri complementi d'arredo.", "sub_text": "info@bensa.com" } },
-        { "type": "poster", "settings": { "fallback_color": "#bfb8b0", "title": "Eccellenza", "bottom_text": "Ogni dettaglio è curato per offrirti l'eccellenza.", "sub_text": "info@bensa.com" } }
+        { "type": "sub_label", "settings": { "text": "Founders" } },
+        { "type": "person", "settings": { "role": "CEO", "name": "Anna Smith" } },
+        { "type": "person", "settings": { "role": "CTO", "name": "Giovanni Ser." } },
+        { "type": "person", "settings": { "role": "CFO", "name": "Marco Tel." } },
+        { "type": "sub_label", "settings": { "text": "Team" } },
+        { "type": "person", "settings": { "role": "Employee", "name": "Marta Bass." } },
+        { "type": "person", "settings": { "role": "Employee", "name": "Anna Smith" } },
+        { "type": "person", "settings": { "role": "Employee", "name": "Anna Smith" } },
+        { "type": "person", "settings": { "role": "Employee", "name": "Anna Smith" } },
+        { "type": "person", "settings": { "role": "CTO 1", "name": "Anna Smith" } },
+        { "type": "person", "settings": { "role": "Employee", "name": "Anna Smith" } },
+        { "type": "person", "settings": { "role": "Employee", "name": "Anna Smith" } }
       ]
     }
   ]

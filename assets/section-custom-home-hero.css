@@ -305,3 +305,24 @@
     right: 80px;
   }
 }
+
+/* ── Sub-1700 luxury scale (PF ratio, 8px grid) ── */
+@media screen and (min-width: 990px) and (max-width: 1699.98px) {
+  .home-hero__heading {
+    font-size: clamp(3.24rem, 4.6vw, 4.32rem);
+  }
+
+  .home-hero__subtext {
+    font-size: 0.78rem;
+    max-width: 60ch;
+  }
+
+  .home-hero__subtitle {
+    font-size: 0.7rem;
+  }
+
+  .home-hero__btn {
+    font-size: 0.7rem;
+    padding: 10px 20px;
+  }
+}

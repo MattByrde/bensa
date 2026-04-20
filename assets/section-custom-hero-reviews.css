@@ -136,3 +136,25 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ── Sub-1700 luxury scale (PF ratio, 8px grid) ── */
+@media screen and (min-width: 990px) and (max-width: 1699.98px) {
+  .hero-reviews__heading {
+    font-size: clamp(2.82rem, 4vw, 3.76rem);
+    margin: 0 0 16px;
+  }
+
+  .hero-reviews__description {
+    font-size: 0.78rem;
+    max-width: 62ch;
+  }
+
+  .hero-reviews__btn {
+    font-size: 0.7rem;
+    padding: 10px 16px;
+  }
+
+  .hero-reviews__actions {
+    margin-top: 32px;
+  }
+}

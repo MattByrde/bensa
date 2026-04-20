@@ -1,6 +1,15 @@
 {%- comment -%} Header Section {%- endcomment -%}
 
-<header class="site-header" data-section-id="{{ section.id }}">
+{%- liquid
+  assign has_hero = false
+  if template.name == 'index'
+    assign has_hero = true
+  elsif template == 'page.chi-siamo'
+    assign has_hero = true
+  endif
+-%}
+
+<header class="site-header{% if has_hero %} is-transparent{% endif %}" data-section-id="{{ section.id }}">
     {%- comment -%} Row 1: Logo + Nav + Right Links {%- endcomment -%}
     <div class="site-header__row site-header__row--nav">
 
