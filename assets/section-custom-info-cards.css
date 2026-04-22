@@ -2,14 +2,6 @@
   display: grid;
   grid-template-columns: 1fr;
   width: 100%;
-  border-top: 1px solid #555;
-  border-bottom: 1px solid #555;
-  transition: border-color 0.4s ease 0.15s;
-}
-
-.info-cards:not(:has(.info-cards__reveal.is-visible)) {
-  border-top-color: transparent;
-  border-bottom-color: transparent;
 }
 
 @media screen and (min-width: 750px) {
@@ -29,18 +21,15 @@
   border-top: 1px solid #555;
 }
 
+.info-cards__card:first-child {
+  border-top: none;
+}
+
 @media screen and (min-width: 750px) {
   .info-cards__card + .info-cards__card {
     border-top: none;
     border-left: 1px solid #555;
   }
-  .info-cards__card:first-child {
-    border-top: none;
-  }
-}
-
-.info-cards__card:first-child {
-  border-top: none;
 }
 
 @media screen and (min-width: 750px) {
@@ -246,32 +235,38 @@
   color: #fff;
 }
 
-/* ── Scroll reveal ── */
-.info-cards__reveal {
+/* ── Scroll reveal (content only — card stays visible to avoid white flash) ── */
+.info-cards__reveal .info-cards__top,
+.info-cards__reveal .info-cards__bottom {
   opacity: 0;
-  transform: translateY(40px);
+  transform: translateY(24px);
   transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
     transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.info-cards__reveal.is-visible {
+.info-cards__reveal.is-visible .info-cards__top,
+.info-cards__reveal.is-visible .info-cards__bottom {
   opacity: 1;
   transform: translateY(0);
 }
 
-.info-cards__reveal--delay-1 {
+.info-cards__reveal--delay-1 .info-cards__top,
+.info-cards__reveal--delay-1 .info-cards__bottom {
   transition-delay: 0.1s;
 }
 
-.info-cards__reveal--delay-2 {
+.info-cards__reveal--delay-2 .info-cards__top,
+.info-cards__reveal--delay-2 .info-cards__bottom {
   transition-delay: 0.25s;
 }
 
-.info-cards__reveal--delay-3 {
+.info-cards__reveal--delay-3 .info-cards__top,
+.info-cards__reveal--delay-3 .info-cards__bottom {
   transition-delay: 0.4s;
 }
 
-.info-cards__reveal--delay-4 {
+.info-cards__reveal--delay-4 .info-cards__top,
+.info-cards__reveal--delay-4 .info-cards__bottom {
   transition-delay: 0.55s;
 }
 

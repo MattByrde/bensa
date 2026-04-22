@@ -1,0 +1,277 @@
+{{ 'section-custom-showroom.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top | times: 0.7 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.7 | round: 0 }}px;
+  }
+  #shopify-section-{{ section.id }} .showroom__heading,
+  #shopify-section-{{ section.id }} .showroom__description,
+  #shopify-section-{{ section.id }} .showroom__info dt,
+  #shopify-section-{{ section.id }} .showroom__info dd {
+    color: {{ section.settings.text_color }};
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="showroom">
+  <div class="showroom__inner {% if section.settings.media_position == 'left' %}showroom__inner--reverse{% endif %}">
+    <div class="showroom__content">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="showroom__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <p class="showroom__description">{{ section.settings.description }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.info_1_label != blank or section.settings.info_2_label != blank or section.settings.info_3_label != blank -%}
+        <dl class="showroom__info">
+          {%- if section.settings.info_1_label != blank -%}
+            <div class="showroom__info-row">
+              <dt>{{ section.settings.info_1_label }}</dt>
+              <dd>{{ section.settings.info_1_value }}</dd>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.info_2_label != blank -%}
+            <div class="showroom__info-row">
+              <dt>{{ section.settings.info_2_label }}</dt>
+              <dd>{{ section.settings.info_2_value }}</dd>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.info_3_label != blank -%}
+            <div class="showroom__info-row">
+              <dt>{{ section.settings.info_3_label }}</dt>
+              <dd>{{ section.settings.info_3_value }}</dd>
+            </div>
+          {%- endif -%}
+        </dl>
+      {%- endif -%}
+
+      {%- if section.settings.primary_label != blank -%}
+        <div class="showroom__buttons">
+          <a href="{{ section.settings.primary_link | default: '#' }}" class="showroom__btn showroom__btn--primary">
+            {{ section.settings.primary_label }}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="showroom__media" data-showroom-media>
+      {%- if section.settings.video != blank -%}
+        {{ section.settings.video | video_tag: image_size: '1600x', autoplay: true, loop: true, muted: true, controls: false, class: 'showroom__video', data-showroom-video: '' }}
+        <div class="showroom__controls">
+          <button type="button" class="showroom__control-btn" data-showroom-toggle aria-label="Play/Pausa">
+            <svg class="showroom__icon-play" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 2.5L13 8L4 13.5V2.5Z" fill="currentColor"/></svg>
+            <svg class="showroom__icon-pause" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="3" y="2" width="4" height="12" rx="1" fill="currentColor"/><rect x="9" y="2" width="4" height="12" rx="1" fill="currentColor"/></svg>
+          </button>
+          <button type="button" class="showroom__control-btn" data-showroom-mute aria-label="Muto/Riattiva audio">
+            <svg class="showroom__icon-muted" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><line x1="11" y1="5" x2="15" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="5" x2="11" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <svg class="showroom__icon-unmuted" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><path d="M11 5.5C11.8 6.3 12.25 7.4 12.25 8.5C12.25 9.6 11.8 10.7 11 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 3.5C14.3 4.8 15 6.6 15 8.5C15 10.4 14.3 12.2 13 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      {%- elsif section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1600 | image_tag: class: 'showroom__image', loading: 'lazy', widths: '600, 900, 1200, 1600', alt: section.settings.heading | default: 'Showroom' }}
+      {%- else -%}
+        <div class="showroom__placeholder">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.badge_label != blank -%}
+        <div class="showroom__badge">
+          <span class="showroom__badge-dot" aria-hidden="true"></span>
+          {{ section.settings.badge_label }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{%- if section.settings.video != blank -%}
+<script>
+  (function () {
+    var section = document.querySelector('#shopify-section-{{ section.id }}');
+    if (!section) return;
+    var media = section.querySelector('[data-showroom-media]');
+    var video = section.querySelector('[data-showroom-video]');
+    var toggleBtn = section.querySelector('[data-showroom-toggle]');
+    var muteBtn = section.querySelector('[data-showroom-mute]');
+    if (!media || !video) return;
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function () {
+        if (video.paused) { video.play().catch(function () {}); } else { video.pause(); }
+      });
+    }
+    video.addEventListener('play', function () { media.classList.add('is-playing'); });
+    video.addEventListener('pause', function () { media.classList.remove('is-playing'); });
+    if (!video.paused) media.classList.add('is-playing');
+
+    if (muteBtn) {
+      muteBtn.addEventListener('click', function () {
+        video.muted = !video.muted;
+        media.classList.toggle('is-unmuted', !video.muted);
+      });
+    }
+  })();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Showroom CTA",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contenuto"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Titolo",
+      "default": "<p>Vieni a scoprire il nostro <em>showroom</em>.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descrizione",
+      "default": "A Vignolo ti aspettano le nostre collezioni: tocca i materiali, confronta le finiture e ricevi una consulenza dedicata. Riceviamo solo su appuntamento, per darti tutto il tempo che il tuo progetto merita."
+    },
+    {
+      "type": "header",
+      "content": "Info (3 righe facoltative)"
+    },
+    {
+      "type": "text",
+      "id": "info_1_label",
+      "label": "Info 1 — etichetta",
+      "default": "Indirizzo"
+    },
+    {
+      "type": "text",
+      "id": "info_1_value",
+      "label": "Info 1 — valore",
+      "default": "Via Cuneo, 9 – 12010 Vignolo (CN)"
+    },
+    {
+      "type": "text",
+      "id": "info_2_label",
+      "label": "Info 2 — etichetta",
+      "default": "Telefono"
+    },
+    {
+      "type": "text",
+      "id": "info_2_value",
+      "label": "Info 2 — valore",
+      "default": "0171 48345"
+    },
+    {
+      "type": "text",
+      "id": "info_3_label",
+      "label": "Info 3 — etichetta"
+    },
+    {
+      "type": "text",
+      "id": "info_3_value",
+      "label": "Info 3 — valore"
+    },
+    {
+      "type": "header",
+      "content": "Pulsanti"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Pulsante primario",
+      "default": "Prenota la tua visita"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Link pulsante primario"
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Posizione media",
+      "options": [
+        { "value": "right", "label": "Destra" },
+        { "value": "left", "label": "Sinistra" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video (Shopify)",
+      "info": "Se impostato, ha priorità sull'immagine."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Immagine"
+    },
+    {
+      "type": "text",
+      "id": "badge_label",
+      "label": "Badge su media",
+      "default": "Su appuntamento"
+    },
+    {
+      "type": "header",
+      "content": "Aspetto"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Colore sfondo",
+      "default": "#f5f3ec"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Colore testo",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Showroom CTA"
+    }
+  ]
+}
+{% endschema %}

@@ -4,6 +4,11 @@
   #shopify-section-{{ section.id }} {
     background-color: {{ section.settings.bg_color }};
   }
+  #shopify-section-{{ section.id }} .prog-steps__heading,
+  #shopify-section-{{ section.id }} .prog-steps__step-title,
+  #shopify-section-{{ section.id }} .prog-steps__step-text {
+    color: {{ section.settings.text_color }};
+  }
   .prog-steps {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
@@ -12,14 +17,8 @@
 
 <div class="prog-steps">
   <div class="prog-steps__header">
-    {%- if section.settings.subtitle != blank -%}
-      <span class="prog-steps__subtitle">{{ section.settings.subtitle }}</span>
-    {%- endif -%}
     {%- if section.settings.heading != blank -%}
-      <h2 class="prog-steps__heading typo-h2">{{ section.settings.heading }}</h2>
-    {%- endif -%}
-    {%- if section.settings.intro != blank -%}
-      <p class="prog-steps__intro">{{ section.settings.intro }}</p>
+      <h2 class="prog-steps__heading typo-section-heading">{{ section.settings.heading }}</h2>
     {%- endif -%}
   </div>
 
@@ -76,13 +75,15 @@
               {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
             </div>
           {%- endif -%}
-          <span class="prog-steps__number">
-            {%- if forloop.index < 10 -%}0{%- endif -%}{{ forloop.index }}
-          </span>
+          {%- if block.settings.label != blank -%}
+            <span class="prog-steps__number">{{ block.settings.label }}</span>
+          {%- else -%}
+            <span class="prog-steps__number">{%- if forloop.index < 10 -%}0{%- endif -%}{{ forloop.index }}</span>
+          {%- endif -%}
         </div>
         <div class="prog-steps__step-body">
           {%- if block.settings.title != blank -%}
-            <h3 class="prog-steps__step-title">{{ block.settings.title }}</h3>
+            <h3 class="prog-steps__step-title typo-card-title">{{ block.settings.title }}</h3>
           {%- endif -%}
           {%- if block.settings.text != blank -%}
             <p class="prog-steps__step-text">{{ block.settings.text }}</p>
@@ -167,6 +168,12 @@
       "default": "#1a1a1a"
     },
     {
+      "type": "color",
+      "id": "text_color",
+      "label": "Colore testo",
+      "default": "#111111"
+    },
+    {
       "type": "range",
       "id": "padding_top",
       "label": "Padding Top",
@@ -187,22 +194,11 @@
       "default": 80
     },
     {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Sottotitolo",
-      "default": "Il nostro processo"
-    },
-    {
-      "type": "text",
+      "type": "richtext",
       "id": "heading",
       "label": "Titolo",
-      "default": "Dal progetto alla realtà"
-    },
-    {
-      "type": "textarea",
-      "id": "intro",
-      "label": "Testo introduttivo",
-      "default": "Ogni progetto nasce dall'ascolto. Seguiamo ogni cliente in ogni fase, dalla prima consulenza alla consegna chiavi in mano."
+      "info": "Supporta grassetto, corsivo ed elenchi tramite l'editor.",
+      "default": "<p>Dal progetto <strong>alla realtà.</strong></p>"
     }
   ],
   "blocks": [
@@ -229,6 +225,12 @@
         },
         {
           "type": "text",
+          "id": "label",
+          "label": "Etichetta numero",
+          "info": "Se vuoto, verrà usato il numero automatico (01, 02, …)."
+        },
+        {
+          "type": "text",
           "id": "title",
           "label": "Titolo fase"
         },
@@ -245,9 +247,7 @@
     {
       "name": "Progettazione Steps",
       "settings": {
-        "subtitle": "Il nostro processo",
-        "heading": "Dal progetto alla realtà",
-        "intro": "Ogni progetto nasce dall'ascolto. Seguiamo ogni cliente in ogni fase, dalla prima consulenza alla consegna chiavi in mano."
+        "heading": "<p>Dal progetto <strong>alla realtà.</strong></p>"
       },
       "blocks": [
         {
