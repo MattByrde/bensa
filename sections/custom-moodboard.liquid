@@ -1,0 +1,403 @@
+{{ 'section-custom-moodboard.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .moodboard {
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<section class="moodboard"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id }}"{% endif %} data-moodboard-root>
+  <div class="moodboard__inner">
+    <div class="moodboard__head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="moodboard__kicker">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="typo-section-heading moodboard__title">{{ section.settings.heading | remove: '<p>' | remove: '</p>' }}</h2>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.description != blank -%}
+        <p class="moodboard__lead">{{ section.settings.description }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- assign tab_blocks = section.blocks | where: 'type', 'ambiente' -%}
+
+    <div class="moodboard__tabs" role="tablist">
+      {%- for block in tab_blocks -%}
+        <button
+          class="moodboard__tab{% if forloop.first %} is-active{% endif %}"
+          data-mb-tab="{{ block.id }}"
+          role="tab"
+          type="button"
+          {{ block.shopify_attributes }}
+        >
+          <span class="moodboard__tab-dot" style="background: {{ block.settings.dot_color }}"></span>{{ block.settings.tab_label }}
+        </button>
+      {%- endfor -%}
+    </div>
+
+    <div class="moodboard__stage">
+      <div class="moodboard__room" data-mb-room>
+        {%- for block in tab_blocks -%}
+          <div class="moodboard__room-image{% if forloop.first %} is-visible{% endif %}" data-mb-image="{{ block.id }}">
+            {%- if block.settings.room_image != blank -%}
+              {{ block.settings.room_image | image_url: width: 1600 | image_tag: loading: 'lazy', alt: block.settings.room_label }}
+            {%- else -%}
+              <div class="moodboard__room-image-ph"></div>
+            {%- endif -%}
+            {%- if block.settings.room_label != blank -%}
+              <span class="moodboard__room-label">{{ block.settings.room_label }}</span>
+            {%- endif -%}
+
+            {%- for i in (1..4) -%}
+              {%- assign pin_brand = block.settings | dig: 'pin_' | append: i | append: '_brand' -%}
+            {%- endfor -%}
+
+            {%- assign pin_count = 0 -%}
+            {%- for i in (1..4) -%}
+              {%- case i -%}
+                {%- when 1 -%}
+                  {%- assign brand = block.settings.pin_1_brand -%}
+                  {%- assign name = block.settings.pin_1_name -%}
+                  {%- assign meta = block.settings.pin_1_meta -%}
+                  {%- assign top = block.settings.pin_1_top -%}
+                  {%- assign left = block.settings.pin_1_left -%}
+                  {%- assign thumb = block.settings.pin_1_image -%}
+                {%- when 2 -%}
+                  {%- assign brand = block.settings.pin_2_brand -%}
+                  {%- assign name = block.settings.pin_2_name -%}
+                  {%- assign meta = block.settings.pin_2_meta -%}
+                  {%- assign top = block.settings.pin_2_top -%}
+                  {%- assign left = block.settings.pin_2_left -%}
+                  {%- assign thumb = block.settings.pin_2_image -%}
+                {%- when 3 -%}
+                  {%- assign brand = block.settings.pin_3_brand -%}
+                  {%- assign name = block.settings.pin_3_name -%}
+                  {%- assign meta = block.settings.pin_3_meta -%}
+                  {%- assign top = block.settings.pin_3_top -%}
+                  {%- assign left = block.settings.pin_3_left -%}
+                  {%- assign thumb = block.settings.pin_3_image -%}
+                {%- when 4 -%}
+                  {%- assign brand = block.settings.pin_4_brand -%}
+                  {%- assign name = block.settings.pin_4_name -%}
+                  {%- assign meta = block.settings.pin_4_meta -%}
+                  {%- assign top = block.settings.pin_4_top -%}
+                  {%- assign left = block.settings.pin_4_left -%}
+                  {%- assign thumb = block.settings.pin_4_image -%}
+              {%- endcase -%}
+              {%- if name != blank -%}
+                {%- assign pin_count = pin_count | plus: 1 -%}
+                {%- assign pin_id = block.id | append: '--' | append: i -%}
+                {%- assign thumb_url = '' -%}
+                {%- if thumb != blank -%}{%- assign thumb_url = thumb | image_url: width: 200 -%}{%- endif -%}
+                <button
+                  class="moodboard__pin{% if forloop.first %} is-active{% endif %}"
+                  data-mb-pin="{{ pin_id }}"
+                  data-brand="{{ brand | escape }}"
+                  data-name="{{ name | escape }}"
+                  data-meta="{{ meta | escape }}"
+                  data-thumb="{{ thumb_url }}"
+                  style="top: {{ top | default: 50 }}%; left: {{ left | default: 50 }}%;"
+                  type="button"
+                >{{ i }}</button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="moodboard__panel" data-mb-panel>
+        <div class="moodboard__panel-head">
+          <span class="moodboard__panel-overline" data-mb-style></span>
+          <h3 class="moodboard__panel-title" data-mb-headline></h3>
+        </div>
+
+        <div>
+          <span class="moodboard__panel-overline" style="display:block;margin-bottom:10px">{{ section.settings.palette_label | default: 'Palette' }}</span>
+          <div class="moodboard__palette-grid" data-mb-palette></div>
+        </div>
+
+        <div>
+          <span class="moodboard__panel-overline" style="display:block;margin-bottom:10px">{{ section.settings.materials_label | default: 'Materiali' }}</span>
+          <div class="moodboard__materials" data-mb-materials></div>
+        </div>
+
+        <div>
+          <span class="moodboard__panel-overline" style="display:block;margin-bottom:10px">{{ section.settings.object_label | default: 'Arredo selezionato' }}</span>
+          <div class="moodboard__object is-visible" data-mb-object>
+            <div class="moodboard__object-thumb" data-mb-object-thumb>
+              <div class="moodboard__room-image-ph"></div>
+            </div>
+            <div class="moodboard__object-body">
+              <span class="moodboard__object-brand" data-mb-object-brand></span>
+              <h4 class="moodboard__object-name" data-mb-object-name></h4>
+              <p class="moodboard__object-meta" data-mb-object-meta></p>
+            </div>
+          </div>
+        </div>
+
+        <p class="moodboard__note" data-mb-note></p>
+      </div>
+    </div>
+
+    {%- if section.settings.foot_text != blank or section.settings.foot_cta_label != blank -%}
+      <div class="moodboard__foot">
+        {%- if section.settings.foot_text != blank -%}
+          <span>{{ section.settings.foot_text }}</span>
+        {%- endif -%}
+        {%- if section.settings.foot_cta_label != blank -%}
+          <a href="{{ section.settings.foot_cta_link | default: '#' }}" class="moodboard__btn moodboard__btn--primary">
+            {{ section.settings.foot_cta_label }}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} Data payload (JSON) for client-side rendering {%- endcomment -%}
+  <script type="application/json" data-mb-data>
+    {
+      {%- for block in tab_blocks -%}
+        "{{ block.id }}": {
+          "style": {{ block.settings.style_line | default: '' | json }},
+          "headline": {{ block.settings.headline | default: '' | json }},
+          "note": {{ block.settings.note | default: '' | json }},
+          "palette": [
+            {%- for i in (1..5) -%}
+              {%- case i -%}
+                {%- when 1 -%}{%- assign hex = block.settings.palette_1_color -%}{%- assign lbl = block.settings.palette_1_label -%}
+                {%- when 2 -%}{%- assign hex = block.settings.palette_2_color -%}{%- assign lbl = block.settings.palette_2_label -%}
+                {%- when 3 -%}{%- assign hex = block.settings.palette_3_color -%}{%- assign lbl = block.settings.palette_3_label -%}
+                {%- when 4 -%}{%- assign hex = block.settings.palette_4_color -%}{%- assign lbl = block.settings.palette_4_label -%}
+                {%- when 5 -%}{%- assign hex = block.settings.palette_5_color -%}{%- assign lbl = block.settings.palette_5_label -%}
+              {%- endcase -%}
+              {%- if hex != blank -%}
+                {%- unless forloop.first -%},{%- endunless -%}
+                [{{ hex | json }}, {{ lbl | default: '' | json }}]
+              {%- endif -%}
+            {%- endfor -%}
+          ],
+          "materials": {{ block.settings.materials_list | default: '' | split: ',' | json }}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    }
+  </script>
+</section>
+
+<script>
+  (function(){
+    var root = document.querySelector('#shopify-section-{{ section.id }}');
+    if (!root) return;
+    var dataEl = root.querySelector('[data-mb-data]');
+    if (!dataEl) return;
+    var data;
+    try { data = JSON.parse(dataEl.textContent); } catch(e) { return; }
+
+    var tabs = root.querySelectorAll('[data-mb-tab]');
+    var panel = root.querySelector('[data-mb-panel]');
+    if (!panel) return;
+    var styleEl = panel.querySelector('[data-mb-style]');
+    var headlineEl = panel.querySelector('[data-mb-headline]');
+    var paletteEl = panel.querySelector('[data-mb-palette]');
+    var materialsEl = panel.querySelector('[data-mb-materials]');
+    var objectEl = panel.querySelector('[data-mb-object]');
+    var objectBrand = panel.querySelector('[data-mb-object-brand]');
+    var objectName = panel.querySelector('[data-mb-object-name]');
+    var objectMeta = panel.querySelector('[data-mb-object-meta]');
+    var objectThumb = panel.querySelector('[data-mb-object-thumb]');
+    var noteEl = panel.querySelector('[data-mb-note]');
+
+    var matColors = ["#c8b89e","#8a7d6e","#5a4a36","#4a5548","#a89d87","#d4d0c8","#c7b8a1","#5e524a"];
+    function hashColor(name){
+      var h = 0;
+      for (var i=0; i<name.length; i++) h = (h*31 + name.charCodeAt(i)) | 0;
+      return matColors[Math.abs(h) % matColors.length];
+    }
+
+    function renderPin(pinBtn){
+      if (!pinBtn) {
+        objectEl.classList.remove('is-visible');
+        return;
+      }
+      objectBrand.textContent = pinBtn.dataset.brand || '';
+      objectName.innerHTML = pinBtn.dataset.name || '';
+      objectMeta.textContent = pinBtn.dataset.meta || '';
+      var thumb = pinBtn.dataset.thumb || '';
+      if (thumb) {
+        objectThumb.innerHTML = '<img src="' + thumb + '" alt="" loading="lazy">';
+      } else {
+        objectThumb.innerHTML = '<div class="moodboard__room-image-ph"></div>';
+      }
+      objectEl.classList.remove('is-visible');
+      requestAnimationFrame(function(){ objectEl.classList.add('is-visible'); });
+    }
+
+    function render(tabKey, pinBtn){
+      var d = data[tabKey];
+      if (!d) return;
+
+      tabs.forEach(function(t){
+        t.classList.toggle('is-active', t.getAttribute('data-mb-tab') === tabKey);
+      });
+
+      root.querySelectorAll('[data-mb-image]').forEach(function(img){
+        img.classList.toggle('is-visible', img.getAttribute('data-mb-image') === tabKey);
+      });
+
+      if (styleEl) styleEl.textContent = d.style || '';
+      if (headlineEl) headlineEl.innerHTML = d.headline || '';
+      if (noteEl) noteEl.textContent = d.note || '';
+
+      if (paletteEl) {
+        paletteEl.innerHTML = (d.palette || []).map(function(entry){
+          var hex = entry[0], label = entry[1] || '';
+          return '<div class="moodboard__swatch" style="background:' + hex + '"><span class="moodboard__swatch-label">' + label + '</span></div>';
+        }).join('');
+      }
+
+      if (materialsEl) {
+        materialsEl.innerHTML = (d.materials || []).map(function(m){
+          var name = (m || '').trim();
+          if (!name) return '';
+          return '<span class="moodboard__chip"><span class="moodboard__chip-dot" style="background:' + hashColor(name) + '"></span>' + name + '</span>';
+        }).join('');
+      }
+
+      var activePin = pinBtn;
+      if (!activePin) {
+        var activeImg = root.querySelector('[data-mb-image="' + tabKey + '"]');
+        if (activeImg) activePin = activeImg.querySelector('.moodboard__pin');
+      }
+      root.querySelectorAll('[data-mb-pin]').forEach(function(p){
+        p.classList.toggle('is-active', p === activePin);
+      });
+      renderPin(activePin);
+    }
+
+    tabs.forEach(function(tab){
+      tab.addEventListener('click', function(){
+        render(tab.getAttribute('data-mb-tab'), null);
+      });
+    });
+
+    root.querySelectorAll('[data-mb-pin]').forEach(function(pin){
+      pin.addEventListener('click', function(){
+        var pinId = pin.getAttribute('data-mb-pin');
+        var tabKey = pinId.split('--')[0];
+        render(tabKey, pin);
+      });
+    });
+
+    var firstTab = tabs[0];
+    if (firstTab) render(firstTab.getAttribute('data-mb-tab'), null);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Moodboard interattiva",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    { "type": "color", "id": "bg_color", "label": "Colore sfondo", "default": "#ffffff" },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 200, "step": 10, "unit": "px", "default": 100 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 200, "step": 10, "unit": "px", "default": 100 },
+    { "type": "text", "id": "anchor_id", "label": "ID ancora", "default": "moodboard" },
+
+    { "type": "header", "content": "Intestazione" },
+    { "type": "text", "id": "eyebrow", "label": "Pre-titolo", "default": "Moodboard interattiva" },
+    { "type": "richtext", "id": "heading", "label": "Titolo", "default": "<p>Entrate nel <em>progetto.</em></p>" },
+    { "type": "textarea", "id": "description", "label": "Descrizione", "default": "Ogni ambiente che progettiamo è una composizione di luce, materia e oggetti. Cliccate sui pin per esplorare palette, materiali e arredi di ciascun progetto." },
+
+    { "type": "header", "content": "Etichette pannello" },
+    { "type": "text", "id": "palette_label", "label": "Etichetta Palette", "default": "Palette" },
+    { "type": "text", "id": "materials_label", "label": "Etichetta Materiali", "default": "Materiali" },
+    { "type": "text", "id": "object_label", "label": "Etichetta Arredo", "default": "Arredo selezionato" },
+
+    { "type": "header", "content": "Footer" },
+    { "type": "text", "id": "foot_text", "label": "Testo footer", "default": "Cliccate i pin numerati per esplorare ogni oggetto — cambiate ambiente con i tab in alto." },
+    { "type": "text", "id": "foot_cta_label", "label": "Etichetta CTA", "default": "Voglio la mia moodboard" },
+    { "type": "url", "id": "foot_cta_link", "label": "Link CTA" }
+  ],
+  "blocks": [
+    {
+      "type": "ambiente",
+      "name": "Ambiente",
+      "settings": [
+        { "type": "header", "content": "Tab" },
+        { "type": "text", "id": "tab_label", "label": "Etichetta tab", "default": "Zona living · Villa Alba" },
+        { "type": "color", "id": "dot_color", "label": "Colore punto tab", "default": "#c8b89e" },
+
+        { "type": "header", "content": "Stanza" },
+        { "type": "image_picker", "id": "room_image", "label": "Immagine ambiente" },
+        { "type": "text", "id": "room_label", "label": "Etichetta ambiente", "default": "Villa Alba · Cherasco" },
+        { "type": "text", "id": "style_line", "label": "Riga stile (overline pannello)", "default": "Villa Alba · Cherasco · 420 m²" },
+        { "type": "richtext", "id": "headline", "label": "Titolo pannello", "default": "<p><em>Toni caldi,</em> luce naturale e legno chiaro.</p>" },
+        { "type": "textarea", "id": "note", "label": "Nota", "default": "Villa di famiglia con grande finestratura sud. Il lino e il rovere chiaro catturano la luce delle colline." },
+
+        { "type": "header", "content": "Palette (5 colori)" },
+        { "type": "color", "id": "palette_1_color", "label": "Colore 1", "default": "#c8b89e" },
+        { "type": "text", "id": "palette_1_label", "label": "Etichetta 1", "default": "Creta 01" },
+        { "type": "color", "id": "palette_2_color", "label": "Colore 2", "default": "#e8e2d4" },
+        { "type": "text", "id": "palette_2_label", "label": "Etichetta 2", "default": "Sabbia" },
+        { "type": "color", "id": "palette_3_color", "label": "Colore 3", "default": "#5a4a36" },
+        { "type": "text", "id": "palette_3_label", "label": "Etichetta 3", "default": "Terra" },
+        { "type": "color", "id": "palette_4_color", "label": "Colore 4", "default": "#8a7d6e" },
+        { "type": "text", "id": "palette_4_label", "label": "Etichetta 4", "default": "Lino" },
+        { "type": "color", "id": "palette_5_color", "label": "Colore 5", "default": "#1f1d19" },
+        { "type": "text", "id": "palette_5_label", "label": "Etichetta 5", "default": "Caffè scuro" },
+
+        { "type": "header", "content": "Materiali" },
+        { "type": "textarea", "id": "materials_list", "label": "Materiali (separati da virgola)", "default": "Rovere spazzolato, Pietra di Luserna, Lino grezzo, Ottone brunito, Intonaco a calce" },
+
+        { "type": "header", "content": "Pin 1" },
+        { "type": "image_picker", "id": "pin_1_image", "label": "Immagine" },
+        { "type": "text", "id": "pin_1_brand", "label": "Brand", "default": "Flexform" },
+        { "type": "richtext", "id": "pin_1_name", "label": "Nome prodotto", "default": "<p>Divano <em>Groundpiece</em></p>" },
+        { "type": "text", "id": "pin_1_meta", "label": "Dettagli", "default": "Tessuto lino grezzo · 360×110 cm · finitura rovere" },
+        { "type": "range", "id": "pin_1_top", "label": "Posizione top (%)", "min": 0, "max": 100, "step": 1, "default": 45 },
+        { "type": "range", "id": "pin_1_left", "label": "Posizione left (%)", "min": 0, "max": 100, "step": 1, "default": 22 },
+
+        { "type": "header", "content": "Pin 2" },
+        { "type": "image_picker", "id": "pin_2_image", "label": "Immagine" },
+        { "type": "text", "id": "pin_2_brand", "label": "Brand" },
+        { "type": "richtext", "id": "pin_2_name", "label": "Nome prodotto" },
+        { "type": "text", "id": "pin_2_meta", "label": "Dettagli" },
+        { "type": "range", "id": "pin_2_top", "label": "Posizione top (%)", "min": 0, "max": 100, "step": 1, "default": 62 },
+        { "type": "range", "id": "pin_2_left", "label": "Posizione left (%)", "min": 0, "max": 100, "step": 1, "default": 55 },
+
+        { "type": "header", "content": "Pin 3" },
+        { "type": "image_picker", "id": "pin_3_image", "label": "Immagine" },
+        { "type": "text", "id": "pin_3_brand", "label": "Brand" },
+        { "type": "richtext", "id": "pin_3_name", "label": "Nome prodotto" },
+        { "type": "text", "id": "pin_3_meta", "label": "Dettagli" },
+        { "type": "range", "id": "pin_3_top", "label": "Posizione top (%)", "min": 0, "max": 100, "step": 1, "default": 32 },
+        { "type": "range", "id": "pin_3_left", "label": "Posizione left (%)", "min": 0, "max": 100, "step": 1, "default": 75 },
+
+        { "type": "header", "content": "Pin 4" },
+        { "type": "image_picker", "id": "pin_4_image", "label": "Immagine" },
+        { "type": "text", "id": "pin_4_brand", "label": "Brand" },
+        { "type": "richtext", "id": "pin_4_name", "label": "Nome prodotto" },
+        { "type": "text", "id": "pin_4_meta", "label": "Dettagli" },
+        { "type": "range", "id": "pin_4_top", "label": "Posizione top (%)", "min": 0, "max": 100, "step": 1, "default": 78 },
+        { "type": "range", "id": "pin_4_left", "label": "Posizione left (%)", "min": 0, "max": 100, "step": 1, "default": 38 }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Moodboard interattiva",
+      "blocks": [
+        { "type": "ambiente" }
+      ]
+    }
+  ]
+}
+{% endschema %}

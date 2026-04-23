@@ -1,4 +1,4 @@
-{{ 'section-custom-progettazione-steps.css' | asset_url | stylesheet_tag }}
+{{ 'section-custom-progettazione-steps.css' | asset_url | stylesheet_tag: preload: true }}
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
@@ -17,9 +17,14 @@
 
 <div class="prog-steps">
   <div class="prog-steps__header">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="prog-steps__heading typo-section-heading">{{ section.settings.heading }}</h2>
-    {%- endif -%}
+    <div class="prog-steps__title">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="prog-steps__heading typo-section-heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
   </div>
 
   <div class="prog-steps__grid">
@@ -192,6 +197,11 @@
       "step": 10,
       "unit": "px",
       "default": 80
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Pre-titolo"
     },
     {
       "type": "richtext",

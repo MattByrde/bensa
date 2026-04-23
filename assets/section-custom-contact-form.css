@@ -212,14 +212,13 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.9rem 1.5rem;
-  border: none;
+  padding: 12px 22px;
+  border: 1px solid transparent;
   border-radius: 999px;
   font-family: inherit;
-  font-size: 0.8125rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }

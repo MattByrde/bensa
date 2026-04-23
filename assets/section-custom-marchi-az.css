@@ -1,0 +1,26 @@
+.shopify-section--marchi-az{
+  position:sticky;top:48px;z-index:29;
+}
+.marchi-az{
+  background:#fff;border-bottom:1px solid var(--color-line,#e0dccf);
+}
+.marchi-az__row{
+  max-width:1280px;margin:0 auto;padding:14px 40px 14px 0;
+  display:flex;align-items:center;gap:4px;flex-wrap:wrap;
+}
+@media(max-width:749px){.marchi-az__row{padding:14px 20px}}
+
+.marchi-az__label{
+  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--color-muted,#6b6b6b);
+  margin-right:14px;flex-shrink:0;
+}
+
+.marchi-az__link{
+  min-width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:600;letter-spacing:.02em;color:#202020;
+  border-radius:6px;transition:background .15s,color .15s;
+  text-decoration:none;
+}
+.marchi-az__link:hover,
+.marchi-az__link.is-active{background:#202020;color:#fff}
+.marchi-az__link.is-off{color:#bbb;pointer-events:none}

@@ -64,11 +64,16 @@
 }
 
 .hero-reviews__description {
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.7);
   margin: 0 auto;
-  max-width: 480px;
+  max-width: 560px;
+}
+
+.hero-reviews__content .section-eyebrow {
+  color: #fff;
+  opacity: 1;
 }
 
 /* ── Buttons ── */
@@ -91,12 +96,12 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  padding: 12px 22px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-decoration: none;
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
@@ -104,7 +109,7 @@
 
 .hero-reviews__btn--primary {
   background: var(--color-accent, #1E8BA8);
-  border: 1.5px solid var(--color-accent, #1E8BA8);
+  border-color: var(--color-accent, #1E8BA8);
   color: #fff;
 }
 
@@ -115,13 +120,14 @@
 
 .hero-reviews__btn--secondary {
   background: transparent;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.6);
   color: #fff;
 }
 
 .hero-reviews__btn--secondary:hover {
-  border-color: rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.08);
+  background: #fff;
+  color: #111;
+  border-color: #fff;
 }
 
 /* ── Scroll reveal ── */
@@ -145,7 +151,7 @@
   }
 
   .hero-reviews__description {
-    font-size: 0.78rem;
+    font-size: 0.95rem;
     max-width: 62ch;
   }
 

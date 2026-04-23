@@ -1,0 +1,92 @@
+{{ 'section-custom-marchi-b2b-cta.css' | asset_url | stylesheet_tag }}
+
+<section class="marchi-b2b-cta" aria-label="{{ section.settings.aria_label | default: 'B2B partner' | escape }}">
+  <div class="marchi-b2b-cta__inner">
+    <div>
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="marchi-b2b-cta__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="typo-section-heading marchi-b2b-cta__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="marchi-b2b-cta__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.primary_cta_label != blank or section.settings.secondary_cta_label != blank -%}
+      <div class="marchi-b2b-cta__actions">
+        {%- if section.settings.primary_cta_label != blank -%}
+          <a href="{{ section.settings.primary_cta_link | default: '#' }}" class="marchi-b2b-cta__btn marchi-b2b-cta__btn--primary">
+            {{ section.settings.primary_cta_label }}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.secondary_cta_label != blank -%}
+          <a href="{{ section.settings.secondary_cta_link | default: '#' }}" class="marchi-b2b-cta__btn marchi-b2b-cta__btn--outline">
+            {{ section.settings.secondary_cta_label }}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Marchi · B2B CTA",
+  "tag": "section",
+  "class": "shopify-section--marchi-b2b-cta",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Kicker",
+      "default": "Architetti & imprese"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titolo",
+      "info": "Usa <em>...</em> per il corsivo serif.",
+      "default": "Lavorate con i marchi che amate, <em>alle nostre condizioni.</em>"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Descrizione",
+      "default": "Listini riservati, campionari disponibili, ordini coordinati e consegna in cantiere. Un unico referente per oltre cinquanta brand."
+    },
+    {
+      "type": "header",
+      "content": "Azioni"
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_label",
+      "label": "CTA principale",
+      "default": "Diventa partner"
+    },
+    {
+      "type": "url",
+      "id": "primary_cta_link",
+      "label": "Link CTA principale"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_label",
+      "label": "CTA secondaria",
+      "default": "Scarica la brochure"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_link",
+      "label": "Link CTA secondaria"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marchi · B2B CTA"
+    }
+  ]
+}
+{% endschema %}

@@ -20,10 +20,15 @@
     {%- assign media_blocks = section.blocks | where: 'type', 'media' -%}
     
     <div class="intro-section__cell intro-section__col-1 intro-section__reveal">
-      {%- if section.settings.heading != blank -%}
-        <h2 class="intro-section__heading text-uppercase">{{ section.settings.heading | newline_to_br }}</h2>
-      {%- endif -%}
-      
+      <div class="intro-section__title">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="intro-section__heading text-uppercase">{{ section.settings.heading | newline_to_br }}</h2>
+        {%- endif -%}
+      </div>
+
       {%- if media_blocks[1] != blank -%}
       <div class="intro-section__media-wrap intro-section__media-wrap--2" {{ media_blocks[1].shopify_attributes }}>
         {%- if media_blocks[1].settings.video != blank -%}
@@ -101,7 +106,12 @@
   {%- comment -%} Impact in Numbers {%- endcomment -%}
   <div class="intro-section__impact intro-section__reveal">
     <div class="intro-section__impact-header">
-      <h3 class="typo-section-heading intro-section__impact-title">{{ section.settings.impact_heading | remove: '<p>' | remove: '</p>' | replace: '&lt;', '<' | replace: '&gt;', '>' }}</h3>
+      <div class="intro-section__title">
+        {%- if section.settings.impact_eyebrow != blank -%}
+          <p class="section-eyebrow">{{ section.settings.impact_eyebrow }}</p>
+        {%- endif -%}
+        <h3 class="typo-section-heading intro-section__impact-title">{{ section.settings.impact_heading | remove: '<p>' | remove: '</p>' | replace: '&lt;', '<' | replace: '&gt;', '>' }}</h3>
+      </div>
     </div>
     <div class="intro-section__impact-grid">
       {%- for block in section.blocks -%}
@@ -118,7 +128,12 @@
   {%- comment -%} Why Serious Business / Featured Work {%- endcomment -%}
   <div class="intro-section__features intro-section__reveal">
     <div class="intro-section__features-header">
-      <h3 class="typo-section-heading intro-section__features-title">{{ section.settings.services_heading | remove: '<p>' | remove: '</p>' | replace: '&lt;', '<' | replace: '&gt;', '>' }}</h3>
+      <div class="intro-section__title">
+        {%- if section.settings.services_eyebrow != blank -%}
+          <p class="section-eyebrow">{{ section.settings.services_eyebrow }}</p>
+        {%- endif -%}
+        <h3 class="typo-section-heading intro-section__features-title">{{ section.settings.services_heading | remove: '<p>' | remove: '</p>' | replace: '&lt;', '<' | replace: '&gt;', '>' }}</h3>
+      </div>
       <div class="intro-section__features-desc-wrap">
         {%- if section.settings.services_description != blank -%}
           <div class="intro-section__features-desc typo-body">{{ section.settings.services_description }}</div>
@@ -302,6 +317,11 @@
   "class": "section",
   "settings": [
     {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Pre-titolo"
+    },
+    {
       "type": "color",
       "id": "background_color",
       "label": "Background Color",
@@ -368,6 +388,11 @@
       "default": 72
     },
     {
+      "type": "text",
+      "id": "services_eyebrow",
+      "label": "Services Pre-titolo"
+    },
+    {
       "type": "richtext",
       "id": "services_heading",
       "label": "Services Heading",
@@ -389,6 +414,11 @@
       "type": "url",
       "id": "services_button_link",
       "label": "Services Button Link"
+    },
+    {
+      "type": "text",
+      "id": "impact_eyebrow",
+      "label": "Impact Pre-titolo"
     },
     {
       "type": "richtext",

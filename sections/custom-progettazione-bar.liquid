@@ -1,5 +1,4 @@
-<link rel="stylesheet" href="{{ 'section-custom-progettazione-bar.css' | asset_url }}" media="print" onload="this.media='all'">
-<noscript>{{ 'section-custom-progettazione-bar.css' | asset_url | stylesheet_tag }}</noscript>
+{{ 'section-custom-progettazione-bar.css' | asset_url | stylesheet_tag: preload: true }}
 
 {%- style -%}
   #shopify-section-{{ section.id }} .prog-bar {
@@ -30,6 +29,10 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
             {%- when 'check' -%}
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+            {%- when 'document' -%}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6M9 9h1"/></svg>
+            {%- when 'site' -%}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/><path d="M9 11h.01M15 11h.01"/></svg>
           {%- endcase -%}
         </div>
         <div class="prog-bar__text">
@@ -75,7 +78,9 @@
             { "value": "home",    "label": "Casa" },
             { "value": "chat",    "label": "Consulenza" },
             { "value": "star",    "label": "Qualità" },
-            { "value": "check",   "label": "Garanzia" }
+            { "value": "check",   "label": "Garanzia" },
+            { "value": "document", "label": "Documento (Capitolato)" },
+            { "value": "site",    "label": "Cantiere" }
           ],
           "default": "pencil"
         },
@@ -104,39 +109,39 @@
           "settings": {
             "icon": "chat",
             "label": "Consulenza gratuita",
-            "description": "Ascoltiamo ogni tua esigenza in showroom"
-          }
-        },
-        {
-          "type": "feature",
-          "settings": {
-            "icon": "pencil",
-            "label": "Progettazione 3D",
-            "description": "Rendering realistici prima dell'installazione"
+            "description": "Primo incontro in showroom, senza impegno"
           }
         },
         {
           "type": "feature",
           "settings": {
             "icon": "ruler",
-            "label": "Rilievo preciso",
-            "description": "Misurazioni laser per la massima precisione"
+            "label": "Rilievo in loco",
+            "description": "Misurazioni laser e stazione totale"
           }
         },
         {
           "type": "feature",
           "settings": {
-            "icon": "tools",
-            "label": "Installazione chiavi in mano",
-            "description": "Tecnici specializzati, cura nei dettagli"
+            "icon": "cube",
+            "label": "Progetto 3D",
+            "description": "Render fotorealistici prima della posa"
           }
         },
         {
           "type": "feature",
           "settings": {
-            "icon": "check",
-            "label": "Assistenza post-vendita",
-            "description": "Supporto continuo anche dopo la consegna"
+            "icon": "document",
+            "label": "Capitolato unico",
+            "description": "Un documento scritto, costi chiusi"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "site",
+            "label": "Cantiere coordinato",
+            "description": "Un solo interlocutore fino alla consegna"
           }
         }
       ]

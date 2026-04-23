@@ -1,0 +1,401 @@
+{{ 'section-custom-progettazione-metodo.css' | asset_url | stylesheet_tag: preload: true }}
+
+{%- liquid
+  assign step_count = 0
+  for block in section.blocks
+    if block.type == 'step'
+      assign step_count = step_count | plus: 1
+    endif
+  endfor
+  if step_count < 1
+    assign step_count = 1
+  endif
+  assign step_width = 100.0 | divided_by: step_count
+  assign step_half = step_width | divided_by: 2
+  assign active_index = section.settings.active_step | minus: 1
+  if active_index < 0
+    assign active_index = 0
+  endif
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+  #shopify-section-{{ section.id }} .prog-metodo {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  #shopify-section-{{ section.id }} .prog-metodo__grid {
+    --cols: {{ step_count }};
+  }
+  #shopify-section-{{ section.id }} .prog-metodo__timeline {
+    --step-width: {{ step_width }}%;
+    --step-half: {{ step_half }}%;
+  }
+  @media(max-width:749px){
+    #shopify-section-{{ section.id }} .prog-metodo {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="prog-metodo"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id }}"{% endif %}>
+  <div class="prog-metodo__inner">
+    <div class="prog-metodo__header">
+      <div class="prog-metodo__header-left">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="typo-overline">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="typo-section-heading prog-metodo__heading">{{ section.settings.heading | remove: '<p>' | remove: '</p>' }}</h2>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.lead != blank -%}
+        <p class="prog-metodo__lead">{{ section.settings.lead }}</p>
+      {%- endif -%}
+      {%- if section.settings.duration_label != blank or section.settings.duration_value != blank -%}
+        <span class="prog-metodo__duration">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          {{ section.settings.duration_label }} <strong>{{ section.settings.duration_value }}</strong>
+        </span>
+      {%- endif -%}
+    </div>
+
+    <div class="prog-metodo__timeline" data-metodo-root style="--active-step: {{ active_index }};">
+      <div class="prog-metodo__rail"><div class="prog-metodo__rail-fill"></div></div>
+
+      <div class="prog-metodo__grid">
+        {%- assign step_i = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'step' -%}
+            {%- assign state = '' -%}
+            {%- if step_i == active_index -%}{%- assign state = 'is-active' -%}
+            {%- elsif step_i < active_index -%}{%- assign state = 'is-done' -%}
+            {%- endif -%}
+            {%- if step_count > 1 -%}
+              {%- assign ratio = step_i | times: 100 | divided_by: step_count | minus: 0 -%}
+              {%- assign ratio = step_i | times: 1.0 | divided_by: step_count -%}
+            {%- else -%}
+              {%- assign ratio = 1 -%}
+            {%- endif -%}
+            <article class="prog-metodo__step {{ state }}" data-step="{{ step_i }}" style="--step-progress: {{ ratio }};" {{ block.shopify_attributes }}>
+              <div class="prog-metodo__node">
+                <span class="prog-metodo__dot"></span>
+                {%- if block.settings.week != blank -%}
+                  <span class="prog-metodo__week">{{ block.settings.week }}</span>
+                {%- endif -%}
+                <span class="prog-metodo__number">
+                  {%- if block.settings.number != blank -%}{{ block.settings.number }}
+                  {%- else -%}{% if step_i < 9 %}0{% endif %}{{ step_i | plus: 1 }}
+                  {%- endif -%}
+                </span>
+              </div>
+              <div class="prog-metodo__card">
+                {%- if block.settings.video != blank or block.settings.video_url != blank or block.settings.image != blank -%}
+                  <div class="prog-metodo__media">
+                    {%- if block.settings.video != blank -%}
+                      <video
+                        class="prog-metodo__video"
+                        src="{{ block.settings.video.sources[1].url | default: block.settings.video.sources[0].url }}"
+                        {% if block.settings.image != blank %}poster="{{ block.settings.image | image_url: width: 800 }}"{% endif %}
+                        loop muted playsinline preload="metadata" autoplay
+                      ></video>
+                    {%- elsif block.settings.video_url != blank -%}
+                      <video
+                        class="prog-metodo__video"
+                        src="{{ block.settings.video_url }}"
+                        {% if block.settings.image != blank %}poster="{{ block.settings.image | image_url: width: 800 }}"{% endif %}
+                        loop muted playsinline preload="metadata" autoplay
+                      ></video>
+                    {%- elsif block.settings.image != blank -%}
+                      {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'prog-metodo__video' }}
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.title != blank -%}
+                  <h3 class="prog-metodo__step-title">{{ block.settings.title | remove: '<p>' | remove: '</p>' }}</h3>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <p class="prog-metodo__step-text">{{ block.settings.text }}</p>
+                {%- endif -%}
+                {%- if block.settings.deliver_label != blank or block.settings.deliver_chips != blank -%}
+                  <div class="prog-metodo__deliver">
+                    {%- if block.settings.deliver_label != blank -%}
+                      <span class="prog-metodo__deliver-label">{{ block.settings.deliver_label }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.deliver_chips != blank -%}
+                      <div class="prog-metodo__deliver-list">
+                        {%- assign chips = block.settings.deliver_chips | split: ',' -%}
+                        {%- for chip in chips -%}
+                          {%- assign chip_clean = chip | strip -%}
+                          {%- if chip_clean != blank -%}
+                            <span class="prog-metodo__deliver-chip"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5 9-11"/></svg>{{ chip_clean }}</span>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            </article>
+            {%- assign step_i = step_i | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- if section.settings.foot_text != blank or section.settings.foot_cta_label != blank -%}
+      <div class="prog-metodo__foot">
+        {%- if section.settings.foot_text != blank -%}
+          <p class="prog-metodo__foot-text">{{ section.settings.foot_text | remove: '<p>' | remove: '</p>' }}</p>
+        {%- endif -%}
+        {%- if section.settings.foot_cta_label != blank -%}
+          <a href="{{ section.settings.foot_cta_link | default: '#' }}" class="marchi-custom__btn marchi-custom__btn--primary prog-metodo__foot-cta">
+            {{ section.settings.foot_cta_label }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (function(){
+    var root = document.querySelector('#shopify-section-{{ section.id }} [data-metodo-root]');
+    if (!root) return;
+    var steps = root.querySelectorAll('.prog-metodo__step');
+    steps.forEach(function(step){
+      step.addEventListener('click', function(){
+        var idx = +step.getAttribute('data-step');
+        steps.forEach(function(s, i){
+          s.classList.toggle('is-active', i === idx);
+          s.classList.toggle('is-done', i < idx);
+        });
+        root.style.setProperty('--active-step', idx);
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Progettazione Metodo",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Colore sfondo",
+      "default": "#F5F0E8"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0, "max": 200, "step": 10, "unit": "px", "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0, "max": 200, "step": 10, "unit": "px", "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0, "max": 200, "step": 10, "unit": "px", "default": 70
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0, "max": 200, "step": 10, "unit": "px", "default": 70
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "ID ancora",
+      "default": "metodo"
+    },
+    {
+      "type": "header",
+      "content": "Intestazione"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Pre-titolo",
+      "default": "Il metodo"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Titolo",
+      "info": "Usa <em> per il corsivo serif.",
+      "default": "<p>Dal progetto <em>alla realtà,</em> in quattro tappe.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Descrizione",
+      "default": "Un solo interlocutore dal primo sopralluogo alla consegna. Ogni tappa ha una durata, un deliverable e un referente scritti nel capitolato."
+    },
+    {
+      "type": "text",
+      "id": "duration_label",
+      "label": "Etichetta durata",
+      "default": "Tempi medi:"
+    },
+    {
+      "type": "text",
+      "id": "duration_value",
+      "label": "Valore durata",
+      "default": "10–14 settimane"
+    },
+    {
+      "type": "header",
+      "content": "Timeline"
+    },
+    {
+      "type": "range",
+      "id": "active_step",
+      "label": "Tappa attiva iniziale",
+      "min": 1, "max": 8, "step": 1, "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Footer"
+    },
+    {
+      "type": "richtext",
+      "id": "foot_text",
+      "label": "Testo footer",
+      "default": "<p>Ogni tappa è <em>firmata</em> su capitolato prima di partire con la successiva. Nessuna sorpresa in corso d'opera.</p>"
+    },
+    {
+      "type": "text",
+      "id": "foot_cta_label",
+      "label": "Etichetta CTA",
+      "default": "Fissa il primo incontro"
+    },
+    {
+      "type": "url",
+      "id": "foot_cta_link",
+      "label": "Link CTA"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Tappa",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (Shopify)",
+          "info": "Se impostato, ha priorità sull'URL e l'immagine."
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "URL video esterno (.mp4)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Immagine / poster video",
+          "info": "Usata come fallback o poster."
+        },
+        {
+          "type": "text",
+          "id": "week",
+          "label": "Etichetta settimane",
+          "default": "Sett. 1 – 2"
+        },
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Numero tappa",
+          "info": "Se vuoto, numerazione automatica (01, 02, …)."
+        },
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Titolo tappa",
+          "default": "<p>Ascolto <em>&amp; rilievo</em></p>"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Descrizione"
+        },
+        {
+          "type": "text",
+          "id": "deliver_label",
+          "label": "Etichetta deliverable",
+          "default": "Cosa ricevete"
+        },
+        {
+          "type": "text",
+          "id": "deliver_chips",
+          "label": "Deliverable (separati da virgola)",
+          "default": "Brief firmato, Piante quotate"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Progettazione Metodo",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "week": "Sett. 1 – 2",
+            "title": "<p>Ascolto <em>&amp; rilievo</em></p>",
+            "text": "Primo incontro in showroom, sopralluogo, rilievo laser e stazione totale. Conosciamo chi abita lo spazio, le abitudini e il budget.",
+            "deliver_chips": "Brief firmato, Piante quotate"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "week": "Sett. 3 – 5",
+            "title": "<p>Progetto <em>&amp; moodboard</em></p>",
+            "text": "Due ipotesi a confronto, materiali da toccare in showroom, render fotorealistici e palette definita. Si sceglie la direzione.",
+            "deliver_chips": "Moodboard, Render 3D, Capitolato"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "week": "Sett. 6 – 10",
+            "title": "<p>Cantiere <em>&amp; posa</em></p>",
+            "text": "Coordinamento dei fornitori, direzione lavori settimanale, tracciamento delle varianti. Tecnici specializzati per la posa degli arredi.",
+            "deliver_chips": "Report settimanale, Cronoprogramma"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "week": "Sett. 11 – 14",
+            "title": "<p>Consegna <em>&amp; aftercare</em></p>",
+            "text": "Styling finale, shooting fotografico opzionale, consegna formale con manuali e garanzie. Assistenza inclusa per i 12 mesi successivi.",
+            "deliver_chips": "Book di consegna, Aftercare 12 mesi"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

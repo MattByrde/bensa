@@ -95,6 +95,11 @@
   max-width: 600px;
 }
 
+.team__eyebrow {
+  color: #111;
+  opacity: 1;
+}
+
 .team__heading em,
 .team__heading i {
   font-style: italic;
@@ -207,14 +212,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 14px 28px;
-  border-radius: 10px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-decoration: none;
-  border: 1.5px solid transparent;
+  border: 1px solid transparent;
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 

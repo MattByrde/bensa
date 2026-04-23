@@ -1,0 +1,34 @@
+.marchi-logo-wall{background:var(--color-beige,#efeae0);padding:72px 40px}
+@media(max-width:749px){.marchi-logo-wall{padding:48px 20px}}
+.marchi-logo-wall__inner{max-width:1280px;margin:0 auto}
+
+.marchi-logo-wall__head{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:28px;
+  flex-wrap:wrap;
+}
+.marchi-logo-wall__title{color:#111;margin:0}
+.marchi-logo-wall__note{font-size:.78rem;color:#555;max-width:36ch;margin:0}
+
+.marchi-logo-wall__grid{
+  display:grid;grid-template-columns:repeat(6,1fr);
+  border-top:1px solid rgba(0,0,0,.1);border-left:1px solid rgba(0,0,0,.1);
+  background:#fff;
+}
+@media(max-width:989px){.marchi-logo-wall__grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:549px){.marchi-logo-wall__grid{grid-template-columns:repeat(2,1fr)}}
+
+.marchi-logo-wall__tile{
+  aspect-ratio:3/2;
+  display:flex;align-items:center;justify-content:center;
+  border-right:1px solid rgba(0,0,0,.1);border-bottom:1px solid rgba(0,0,0,.1);
+  color:#202020;transition:background .2s,opacity .2s,filter .2s;
+  font-family:var(--font-serif,'Merriweather',Georgia,serif);font-style:italic;font-weight:700;
+  font-size:1.2rem;letter-spacing:.01em;
+  opacity:.55;filter:grayscale(1);
+  padding:10px;text-align:center;text-decoration:none;
+}
+.marchi-logo-wall__tile.is-sans{
+  font-family:var(--font-body,'Assistant',sans-serif);font-style:normal;font-weight:800;
+  letter-spacing:.14em;text-transform:uppercase;font-size:.86rem;
+}
+.marchi-logo-wall__tile:hover{background:var(--color-beige,#efeae0);opacity:1;filter:grayscale(0)}

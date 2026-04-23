@@ -27,6 +27,9 @@
 
   {%- comment -%} Hero content {%- endcomment -%}
   <div class="hero-reviews__content hero-reviews__reveal">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
     {%- if section.settings.heading != blank -%}
       <h2 class="hero-reviews__heading">{{ section.settings.heading }}</h2>
     {%- endif -%}
@@ -75,6 +78,11 @@
   "tag": "section",
   "class": "section-hero-reviews",
   "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Pre-titolo"
+    },
     {
       "type": "range",
       "id": "height",

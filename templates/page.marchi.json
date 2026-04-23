@@ -1,0 +1,512 @@
+{
+  "sections": {
+    "marchi_hero": {
+      "type": "custom-marchi-hero",
+      "blocks": {
+        "brand_card_4Vxeip": {
+          "type": "brand_card",
+          "settings": {
+            "image": "shopify://shop_images/cassina.jpg",
+            "logo": "shopify://shop_images/logo03.avif",
+            "tags": "",
+            "brand_name": "",
+            "description": "Fondata da Cesare e Umberto Cassina nel 1927 a Meda, Cassina inaugura nell'Italia degli anni '50 l'industrial design secondo una logica totalmente inedita che segna il passaggio dalla produzione artigianale a quella seriale. Con un'attitudine di ricerca e di innovazione, Cassina unisce la tecnologia a un'artigianalità di grande tradizione.",
+            "button_label": "Parla con un esperto",
+            "button_link": "shopify://pages/contact",
+            "button_label_2": "",
+            "button_link_2": ""
+          }
+        },
+        "brand_card_pQbdgi": {
+          "type": "brand_card",
+          "settings": {
+            "image": "shopify://shop_images/poliform.webp",
+            "logo": "shopify://shop_images/logo08.png",
+            "tags": "",
+            "brand_name": "",
+            "description": "Nata da un'intuizione progettuale di Poliform, Phoenix è una cucina che invita alla libertà di progettazione, uno dei modelli più amati dai progettisti, che ne apprezzano la flessibilità e le possibilità di personalizzazione del disegno e delle finiture.",
+            "button_label": "Vieni in Showroom",
+            "button_link": "shopify://pages/contact",
+            "button_label_2": "",
+            "button_link_2": ""
+          }
+        }
+      },
+      "block_order": [
+        "brand_card_4Vxeip",
+        "brand_card_pQbdgi"
+      ],
+      "settings": {
+        "height": 80
+      }
+    },
+    "custom_marchi_filters_adDU9z": {
+      "type": "custom-marchi-filters",
+      "blocks": {
+        "chip_daLAdV": {
+          "type": "chip",
+          "settings": {
+            "label": "Tutti",
+            "count": "54",
+            "is_active": true,
+            "link": ""
+          }
+        },
+        "chip_UTRc7y": {
+          "type": "chip",
+          "settings": {
+            "label": "Cucine",
+            "count": "9",
+            "is_active": false,
+            "link": ""
+          }
+        },
+        "chip_xyQKjn": {
+          "type": "chip",
+          "settings": {
+            "label": "Divani & Poltrone",
+            "count": "12",
+            "is_active": false,
+            "link": ""
+          }
+        },
+        "chip_CTVcmL": {
+          "type": "chip",
+          "settings": {
+            "label": "Tavoli & Sedie",
+            "count": "8",
+            "is_active": false,
+            "link": ""
+          }
+        },
+        "chip_ffXFaf": {
+          "type": "chip",
+          "settings": {
+            "label": "Camere",
+            "count": "",
+            "is_active": false,
+            "link": ""
+          }
+        },
+        "chip_gQYUak": {
+          "type": "chip",
+          "settings": {
+            "label": "Bagno",
+            "count": "",
+            "is_active": false,
+            "link": ""
+          }
+        },
+        "chip_g4CC7R": {
+          "type": "chip",
+          "settings": {
+            "label": "Illuminazione",
+            "count": "11",
+            "is_active": false,
+            "link": ""
+          }
+        },
+        "chip_Rg76GR": {
+          "type": "chip",
+          "settings": {
+            "label": "Outdoor",
+            "count": "",
+            "is_active": false,
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "chip_daLAdV",
+        "chip_UTRc7y",
+        "chip_xyQKjn",
+        "chip_CTVcmL",
+        "chip_ffXFaf",
+        "chip_gQYUak",
+        "chip_g4CC7R",
+        "chip_Rg76GR"
+      ],
+      "name": "Marchi · Filtri",
+      "settings": {
+        "show_search": true,
+        "search_placeholder": "Cerca un brand…",
+        "show_sort": true,
+        "sort_label": "Ordina · A → Z"
+      }
+    },
+    "custom_marchi_az": {
+      "type": "custom-marchi-az",
+      "settings": {
+        "label": "Salta a",
+        "aria_label": "Salta a lettera",
+        "anchor_prefix": "brand-",
+        "active_letters": "A,B,C,D,F,G,L,M,P,S,T,V",
+        "default_active_letter": "A"
+      }
+    },
+    "custom_marchi_spotlight": {
+      "type": "custom-marchi-spotlight",
+      "blocks": {
+        "spot_flexform": {
+          "type": "spotlight",
+          "settings": {
+            "eyebrow": "Divani & Poltrone",
+            "brand_name": "Flexform",
+            "is_sans": false,
+            "copy": "Dal 1959, il lusso misurato dei divani italiani. Collezioni firmate Antonio Citterio, disponibili in più di 200 tessuti.",
+            "meta_1": "Meda, IT",
+            "meta_2": "Partner dal 1994",
+            "cta_label": "Scopri Flexform"
+          }
+        },
+        "spot_poliform": {
+          "type": "spotlight",
+          "settings": {
+            "eyebrow": "Cucine & Armadi",
+            "brand_name": "Poliform",
+            "is_sans": true,
+            "copy": "Il design italiano come sistema abitativo. Cucine, armadi e walk-in progettati per dialogare con il resto della casa.",
+            "meta_1": "Inverigo, IT",
+            "meta_2": "Partner dal 2001",
+            "cta_label": "Scopri Poliform"
+          }
+        },
+        "spot_gubi": {
+          "type": "spotlight",
+          "settings": {
+            "eyebrow": "Illuminazione & Sedute",
+            "brand_name": "Gubi",
+            "is_sans": true,
+            "copy": "Riscoperte del '900 scandinavo e francese, in dialogo con designer contemporanei. Una collezione curata come un archivio.",
+            "meta_1": "Copenhagen, DK",
+            "meta_2": "Esclusiva Piemonte",
+            "cta_label": "Scopri Gubi"
+          }
+        }
+      },
+      "block_order": [
+        "spot_flexform",
+        "spot_poliform",
+        "spot_gubi"
+      ],
+      "settings": {
+        "title": "In <em>evidenza</em> in showroom.",
+        "subtitle": "Tre brand che raccontano il nostro modo di progettare questa stagione.",
+        "cta_label": "Nuovi arrivi",
+        "cta_link": "",
+        "max_visible": 3
+      }
+    },
+    "custom_marchi_index": {
+      "type": "custom-marchi-index",
+      "blocks": {
+        "brand_tradition":  { "type": "brand", "settings": { "name": "&Tradition", "tag_style": "default", "tag_label": "Illuminazione" } },
+        "brand_agape":      { "type": "brand", "settings": { "name": "Agape", "tag_style": "default", "tag_label": "Bagno" } },
+        "brand_alias":      { "type": "brand", "settings": { "name": "Alias", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_alki":       { "type": "brand", "settings": { "name": "Alki", "tag_style": "default", "tag_label": "Tavoli" } },
+        "brand_antonangeli": { "type": "brand", "settings": { "name": "Antonangeli", "tag_style": "default", "tag_label": "Illuminazione" } },
+        "brand_arflex":     { "type": "brand", "settings": { "name": "Arflex", "tag_style": "default", "tag_label": "Divani" } },
+        "brand_arketipo":   { "type": "brand", "settings": { "name": "Arketipo", "tag_style": "default", "tag_label": "Divani" } },
+        "brand_arper":      { "type": "brand", "settings": { "name": "Arper", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_artemide":   { "type": "brand", "settings": { "name": "Artemide", "tag_style": "default", "tag_label": "Illuminazione" } },
+        "brand_bbitalia":   { "type": "brand", "settings": { "name": "B&B Italia", "tag_style": "default", "tag_label": "Divani" } },
+        "brand_baxter":     { "type": "brand", "settings": { "name": "Baxter", "tag_style": "default", "tag_label": "Divani" } },
+        "brand_bonaldo":    { "type": "brand", "settings": { "name": "Bonaldo", "tag_style": "default", "tag_label": "Tavoli" } },
+        "brand_boffi":      { "type": "brand", "settings": { "name": "Boffi", "tag_style": "default", "tag_label": "Cucine" } },
+        "brand_bocci":      { "type": "brand", "settings": { "name": "Bocci", "tag_style": "exclusive", "tag_label": "Esclusiva" } },
+        "brand_busnelli":   { "type": "brand", "settings": { "name": "Busnelli", "tag_style": "default", "tag_label": "Divani" } },
+        "brand_carlhansen": { "type": "brand", "settings": { "name": "Carl Hansen & Søn", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_cassina":    { "type": "brand", "settings": { "name": "Cassina", "tag_style": "default", "tag_label": "Divani" } },
+        "brand_cappellini": { "type": "brand", "settings": { "name": "Cappellini", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_cesar":      { "type": "brand", "settings": { "name": "Cesar", "tag_style": "default", "tag_label": "Cucine" } },
+        "brand_cc_tapis":   { "type": "brand", "settings": { "name": "CC-Tapis", "tag_style": "default", "tag_label": "Tappeti" } },
+        "brand_dada":       { "type": "brand", "settings": { "name": "Dada", "tag_style": "default", "tag_label": "Cucine" } },
+        "brand_davide_groppi": { "type": "brand", "settings": { "name": "Davide Groppi", "tag_style": "default", "tag_label": "Illuminazione" } },
+        "brand_depadova":   { "type": "brand", "settings": { "name": "De Padova", "tag_style": "default", "tag_label": "Tavoli" } },
+        "brand_desalto":    { "type": "brand", "settings": { "name": "Desalto", "tag_style": "default", "tag_label": "Tavoli" } },
+        "brand_driade":     { "type": "brand", "settings": { "name": "Driade", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_edra":       { "type": "brand", "settings": { "name": "Edra", "tag_style": "new", "tag_label": "Novità" } },
+        "brand_emmemobili": { "type": "brand", "settings": { "name": "Emmemobili", "tag_style": "default", "tag_label": "Armadi" } },
+        "brand_ethimo":     { "type": "brand", "settings": { "name": "Ethimo", "tag_style": "default", "tag_label": "Outdoor" } },
+        "brand_extremis":   { "type": "brand", "settings": { "name": "Extremis", "tag_style": "default", "tag_label": "Outdoor" } },
+        "brand_fantin":     { "type": "brand", "settings": { "name": "Fantin", "tag_style": "default", "tag_label": "Armadi" } },
+        "brand_fermob":     { "type": "brand", "settings": { "name": "Fermob", "tag_style": "default", "tag_label": "Outdoor" } },
+        "brand_flexform":   { "type": "brand", "settings": { "name": "Flexform", "tag_style": "default", "tag_label": "Divani" } },
+        "brand_flos":       { "type": "brand", "settings": { "name": "Flos", "tag_style": "default", "tag_label": "Illuminazione" } },
+        "brand_foscarini":  { "type": "brand", "settings": { "name": "Foscarini", "tag_style": "default", "tag_label": "Illuminazione" } },
+        "brand_fritzhansen": { "type": "brand", "settings": { "name": "Fritz Hansen", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_gallotti":   { "type": "brand", "settings": { "name": "Gallotti&Radice", "tag_style": "default", "tag_label": "Tavoli" } },
+        "brand_gandia":     { "type": "brand", "settings": { "name": "Gandia Blasco", "tag_style": "default", "tag_label": "Outdoor" } },
+        "brand_gervasoni":  { "type": "brand", "settings": { "name": "Gervasoni", "tag_style": "default", "tag_label": "Divani" } },
+        "brand_glas":       { "type": "brand", "settings": { "name": "Glas Italia", "tag_style": "default", "tag_label": "Tavoli" } },
+        "brand_gubi":       { "type": "brand", "settings": { "name": "Gubi", "tag_style": "exclusive", "tag_label": "Esclusiva" } },
+        "brand_hay":        { "type": "brand", "settings": { "name": "Hay", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_horm":       { "type": "brand", "settings": { "name": "Horm", "tag_style": "default", "tag_label": "Armadi" } },
+        "brand_kartell":    { "type": "brand", "settings": { "name": "Kartell", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_kettal":     { "type": "brand", "settings": { "name": "Kettal", "tag_style": "default", "tag_label": "Outdoor" } },
+        "brand_knoll":      { "type": "brand", "settings": { "name": "Knoll", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_lago":       { "type": "brand", "settings": { "name": "Lago", "tag_style": "default", "tag_label": "Armadi" } },
+        "brand_lapalma":    { "type": "brand", "settings": { "name": "Lapalma", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_lema":       { "type": "brand", "settings": { "name": "Lema", "tag_style": "default", "tag_label": "Armadi" } },
+        "brand_livdivani":  { "type": "brand", "settings": { "name": "Living Divani", "tag_style": "default", "tag_label": "Divani" } },
+        "brand_louis_poulsen": { "type": "brand", "settings": { "name": "Louis Poulsen", "tag_style": "default", "tag_label": "Illuminazione" } },
+        "brand_magis":      { "type": "brand", "settings": { "name": "Magis", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_maxalto":    { "type": "brand", "settings": { "name": "Maxalto", "tag_style": "default", "tag_label": "Divani" } },
+        "brand_meridiani":  { "type": "brand", "settings": { "name": "Meridiani", "tag_style": "default", "tag_label": "Divani" } },
+        "brand_minotti":    { "type": "brand", "settings": { "name": "Minotti", "tag_style": "default", "tag_label": "Divani" } },
+        "brand_miniforms":  { "type": "brand", "settings": { "name": "Miniforms", "tag_style": "default", "tag_label": "Tavoli" } },
+        "brand_modulnova":  { "type": "brand", "settings": { "name": "Modulnova", "tag_style": "default", "tag_label": "Cucine" } },
+        "brand_molteni":    { "type": "brand", "settings": { "name": "Molteni&C", "tag_style": "default", "tag_label": "Armadi" } },
+        "brand_moooi":      { "type": "brand", "settings": { "name": "Moooi", "tag_style": "default", "tag_label": "Illuminazione" } },
+        "brand_moroso":     { "type": "brand", "settings": { "name": "Moroso", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_muuto":      { "type": "brand", "settings": { "name": "Muuto", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_nemo":       { "type": "brand", "settings": { "name": "Nemo Lighting", "tag_style": "default", "tag_label": "Illuminazione" } },
+        "brand_oluce":      { "type": "brand", "settings": { "name": "Oluce", "tag_style": "default", "tag_label": "Illuminazione" } },
+        "brand_paola_lenti": { "type": "brand", "settings": { "name": "Paola Lenti", "tag_style": "new", "tag_label": "Novità" } },
+        "brand_pedrali":    { "type": "brand", "settings": { "name": "Pedrali", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_poliform":   { "type": "brand", "settings": { "name": "Poliform", "tag_style": "default", "tag_label": "Cucine" } },
+        "brand_poltronaf":  { "type": "brand", "settings": { "name": "Poltrona Frau", "tag_style": "default", "tag_label": "Divani" } },
+        "brand_porro":      { "type": "brand", "settings": { "name": "Porro", "tag_style": "new", "tag_label": "Novità" } },
+        "brand_roda":       { "type": "brand", "settings": { "name": "Roda", "tag_style": "default", "tag_label": "Outdoor" } },
+        "brand_rimadesio":  { "type": "brand", "settings": { "name": "Rimadesio", "tag_style": "default", "tag_label": "Armadi" } },
+        "brand_saba":       { "type": "brand", "settings": { "name": "Saba Italia", "tag_style": "default", "tag_label": "Divani" } },
+        "brand_sancal":     { "type": "brand", "settings": { "name": "Sancal", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_santacole":  { "type": "brand", "settings": { "name": "Santa&Cole", "tag_style": "default", "tag_label": "Illuminazione" } },
+        "brand_tacchini":   { "type": "brand", "settings": { "name": "Tacchini", "tag_style": "default", "tag_label": "Divani" } },
+        "brand_tribu":      { "type": "brand", "settings": { "name": "Tribù", "tag_style": "default", "tag_label": "Outdoor" } },
+        "brand_tonelli":    { "type": "brand", "settings": { "name": "Tonelli Design", "tag_style": "default", "tag_label": "Tavoli" } },
+        "brand_usm":        { "type": "brand", "settings": { "name": "USM", "tag_style": "default", "tag_label": "Armadi" } },
+        "brand_varaschin":  { "type": "brand", "settings": { "name": "Varaschin", "tag_style": "default", "tag_label": "Outdoor" } },
+        "brand_vibia":      { "type": "brand", "settings": { "name": "Vibia", "tag_style": "default", "tag_label": "Illuminazione" } },
+        "brand_vitra":      { "type": "brand", "settings": { "name": "Vitra", "tag_style": "default", "tag_label": "Sedute" } },
+        "brand_zanotta":    { "type": "brand", "settings": { "name": "Zanotta", "tag_style": "default", "tag_label": "Divani" } }
+      },
+      "block_order": [
+        "brand_tradition",
+        "brand_agape",
+        "brand_alias",
+        "brand_alki",
+        "brand_antonangeli",
+        "brand_arflex",
+        "brand_arketipo",
+        "brand_arper",
+        "brand_artemide",
+        "brand_bbitalia",
+        "brand_baxter",
+        "brand_bonaldo",
+        "brand_boffi",
+        "brand_bocci",
+        "brand_busnelli",
+        "brand_carlhansen",
+        "brand_cassina",
+        "brand_cappellini",
+        "brand_cesar",
+        "brand_cc_tapis",
+        "brand_dada",
+        "brand_davide_groppi",
+        "brand_depadova",
+        "brand_desalto",
+        "brand_driade",
+        "brand_edra",
+        "brand_emmemobili",
+        "brand_ethimo",
+        "brand_extremis",
+        "brand_fantin",
+        "brand_fermob",
+        "brand_flexform",
+        "brand_flos",
+        "brand_foscarini",
+        "brand_fritzhansen",
+        "brand_gallotti",
+        "brand_gandia",
+        "brand_gervasoni",
+        "brand_glas",
+        "brand_gubi",
+        "brand_hay",
+        "brand_horm",
+        "brand_kartell",
+        "brand_kettal",
+        "brand_knoll",
+        "brand_lago",
+        "brand_lapalma",
+        "brand_lema",
+        "brand_livdivani",
+        "brand_louis_poulsen",
+        "brand_magis",
+        "brand_maxalto",
+        "brand_meridiani",
+        "brand_minotti",
+        "brand_miniforms",
+        "brand_modulnova",
+        "brand_molteni",
+        "brand_moooi",
+        "brand_moroso",
+        "brand_muuto",
+        "brand_nemo",
+        "brand_oluce",
+        "brand_paola_lenti",
+        "brand_pedrali",
+        "brand_poliform",
+        "brand_poltronaf",
+        "brand_porro",
+        "brand_roda",
+        "brand_rimadesio",
+        "brand_saba",
+        "brand_sancal",
+        "brand_santacole",
+        "brand_tacchini",
+        "brand_tribu",
+        "brand_tonelli",
+        "brand_usm",
+        "brand_varaschin",
+        "brand_vibia",
+        "brand_vitra",
+        "brand_zanotta"
+      ],
+      "settings": {
+        "anchor_prefix": "brand-",
+        "aria_label": "Indice marchi",
+        "count_suffix_single": "brand",
+        "count_suffix_plural": "brand"
+      }
+    },
+    "custom_marchi_logo_wall": {
+      "type": "custom-marchi-logo-wall",
+      "blocks": {
+        "logo_flexform":   { "type": "logo", "settings": { "label": "Flexform", "is_sans": false } },
+        "logo_poliform":   { "type": "logo", "settings": { "label": "Poliform", "is_sans": true } },
+        "logo_gubi":       { "type": "logo", "settings": { "label": "Gubi", "is_sans": true } },
+        "logo_cassina":    { "type": "logo", "settings": { "label": "Cassina", "is_sans": false } },
+        "logo_minotti":    { "type": "logo", "settings": { "label": "Minotti", "is_sans": true } },
+        "logo_bbitalia":   { "type": "logo", "settings": { "label": "B&B Italia", "is_sans": true } },
+        "logo_baxter":     { "type": "logo", "settings": { "label": "Baxter", "is_sans": false } },
+        "logo_vitra":      { "type": "logo", "settings": { "label": "Vitra", "is_sans": true } },
+        "logo_artemide":   { "type": "logo", "settings": { "label": "Artemide", "is_sans": true } },
+        "logo_flos":       { "type": "logo", "settings": { "label": "Flos", "is_sans": false } },
+        "logo_moooi":      { "type": "logo", "settings": { "label": "Moooi", "is_sans": true } },
+        "logo_tradition":  { "type": "logo", "settings": { "label": "&Tradition", "is_sans": false } },
+        "logo_bocci":      { "type": "logo", "settings": { "label": "Bocci", "is_sans": true } },
+        "logo_poltronaf":  { "type": "logo", "settings": { "label": "Poltrona Frau", "is_sans": false } },
+        "logo_molteni":    { "type": "logo", "settings": { "label": "Molteni&C", "is_sans": false } },
+        "logo_porro":      { "type": "logo", "settings": { "label": "Porro", "is_sans": true } },
+        "logo_lema":       { "type": "logo", "settings": { "label": "Lema", "is_sans": false } },
+        "logo_boffi":      { "type": "logo", "settings": { "label": "Boffi", "is_sans": true } },
+        "logo_cesar":      { "type": "logo", "settings": { "label": "Cesar", "is_sans": false } },
+        "logo_arflex":     { "type": "logo", "settings": { "label": "Arflex", "is_sans": true } },
+        "logo_saba":       { "type": "logo", "settings": { "label": "Saba", "is_sans": true } },
+        "logo_tacchini":   { "type": "logo", "settings": { "label": "Tacchini", "is_sans": false } },
+        "logo_depadova":   { "type": "logo", "settings": { "label": "De Padova", "is_sans": false } },
+        "logo_driade":     { "type": "logo", "settings": { "label": "Driade", "is_sans": true } },
+        "logo_gervasoni":  { "type": "logo", "settings": { "label": "Gervasoni", "is_sans": false } },
+        "logo_livdivani":  { "type": "logo", "settings": { "label": "Living Divani", "is_sans": true } },
+        "logo_maxalto":    { "type": "logo", "settings": { "label": "Maxalto", "is_sans": false } },
+        "logo_fritzhansen":{ "type": "logo", "settings": { "label": "Fritz Hansen", "is_sans": true } },
+        "logo_santacole":  { "type": "logo", "settings": { "label": "Santa&Cole", "is_sans": false } },
+        "logo_vibia":      { "type": "logo", "settings": { "label": "Vibia", "is_sans": true } }
+      },
+      "block_order": [
+        "logo_flexform","logo_poliform","logo_gubi","logo_cassina","logo_minotti",
+        "logo_bbitalia","logo_baxter","logo_vitra","logo_artemide","logo_flos",
+        "logo_moooi","logo_tradition","logo_bocci","logo_poltronaf","logo_molteni",
+        "logo_porro","logo_lema","logo_boffi","logo_cesar","logo_arflex",
+        "logo_saba","logo_tacchini","logo_depadova","logo_driade","logo_gervasoni",
+        "logo_livdivani","logo_maxalto","logo_fritzhansen","logo_santacole","logo_vibia"
+      ],
+      "settings": {
+        "title": "Tutti i marchi <em>in una sguardo.</em>",
+        "note": "Qui sotto, l'elenco visivo completo. Ogni logo rimanda alla scheda del brand con le collezioni disponibili in showroom.",
+        "aria_label": "Tutti i marchi"
+      }
+    },
+    "custom_marchi_process": {
+      "type": "custom-marchi-process",
+      "blocks": {
+        "crit_01": {
+          "type": "criterion",
+          "settings": {
+            "number": "01 — Materia",
+            "title": "Qualità dei materiali, prima di tutto.",
+            "text": "Legni certificati, imbottiture in piuma e lattice, tessuti tracciabili. Tocchiamo, smontiamo, chiediamo le schede tecniche. Quello che non resiste a dieci anni di vita vera non entra."
+          }
+        },
+        "crit_02": {
+          "type": "criterion",
+          "settings": {
+            "number": "02 — Progetto",
+            "title": "Coerenza tra forma, funzione e autore.",
+            "text": "Cerchiamo brand con una direzione chiara, che lavorano con designer riconosciuti e non inseguono la moda. La sedia deve avere senso oggi e fra vent'anni."
+          }
+        },
+        "crit_03": {
+          "type": "criterion",
+          "settings": {
+            "number": "03 — Artigianato",
+            "title": "Produzione italiana o europea, tracciabile.",
+            "text": "Visitiamo i laboratori. Conosciamo chi assembla, chi cuce, chi rifinisce. Il 78% dei nostri marchi produce a meno di mille chilometri da Cuneo."
+          }
+        },
+        "crit_04": {
+          "type": "criterion",
+          "settings": {
+            "number": "04 — Servizio",
+            "title": "Post-vendita serio, ricambi reali.",
+            "text": "Un divano si compra una volta, si vive ogni giorno. Pretendiamo rivestimenti sostituibili, ricambi a listino per almeno dieci anni, assistenza diretta senza call-center."
+          }
+        }
+      },
+      "block_order": ["crit_01", "crit_02", "crit_03", "crit_04"],
+      "settings": {
+        "kicker": "Il nostro metodo di curatela",
+        "title": "Come scegliamo <em>i marchi</em> che trovate qui.",
+        "lead": "<p>Non siamo rivenditori. Siamo uno studio di progettazione che, per lavorare bene, deve potersi fidare di chi produce. <strong>Ogni brand a catalogo attraversa quattro filtri</strong> — e quando uno non li supera più, esce dal listino senza clamore.</p>",
+        "foot_text": "<p><em>Quattro brand</em> sono usciti dal nostro catalogo negli ultimi due anni. Altri sette stanno per entrare.</p>",
+        "foot_cta_label": "Vedi tutti i brand",
+        "foot_cta_link": "#brand-A"
+      }
+    },
+    "custom_marchi_b2b_cta": {
+      "type": "custom-marchi-b2b-cta",
+      "settings": {
+        "eyebrow": "Architetti & imprese",
+        "heading": "Lavorate con i marchi che amate, <em>alle nostre condizioni.</em>",
+        "text": "Listini riservati, campionari disponibili, ordini coordinati e consegna in cantiere. Un unico referente per oltre cinquanta brand.",
+        "primary_cta_label": "Diventa partner",
+        "primary_cta_link": "shopify://pages/contact",
+        "secondary_cta_label": "Scarica la brochure",
+        "secondary_cta_link": ""
+      }
+    },
+    "custom_marchi_custom": {
+      "type": "custom-marchi-custom",
+      "blocks": {
+        "bullet_1": { "type": "bullet", "settings": { "text": "Progetto dedicato con disegni tecnici e render" } },
+        "bullet_2": { "type": "bullet", "settings": { "text": "Campionatura materiali in showroom a Cuneo" } },
+        "bullet_3": { "type": "bullet", "settings": { "text": "Produzione in Italia, 8–14 settimane" } }
+      },
+      "block_order": ["bullet_1", "bullet_2", "bullet_3"],
+      "settings": {
+        "image": "",
+        "image_alt": "",
+        "badge_label": "Laboratorio · Piemonte",
+        "kicker": "Non trovi il tuo brand?",
+        "heading": "Quando un marchio non basta, <em>disegniamo noi</em> il pezzo.",
+        "text": "Collaboriamo con falegnami, tappezzieri e marmisti piemontesi per realizzare arredi su misura: un tavolo a cinque metri che entra in un vano di quattro e ottanta, una libreria che segue la pendenza del tetto, un divano modulare per una stanza che non esiste ancora.",
+        "primary_cta_label": "Parliamo del tuo progetto",
+        "primary_cta_link": "shopify://pages/contact",
+        "secondary_cta_label": "Vedi realizzazioni su misura",
+        "secondary_cta_link": ""
+      }
+    }
+  },
+  "order": [
+    "marchi_hero",
+    "custom_marchi_filters_adDU9z",
+    "custom_marchi_az",
+    "custom_marchi_spotlight",
+    "custom_marchi_index",
+    "custom_marchi_logo_wall",
+    "custom_marchi_process",
+    "custom_marchi_b2b_cta",
+    "custom_marchi_custom"
+  ]
+}

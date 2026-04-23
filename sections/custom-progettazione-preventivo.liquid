@@ -1,0 +1,455 @@
+{{ 'section-custom-progettazione-preventivo.css' | asset_url | stylesheet_tag: preload: true }}
+
+{%- style -%}
+  {%- if section.settings.bg_color != blank -%}
+  #shopify-section-{{ section.id }} .prog-preventivo{background:{{ section.settings.bg_color }};}
+  {%- endif -%}
+{%- endstyle -%}
+
+{%- liquid
+  assign anchor = section.settings.anchor_id | default: 'preventivo'
+-%}
+
+<section class="prog-preventivo" id="{{ anchor }}" data-screen-label="{{ section.settings.screen_label | default: '13 Preventivo' }}" data-tf>
+  <div class="tf__progress"><div class="tf__progress-fill"></div></div>
+
+  <div class="prog-preventivo__shell">
+    <div class="tf__meta">
+      <span class="tf__eyebrow">{{ section.settings.eyebrow | default: 'Richiedi preventivo' }}</span>
+      <span class="tf__counter"><strong data-tf-current>01</strong>&thinsp;/&thinsp;<span data-tf-total>08</span></span>
+    </div>
+
+    <div class="tf__stage">
+
+      {%- comment -%} 1 · Project type (visual choices) {%- endcomment -%}
+      <div class="tf__slide is-active" data-tf-slide data-tf-required="tipo">
+        <span class="tf__num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+          1 · {{ section.settings.s1_eyebrow | default: 'Il progetto' }}
+        </span>
+        <h3 class="tf__q">{{ section.settings.s1_question | default: 'Di che tipo di intervento <em>parliamo?</em>' }}<span class="tf__q-sub">{{ section.settings.s1_sub | default: 'Scegline uno — se ne parliamo meglio, ci penseremo insieme.' }}</span></h3>
+        <div class="tf__choices tf__choices--visual" data-tf-choices="tipo">
+          <button type="button" class="tf__choice tf__choice--visual" data-tf-value="{{ section.settings.s1_a_value | default: 'Casa intera' }}">
+            <span class="tf__choice-media"><span class="tf__choice-key">A</span>{%- if section.settings.s1_a_image != blank -%}{{ section.settings.s1_a_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600' }}{%- else -%}<span class="ph"><span class="ph__label">{{ section.settings.s1_a_label | default: 'Casa intera' }}</span></span>{%- endif -%}</span>
+            <span class="tf__choice-body"><span class="tf__choice-text"><span class="tf__choice-label">{{ section.settings.s1_a_label | default: 'Casa intera' }}</span><span class="tf__choice-meta">{{ section.settings.s1_a_meta | default: '6–14 mesi' }}</span></span></span>
+          </button>
+          <button type="button" class="tf__choice tf__choice--visual" data-tf-value="{{ section.settings.s1_b_value | default: 'Ambiente singolo' }}">
+            <span class="tf__choice-media"><span class="tf__choice-key">B</span>{%- if section.settings.s1_b_image != blank -%}{{ section.settings.s1_b_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600' }}{%- else -%}<span class="ph"><span class="ph__label">{{ section.settings.s1_b_label | default: 'Un ambiente' }}</span></span>{%- endif -%}</span>
+            <span class="tf__choice-body"><span class="tf__choice-text"><span class="tf__choice-label">{{ section.settings.s1_b_label | default: 'Un ambiente' }}</span><span class="tf__choice-meta">{{ section.settings.s1_b_meta | default: 'Cucina, living, camera' }}</span></span></span>
+          </button>
+          <button type="button" class="tf__choice tf__choice--visual" data-tf-value="{{ section.settings.s1_c_value | default: 'Ristrutturazione' }}">
+            <span class="tf__choice-media"><span class="tf__choice-key">C</span>{%- if section.settings.s1_c_image != blank -%}{{ section.settings.s1_c_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600' }}{%- else -%}<span class="ph"><span class="ph__label">{{ section.settings.s1_c_label | default: 'Chiavi in mano' }}</span></span>{%- endif -%}</span>
+            <span class="tf__choice-body"><span class="tf__choice-text"><span class="tf__choice-label">{{ section.settings.s1_c_label | default: 'Chiavi in mano' }}</span><span class="tf__choice-meta">{{ section.settings.s1_c_meta | default: 'Progetto + cantiere' }}</span></span></span>
+          </button>
+          <button type="button" class="tf__choice tf__choice--visual" data-tf-value="{{ section.settings.s1_d_value | default: 'B2B / Contract' }}">
+            <span class="tf__choice-media"><span class="tf__choice-key">D</span>{%- if section.settings.s1_d_image != blank -%}{{ section.settings.s1_d_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600' }}{%- else -%}<span class="ph"><span class="ph__label">{{ section.settings.s1_d_label | default: 'B2B / Contract' }}</span></span>{%- endif -%}</span>
+            <span class="tf__choice-body"><span class="tf__choice-text"><span class="tf__choice-label">{{ section.settings.s1_d_label | default: 'B2B / Contract' }}</span><span class="tf__choice-meta">{{ section.settings.s1_d_meta | default: 'Uffici, hotel, retail' }}</span></span></span>
+          </button>
+        </div>
+      </div>
+
+      {%- comment -%} 2 · Surface {%- endcomment -%}
+      <div class="tf__slide" data-tf-slide data-tf-required="mq">
+        <span class="tf__num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+          2 · {{ section.settings.s2_eyebrow | default: 'Dimensioni' }}
+        </span>
+        <h3 class="tf__q">{{ section.settings.s2_question | default: 'Quanti metri <em>quadri</em> più o meno?' }}<span class="tf__q-sub">{{ section.settings.s2_sub | default: 'Una stima basta — ci aiuta a capire la scala.' }}</span></h3>
+        <div class="tf__field">
+          <input class="tf__input" type="text" inputmode="numeric" placeholder="{{ section.settings.s2_placeholder | default: '120 m²' }}" data-tf-input="mq">
+          <span class="tf__hint">{{ section.settings.s2_hint | default: 'Se non lo sapete, scrivete "da rilevare".' }}</span>
+        </div>
+        <div class="tf__actions">
+          <button type="button" class="tf__submit" data-tf-next>OK <kbd>↵</kbd></button>
+        </div>
+      </div>
+
+      {%- comment -%} 3 · Budget {%- endcomment -%}
+      <div class="tf__slide" data-tf-slide data-tf-required="budget">
+        <span class="tf__num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+          3 · {{ section.settings.s3_eyebrow | default: 'Budget' }}
+        </span>
+        <h3 class="tf__q">{{ section.settings.s3_question | default: 'Di che budget stiamo <em>parlando?</em>' }}<span class="tf__q-sub">{{ section.settings.s3_sub | default: 'Una forchetta basta. Non giudichiamo, ci aiuta a proporvi la cosa giusta.' }}</span></h3>
+        <div class="tf__choices" data-tf-choices="budget">
+          <button type="button" class="tf__choice" data-tf-value="{{ section.settings.s3_a_value | default: 'Fino a 15k' }}"><span class="tf__choice-key">A</span><span class="tf__choice-label">{{ section.settings.s3_a_label | default: 'Fino a € 15.000' }}</span><span class="tf__choice-meta">{{ section.settings.s3_a_meta | default: 'Un ambiente' }}</span></button>
+          <button type="button" class="tf__choice" data-tf-value="{{ section.settings.s3_b_value | default: '15-50k' }}"><span class="tf__choice-key">B</span><span class="tf__choice-label">{{ section.settings.s3_b_label | default: '€ 15.000 – 50.000' }}</span><span class="tf__choice-meta">{{ section.settings.s3_b_meta | default: 'Più ambienti, arredi' }}</span></button>
+          <button type="button" class="tf__choice" data-tf-value="{{ section.settings.s3_c_value | default: '50-150k' }}"><span class="tf__choice-key">C</span><span class="tf__choice-label">{{ section.settings.s3_c_label | default: '€ 50.000 – 150.000' }}</span><span class="tf__choice-meta">{{ section.settings.s3_c_meta | default: 'Casa completa' }}</span></button>
+          <button type="button" class="tf__choice" data-tf-value="{{ section.settings.s3_d_value | default: 'Oltre 150k' }}"><span class="tf__choice-key">D</span><span class="tf__choice-label">{{ section.settings.s3_d_label | default: 'Oltre € 150.000' }}</span><span class="tf__choice-meta">{{ section.settings.s3_d_meta | default: 'Chiavi in mano, contract' }}</span></button>
+          <button type="button" class="tf__choice" data-tf-value="{{ section.settings.s3_e_value | default: 'Da definire' }}"><span class="tf__choice-key">E</span><span class="tf__choice-label">{{ section.settings.s3_e_label | default: 'Preferisco definirlo insieme' }}</span></button>
+        </div>
+      </div>
+
+      {%- comment -%} 4 · Timeline {%- endcomment -%}
+      <div class="tf__slide" data-tf-slide data-tf-required="quando">
+        <span class="tf__num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+          4 · {{ section.settings.s4_eyebrow | default: 'Tempi' }}
+        </span>
+        <h3 class="tf__q">{{ section.settings.s4_question | default: 'Quando vorreste <em>cominciare?</em>' }}</h3>
+        <div class="tf__choices" data-tf-choices="quando">
+          <button type="button" class="tf__choice" data-tf-value="{{ section.settings.s4_a_value | default: 'Subito' }}"><span class="tf__choice-key">A</span><span class="tf__choice-label">{{ section.settings.s4_a_label | default: 'Il prima possibile' }}</span></button>
+          <button type="button" class="tf__choice" data-tf-value="{{ section.settings.s4_b_value | default: 'Entro 3 mesi' }}"><span class="tf__choice-key">B</span><span class="tf__choice-label">{{ section.settings.s4_b_label | default: 'Entro 3 mesi' }}</span></button>
+          <button type="button" class="tf__choice" data-tf-value="{{ section.settings.s4_c_value | default: 'Entro 6 mesi' }}"><span class="tf__choice-key">C</span><span class="tf__choice-label">{{ section.settings.s4_c_label | default: 'Entro 6 mesi' }}</span></button>
+          <button type="button" class="tf__choice" data-tf-value="{{ section.settings.s4_d_value | default: 'Sto solo informandomi' }}"><span class="tf__choice-key">D</span><span class="tf__choice-label">{{ section.settings.s4_d_label | default: 'Sto solo informandomi' }}</span></button>
+        </div>
+      </div>
+
+      {%- comment -%} 5 · Story (textarea) {%- endcomment -%}
+      <div class="tf__slide" data-tf-slide>
+        <span class="tf__num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+          5 · {{ section.settings.s5_eyebrow | default: 'Raccontateci' }}
+        </span>
+        <h3 class="tf__q">{{ section.settings.s5_question | default: 'Cosa vi <em>piacerebbe?</em>' }}<span class="tf__q-sub">{{ section.settings.s5_sub | default: "Due righe bastano — una stanza, un'atmosfera, un riferimento. (Opzionale.)" }}</span></h3>
+        <div class="tf__field">
+          <textarea class="tf__input tf__textarea" placeholder="{{ section.settings.s5_placeholder | default: 'Una cucina aperta sul living, molto legno, vista sul giardino…' }}" data-tf-input="note"></textarea>
+          <span class="tf__hint"><strong>Shift+Invio</strong> per andare a capo, <strong>Invio</strong> per continuare</span>
+        </div>
+        <div class="tf__actions">
+          <button type="button" class="tf__submit" data-tf-next>OK <kbd>↵</kbd></button>
+        </div>
+      </div>
+
+      {%- comment -%} 6 · Name {%- endcomment -%}
+      <div class="tf__slide" data-tf-slide data-tf-required="nome">
+        <span class="tf__num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+          6 · {{ section.settings.s6_eyebrow | default: 'Presentazioni' }}
+        </span>
+        <h3 class="tf__q">{{ section.settings.s6_question | default: 'Come possiamo <em>chiamarvi?</em>' }}<span class="tf__q-sub">{{ section.settings.s6_sub | default: 'Nome e cognome — così non iniziamo con un "gentile cliente".' }}</span></h3>
+        <div class="tf__field">
+          <input class="tf__input" type="text" placeholder="{{ section.settings.s6_placeholder | default: 'Mario Rossi' }}" data-tf-input="nome" autocomplete="name">
+          <span class="tf__hint">Premi <strong>Invio ↵</strong> per continuare</span>
+        </div>
+        <div class="tf__actions">
+          <button type="button" class="tf__submit" data-tf-next>OK <kbd>↵</kbd></button>
+        </div>
+      </div>
+
+      {%- comment -%} 7 · Email {%- endcomment -%}
+      <div class="tf__slide" data-tf-slide data-tf-required="email" data-tf-type="email">
+        <span class="tf__num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+          7 · {{ section.settings.s7_eyebrow | default: 'Contatti' }}
+        </span>
+        <h3 class="tf__q">{{ section.settings.s7_q_prefix | default: 'Piacere' }} <span data-tf-echo="nome">.</span> {{ section.settings.s7_q_suffix | default: 'A che email vi <em>scriviamo?</em>' }}</h3>
+        <div class="tf__field">
+          <input class="tf__input" type="email" placeholder="{{ section.settings.s7_placeholder | default: 'mario@example.it' }}" data-tf-input="email" autocomplete="email">
+          <span class="tf__hint">{{ section.settings.s7_hint | default: "Usiamo l'email solo per rispondervi. Niente newsletter." }}</span>
+        </div>
+        <div class="tf__actions">
+          <button type="button" class="tf__submit" data-tf-next>OK <kbd>↵</kbd></button>
+        </div>
+      </div>
+
+      {%- comment -%} 8 · Phone (optional) — final step {%- endcomment -%}
+      <div class="tf__slide" data-tf-slide data-tf-last>
+        <span class="tf__num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+          8 · {{ section.settings.s8_eyebrow | default: 'Ultima cosa' }}
+        </span>
+        <h3 class="tf__q">{{ section.settings.s8_question | default: 'Un <em>numero</em> per richiamarvi?' }}<span class="tf__q-sub">{{ section.settings.s8_sub | default: 'Opzionale — ma spesso basta una telefonata di 10 minuti per capirsi.' }}</span></h3>
+        <div class="tf__field">
+          <input class="tf__input" type="tel" placeholder="{{ section.settings.s8_placeholder | default: '+39 …' }}" data-tf-input="tel" autocomplete="tel">
+          <span class="tf__hint">Saltate pure con <strong>Invio</strong>.</span>
+        </div>
+        <div class="tf__actions">
+          <button type="button" class="tf__submit" data-tf-submit>{{ section.settings.submit_label | default: 'Invia la richiesta' }} <kbd>↵</kbd></button>
+        </div>
+      </div>
+
+      {%- comment -%} DONE {%- endcomment -%}
+      <div class="tf__slide" data-tf-slide data-tf-done>
+        <div class="tf__done">
+          <span class="tf__done-mark"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <h3>{{ section.settings.done_heading | default: 'Grazie <span data-tf-echo="nome">.</span><br>Vi <em>richiamiamo entro 48 ore.</em>' }}</h3>
+          <p>{{ section.settings.done_text | default: 'Riceverete una mail di conferma a <strong data-tf-echo="email">—</strong>. Nel frattempo, se passate da Cuneo, lo showroom è aperto dal martedì al sabato.' }}</p>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="tf__privacy">{{ section.settings.privacy_text | default: 'Inviando il modulo accettate la <a href="/policies/privacy-policy">privacy policy</a>. I dati restano in studio, non li condividiamo con terzi.' }}</p>
+
+    <div class="tf__nav">
+      <button type="button" data-tf-back aria-label="Domanda precedente" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+      </button>
+      <button type="button" data-tf-forward aria-label="Domanda successiva">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  {%- comment -%} Hidden Shopify contact form {%- endcomment -%}
+  <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+    {%- form 'contact', id: 'prog-preventivo-form' -%}
+      <input type="hidden" name="contact[form_source]" value="{{ section.settings.form_source | default: 'Preventivo Progettazione' }}">
+      <input type="text" name="contact[name]" data-tf-hidden="nome">
+      <input type="email" name="contact[email]" data-tf-hidden="email">
+      <input type="tel" name="contact[phone]" data-tf-hidden="tel">
+      <input type="text" name="contact[tipo]" data-tf-hidden="tipo">
+      <input type="text" name="contact[mq]" data-tf-hidden="mq">
+      <input type="text" name="contact[budget]" data-tf-hidden="budget">
+      <input type="text" name="contact[quando]" data-tf-hidden="quando">
+      <textarea name="contact[body]" data-tf-hidden="note"></textarea>
+      <button type="submit" data-tf-submit-button tabindex="-1">Submit</button>
+    {%- endform -%}
+  </div>
+</section>
+
+<script>
+(() => {
+  const root = document.querySelector('#shopify-section-{{ section.id }} .prog-preventivo');
+  if (!root) return;
+  const scope = document.getElementById('shopify-section-{{ section.id }}');
+  const slides = [...root.querySelectorAll('[data-tf-slide]')];
+  const total = slides.filter(s => !s.hasAttribute('data-tf-done')).length;
+  const totalEl = root.querySelector('[data-tf-total]');
+  const currentEl = root.querySelector('[data-tf-current]');
+  const backBtn = root.querySelector('[data-tf-back]');
+  const fwdBtn = root.querySelector('[data-tf-forward]');
+  const submitBtn = scope.querySelector('[data-tf-submit-button]');
+
+  if (totalEl) totalEl.textContent = String(total).padStart(2,'0');
+  root.style.setProperty('--tf-total', total);
+
+  const state = {};
+  let idx = 0;
+
+  {% if form.posted_successfully? %}
+    const doneIdx = slides.findIndex(s => s.hasAttribute('data-tf-done'));
+    if (doneIdx >= 0) idx = doneIdx;
+  {% endif %}
+
+  const setIdx = (n) => {
+    idx = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, i) => {
+      s.classList.toggle('is-active', i === idx);
+      s.classList.toggle('is-past', i < idx);
+    });
+    const isDone = slides[idx].hasAttribute('data-tf-done');
+    const effective = isDone ? total : idx;
+    root.style.setProperty('--tf-step', effective);
+    if (currentEl) currentEl.textContent = isDone
+      ? String(total).padStart(2,'0')
+      : String(idx + 1).padStart(2,'0');
+    if (backBtn) backBtn.disabled = idx === 0 || isDone;
+    if (fwdBtn) fwdBtn.disabled = isDone;
+
+    root.querySelectorAll('[data-tf-echo]').forEach(el => {
+      const k = el.getAttribute('data-tf-echo');
+      if (state[k]) el.textContent = k === 'nome' ? state[k].split(' ')[0] : state[k];
+    });
+
+    const input = slides[idx].querySelector('[data-tf-input]');
+    if (input) setTimeout(() => input.focus(), 350);
+  };
+
+  const showError = (slide, msg) => {
+    const h = slide.querySelector('.tf__hint');
+    if (h) {
+      h.dataset.original = h.dataset.original || h.innerHTML;
+      h.textContent = msg; h.classList.add('is-error');
+      setTimeout(() => {
+        h.classList.remove('is-error');
+        if (h.dataset.original) h.innerHTML = h.dataset.original;
+      }, 2400);
+    }
+    return false;
+  };
+
+  const validate = (slide) => {
+    const required = slide.getAttribute('data-tf-required');
+    const type = slide.getAttribute('data-tf-type');
+    if (!required) return true;
+    const val = state[required];
+    if (!val || !String(val).trim()) return showError(slide, 'Campo necessario per continuare');
+    if (type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+      return showError(slide, 'Controlla la mail, sembra non valida');
+    }
+    return true;
+  };
+
+  const syncHiddenFields = () => {
+    scope.querySelectorAll('[data-tf-hidden]').forEach(el => {
+      const k = el.getAttribute('data-tf-hidden');
+      if (state[k] != null) el.value = state[k];
+    });
+  };
+
+  const submitForm = () => {
+    syncHiddenFields();
+    if (submitBtn) submitBtn.click();
+  };
+
+  const next = () => {
+    const s = slides[idx];
+    if (!validate(s)) return;
+    if (s.hasAttribute('data-tf-last')) { submitForm(); return; }
+    if (idx < slides.length - 1) setIdx(idx + 1);
+  };
+  const prev = () => { if (idx > 0) setIdx(idx - 1); };
+
+  root.querySelectorAll('[data-tf-input]').forEach(inp => {
+    inp.addEventListener('input', e => {
+      state[inp.getAttribute('data-tf-input')] = e.target.value;
+    });
+  });
+
+  root.querySelectorAll('[data-tf-choices]').forEach(group => {
+    const key = group.getAttribute('data-tf-choices');
+    group.querySelectorAll('.tf__choice').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        group.querySelectorAll('.tf__choice').forEach(b => b.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        state[key] = btn.getAttribute('data-tf-value');
+        setTimeout(next, 280);
+      });
+    });
+  });
+
+  root.querySelectorAll('[data-tf-next]').forEach(b => b.addEventListener('click', next));
+  root.querySelectorAll('[data-tf-submit]').forEach(b => b.addEventListener('click', next));
+  if (backBtn) backBtn.addEventListener('click', prev);
+  if (fwdBtn) fwdBtn.addEventListener('click', next);
+
+  root.addEventListener('keydown', (e) => {
+    const active = slides[idx];
+    if (active.hasAttribute('data-tf-done')) return;
+
+    const choices = active.querySelector('[data-tf-choices]');
+    if (choices && /^[a-z]$/i.test(e.key) && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+      const letter = e.key.toUpperCase();
+      const btns = choices.querySelectorAll('.tf__choice');
+      const match = [...btns].find(b => {
+        const k = b.querySelector('.tf__choice-key');
+        return k && k.textContent === letter;
+      });
+      if (match) { e.preventDefault(); match.click(); return; }
+    }
+
+    if (e.key === 'Enter') {
+      if (e.target.tagName === 'TEXTAREA' && e.shiftKey) return;
+      e.preventDefault(); next();
+    }
+    if (e.key === 'Tab' && e.shiftKey) { e.preventDefault(); prev(); }
+  });
+
+  setIdx(idx);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Prog. Preventivo",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "header", "content": "Generale" },
+    { "type": "color", "id": "bg_color", "label": "Colore sfondo", "default": "#1E8BA8" },
+    { "type": "text", "id": "anchor_id", "label": "ID ancora", "default": "preventivo" },
+    { "type": "text", "id": "screen_label", "label": "Etichetta sezione (screen)", "default": "13 Preventivo" },
+    { "type": "text", "id": "eyebrow", "label": "Pre-titolo", "default": "Richiedi preventivo" },
+    { "type": "text", "id": "form_source", "label": "Sorgente form (hidden)", "default": "Preventivo Progettazione" },
+
+    { "type": "header", "content": "Step 1 — Tipo intervento" },
+    { "type": "text", "id": "s1_eyebrow", "label": "Etichetta step", "default": "Il progetto" },
+    { "type": "text", "id": "s1_question", "label": "Domanda (usa <em> per l'italico)", "default": "Di che tipo di intervento <em>parliamo?</em>" },
+    { "type": "text", "id": "s1_sub", "label": "Sottotitolo", "default": "Scegline uno — se ne parliamo meglio, ci penseremo insieme." },
+    { "type": "header", "content": "Step 1 — Opzione A" },
+    { "type": "text", "id": "s1_a_label", "label": "Titolo", "default": "Casa intera" },
+    { "type": "text", "id": "s1_a_meta", "label": "Sottotitolo", "default": "6–14 mesi" },
+    { "type": "text", "id": "s1_a_value", "label": "Valore inviato", "default": "Casa intera" },
+    { "type": "image_picker", "id": "s1_a_image", "label": "Immagine" },
+    { "type": "header", "content": "Step 1 — Opzione B" },
+    { "type": "text", "id": "s1_b_label", "label": "Titolo", "default": "Un ambiente" },
+    { "type": "text", "id": "s1_b_meta", "label": "Sottotitolo", "default": "Cucina, living, camera" },
+    { "type": "text", "id": "s1_b_value", "label": "Valore inviato", "default": "Ambiente singolo" },
+    { "type": "image_picker", "id": "s1_b_image", "label": "Immagine" },
+    { "type": "header", "content": "Step 1 — Opzione C" },
+    { "type": "text", "id": "s1_c_label", "label": "Titolo", "default": "Chiavi in mano" },
+    { "type": "text", "id": "s1_c_meta", "label": "Sottotitolo", "default": "Progetto + cantiere" },
+    { "type": "text", "id": "s1_c_value", "label": "Valore inviato", "default": "Ristrutturazione" },
+    { "type": "image_picker", "id": "s1_c_image", "label": "Immagine" },
+    { "type": "header", "content": "Step 1 — Opzione D" },
+    { "type": "text", "id": "s1_d_label", "label": "Titolo", "default": "B2B / Contract" },
+    { "type": "text", "id": "s1_d_meta", "label": "Sottotitolo", "default": "Uffici, hotel, retail" },
+    { "type": "text", "id": "s1_d_value", "label": "Valore inviato", "default": "B2B / Contract" },
+    { "type": "image_picker", "id": "s1_d_image", "label": "Immagine" },
+
+    { "type": "header", "content": "Step 2 — Dimensioni" },
+    { "type": "text", "id": "s2_eyebrow", "label": "Etichetta step", "default": "Dimensioni" },
+    { "type": "text", "id": "s2_question", "label": "Domanda", "default": "Quanti metri <em>quadri</em> più o meno?" },
+    { "type": "text", "id": "s2_sub", "label": "Sottotitolo", "default": "Una stima basta — ci aiuta a capire la scala." },
+    { "type": "text", "id": "s2_placeholder", "label": "Placeholder", "default": "120 m²" },
+    { "type": "text", "id": "s2_hint", "label": "Hint", "default": "Se non lo sapete, scrivete \"da rilevare\"." },
+
+    { "type": "header", "content": "Step 3 — Budget" },
+    { "type": "text", "id": "s3_eyebrow", "label": "Etichetta step", "default": "Budget" },
+    { "type": "text", "id": "s3_question", "label": "Domanda", "default": "Di che budget stiamo <em>parlando?</em>" },
+    { "type": "text", "id": "s3_sub", "label": "Sottotitolo", "default": "Una forchetta basta. Non giudichiamo, ci aiuta a proporvi la cosa giusta." },
+    { "type": "text", "id": "s3_a_label", "label": "A — Etichetta", "default": "Fino a € 15.000" },
+    { "type": "text", "id": "s3_a_meta", "label": "A — Meta", "default": "Un ambiente" },
+    { "type": "text", "id": "s3_a_value", "label": "A — Valore", "default": "Fino a 15k" },
+    { "type": "text", "id": "s3_b_label", "label": "B — Etichetta", "default": "€ 15.000 – 50.000" },
+    { "type": "text", "id": "s3_b_meta", "label": "B — Meta", "default": "Più ambienti, arredi" },
+    { "type": "text", "id": "s3_b_value", "label": "B — Valore", "default": "15-50k" },
+    { "type": "text", "id": "s3_c_label", "label": "C — Etichetta", "default": "€ 50.000 – 150.000" },
+    { "type": "text", "id": "s3_c_meta", "label": "C — Meta", "default": "Casa completa" },
+    { "type": "text", "id": "s3_c_value", "label": "C — Valore", "default": "50-150k" },
+    { "type": "text", "id": "s3_d_label", "label": "D — Etichetta", "default": "Oltre € 150.000" },
+    { "type": "text", "id": "s3_d_meta", "label": "D — Meta", "default": "Chiavi in mano, contract" },
+    { "type": "text", "id": "s3_d_value", "label": "D — Valore", "default": "Oltre 150k" },
+    { "type": "text", "id": "s3_e_label", "label": "E — Etichetta", "default": "Preferisco definirlo insieme" },
+    { "type": "text", "id": "s3_e_value", "label": "E — Valore", "default": "Da definire" },
+
+    { "type": "header", "content": "Step 4 — Tempi" },
+    { "type": "text", "id": "s4_eyebrow", "label": "Etichetta step", "default": "Tempi" },
+    { "type": "text", "id": "s4_question", "label": "Domanda", "default": "Quando vorreste <em>cominciare?</em>" },
+    { "type": "text", "id": "s4_a_label", "label": "A", "default": "Il prima possibile" },
+    { "type": "text", "id": "s4_a_value", "label": "A — Valore", "default": "Subito" },
+    { "type": "text", "id": "s4_b_label", "label": "B", "default": "Entro 3 mesi" },
+    { "type": "text", "id": "s4_b_value", "label": "B — Valore", "default": "Entro 3 mesi" },
+    { "type": "text", "id": "s4_c_label", "label": "C", "default": "Entro 6 mesi" },
+    { "type": "text", "id": "s4_c_value", "label": "C — Valore", "default": "Entro 6 mesi" },
+    { "type": "text", "id": "s4_d_label", "label": "D", "default": "Sto solo informandomi" },
+    { "type": "text", "id": "s4_d_value", "label": "D — Valore", "default": "Sto solo informandomi" },
+
+    { "type": "header", "content": "Step 5 — Raccontateci" },
+    { "type": "text", "id": "s5_eyebrow", "label": "Etichetta step", "default": "Raccontateci" },
+    { "type": "text", "id": "s5_question", "label": "Domanda", "default": "Cosa vi <em>piacerebbe?</em>" },
+    { "type": "text", "id": "s5_sub", "label": "Sottotitolo", "default": "Due righe bastano — una stanza, un'atmosfera, un riferimento. (Opzionale.)" },
+    { "type": "text", "id": "s5_placeholder", "label": "Placeholder", "default": "Una cucina aperta sul living, molto legno, vista sul giardino…" },
+
+    { "type": "header", "content": "Step 6 — Nome" },
+    { "type": "text", "id": "s6_eyebrow", "label": "Etichetta step", "default": "Presentazioni" },
+    { "type": "text", "id": "s6_question", "label": "Domanda", "default": "Come possiamo <em>chiamarvi?</em>" },
+    { "type": "text", "id": "s6_sub", "label": "Sottotitolo", "default": "Nome e cognome — così non iniziamo con un \"gentile cliente\"." },
+    { "type": "text", "id": "s6_placeholder", "label": "Placeholder", "default": "Mario Rossi" },
+
+    { "type": "header", "content": "Step 7 — Email" },
+    { "type": "text", "id": "s7_eyebrow", "label": "Etichetta step", "default": "Contatti" },
+    { "type": "text", "id": "s7_q_prefix", "label": "Testo prima del nome", "default": "Piacere" },
+    { "type": "text", "id": "s7_q_suffix", "label": "Testo dopo il nome", "default": "A che email vi <em>scriviamo?</em>" },
+    { "type": "text", "id": "s7_placeholder", "label": "Placeholder", "default": "mario@example.it" },
+    { "type": "text", "id": "s7_hint", "label": "Hint", "default": "Usiamo l'email solo per rispondervi. Niente newsletter." },
+
+    { "type": "header", "content": "Step 8 — Telefono & invio" },
+    { "type": "text", "id": "s8_eyebrow", "label": "Etichetta step", "default": "Ultima cosa" },
+    { "type": "text", "id": "s8_question", "label": "Domanda", "default": "Un <em>numero</em> per richiamarvi?" },
+    { "type": "text", "id": "s8_sub", "label": "Sottotitolo", "default": "Opzionale — ma spesso basta una telefonata di 10 minuti per capirsi." },
+    { "type": "text", "id": "s8_placeholder", "label": "Placeholder", "default": "+39 …" },
+    { "type": "text", "id": "submit_label", "label": "Testo bottone invio", "default": "Invia la richiesta" },
+
+    { "type": "header", "content": "Conferma & Privacy" },
+    { "type": "html", "id": "done_heading", "label": "Titolo conferma", "default": "Grazie <span data-tf-echo=\"nome\">.</span><br>Vi <em>richiamiamo entro 48 ore.</em>" },
+    { "type": "html", "id": "done_text", "label": "Testo conferma", "default": "Riceverete una mail di conferma a <strong data-tf-echo=\"email\">—</strong>. Nel frattempo, se passate da Cuneo, lo showroom è aperto dal martedì al sabato." },
+    { "type": "html", "id": "privacy_text", "label": "Testo privacy", "default": "Inviando il modulo accettate la <a href=\"/policies/privacy-policy\">privacy policy</a>. I dati restano in studio, non li condividiamo con terzi." }
+  ],
+  "presets": [
+    { "name": "Prog. Preventivo" }
+  ]
+}
+{% endschema %}

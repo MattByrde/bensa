@@ -1,0 +1,79 @@
+{{ 'section-custom-marchi-az.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Active letters are declared in section.settings.active_letters (comma-separated).
+  Default anchor prefix is "brand-" to match the Indice section anchors (id="brand-A" etc).
+{%- endcomment -%}
+
+{%- assign active_raw = section.settings.active_letters | default: '' | upcase -%}
+{%- assign active_list = active_raw | replace: ' ', '' | split: ',' -%}
+{%- assign anchor_prefix = section.settings.anchor_prefix | default: 'brand-' -%}
+{%- assign alphabet = 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z' | split: ',' -%}
+{%- assign current_active = section.settings.default_active_letter | default: '' | upcase -%}
+
+<nav class="marchi-az" aria-label="{{ section.settings.aria_label | default: 'Salta a lettera' | escape }}">
+  <div class="marchi-az__row">
+    {%- if section.settings.label != blank -%}
+      <span class="marchi-az__label">{{ section.settings.label }}</span>
+    {%- endif -%}
+
+    {%- for letter in alphabet -%}
+      {%- assign is_active_letter = false -%}
+      {%- if active_list contains letter -%}{%- assign is_active_letter = true -%}{%- endif -%}
+
+      {%- if is_active_letter -%}
+        <a class="marchi-az__link{% if current_active == letter %} is-active{% endif %}" href="#{{ anchor_prefix }}{{ letter }}">{{ letter }}</a>
+      {%- else -%}
+        <a class="marchi-az__link is-off" aria-disabled="true">{{ letter }}</a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</nav>
+
+{% schema %}
+{
+  "name": "Marchi · A–Z",
+  "tag": "section",
+  "class": "shopify-section--marchi-az",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Etichetta",
+      "default": "Salta a"
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "Etichetta ARIA",
+      "default": "Salta a lettera"
+    },
+    {
+      "type": "text",
+      "id": "anchor_prefix",
+      "label": "Prefisso anchor",
+      "info": "Per far corrispondere agli ID della sezione Indice. Default: brand- (es. brand-A).",
+      "default": "brand-"
+    },
+    {
+      "type": "text",
+      "id": "active_letters",
+      "label": "Lettere attive",
+      "info": "Elenco delle lettere con almeno un marchio, separate da virgola. Le altre risultano disabilitate.",
+      "default": "A,B,C,D,F,G,L,M,P,S,T,V"
+    },
+    {
+      "type": "text",
+      "id": "default_active_letter",
+      "label": "Lettera attiva iniziale",
+      "info": "Una sola lettera evidenziata all'apertura della pagina. Lascia vuoto per nessuna.",
+      "default": "A"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marchi · A–Z"
+    }
+  ]
+}
+{% endschema %}

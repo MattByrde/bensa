@@ -1,0 +1,174 @@
+{{ 'section-custom-marchi-spotlight.css' | asset_url | stylesheet_tag }}
+
+{%- assign limit = section.settings.max_visible | default: 3 -%}
+
+<section class="marchi-spotlight" aria-label="{{ section.settings.aria_label | default: 'Brand in evidenza' | escape }}">
+  <div class="marchi-spotlight__inner">
+
+    {%- if section.settings.title != blank or section.settings.subtitle != blank or section.settings.cta_label != blank -%}
+      <div class="marchi-spotlight__head">
+        <div>
+          {%- if section.settings.title != blank -%}
+            <h2 class="typo-section-heading marchi-spotlight__title">{{ section.settings.title }}</h2>
+          {%- endif -%}
+          {%- if section.settings.subtitle != blank -%}
+            <p class="marchi-spotlight__sub">{{ section.settings.subtitle }}</p>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.cta_label != blank -%}
+          <a href="{{ section.settings.cta_link | default: '#' }}" class="marchi-spotlight__cta">{{ section.settings.cta_label }}</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="marchi-spotlight__grid">
+      {%- for block in section.blocks limit: limit -%}
+        {%- if block.type == 'spotlight' -%}
+          {%- assign card_tag = 'div' -%}
+          {%- if block.settings.cta_link != blank -%}{%- assign card_tag = 'a' -%}{%- endif -%}
+
+          <{{ card_tag }} class="marchi-spotlight-card"
+            {% if card_tag == 'a' %}href="{{ block.settings.cta_link }}"{% endif %}
+            {{ block.shopify_attributes }}>
+
+            <div class="marchi-spotlight-card__media">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 900 | image_tag:
+                  loading: 'lazy',
+                  sizes: '(min-width:990px) 33vw, 100vw',
+                  widths: '400, 600, 900, 1200',
+                  alt: block.settings.brand_name }}
+              {%- else -%}
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+
+            {%- if block.settings.eyebrow != blank -%}
+              <span class="marchi-spotlight-card__eyebrow">{{ block.settings.eyebrow }}</span>
+            {%- endif -%}
+
+            <div class="marchi-spotlight-card__body">
+              {%- if block.settings.brand_name != blank -%}
+                <span class="marchi-spotlight-card__brand{% if block.settings.is_sans %} is-sans{% endif %}">{{ block.settings.brand_name }}</span>
+              {%- endif -%}
+              {%- if block.settings.meta_1 != blank or block.settings.meta_2 != blank -%}
+                <div class="marchi-spotlight-card__meta">
+                  {%- if block.settings.meta_1 != blank -%}<span>{{ block.settings.meta_1 }}</span>{%- endif -%}
+                  {%- if block.settings.meta_2 != blank -%}<span>{{ block.settings.meta_2 }}</span>{%- endif -%}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.cta_label != blank -%}
+                <span class="marchi-spotlight-card__cta">{{ block.settings.cta_label }}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </span>
+              {%- endif -%}
+            </div>
+
+          </{{ card_tag }}>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Marchi · Spotlight",
+  "tag": "section",
+  "class": "shopify-section--marchi-spotlight",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titolo",
+      "info": "Usa <em>...</em> per il corsivo serif.",
+      "default": "In <em>evidenza</em> in showroom."
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sottotitolo",
+      "default": "Tre brand che raccontano il nostro modo di progettare questa stagione."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Etichetta pulsante",
+      "default": "Nuovi arrivi"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Link pulsante"
+    },
+    {
+      "type": "range",
+      "id": "max_visible",
+      "label": "Card visibili",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    }
+  ],
+  "blocks": [
+    {
+      "type": "spotlight",
+      "name": "Brand in evidenza",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Immagine" },
+        { "type": "text", "id": "eyebrow", "label": "Categoria", "default": "Categoria" },
+        { "type": "text", "id": "brand_name", "label": "Nome brand", "default": "Brand" },
+        { "type": "checkbox", "id": "is_sans", "label": "Stile sans-serif maiuscolo", "default": false },
+        { "type": "text", "id": "meta_1", "label": "Meta 1 (es. città)" },
+        { "type": "text", "id": "meta_2", "label": "Meta 2 (es. partner dal)" },
+        { "type": "text", "id": "cta_label", "label": "Etichetta CTA", "default": "Scopri il brand" },
+        { "type": "url", "id": "cta_link", "label": "Link brand" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marchi · Spotlight",
+      "blocks": [
+        {
+          "type": "spotlight",
+          "settings": {
+            "eyebrow": "Divani & Poltrone",
+            "brand_name": "Flexform",
+            "meta_1": "Meda, IT",
+            "meta_2": "Partner dal 1994",
+            "cta_label": "Scopri Flexform"
+          }
+        },
+        {
+          "type": "spotlight",
+          "settings": {
+            "eyebrow": "Cucine & Armadi",
+            "brand_name": "Poliform",
+            "is_sans": true,
+            "meta_1": "Inverigo, IT",
+            "meta_2": "Partner dal 2001",
+            "cta_label": "Scopri Poliform"
+          }
+        },
+        {
+          "type": "spotlight",
+          "settings": {
+            "eyebrow": "Illuminazione & Sedute",
+            "brand_name": "Gubi",
+            "is_sans": true,
+            "meta_1": "Copenhagen, DK",
+            "meta_2": "Esclusiva Piemonte",
+            "cta_label": "Scopri Gubi"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -19,6 +19,9 @@
 <div class="b2b-header">
   <div class="b2b-header__top">
     <div class="b2b-header__heading-wrap">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
       {%- if section.settings.heading != blank -%}
         <h2 class="b2b-header__heading">{{ section.settings.heading }}</h2>
       {%- endif -%}
@@ -116,6 +119,11 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Pre-titolo"
+    },
     {
       "type": "color",
       "id": "background_color",

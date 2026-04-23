@@ -6,6 +6,12 @@
     assign has_hero = true
   elsif template == 'page.chi-siamo'
     assign has_hero = true
+  elsif template == 'page.marchi'
+    assign has_hero = true
+  elsif template == 'page.progettazione'
+    assign has_hero = true
+  elsif template == 'page.ristrutturazioni'
+    assign has_hero = true
   endif
 -%}
 
@@ -323,7 +329,7 @@
   <div class="mobile-nav__footer">
     {%- if section.settings.cta_label != blank -%}
       <a href="{{ section.settings.cta_link | default: '#' }}" class="site-header__cta site-header__cta--mobile">
-        {{ section.settings.cta_label | upcase }}
+        {{ section.settings.cta_label }}
       </a>
     {%- endif -%}
   </div>

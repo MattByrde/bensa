@@ -1,0 +1,123 @@
+{{ 'section-custom-marchi-filters.css' | asset_url | stylesheet_tag }}
+
+<section class="marchi-filters" aria-label="Filtri marchi">
+  <div class="marchi-filters__row">
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="marchi-filters__group" role="tablist" aria-label="Categorie">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'chip' -%}
+            {%- assign chip_tag = 'button' -%}
+            {%- if block.settings.link != blank -%}{%- assign chip_tag = 'a' -%}{%- endif -%}
+            <{{ chip_tag }}
+              class="marchi-filters__chip{% if block.settings.is_active %} is-on{% endif %}"
+              {% if chip_tag == 'a' %}href="{{ block.settings.link }}"{% else %}type="button"{% endif %}
+              {{ block.shopify_attributes }}>
+              {{ block.settings.label }}
+              {%- if block.settings.count != blank -%}
+                <span class="dot">{{ block.settings.count }}</span>
+              {%- endif -%}
+            </{{ chip_tag }}>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_search -%}
+      <div class="marchi-filters__search" role="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" placeholder="{{ section.settings.search_placeholder | escape }}" aria-label="{{ section.settings.search_placeholder | escape }}">
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_sort -%}
+      <button type="button" class="marchi-filters__sort">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+        {{ section.settings.sort_label }}
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 4l3 3 3-3"/></svg>
+      </button>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Marchi · Filtri",
+  "tag": "section",
+  "class": "shopify-section--marchi-filters",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Mostra campo di ricerca",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Placeholder ricerca",
+      "default": "Cerca un brand…"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort",
+      "label": "Mostra pulsante ordinamento",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sort_label",
+      "label": "Etichetta ordinamento",
+      "default": "Ordina · A → Z"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "chip",
+      "name": "Categoria",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Etichetta",
+          "default": "Categoria"
+        },
+        {
+          "type": "text",
+          "id": "count",
+          "label": "Contatore (opzionale)",
+          "info": "Numero di marchi in questa categoria. Lascia vuoto per nasconderlo."
+        },
+        {
+          "type": "checkbox",
+          "id": "is_active",
+          "label": "Attivo di default",
+          "default": false
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (opzionale)",
+          "info": "Se vuoto, la chip è un pulsante statico."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marchi · Filtri",
+      "blocks": [
+        { "type": "chip", "settings": { "label": "Tutti", "count": "54", "is_active": true } },
+        { "type": "chip", "settings": { "label": "Cucine", "count": "9" } },
+        { "type": "chip", "settings": { "label": "Divani & Poltrone", "count": "12" } },
+        { "type": "chip", "settings": { "label": "Tavoli & Sedie", "count": "8" } },
+        { "type": "chip", "settings": { "label": "Camere" } },
+        { "type": "chip", "settings": { "label": "Bagno" } },
+        { "type": "chip", "settings": { "label": "Illuminazione", "count": "11" } },
+        { "type": "chip", "settings": { "label": "Outdoor" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

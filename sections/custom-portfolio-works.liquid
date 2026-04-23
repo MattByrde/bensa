@@ -21,9 +21,14 @@
 
 <div class="portfolio-works" style="color: var(--text-color);">
   <div class="portfolio-works__header">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="portfolio-works__heading">{{ section.settings.heading }}</h2>
-    {%- endif -%}
+    <div class="portfolio-works__title">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="portfolio-works__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
     <div class="portfolio-works__nav">
       <button class="portfolio-works__arrow portfolio-works__arrow--prev" data-pw-prev aria-label="Previous" disabled>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -238,6 +243,11 @@
   "tag": "section",
   "class": "section-portfolio-works",
   "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Pre-titolo"
+    },
     {
       "type": "text",
       "id": "heading",

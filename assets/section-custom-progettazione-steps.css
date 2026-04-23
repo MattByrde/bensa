@@ -24,6 +24,11 @@
   margin: 0;
 }
 
+.prog-steps__title .section-eyebrow {
+  color: #fff;
+  opacity: 1;
+}
+
 /* ── Grid ── */
 .prog-steps__grid {
   display: grid;

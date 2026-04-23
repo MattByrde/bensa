@@ -31,6 +31,7 @@
         "slide_1"
       ],
       "settings": {
+        "eyebrow": "Bensa Arredamenti",
         "height": 100
       }
     },
@@ -167,6 +168,7 @@
         "logo_14"
       ],
       "settings": {
+        "eyebrow": "I nostri marchi",
         "heading": "",
         "background_color": "#ffffff",
         "speed": 40,
@@ -225,6 +227,7 @@
         "card_4"
       ],
       "settings": {
+        "eyebrow": "Cosa facciamo",
         "background_color": "#ffffff",
         "subtitle": "COSA FACCIAMO",
         "heading": "I nostri servizi",
@@ -299,6 +302,7 @@
         "img_5"
       ],
       "settings": {
+        "eyebrow": "Non solo arredamento",
         "background_color": "#ffffff",
         "heading": "Da <em>Bensa Arredamenti </em>offriamo servizi per privati e professionisti assicurando che il risultato finale superi le vostre aspettative.",
         "description": "Vi aiutiamo a creare spazi unici e funzionali che rispecchiano la vostra personalità, combinando estetica e comfort con la massima cura per ogni dettaglio.",
@@ -451,6 +455,7 @@
       ],
       "name": "Intro",
       "settings": {
+        "eyebrow": "Ispirazione",
         "background_color": "#f5f0e8",
         "heading": "Ispirazione per ogni ambiente.",
         "header_button_label": "Learn more",
@@ -476,9 +481,9 @@
       "type": "custom-hero-reviews",
       "name": "Hero Reviews",
       "settings": {
+        "eyebrow": "Il nostro studio",
         "height": 65,
         "image": "shopify://shop_images/equipo2_6139e7e6-005f-4acb-b952-6e1c6efa9280.webp",
-        "subtitle": "Cosa dicono i nostri clienti",
         "heading": "Spazi che raccontano chi sei",
         "description": "Ogni progetto nasce dall'ascolto, dalla cura dei dettagli e dalla passione per il design italiano.",
         "button_label": "Prenota un appuntamento",
@@ -570,6 +575,7 @@
       ],
       "name": "Community",
       "settings": {
+        "eyebrow": "Community",
         "background_color": "#1e8ba8",
         "heading": "<p>I consigli dei nostri Esperti</p>",
         "cta_label": "Parla con noi",
@@ -600,6 +606,7 @@
       ],
       "name": "B2B Header",
       "settings": {
+        "eyebrow": "Per professionisti",
         "background_color": "#ffffff",
         "text_color": "#111111",
         "heading": "Sei un Architetto, Geometra o Professionista del Settore?",
@@ -640,6 +647,7 @@
       ],
       "name": "Services List",
       "settings": {
+        "eyebrow": "I nostri servizi",
         "background_color": "#ffffff",
         "text_color": "#111111",
         "main_heading": "<p>Supporto completo —<br/>Per i tuoi <em>Clienti.</em></p>",
@@ -718,6 +726,7 @@
       ],
       "name": "Values Grid",
       "settings": {
+        "eyebrow": "I nostri valori",
         "bg_color": "#ffffff",
         "heading": "<p>I <em>Valori</em> che ci guidano</p>",
         "padding_top": 0,
@@ -787,6 +796,7 @@
         "work_2"
       ],
       "settings": {
+        "eyebrow": "Portfolio",
         "heading": "Le nostre Realizzazioni",
         "background_color": "#f5f3ec",
         "text_color": "#111111",
@@ -846,6 +856,7 @@
         "card_sustainability"
       ],
       "settings": {
+        "eyebrow": "Scopri di più",
         "padding_top": 0,
         "padding_bottom": 0
       }

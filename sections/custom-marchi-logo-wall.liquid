@@ -1,0 +1,111 @@
+{{ 'section-custom-marchi-logo-wall.css' | asset_url | stylesheet_tag }}
+
+<section class="marchi-logo-wall" aria-label="{{ section.settings.aria_label | default: 'Tutti i marchi' | escape }}">
+  <div class="marchi-logo-wall__inner">
+
+    {%- if section.settings.title != blank or section.settings.note != blank -%}
+      <div class="marchi-logo-wall__head">
+        {%- if section.settings.title != blank -%}
+          <h2 class="typo-section-heading marchi-logo-wall__title">{{ section.settings.title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.note != blank -%}
+          <p class="marchi-logo-wall__note">{{ section.settings.note }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="marchi-logo-wall__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'logo' -%}
+          {%- assign tile_tag = 'div' -%}
+          {%- if block.settings.url != blank -%}{%- assign tile_tag = 'a' -%}{%- endif -%}
+
+          <{{ tile_tag }} class="marchi-logo-wall__tile{% if block.settings.is_sans %} is-sans{% endif %}"
+            {% if tile_tag == 'a' %}href="{{ block.settings.url }}"{% endif %}
+            {{ block.shopify_attributes }}>
+            {{ block.settings.label }}
+          </{{ tile_tag }}>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Marchi · Logo wall",
+  "tag": "section",
+  "class": "shopify-section--marchi-logo-wall",
+  "max_blocks": 60,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titolo",
+      "info": "Usa <em>...</em> per il corsivo serif.",
+      "default": "Tutti i marchi <em>in una sguardo.</em>"
+    },
+    {
+      "type": "textarea",
+      "id": "note",
+      "label": "Nota",
+      "default": "Qui sotto, l'elenco visivo completo. Ogni logo rimanda alla scheda del brand con le collezioni disponibili in showroom."
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "Etichetta ARIA",
+      "default": "Tutti i marchi"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Brand",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Nome brand", "default": "Brand" },
+        { "type": "checkbox", "id": "is_sans", "label": "Stile sans-serif maiuscolo", "default": false },
+        { "type": "url", "id": "url", "label": "Link pagina brand" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marchi · Logo wall",
+      "blocks": [
+        { "type": "logo", "settings": { "label": "Flexform" } },
+        { "type": "logo", "settings": { "label": "Poliform", "is_sans": true } },
+        { "type": "logo", "settings": { "label": "Gubi", "is_sans": true } },
+        { "type": "logo", "settings": { "label": "Cassina" } },
+        { "type": "logo", "settings": { "label": "Minotti", "is_sans": true } },
+        { "type": "logo", "settings": { "label": "B&B Italia", "is_sans": true } },
+        { "type": "logo", "settings": { "label": "Baxter" } },
+        { "type": "logo", "settings": { "label": "Vitra", "is_sans": true } },
+        { "type": "logo", "settings": { "label": "Artemide", "is_sans": true } },
+        { "type": "logo", "settings": { "label": "Flos" } },
+        { "type": "logo", "settings": { "label": "Moooi", "is_sans": true } },
+        { "type": "logo", "settings": { "label": "&Tradition" } },
+        { "type": "logo", "settings": { "label": "Bocci", "is_sans": true } },
+        { "type": "logo", "settings": { "label": "Poltrona Frau" } },
+        { "type": "logo", "settings": { "label": "Molteni&C" } },
+        { "type": "logo", "settings": { "label": "Porro", "is_sans": true } },
+        { "type": "logo", "settings": { "label": "Lema" } },
+        { "type": "logo", "settings": { "label": "Boffi", "is_sans": true } },
+        { "type": "logo", "settings": { "label": "Cesar" } },
+        { "type": "logo", "settings": { "label": "Arflex", "is_sans": true } },
+        { "type": "logo", "settings": { "label": "Saba", "is_sans": true } },
+        { "type": "logo", "settings": { "label": "Tacchini" } },
+        { "type": "logo", "settings": { "label": "De Padova" } },
+        { "type": "logo", "settings": { "label": "Driade", "is_sans": true } },
+        { "type": "logo", "settings": { "label": "Gervasoni" } },
+        { "type": "logo", "settings": { "label": "Living Divani", "is_sans": true } },
+        { "type": "logo", "settings": { "label": "Maxalto" } },
+        { "type": "logo", "settings": { "label": "Fritz Hansen", "is_sans": true } },
+        { "type": "logo", "settings": { "label": "Santa&Cole" } },
+        { "type": "logo", "settings": { "label": "Vibia", "is_sans": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

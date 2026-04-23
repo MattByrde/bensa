@@ -138,19 +138,19 @@
   display: inline-flex;
   align-items: center;
   text-decoration: none;
-  padding: 0.5rem 1.25rem;
-  border-radius: 10px;
+  padding: 12px 22px;
+  border-radius: 999px;
   font-family: var(--font-body);
-  font-size: 0.83rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 1px solid transparent;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 /* Light button (for dark/image backgrounds) */
 .info-cards__btn--light {
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   color: #fff;
   background: transparent;
 }
@@ -163,7 +163,7 @@
 
 /* Dark button (accent-styled — matches navbar/community CTA) */
 .info-cards__btn--dark {
-  border: 1.5px solid var(--color-accent, #1E8BA8);
+  border: 1px solid var(--color-accent, #1E8BA8);
   background-color: var(--color-accent, #1E8BA8);
   color: #fff;
 }
@@ -216,7 +216,7 @@
 .info-cards__btn--white {
   background: #fff;
   color: #111;
-  border: 1.5px solid #fff;
+  border: 1px solid #fff;
 }
 
 .info-cards__btn--white:hover {

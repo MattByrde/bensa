@@ -17,8 +17,11 @@
 
 <div class="team">
   <div class="team__layout">
-    {%- if section.settings.heading != blank or section.settings.description != blank -%}
+    {%- if section.settings.heading != blank or section.settings.description != blank or section.settings.eyebrow != blank -%}
       <div class="team__intro">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="section-eyebrow team__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
         {%- if section.settings.heading != blank -%}
           <h2 class="typo-section-heading team__heading">{{ section.settings.heading }}</h2>
         {%- endif -%}
@@ -130,6 +133,11 @@
     {
       "type": "header",
       "content": "Intro"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Pre-titolo"
     },
     {
       "type": "richtext",

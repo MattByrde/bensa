@@ -1,4 +1,4 @@
-{{ 'section-custom-progettazione-approach.css' | asset_url | stylesheet_tag }}
+{{ 'section-custom-progettazione-approach.css' | asset_url | stylesheet_tag: preload: true }}
 
 <style>
   #shopify-section-{{ section.id }} {

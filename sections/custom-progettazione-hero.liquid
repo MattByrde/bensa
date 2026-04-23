@@ -1,7 +1,8 @@
-{{ 'section-custom-progettazione-hero.css' | asset_url | stylesheet_tag }}
+{{ 'section-custom-progettazione-hero.css' | asset_url | stylesheet_tag: preload: true }}
 
-<div class="prog-hero" style="min-height: {{ section.settings.height }}vh;">
+<div class="prog-hero" data-prog-hero style="--prog-hero-h: {{ section.settings.height }}vh; --prog-hero-h-mobile: {{ section.settings.height_mobile }}vh;">
 
+  {%- comment -%} Background: video (section-level, persists across slides) or image fallback per slide {%- endcomment -%}
   <div class="prog-hero__media">
     {%- if section.settings.video != blank -%}
       <video
@@ -40,187 +41,164 @@
 
   <div class="prog-hero__overlay"></div>
 
-  <div class="prog-hero__inner">
+  {%- comment -%} Slides {%- endcomment -%}
+  <div class="prog-hero__slides" data-prog-slides>
+    {%- for block in section.blocks -%}
+      <div class="prog-hero__slide{% if forloop.first %} is-active{% endif %}" data-prog-slide="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
 
-    {%- comment -%} Left: text content {%- endcomment -%}
-    <div class="prog-hero__content">
-      {%- if section.settings.subtitle != blank -%}
-        <span class="prog-hero__subtitle">{{ section.settings.subtitle }}</span>
-      {%- endif -%}
-      {%- if section.settings.heading != blank -%}
-        <h1 class="prog-hero__heading">{{ section.settings.heading }}</h1>
-      {%- endif -%}
-      {%- if section.settings.subtext != blank -%}
-        <p class="prog-hero__subtext">{{ section.settings.subtext }}</p>
-      {%- endif -%}
-      {%- if section.settings.button_label != blank -%}
-        <a href="{{ section.settings.button_link | default: '#' }}" class="prog-hero__btn typo-btn">
-          {{ section.settings.button_label }}
-        </a>
-      {%- endif -%}
-    </div>
-
-    {%- comment -%} Right: floating reviews card {%- endcomment -%}
-    {%- if section.blocks.size > 0 -%}
-      <div class="prog-hero__reviews" data-prog-reviews>
-        <div class="prog-hero__reviews-card">
-
-          {%- comment -%} Header: star summary + label {%- endcomment -%}
-          <div class="prog-hero__reviews-header">
-            <div class="prog-hero__reviews-stars">
-              {%- for i in (1..5) -%}
-                <svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              {%- endfor -%}
-              <span class="prog-hero__reviews-score">{{ section.settings.score | default: '5.0' }}</span>
-              <span class="prog-hero__reviews-count">· +{{ section.blocks.size }}0 recensioni</span>
-            </div>
-            <span class="prog-hero__reviews-label">Recensioni</span>
+        {%- comment -%} Optional per-slide image override (fades over the background video) {%- endcomment -%}
+        {%- if block.settings.slide_image != blank -%}
+          <div class="prog-hero__slide-image">
+            {{ block.settings.slide_image | image_url: width: 1920 | image_tag:
+              loading: 'lazy',
+              sizes: '100vw',
+              widths: '750, 1100, 1500, 1920'
+            }}
           </div>
+        {%- endif -%}
 
-          {%- comment -%} Scrolling review items — grouped in pages of 2 {%- endcomment -%}
-          <div class="prog-hero__reviews-viewport" data-prog-reviews-viewport>
-            <div class="prog-hero__reviews-track" data-prog-reviews-track>
-              {%- assign page_size = 2 -%}
-              {%- assign total_pages = section.blocks.size | divided_by: page_size | ceil -%}
-              {%- assign last_page = total_pages | minus: 1 -%}
-              {%- for page_num in (0..last_page) -%}
-                {%- assign start_idx = page_num | times: page_size -%}
-                {%- assign end_idx = start_idx | plus: page_size | minus: 1 -%}
-                <div class="prog-hero__reviews-page">
-                  {%- for block in section.blocks -%}
-                    {%- if forloop.index0 >= start_idx and forloop.index0 <= end_idx -%}
-                      <div class="prog-hero__review-item" {{ block.shopify_attributes }}>
-                        <div class="prog-hero__review-top">
-                          <div class="prog-hero__review-avatar">
-                            {%- if block.settings.author_image != blank -%}
-                              {{ block.settings.author_image | image_url: width: 80 | image_tag: loading: 'lazy' }}
-                            {%- else -%}
-                              {{ block.settings.author_name | slice: 0 | upcase }}
-                            {%- endif -%}
-                          </div>
-                          <div class="prog-hero__review-meta">
-                            <span class="prog-hero__review-name">{{ block.settings.author_name }} — {{ block.settings.author_location }}</span>
-                            <div class="prog-hero__review-item-stars">
-                              {%- assign stars = block.settings.stars | default: 5 -%}
-                              {%- for i in (1..stars) -%}
-                                <svg width="12" height="12" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                              {%- endfor -%}
-                            </div>
-                          </div>
-                        </div>
-                        {%- if block.settings.review_text != blank -%}
-                          <p class="prog-hero__review-text">{{ block.settings.review_text }}</p>
-                        {%- endif -%}
-                      </div>
-                    {%- endif -%}
-                  {%- endfor -%}
-                </div>
-              {%- endfor -%}
+        <div class="prog-hero__inner">
+          <div class="prog-hero__content">
+            {%- if block.settings.tags != blank -%}
+              <div class="prog-hero__tags">
+                {%- assign tag_list = block.settings.tags | split: ',' -%}
+                {%- for t in tag_list -%}
+                  <span class="prog-hero__tag">{{ t | strip }}</span>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.eyebrow != blank -%}
+              <span class="prog-hero__eyebrow">{{ block.settings.eyebrow }}</span>
+            {%- endif -%}
+
+            {%- if block.settings.heading != blank -%}
+              {%- if forloop.first -%}
+                <h1 class="prog-hero__heading">{{ block.settings.heading }}</h1>
+              {%- else -%}
+                <h2 class="prog-hero__heading">{{ block.settings.heading }}</h2>
+              {%- endif -%}
+            {%- endif -%}
+
+            {%- if block.settings.subtext != blank -%}
+              <p class="prog-hero__subtext">{{ block.settings.subtext }}</p>
+            {%- endif -%}
+
+            <div class="prog-hero__actions">
+              {%- if block.settings.button_label != blank -%}
+                <a href="{{ block.settings.button_link | default: '#' }}" class="prog-hero__btn prog-hero__btn--primary typo-btn">
+                  {{ block.settings.button_label }}
+                </a>
+              {%- endif -%}
+              {%- if block.settings.button_label_2 != blank -%}
+                <a href="{{ block.settings.button_link_2 | default: '#' }}" class="prog-hero__btn prog-hero__btn--secondary typo-btn">
+                  {{ block.settings.button_label_2 }}
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              {%- endif -%}
             </div>
           </div>
-
-          {%- comment -%} Dots — one per page of 2 {%- endcomment -%}
-          {%- assign total_pages = section.blocks.size | divided_by: 2 | ceil -%}
-          <div class="prog-hero__reviews-dots" data-prog-reviews-dots>
-            {%- for i in (1..total_pages) -%}
-              <button class="prog-hero__reviews-dot{% if forloop.first %} is-active{% endif %}" data-prog-dot="{{ forloop.index0 }}" aria-label="Pagina {{ forloop.index }}"></button>
-            {%- endfor -%}
-          </div>
-
         </div>
-      </div>
-    {%- endif -%}
 
+      </div>
+    {%- endfor -%}
   </div>
+
+  {%- assign slide_count = section.blocks.size -%}
+  {%- if slide_count > 1 -%}
+    <div class="prog-hero__controls" data-prog-controls>
+      <div class="prog-hero__counter">
+        <span data-prog-current>01</span>
+        <span class="prog-hero__counter-sep">/</span>
+        <span>{{ slide_count | prepend: '00' | slice: -2, 2 }}</span>
+      </div>
+      <div class="prog-hero__progress" data-prog-progress>
+        <div class="prog-hero__progress-bar" data-prog-bar></div>
+      </div>
+      <div class="prog-hero__arrows">
+        <button class="prog-hero__arrow prog-hero__arrow--prev" data-prog-prev aria-label="Slide precedente">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l6-6M5 12l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="prog-hero__arrow prog-hero__arrow--next" data-prog-next aria-label="Slide successiva">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M19 12l-6-6M19 12l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <a href="#prog-hero-next" class="prog-hero__scroll" aria-label="Scorri giù">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+
 </div>
+<span id="prog-hero-next"></span>
 
 <script>
   (function () {
-    var widget = document.querySelector('[data-prog-reviews]');
-    if (!widget) return;
-    var track = widget.querySelector('[data-prog-reviews-track]');
-    var viewport = widget.querySelector('[data-prog-reviews-viewport]');
-    var dots = widget.querySelectorAll('[data-prog-dot]');
-    if (!track || !dots.length) return;
+    var hero = document.querySelector('[data-prog-hero]');
+    if (!hero) return;
 
-    var pages = Array.from(track.children);
-    var totalPages = pages.length;
+    var slides = hero.querySelectorAll('[data-prog-slide]');
+    if (slides.length < 2) return;
+
     var current = 0;
+    var total = slides.length;
+    var autoDelay = 6000;
+    var timer;
+    var counterEl = hero.querySelector('[data-prog-current]');
+    var barEl = hero.querySelector('[data-prog-bar]');
 
-    function goTo(index) {
-      current = (index + totalPages) % totalPages;
-      track.style.transform = 'translateX(-' + (current * 100) + '%)';
-      dots.forEach(function (d, i) {
-        d.classList.toggle('is-active', i === current);
-      });
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+    function goTo(idx) {
+      slides[current].classList.remove('is-active');
+      current = ((idx % total) + total) % total;
+      slides[current].classList.add('is-active');
+      if (counterEl) counterEl.textContent = pad(current + 1);
+      restartBar();
     }
 
-    dots.forEach(function (dot) {
-      dot.addEventListener('click', function () {
-        goTo(parseInt(dot.getAttribute('data-prog-dot')));
-        resetAuto();
-      });
-    });
+    function restartBar() {
+      if (!barEl) return;
+      barEl.style.transition = 'none';
+      barEl.style.width = '0%';
+      barEl.offsetWidth;
+      barEl.style.transition = 'width ' + autoDelay + 'ms linear';
+      barEl.style.width = '100%';
+    }
 
-    /* ── Drag / swipe ── */
-    var dragStartX = 0;
+    function startAuto() {
+      restartBar();
+      timer = setInterval(function () { goTo(current + 1); }, autoDelay);
+    }
+
+    function resetAuto() {
+      clearInterval(timer);
+      startAuto();
+    }
+
+    var prevBtn = hero.querySelector('[data-prog-prev]');
+    var nextBtn = hero.querySelector('[data-prog-next]');
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { goTo(current - 1); resetAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { goTo(current + 1); resetAuto(); });
+
+    var startX = 0;
     var dragging = false;
-    var dragMoved = false;
 
-    function onDragStart(e) {
+    hero.addEventListener('touchstart', function (e) {
+      startX = e.touches[0].clientX;
       dragging = true;
-      dragMoved = false;
-      dragStartX = e.pageX || e.touches[0].pageX;
-      track.style.transition = 'none';
-      if (viewport) viewport.style.cursor = 'grabbing';
-    }
+    }, { passive: true });
 
-    function onDragMove(e) {
-      if (!dragging) return;
-      var dx = (e.pageX || e.touches[0].pageX) - dragStartX;
-      if (Math.abs(dx) > 4) dragMoved = true;
-      var base = -(current * 100);
-      var vw = track.parentElement.offsetWidth;
-      var pct = (dx / vw) * 100;
-      track.style.transform = 'translateX(' + (base + pct) + '%)';
-    }
-
-    function onDragEnd(e) {
+    hero.addEventListener('touchend', function (e) {
       if (!dragging) return;
       dragging = false;
-      if (viewport) viewport.style.cursor = '';
-      track.style.transition = '';
-      var dx = (e.pageX || (e.changedTouches && e.changedTouches[0].pageX) || dragStartX) - dragStartX;
-      var threshold = track.parentElement.offsetWidth * 0.2;
-      if (dx < -threshold) goTo(current + 1);
-      else if (dx > threshold) goTo(current - 1);
-      else goTo(current);
-      if (dragMoved) resetAuto();
-    }
-
-    if (viewport) {
-      viewport.style.cursor = 'grab';
-      viewport.addEventListener('mousedown', onDragStart);
-      viewport.addEventListener('mousemove', onDragMove);
-      viewport.addEventListener('mouseup', onDragEnd);
-      viewport.addEventListener('mouseleave', onDragEnd);
-      viewport.addEventListener('touchstart', onDragStart, { passive: true });
-      viewport.addEventListener('touchmove', onDragMove, { passive: true });
-      viewport.addEventListener('touchend', onDragEnd);
-      viewport.addEventListener('click', function (e) {
-        if (dragMoved) { e.preventDefault(); e.stopPropagation(); }
-      }, true);
-    }
-
-    var timer;
-    function startAuto() {
-      timer = setInterval(function () { goTo(current + 1); }, 4000);
-    }
-    function resetAuto() { clearInterval(timer); startAuto(); }
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 50) { goTo(dx < 0 ? current + 1 : current - 1); resetAuto(); }
+    });
 
     startAuto();
-    widget.addEventListener('mouseenter', function () { clearInterval(timer); });
-    widget.addEventListener('mouseleave', startAuto);
   })();
 </script>
 
@@ -231,10 +209,14 @@
   "class": "section",
   "settings": [
     {
+      "type": "header",
+      "content": "Sfondo sezione"
+    },
+    {
       "type": "video",
       "id": "video",
       "label": "Video di sfondo",
-      "info": "Se impostato, ha priorità sull'immagine."
+      "info": "Se impostato, ha priorità sull'immagine e persiste su tutte le slide."
     },
     {
       "type": "url",
@@ -246,90 +228,92 @@
       "type": "image_picker",
       "id": "image",
       "label": "Immagine di sfondo",
-      "info": "Usata come fallback se nessun video è impostato, o come poster del video."
+      "info": "Fallback se nessun video è impostato, o poster del video."
     },
     {
       "type": "range",
       "id": "height",
-      "label": "Altezza sezione",
-      "min": 40,
+      "label": "Altezza sezione (desktop)",
+      "min": 30,
       "max": 100,
-      "step": 5,
+      "step": 1,
       "unit": "vh",
-      "default": 75
+      "default": 80
     },
     {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Sottotitolo",
-      "default": "Progettazione"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Titolo",
-      "default": "Progettiamo il tuo spazio ideale"
-    },
-    {
-      "type": "textarea",
-      "id": "subtext",
-      "label": "Testo introduttivo",
-      "default": "All'ingresso nel nostro showroom sarete accolti da personale esperto, pronto ad ascoltare con attenzione le vostre esigenze e i vostri desideri."
-    },
-    {
-      "type": "text",
-      "id": "button_label",
-      "label": "Testo pulsante",
-      "default": "Contattaci"
-    },
-    {
-      "type": "url",
-      "id": "button_link",
-      "label": "Link pulsante"
-    },
-    {
-      "type": "text",
-      "id": "score",
-      "label": "Punteggio medio",
-      "default": "5.0"
+      "type": "range",
+      "id": "height_mobile",
+      "label": "Altezza sezione (mobile)",
+      "min": 30,
+      "max": 100,
+      "step": 1,
+      "unit": "vh",
+      "default": 70
     }
   ],
   "blocks": [
     {
-      "type": "review",
-      "name": "Recensione",
+      "type": "slide",
+      "name": "Slide",
       "settings": [
         {
           "type": "image_picker",
-          "id": "author_image",
-          "label": "Foto autore"
+          "id": "slide_image",
+          "label": "Immagine slide (opzionale)",
+          "info": "Se impostata, sovrascrive il video/immagine di sezione solo per questa slide."
         },
         {
           "type": "text",
-          "id": "author_name",
-          "label": "Nome autore",
-          "default": "Maria Rossi"
+          "id": "tags",
+          "label": "Tag",
+          "info": "Separa più tag con una virgola. Es: Residenziale, Villa, Cherasco"
         },
         {
           "type": "text",
-          "id": "author_location",
-          "label": "Città",
-          "default": "Cuneo"
+          "id": "eyebrow",
+          "label": "Eyebrow (piccolo testo sopra il titolo)",
+          "default": "Progettazione d'interni"
         },
         {
-          "type": "range",
-          "id": "stars",
-          "label": "Stelle",
-          "min": 1,
-          "max": 5,
-          "step": 1,
-          "default": 5
+          "type": "text",
+          "id": "heading",
+          "label": "Titolo",
+          "default": "Progettiamo il tuo spazio ideale"
         },
         {
           "type": "textarea",
-          "id": "review_text",
-          "label": "Testo recensione",
-          "default": "Qualità eccezionale e un servizio clienti impeccabile. Non potremmo essere più soddisfatti!"
+          "id": "subtext",
+          "label": "Testo introduttivo",
+          "default": "Dal primo sopralluogo alla consegna, un solo interlocutore e un capitolato scritto."
+        },
+        {
+          "type": "header",
+          "content": "Pulsante primario"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Testo pulsante",
+          "default": "Contattaci"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Link pulsante"
+        },
+        {
+          "type": "header",
+          "content": "Pulsante secondario"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "Testo pulsante"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Link pulsante"
         }
       ]
     }
@@ -339,39 +323,36 @@
       "name": "Progettazione Hero",
       "blocks": [
         {
-          "type": "review",
+          "type": "slide",
           "settings": {
-            "author_name": "Maria Rossi",
-            "author_location": "Cuneo",
-            "stars": 5,
-            "review_text": "Qualità eccezionale e un servizio clienti impeccabile. Il team ha ascoltato ogni nostra richiesta con grande attenzione."
+            "eyebrow": "Progettazione d'interni",
+            "heading": "Progettiamo il tuo spazio ideale",
+            "subtext": "Dal primo sopralluogo alla consegna, un solo interlocutore e un capitolato scritto.",
+            "tags": "Residenziale, Chiavi in mano",
+            "button_label": "Contattaci",
+            "button_label_2": "Scopri il metodo"
           }
         },
         {
-          "type": "review",
+          "type": "slide",
           "settings": {
-            "author_name": "Luca Bianchi",
-            "author_location": "Torino",
-            "stars": 5,
-            "review_text": "Progettazione curata nei minimi dettagli. Dalla prima consulenza alla consegna, tutto perfetto."
+            "eyebrow": "Studio dal 1983",
+            "heading": "Case che invecchiano bene",
+            "subtext": "Materiali, finiture e artigiani scelti per durare. Oltre la tendenza del momento.",
+            "tags": "Metodo, Materia",
+            "button_label": "Prenota una consulenza",
+            "button_label_2": "Vedi le realizzazioni"
           }
         },
         {
-          "type": "review",
+          "type": "slide",
           "settings": {
-            "author_name": "Giulia Verdi",
-            "author_location": "Alba",
-            "stars": 5,
-            "review_text": "Finalmente la casa che sognavo. Materiali di prima qualità e un'atmosfera che rispecchia esattamente la nostra personalità."
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "author_name": "Roberto Ferrari",
-            "author_location": "Vignolo",
-            "stars": 5,
-            "review_text": "Professionalità e competenza al massimo livello. Il rendering 3D ci ha permesso di vedere il risultato finale ancora prima dell'installazione."
+            "eyebrow": "Chiavi in mano",
+            "heading": "Un capitolato, un interlocutore",
+            "subtext": "Coordiniamo artigiani, impresa e fornitori. Voi firmate un documento solo.",
+            "tags": "Cantiere, Coordinamento",
+            "button_label": "Richiedi preventivo",
+            "button_label_2": "Scopri i percorsi"
           }
         }
       ]

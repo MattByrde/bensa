@@ -295,7 +295,7 @@
       if (!navRow) return;
 
       // Transparent header over hero
-      const hero = document.querySelector('[data-home-hero], [data-about-carousel]');
+      const hero = document.querySelector('[data-home-hero], [data-about-carousel], [data-marchi-hero], [data-prog-hero], [data-rist-hero]');
       const headerGroup = document.querySelector('.shopify-section-group-header-group');
       const hasHero = !!hero;
 

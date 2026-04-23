@@ -1,0 +1,361 @@
+{{ 'section-custom-progettazione-percorsi.css' | asset_url | stylesheet_tag: preload: true }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .prog-percorsi {
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .prog-percorsi {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign anchor = section.settings.anchor_id | default: 'percorsi'
+  assign tier_blocks = section.blocks | where: 'type', 'tier'
+  assign trust_blocks = section.blocks | where: 'type', 'trust'
+-%}
+
+<section
+  class="prog-percorsi"
+  id="{{ anchor }}"
+  {% if section.settings.screen_label != blank %}data-screen-label="{{ section.settings.screen_label }}"{% endif %}
+>
+  <div class="prog-percorsi__inner">
+
+    <header class="prog-percorsi__header">
+      <div class="prog-percorsi__header-title">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="prog-percorsi__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="prog-percorsi__heading">{{ section.settings.heading | remove: '<p>' | remove: '</p>' }}</h2>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.lead != blank -%}
+        <div class="prog-percorsi__lead">{{ section.settings.lead }}</div>
+      {%- endif -%}
+    </header>
+
+    {%- if tier_blocks.size > 0 -%}
+      <div class="prog-percorsi__grid">
+        {%- for block in tier_blocks -%}
+          {%- liquid
+            assign auto_num = forloop.index
+            assign raw_num = block.settings.number | default: auto_num
+            assign n = raw_num | plus: 0
+            if n > 0 and n < 10
+              assign display_num = '0' | append: n
+            else
+              assign display_num = raw_num
+            endif
+
+            assign label_text = ''
+            if display_num != blank and block.settings.tag != blank
+              assign label_text = display_num | append: ' — ' | append: block.settings.tag
+            elsif display_num != blank
+              assign label_text = display_num
+            elsif block.settings.tag != blank
+              assign label_text = block.settings.tag
+            endif
+          -%}
+
+          <article class="prog-percorsi__item" {{ block.shopify_attributes }}>
+            <div class="prog-percorsi__media">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,600,800,1000', sizes: '(max-width: 559px) 100vw, (max-width: 989px) 50vw, 25vw' }}
+              {%- else -%}
+                <div class="prog-percorsi__media-ph">
+                  {%- if block.settings.image_caption != blank -%}
+                    <span class="prog-percorsi__media-tag">{{ block.settings.image_caption }}</span>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+
+            {%- if label_text != blank -%}
+              <p class="prog-percorsi__label">{{ label_text }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.title != blank -%}
+              <h3 class="prog-percorsi__title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+
+            {%- if block.settings.description != blank -%}
+              <p class="prog-percorsi__desc">{{ block.settings.description }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.meta != blank or block.settings.cta_label != blank -%}
+              <div class="prog-percorsi__foot-row">
+                {%- if block.settings.meta != blank -%}
+                  <span class="prog-percorsi__meta">{{ block.settings.meta }}</span>
+                {%- else -%}
+                  <span></span>
+                {%- endif -%}
+                {%- if block.settings.cta_label != blank -%}
+                  <a href="{{ block.settings.cta_url | default: '#' }}" class="prog-percorsi__cta">
+                    {{ block.settings.cta_label }}
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </a>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if trust_blocks.size > 0 -%}
+      <div class="prog-percorsi__trust">
+        {%- for block in trust_blocks -%}
+          <div class="prog-percorsi__trust-row" {{ block.shopify_attributes }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>{{ block.settings.text }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Progettazione Percorsi",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Colore sfondo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "ID ancora",
+      "default": "percorsi"
+    },
+    {
+      "type": "text",
+      "id": "screen_label",
+      "label": "Etichetta sezione (screen)",
+      "default": "08 Percorsi"
+    },
+    {
+      "type": "header",
+      "content": "Intestazione"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Pre-titolo",
+      "default": "Quattro percorsi"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Titolo",
+      "default": "<p>Scegliete il <em>livello</em> di accompagnamento giusto.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "lead",
+      "label": "Testo introduttivo",
+      "default": "<p>Da una singola stanza a una casa intera: ogni percorso è dimensionato sulle vostre necessità. <strong>Capitolato firmato e costi chiusi prima del via,</strong> un solo interlocutore dal rilievo alla consegna — e si può salire di livello in corso d'opera, senza ricominciare da capo.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Percorso",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Immagine"
+        },
+        {
+          "type": "text",
+          "id": "image_caption",
+          "label": "Didascalia placeholder",
+          "info": "Mostrata sull'area immagine quando non è stata caricata un'immagine."
+        },
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Numero",
+          "info": "Se vuoto, verrà usato il numero automatico (01, 02, …)."
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Etichetta categoria",
+          "info": "Es. Casa intera, Singola stanza."
+        },
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Titolo",
+          "default": "<p>Progetto <em>chiavi in mano.</em></p>"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descrizione"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Testo meta",
+          "info": "Es. durata (10–14 settimane) o nota."
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "Testo CTA",
+          "default": "Preventivo"
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "Link CTA"
+        }
+      ]
+    },
+    {
+      "type": "trust",
+      "name": "Punto di fiducia",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Testo",
+          "info": "Usa <strong> per evidenziare parole chiave.",
+          "default": "<p><strong>Capitolato firmato,</strong> costi chiusi prima del via.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "presets": [
+    {
+      "name": "Progettazione Percorsi",
+      "blocks": [
+        {
+          "type": "tier",
+          "settings": {
+            "image_caption": "Casa intera · cascina",
+            "tag": "Casa intera",
+            "title": "<p>Progetto <em>chiavi in mano.</em></p>",
+            "description": "Per chi ristruttura o arreda un'abitazione intera e vuole un solo interlocutore. Dal rilievo alla consegna delle chiavi, passando per impresa, impianti, fornitori e styling.",
+            "meta": "10–14 settimane",
+            "cta_label": "Preventivo"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "image_caption": "Cucina · dettaglio",
+            "tag": "Singola stanza",
+            "title": "<p>Consulenza in <em>showroom.</em></p>",
+            "description": "Per cucina, living o camera. Tre incontri in showroom, due ipotesi progettuali messe a confronto, render finale dell'ambiente e preventivo chiuso.",
+            "meta": "3–4 settimane",
+            "cta_label": "Preventivo"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "image_caption": "Cantiere · Langhe",
+            "tag": "Architetti & imprese",
+            "title": "<p>Supporto <em>B2B & contract.</em></p>",
+            "description": "Per studi e imprese che vogliono un partner su commessa. Listini riservati, campionature, logistica e posa coordinate sul calendario di cantiere.",
+            "meta": "Contratto quadro",
+            "cta_label": "Condizioni"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "image_caption": "Tavolo lavoro · materiali",
+            "tag": "Parere esperto",
+            "title": "<p>Consulenza <em>a ore.</em></p>",
+            "description": "Un dettaglio da risolvere: scelta palette, un singolo arredo, seconda opinione su un render. Pacchetti da 5 o 10 ore, usabili entro 12 mesi dall'attivazione.",
+            "meta": "Pacchetti 5h / 10h",
+            "cta_label": "Prenota"
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "text": "<p><strong>Capitolato firmato,</strong> costi chiusi prima del via.</p>"
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "text": "<p>Primo incontro <strong>gratuito</strong> in showroom a Cuneo.</p>"
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "text": "<p>Un solo <strong>interlocutore</strong> dal rilievo alla consegna.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

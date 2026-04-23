@@ -25,7 +25,7 @@ body {
   background-color: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
   overflow-anchor: none;
 }
 
@@ -34,9 +34,8 @@ em,
 h3 strong,
 h2 strong{
   font-family: 'Merriweather', Georgia, 'Times New Roman', serif;
-  font-weight: 700;
-  font-style: normal;
-  
+  font-weight: 500;
+  font-style: italic;
 }
 
 img,
@@ -202,6 +201,19 @@ h6 {
   }
 }
 
+/* Shared pre-title eyebrow across home sections. */
+.section-eyebrow {
+  display: block;
+  width: 100%;
+  flex-basis: 100%;
+  grid-column: 1 / -1;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  margin: 0 0 10px;
+}
+
 /* Card title: H4-tier — shared title styling for card/cell headings
    across home sections (services grid, bento cells, values cards, feature cards). */
 .typo-card-title {
@@ -283,10 +295,9 @@ h6 {
 /* Button text */
 .typo-btn {
   font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
 /* ============================================= */
@@ -367,15 +378,14 @@ p+p {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 24px;
+  padding: 12px 22px;
   font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-decoration: none;
-  border: 1.5px solid transparent;
-  border-radius: 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
 }
@@ -612,7 +622,10 @@ p+p {
 
 .shopify-section-group-header-group.is-over-hero,
 .template-index .shopify-section-group-header-group,
-.template-page-chi-siamo .shopify-section-group-header-group {
+.template-page-chi-siamo .shopify-section-group-header-group,
+.template-page-marchi .shopify-section-group-header-group,
+.template-page-progettazione .shopify-section-group-header-group,
+.template-page-ristrutturazioni .shopify-section-group-header-group {
   position: absolute;
   top: 0;
   left: 0;
@@ -620,11 +633,17 @@ p+p {
   z-index: 100;
 }
 
-.template-page-chi-siamo .section-announcement {
+.template-page-chi-siamo .section-announcement,
+.template-page-marchi .section-announcement,
+.template-page-progettazione .section-announcement,
+.template-page-ristrutturazioni .section-announcement {
   height: 31px;
 }
 
-.template-page-chi-siamo .section-header {
+.template-page-chi-siamo .section-header,
+.template-page-marchi .section-header,
+.template-page-progettazione .section-header,
+.template-page-ristrutturazioni .section-header {
   margin-top: 31px;
 }
 
@@ -686,7 +705,10 @@ p+p {
 
 /* ── Transparent header over hero ── */
 .is-over-hero .announcement-bar,
-.template-page-chi-siamo .announcement-bar {
+.template-page-chi-siamo .announcement-bar,
+.template-page-marchi .announcement-bar,
+.template-page-progettazione .announcement-bar,
+.template-page-ristrutturazioni .announcement-bar {
   background-color: transparent;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
@@ -1013,15 +1035,25 @@ p+p {
   font-family: var(--font-body);
   background-color: var(--color-accent);
   color: #fff;
-  padding: 0.5rem 1.25rem;
-  border: 1.5px solid var(--color-accent);
-  border-radius: 10px;
+  padding: 10px 20px;
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .site-nav__link--cta:hover {
   background-color: transparent;
   color: var(--color-accent);
+}
+
+@media screen and (min-width: 990px) and (max-width: 1699.98px) {
+  .site-nav__link--cta {
+    font-size: 0.72rem;
+    padding: 8px 16px;
+  }
 }
 
 .site-nav__chevron {
@@ -1310,17 +1342,16 @@ p+p {
   display: inline-flex;
   align-items: center;
   align-self: flex-start;
-  gap: 6px;
+  gap: 8px;
   margin-top: 0.5rem;
-  padding: 0.5rem 1.25rem;
-  border: 1.5px solid var(--color-accent, #1E8BA8);
-  border-radius: 10px;
+  padding: 12px 22px;
+  border: 1px solid var(--color-accent, #1E8BA8);
+  border-radius: 999px;
   background-color: var(--color-accent, #1E8BA8);
   color: #fff;
-  font-size: 0.83rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
   text-decoration: none;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
@@ -1574,8 +1605,12 @@ p+p {
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 14px 24px;
-  font-size: 0.75rem;
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: none;
 }
 
 /* --- Announcement Bar --- */
@@ -2240,9 +2275,12 @@ p+p {
 .newsletter__btn {
   background-color: var(--color-accent, #1E8BA8);
   color: #fff;
-  padding: 0.875rem 2rem;
-  border: 1.5px solid var(--color-accent, #1E8BA8);
-  border-radius: 10px;
+  padding: 12px 22px;
+  border: 1px solid var(--color-accent, #1E8BA8);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   cursor: pointer;
   transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
   min-height: 50px;

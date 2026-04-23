@@ -1,0 +1,163 @@
+{{ 'section-custom-marchi-index.css' | asset_url | stylesheet_tag }}
+
+{%- assign anchor_prefix = section.settings.anchor_prefix | default: 'brand-' -%}
+{%- assign count_suffix_single = section.settings.count_suffix_single | default: 'brand' -%}
+{%- assign count_suffix_plural = section.settings.count_suffix_plural | default: 'brand' -%}
+{%- assign alphabet = 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z' | split: ',' -%}
+
+<section class="marchi-index" aria-label="{{ section.settings.aria_label | default: 'Indice marchi' | escape }}">
+  <div class="marchi-index__inner">
+
+    {%- for letter in alphabet -%}
+      {%- assign letter_blocks = '' -%}
+      {%- assign letter_count = 0 -%}
+
+      {%- comment -%} First pass: count matching blocks for this letter {%- endcomment -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'brand' and block.settings.name != blank -%}
+          {%- assign first_char = block.settings.name | strip | upcase | slice: 0 -%}
+          {%- if first_char == letter -%}
+            {%- assign letter_count = letter_count | plus: 1 -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if letter_count > 0 -%}
+        <div class="marchi-index__letter" id="{{ anchor_prefix }}{{ letter }}">
+          <div class="marchi-index__grid">
+            <div class="marchi-index__head">
+              <div class="marchi-index__letter-char">{{ letter }}</div>
+              <span class="marchi-index__count">
+                {{ letter_count }}
+                {%- if letter_count == 1 %} {{ count_suffix_single }}{% else %} {{ count_suffix_plural }}{% endif -%}
+              </span>
+            </div>
+
+            <div class="marchi-index__list">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'brand' and block.settings.name != blank -%}
+                  {%- assign first_char = block.settings.name | strip | upcase | slice: 0 -%}
+                  {%- if first_char == letter -%}
+                    {%- assign row_tag = 'div' -%}
+                    {%- if block.settings.url != blank -%}{%- assign row_tag = 'a' -%}{%- endif -%}
+
+                    <{{ row_tag }} class="marchi-index__row"
+                      {% if row_tag == 'a' %}href="{{ block.settings.url }}"{% endif %}
+                      {{ block.shopify_attributes }}>
+                      <span class="marchi-index__name">{{ block.settings.name }}</span>
+                      <span class="marchi-index__meta">
+                        {%- if block.settings.tag_label != blank and block.settings.tag_style != 'none' -%}
+                          {%- assign tag_class = 'marchi-index__tag' -%}
+                          {%- if block.settings.tag_style == 'new' -%}{%- assign tag_class = 'marchi-index__tag marchi-index__tag--new' -%}{%- endif -%}
+                          {%- if block.settings.tag_style == 'exclusive' -%}{%- assign tag_class = 'marchi-index__tag marchi-index__tag--exclusive' -%}{%- endif -%}
+                          <span class="{{ tag_class }}">{{ block.settings.tag_label }}</span>
+                        {%- elsif block.settings.tag_label != blank -%}
+                          <span class="marchi-index__tag">{{ block.settings.tag_label }}</span>
+                        {%- endif -%}
+                        <span class="marchi-index__arrow">
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </span>
+                      </span>
+                    </{{ row_tag }}>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Marchi · Indice",
+  "tag": "section",
+  "class": "shopify-section--marchi-index",
+  "max_blocks": 250,
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor_prefix",
+      "label": "Prefisso anchor",
+      "info": "Deve combaciare con il prefisso della sezione A–Z. Default: brand-",
+      "default": "brand-"
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "Etichetta ARIA",
+      "default": "Indice marchi"
+    },
+    {
+      "type": "text",
+      "id": "count_suffix_single",
+      "label": "Suffisso contatore (singolare)",
+      "default": "brand"
+    },
+    {
+      "type": "text",
+      "id": "count_suffix_plural",
+      "label": "Suffisso contatore (plurale)",
+      "default": "brand"
+    },
+    {
+      "type": "paragraph",
+      "content": "Aggiungi un blocco per ogni marchio. I marchi vengono raggruppati automaticamente per lettera iniziale. Ricorda di inserire i marchi in ordine alfabetico nell'editor."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Nome brand", "default": "Brand" },
+        { "type": "url", "id": "url", "label": "Link pagina brand" },
+        {
+          "type": "select",
+          "id": "tag_style",
+          "label": "Stile tag",
+          "options": [
+            { "value": "none", "label": "Nessuno" },
+            { "value": "default", "label": "Categoria (default)" },
+            { "value": "new", "label": "Novità (scuro)" },
+            { "value": "exclusive", "label": "Esclusiva (azzurro)" }
+          ],
+          "default": "default"
+        },
+        { "type": "text", "id": "tag_label", "label": "Etichetta tag", "default": "Categoria" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marchi · Indice",
+      "blocks": [
+        { "type": "brand", "settings": { "name": "&Tradition", "tag_label": "Illuminazione" } },
+        { "type": "brand", "settings": { "name": "Arflex", "tag_label": "Divani" } },
+        { "type": "brand", "settings": { "name": "Artemide", "tag_label": "Illuminazione" } },
+        { "type": "brand", "settings": { "name": "B&B Italia", "tag_label": "Divani" } },
+        { "type": "brand", "settings": { "name": "Baxter", "tag_label": "Divani" } },
+        { "type": "brand", "settings": { "name": "Boffi", "tag_label": "Cucine" } },
+        { "type": "brand", "settings": { "name": "Bocci", "tag_style": "exclusive", "tag_label": "Esclusiva" } },
+        { "type": "brand", "settings": { "name": "Cassina", "tag_label": "Divani" } },
+        { "type": "brand", "settings": { "name": "Cappellini", "tag_label": "Sedute" } },
+        { "type": "brand", "settings": { "name": "Dada", "tag_label": "Cucine" } },
+        { "type": "brand", "settings": { "name": "Flexform", "tag_label": "Divani" } },
+        { "type": "brand", "settings": { "name": "Flos", "tag_label": "Illuminazione" } },
+        { "type": "brand", "settings": { "name": "Gubi", "tag_style": "exclusive", "tag_label": "Esclusiva" } },
+        { "type": "brand", "settings": { "name": "Living Divani", "tag_label": "Divani" } },
+        { "type": "brand", "settings": { "name": "Moroso", "tag_label": "Sedute" } },
+        { "type": "brand", "settings": { "name": "Molteni&C", "tag_label": "Armadi" } },
+        { "type": "brand", "settings": { "name": "Poliform", "tag_label": "Cucine" } },
+        { "type": "brand", "settings": { "name": "Porro", "tag_style": "new", "tag_label": "Novità" } },
+        { "type": "brand", "settings": { "name": "Sancal", "tag_label": "Sedute" } },
+        { "type": "brand", "settings": { "name": "Tacchini", "tag_label": "Divani" } },
+        { "type": "brand", "settings": { "name": "Vitra", "tag_label": "Sedute" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

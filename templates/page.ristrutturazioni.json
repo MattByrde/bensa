@@ -1,0 +1,59 @@
+
+{
+  "sections": {
+    "rist_hero": {
+      "type": "custom-ristrutturazioni-hero",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/modern-kitchen-with-island-with-coloured-wall-units-or-n.o.w.-kitchen-or-lago.jpg",
+            "subtitle": "Ristrutturazioni",
+            "heading": "Ristrutturiamo la tua casa chiavi in mano",
+            "subtext": "Un unico interlocutore dalla progettazione alla consegna. Qualità artigianale, tempi certi, zero pensieri.",
+            "button_label": "Richiedi un sopralluogo",
+            "button_link": "",
+            "button_label_2": "Scopri il metodo",
+            "button_link_2": ""
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/cq5dam.thumbnail.2200.2200_1.jpg",
+            "subtitle": "Studio dal 1983",
+            "heading": "Case che invecchiano bene",
+            "subtext": "All'ingresso nel nostro showroom sarete accolti da personale esperto, pronto ad ascoltare con attenzione le vostre esigenze e i vostri desideri.",
+            "button_label": "Prenota una consulenza",
+            "button_link": "",
+            "button_label_2": "Vedi le realizzazioni",
+            "button_link_2": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2"
+      ],
+      "settings": {
+        "height": 86
+      }
+    },
+    "newsletter_MkYTtg": {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "image": "shopify://shop_images/Flexform-HP-Header_20H.webp",
+        "height": 60,
+        "subtitle": "Resta Aggiornato",
+        "heading": "Iscriviti alla Newsletter",
+        "text": "Ricevi in anteprima le ultime novità, consigli di design e offerte esclusive riservate ai nostri iscritti.",
+        "privacy_text": "<p>Iscrivendoti, accetti la nostra <a href=\"/policies/privacy-policy\">Privacy Policy</a> e acconsenti a ricevere comunicazioni commerciali.</p>"
+      }
+    }
+  },
+  "order": [
+    "rist_hero",
+    "newsletter_MkYTtg"
+  ]
+}

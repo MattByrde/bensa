@@ -22,9 +22,14 @@
 <div class="scattered-about">
   <div class="scattered-about__content">
     <div class="scattered-about__left">
-      {%- if section.settings.main_heading != blank -%}
-        <h3 class="typo-section-heading scattered-about__heading">{{ section.settings.main_heading }}</h3>
-      {%- endif -%}
+      <div class="scattered-about__title">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.main_heading != blank -%}
+          <h3 class="typo-section-heading scattered-about__heading">{{ section.settings.main_heading }}</h3>
+        {%- endif -%}
+      </div>
       {%- if section.settings.header_btn_label != blank -%}
         <a href="{{ section.settings.header_btn_link | default: '#' }}" class="scattered-about__btn">
           {{ section.settings.header_btn_label }}
@@ -55,6 +60,11 @@
   "tag": "section",
   "class": "section-scattered-about",
   "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Pre-titolo"
+    },
     {
       "type": "color",
       "id": "background_color",

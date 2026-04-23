@@ -1,28 +1,66 @@
-{{ 'section-custom-progettazione-vision.css' | asset_url | stylesheet_tag }}
+{{ 'section-custom-progettazione-vision.css' | asset_url | stylesheet_tag: preload: true }}
 
-<style>
-  #shopify-section-{{ section.id }} {
-    background-color: {{ section.settings.bg_color }};
-    border-top: 1px solid #333;
-  }
-  .prog-vision-section {
+{%- style -%}
+  #shopify-section-{{ section.id }} .prog-vision {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
-</style>
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .prog-vision {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{%- endstyle -%}
 
-<div class="prog-vision-section">
-  {%- if section.settings.heading_light != blank or section.settings.heading_bold != blank -%}
-    <h2 class="prog-vision-heading typo-h2">
-      {%- if section.settings.heading_light != blank -%}
-        <span class="prog-vision-heading__light">{{ section.settings.heading_light }}</span>
+<section class="prog-vision" id="{{ section.settings.anchor_id }}" data-screen-label="{{ section.settings.screen_label }}">
+  <div class="prog-vision__inner">
+
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
+      <div class="prog-vision__manifesto">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="section-eyebrow prog-vision__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="prog-vision__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="prog-vision__images">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'image_tile' -%}
+          <figure class="prog-vision__img prog-vision__img--{{ forloop.index }}" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 900 | image_tag:
+                loading: 'lazy',
+                widths: '300, 450, 600, 900',
+                sizes: '(max-width: 749px) 45vw, (max-width: 989px) 45vw, 22vw',
+                alt: block.settings.caption,
+                class: 'prog-vision__img-media'
+              }}
+            {%- else -%}
+              <div class="ph"><span class="ph__label">{{ block.settings.caption }}</span></div>
+            {%- endif -%}
+          </figure>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="prog-vision__body">
+      {%- if section.settings.paragraph_1 != blank -%}
+        <div class="prog-vision__p">{{ section.settings.paragraph_1 }}</div>
       {%- endif -%}
-      {%- if section.settings.heading_bold != blank -%}
-        <span class="prog-vision-heading__bold">{{ section.settings.heading_bold }}</span>
+      {%- if section.settings.paragraph_2 != blank -%}
+        <div class="prog-vision__p">{{ section.settings.paragraph_2 }}</div>
       {%- endif -%}
-    </h2>
-  {%- endif -%}
-</div>
+      {%- if section.settings.paragraph_3 != blank -%}
+        <div class="prog-vision__p">{{ section.settings.paragraph_3 }}</div>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
 
 {% schema %}
 {
@@ -31,51 +69,129 @@
   "class": "section",
   "settings": [
     {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
       "type": "range",
       "id": "padding_top",
-      "label": "Padding Top",
-      "min": 0,
+      "label": "Padding top (desktop)",
+      "min": 40,
       "max": 200,
-      "step": 10,
+      "step": 4,
       "unit": "px",
-      "default": 100
+      "default": 120
     },
     {
       "type": "range",
       "id": "padding_bottom",
-      "label": "Padding Bottom",
-      "min": 0,
+      "label": "Padding bottom (desktop)",
+      "min": 40,
       "max": 200,
-      "step": 10,
+      "step": 4,
       "unit": "px",
       "default": 140
     },
     {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background Color",
-      "default": "#1a1a1a"
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 20,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 20,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 96
     },
     {
       "type": "text",
-      "id": "heading_light",
-      "label": "Heading (light)",
-      "default": "Il nostro"
-    },
-    {
-      "type": "text",
-      "id": "heading_bold",
-      "label": "Heading (bold)",
+      "id": "anchor_id",
+      "label": "ID ancora (opzionale)",
       "default": "approccio"
     },
+    {
+      "type": "text",
+      "id": "screen_label",
+      "label": "Screen label",
+      "default": "04 Approccio"
+    },
+    {
+      "type": "header",
+      "content": "Manifesto"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Il nostro approccio"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Headline (usa <span class=accent> per l'ocra)",
+      "default": "Bensa Arredamenti è uno studio di progettazione fatto di artigiani, architetti e un'<span class=\"prog-vision__heading-accent\">idea lunga quarant'anni</span> di case che invecchiano bene."
+    },
+    {
+      "type": "header",
+      "content": "Paragrafi (colonna centrale)"
+    },
+    {
+      "type": "richtext",
+      "id": "paragraph_1",
+      "label": "Paragrafo 1 — cosa facciamo",
+      "default": "<p><strong>Bensa</strong> progetta case che sembrano nascere dal luogo in cui si trovano. Ogni progetto è un nuovo campo di studio, ogni fase un'occasione per rimettere in discussione le abitudini — che si tratti di una cascina sulle Langhe o di un appartamento in centro a Cuneo, esploriamo come i materiali e la storia di un posto possano essere tradotti in arredi che durano nel tempo.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "paragraph_2",
+      "label": "Paragrafo 2 — fondazione e team",
+      "default": "<p><strong>Lo studio nasce nel 1983</strong>, quando Marco Bensa mette insieme quarant'anni di esperienza in arredamento su misura per fondare una bottega dedicata alla progettazione d'interni che dia voce a chi abita la casa. Il nostro gruppo di architetti e artigiani lavora in Piemonte, con partnership consolidate con marchi italiani e falegnami locali che ci permettono di portare a termine progetti di ogni scala.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "paragraph_3",
+      "label": "Paragrafo 3 — nomi del team",
+      "default": "<p>Siamo <strong>Marco, Elena, Luca, Chiara, Giovanni, Sara, Paolo, Martina e Andrea</strong>.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_tile",
+      "name": "Immagine",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Immagine"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Didascalia / alt (mostrata come placeholder se manca l'immagine)",
+          "default": "Didascalia"
+        }
+      ]
+    }
   ],
   "presets": [
     {
       "name": "Progettazione Vision",
-      "settings": {
-        "heading_light": "Il nostro",
-        "heading_bold": "approccio"
-      }
+      "blocks": [
+        { "type": "image_tile", "settings": { "caption": "Team in showroom · 4:5" } },
+        { "type": "image_tile", "settings": { "caption": "Langhe, collina · 5:4" } },
+        { "type": "image_tile", "settings": { "caption": "Mano su legno · dettaglio 4:5" } },
+        { "type": "image_tile", "settings": { "caption": "Clienti in visita · 5:4" } }
+      ]
     }
   ]
 }

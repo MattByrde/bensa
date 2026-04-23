@@ -1,0 +1,85 @@
+.marchi-spotlight{background:#fff;padding:60px 40px 20px}
+@media(max-width:749px){.marchi-spotlight{padding:44px 20px 12px}}
+.marchi-spotlight__inner{max-width:1280px;margin:0 auto}
+
+.marchi-spotlight__head{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:28px;
+}
+@media(max-width:749px){.marchi-spotlight__head{flex-direction:column;align-items:flex-start}}
+
+.marchi-spotlight__title{color:#111;margin:0}
+.marchi-spotlight__sub{font-size:.82rem;color:#555;max-width:40ch;margin:8px 0 0}
+
+.marchi-spotlight__cta{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 22px;border-radius:999px;
+  background-color:var(--color-accent,#1E8BA8);color:#fff;
+  border:1px solid var(--color-accent,#1E8BA8);
+  font-size:.78rem;font-weight:600;letter-spacing:.04em;
+  text-decoration:none;transition:background .2s ease,border-color .2s ease;
+}
+.marchi-spotlight__cta:hover{background-color:#17748d;border-color:#17748d}
+
+.marchi-spotlight__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+@media(max-width:989px){.marchi-spotlight__grid{grid-template-columns:1fr}}
+
+.marchi-spotlight-card{
+  position:relative;display:flex;flex-direction:column;
+  min-height:420px;overflow:hidden;color:#fff;
+  border:1px solid var(--color-line,#e0dccf);
+  transition:transform .3s,box-shadow .3s;
+  text-decoration:none;
+}
+.marchi-spotlight-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.1)}
+
+.marchi-spotlight-card__media{position:absolute;inset:0;z-index:0;background:#1a1a1a}
+.marchi-spotlight-card__media img,
+.marchi-spotlight-card__media svg{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+
+.marchi-spotlight-card::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.4) 40%,rgba(0,0,0,.05) 75%,rgba(0,0,0,0) 100%);
+}
+
+.marchi-spotlight-card__body{
+  position:relative;z-index:2;margin-top:auto;padding:28px 26px;
+  display:flex;flex-direction:column;gap:16px;
+}
+.marchi-spotlight-card__eyebrow{
+  position:absolute;top:16px;left:16px;z-index:2;
+  font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:#fff;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border-radius:6px;
+  padding:4px 10px;
+  line-height:1;
+}
+.marchi-spotlight-card__brand{
+  font-family:var(--font-serif,'Merriweather',Georgia,serif);
+  font-style:italic;font-weight:700;
+  font-size:1.6rem;letter-spacing:.01em;line-height:1;
+}
+.marchi-spotlight-card__brand.is-sans{
+  font-family:var(--font-body,'Assistant',sans-serif);font-style:normal;
+  font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  font-size:1.1rem;
+}
+.marchi-spotlight-card__meta{
+  display:flex;gap:14px;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);
+}
+.marchi-spotlight-card__meta span+span::before{content:"·";margin-right:14px;opacity:.5}
+.marchi-spotlight-card__meta span+span::before{content:"·";margin-right:14px;opacity:.5}
+.marchi-spotlight-card__cta{
+  display:inline-flex;align-items:center;gap:8px;
+  align-self:flex-start;margin-top:6px;
+  font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:#fff;
+}
+.marchi-spotlight-card__cta svg{transition:transform .25s}
+.marchi-spotlight-card:hover .marchi-spotlight-card__cta svg{transform:translateX(4px)}

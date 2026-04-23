@@ -7,9 +7,14 @@
 </style>
 
 <div class="values-section" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
-  {%- if section.settings.heading != blank -%}
-    <h3 class="typo-section-heading values-section__heading">{{ section.settings.heading | remove: '<p>' | remove: '</p>' }}</h3>
-  {%- endif -%}
+  <div class="values-section__title">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h3 class="typo-section-heading values-section__heading">{{ section.settings.heading | remove: '<p>' | remove: '</p>' }}</h3>
+    {%- endif -%}
+  </div>
 
   <div class="values-grid">
     {%- for block in section.blocks -%}
@@ -47,6 +52,11 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Pre-titolo"
+    },
     {
       "type": "color",
       "id": "bg_color",

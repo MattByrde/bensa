@@ -2,11 +2,33 @@
 .rist-hero {
   position: relative;
   overflow: hidden;
-  display: flex;
-  align-items: stretch;
 }
 
-/* ── Background Media ── */
+/* ── Slides ── */
+.rist-hero__slides {
+  position: relative;
+  width: 100%;
+  min-height: inherit;
+}
+
+.rist-hero__slide {
+  position: absolute;
+  inset: 0;
+  min-height: inherit;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+  z-index: 0;
+}
+
+.rist-hero__slide.is-active {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+}
+
+/* ── Background ── */
 .rist-hero__media {
   position: absolute;
   inset: 0;
@@ -38,8 +60,8 @@
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 40%),
-    linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 50%);
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 35%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 55%);
   pointer-events: none;
 }
 
@@ -48,78 +70,260 @@
   position: relative;
   z-index: 2;
   width: 100%;
+  min-height: inherit;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  padding: 80px 32px 60px;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 80px 1rem 48px;
+  box-sizing: border-box;
+  max-width: 1800px;
+  margin: 0 auto;
 }
 
 @media screen and (min-width: 750px) {
   .rist-hero__inner {
-    padding: 100px 60px 72px;
-    align-items: flex-end;
+    padding: 100px 2rem 72px;
   }
 }
 
-@media screen and (min-width: 1200px) {
-  .rist-hero__inner {
-    padding: 120px 80px 88px;
-  }
-}
-
-/* ── Content ── */
+/* ── Left Content ── */
 .rist-hero__content {
   display: flex;
   flex-direction: column;
   gap: 18px;
-  max-width: 640px;
+  max-width: 800px;
 }
 
 .rist-hero__subtitle {
   display: block;
+  font-family: var(--font-heading);
+  font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.5);
   font-size: 0.75rem;
-  font-weight: 500;
 }
 
 .rist-hero__heading {
   color: #fff;
   margin: 0;
-  font-size: clamp(2.2rem, 4.5vw, 4.2rem);
-  line-height: 1.05;
+  font-family: var(--font-heading);
+  font-size: clamp(2.8rem, 5.5vw, 5rem);
+  font-weight: 400;
+  line-height: 0.95;
   letter-spacing: -0.02em;
+  max-width: 900px;
 }
 
 .rist-hero__subtext {
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 0.9rem;
-  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  line-height: 1.6;
   margin: 0;
-  max-width: 80%;
+  max-width: 500px;
+}
+
+/* ── Buttons ── */
+.rist-hero__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+  max-width: 600px;
+}
+
+@media screen and (min-width: 750px) {
+  .rist-hero__actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
 }
 
 .rist-hero__btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  color: #fff;
-  background: var(--color-accent, #1E8BA8);
-  border: 1.5px solid var(--color-accent, #1E8BA8);
-  border-radius: 10px;
-  padding: 14px 28px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  padding: 12px 22px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-decoration: none;
-  align-self: flex-start;
-  margin-top: 4px;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
-.rist-hero__btn:hover {
+.rist-hero__btn--primary {
+  background: var(--color-accent, #1E8BA8);
+  border-color: var(--color-accent, #1E8BA8);
+  color: #fff;
+}
+
+.rist-hero__btn--primary:hover {
   background: #17748d;
   border-color: #17748d;
+}
+
+.rist-hero__btn--secondary {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #fff;
+}
+
+.rist-hero__btn--secondary:hover {
+  background: #fff;
+  color: #111;
+  border-color: #fff;
+}
+
+/* ── Bottom-right controls ── */
+.rist-hero__controls {
+  position: absolute;
+  bottom: 48px;
+  right: 80px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+@media screen and (min-width: 750px) {
+  .rist-hero__controls {
+    bottom: 72px;
+    right: 140px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .rist-hero__controls {
+    bottom: 88px;
+    right: 160px;
+  }
+}
+
+/* Counter */
+.rist-hero__counter {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+.rist-hero__counter-sep {
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0 1px;
+}
+
+/* Progress bar */
+.rist-hero__progress {
+  width: 48px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.rist-hero__progress-bar {
+  width: 0%;
+  height: 100%;
+  background: #fff;
+  border-radius: 2px;
+}
+
+/* Arrow buttons */
+.rist-hero__arrows {
+  display: flex;
+  gap: 4px;
+}
+
+.rist-hero__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.rist-hero__arrow:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* ── Scroll down indicator ── */
+.rist-hero__scroll {
+  position: absolute;
+  bottom: 48px;
+  right: 24px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  text-decoration: none;
+  animation: ristHeroScrollBounce 2s ease-in-out infinite;
+  transition: border-color 0.25s ease;
+}
+
+.rist-hero__scroll:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  animation-play-state: paused;
+}
+
+@keyframes ristHeroScrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+@media screen and (min-width: 750px) {
+  .rist-hero__scroll {
+    bottom: 72px;
+    right: 60px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .rist-hero__scroll {
+    bottom: 88px;
+    right: 80px;
+  }
+}
+
+/* ── Sub-1700 luxury scale (PF ratio, 8px grid) ── */
+@media screen and (min-width: 990px) and (max-width: 1699.98px) {
+  .rist-hero__heading {
+    font-size: clamp(3.24rem, 4.6vw, 4.32rem);
+  }
+
+  .rist-hero__subtext {
+    font-size: 0.78rem;
+    max-width: 60ch;
+  }
+
+  .rist-hero__subtitle {
+    font-size: 0.7rem;
+  }
+
+  .rist-hero__btn {
+    font-size: 0.7rem;
+    padding: 10px 20px;
+  }
 }

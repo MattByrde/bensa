@@ -1,0 +1,167 @@
+{{ 'section-custom-marchi-process.css' | asset_url | stylesheet_tag }}
+
+<section class="marchi-process" aria-label="{{ section.settings.aria_label | default: 'Come selezioniamo i marchi' | escape }}">
+  <div class="marchi-process__inner">
+
+    <div class="marchi-process__head">
+      <div>
+        {%- if section.settings.kicker != blank -%}
+          <p class="marchi-process__kicker">{{ section.settings.kicker }}</p>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <h2 class="typo-section-heading marchi-process__title">{{ section.settings.title }}</h2>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.lead != blank -%}
+        <p class="marchi-process__lead">{{ section.settings.lead }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="marchi-process__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'criterion' -%}
+            <div class="marchi-process-card" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                <div class="marchi-process-card__media">
+                  {{ block.settings.image | image_url: width: 800 | image_tag:
+                     loading: 'lazy',
+                     widths: '300,400,600,800',
+                     sizes: '(min-width: 750px) 25vw, 90vw',
+                     alt: block.settings.image.alt | default: block.settings.title
+                  }}
+                </div>
+              {%- endif -%}
+              {%- if block.settings.number != blank -%}
+                <span class="marchi-process-card__num">{{ block.settings.number }}</span>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <h3 class="typo-card-title marchi-process-card__title">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <p class="marchi-process-card__text">{{ block.settings.text }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.foot_text != blank or section.settings.foot_cta_label != blank -%}
+      <div class="marchi-process__foot">
+        {%- if section.settings.foot_text != blank -%}
+          <span>{{ section.settings.foot_text }}</span>
+        {%- endif -%}
+        {%- if section.settings.foot_cta_label != blank -%}
+          <a href="{{ section.settings.foot_cta_link | default: '#' }}" class="marchi-process__foot-cta">
+            {{ section.settings.foot_cta_label }} →
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Marchi · Metodo",
+  "tag": "section",
+  "class": "shopify-section--marchi-process",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Il nostro metodo di curatela"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titolo",
+      "info": "Usa <em>...</em> per il corsivo serif.",
+      "default": "Come scegliamo <em>i marchi</em> che trovate qui."
+    },
+    {
+      "type": "richtext",
+      "id": "lead",
+      "label": "Paragrafo introduttivo",
+      "default": "<p>Non siamo rivenditori. Siamo uno studio di progettazione che, per lavorare bene, deve potersi fidare di chi produce. <strong>Ogni brand a catalogo attraversa quattro filtri</strong> — e quando uno non li supera più, esce dal listino senza clamore.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Footer"
+    },
+    {
+      "type": "richtext",
+      "id": "foot_text",
+      "label": "Testo in basso",
+      "info": "Usa <em>...</em> per il corsivo serif.",
+      "default": "<p><em>Quattro brand</em> sono usciti dal nostro catalogo negli ultimi due anni. Altri sette stanno per entrare.</p>"
+    },
+    {
+      "type": "text",
+      "id": "foot_cta_label",
+      "label": "Etichetta CTA",
+      "default": "Vedi tutti i brand"
+    },
+    {
+      "type": "url",
+      "id": "foot_cta_link",
+      "label": "Link CTA"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "criterion",
+      "name": "Criterio",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Immagine (16:9)" },
+        { "type": "text", "id": "number", "label": "Numero + titolo breve", "default": "01 — Materia" },
+        { "type": "text", "id": "title", "label": "Titolo criterio", "default": "Qualità dei materiali." },
+        { "type": "textarea", "id": "text", "label": "Descrizione" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marchi · Metodo",
+      "blocks": [
+        {
+          "type": "criterion",
+          "settings": {
+            "number": "01 — Materia",
+            "title": "Qualità dei materiali, prima di tutto.",
+            "text": "Legni certificati, imbottiture in piuma e lattice, tessuti tracciabili. Tocchiamo, smontiamo, chiediamo le schede tecniche. Quello che non resiste a dieci anni di vita vera non entra."
+          }
+        },
+        {
+          "type": "criterion",
+          "settings": {
+            "number": "02 — Progetto",
+            "title": "Coerenza tra forma, funzione e autore.",
+            "text": "Cerchiamo brand con una direzione chiara, che lavorano con designer riconosciuti e non inseguono la moda. La sedia deve avere senso oggi e fra vent'anni."
+          }
+        },
+        {
+          "type": "criterion",
+          "settings": {
+            "number": "03 — Artigianato",
+            "title": "Produzione italiana o europea, tracciabile.",
+            "text": "Visitiamo i laboratori. Conosciamo chi assembla, chi cuce, chi rifinisce. Il 78% dei nostri marchi produce a meno di mille chilometri da Cuneo."
+          }
+        },
+        {
+          "type": "criterion",
+          "settings": {
+            "number": "04 — Servizio",
+            "title": "Post-vendita serio, ricambi reali.",
+            "text": "Un divano si compra una volta, si vive ogni giorno. Pretendiamo rivestimenti sostituibili, ricambi a listino per almeno dieci anni, assistenza diretta senza call-center."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

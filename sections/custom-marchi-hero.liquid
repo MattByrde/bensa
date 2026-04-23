@@ -1,278 +1,161 @@
 {{ 'section-custom-marchi-hero.css' | asset_url | stylesheet_tag }}
 
-{%- style -%}
-  #shopify-section-{{ section.id }} {
-    background-color: {{ section.settings.background_color }};
-    padding-top: 0;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
+<div class="marchi-hero" data-marchi-hero style="min-height: {{ section.settings.height }}vh;">
 
-  @media screen and (min-width: 750px) {
-    #shopify-section-{{ section.id }} {
-      padding-top: 0;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-{%- endstyle -%}
+  <div class="marchi-hero__slides" data-marchi-slides>
+    {%- for block in section.blocks -%}
+      <div class="marchi-hero__slide{% if forloop.first %} is-active{% endif %}" data-marchi-slide="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
 
-<div class="marchi-carousel" data-marchi-carousel>
-
-  {%- comment -%} Intro Panel (left side) {%- endcomment -%}
-  <div class="marchi-carousel__intro">
-    <div class="marchi-carousel__intro-content">
-      {%- if section.settings.subtitle != blank -%}
-        <span class="marchi-carousel__subtitle">{{ section.settings.subtitle }}</span>
-      {%- endif -%}
-      {%- if section.settings.intro_heading != blank -%}
-        <h2 class="marchi-carousel__intro-heading typo-h1">{{ section.settings.intro_heading }}</h2>
-      {%- endif -%}
-      <div class="marchi-carousel__intro-bottom">
-        {%- if section.settings.intro_subtext != blank -%}
-          <div class="marchi-carousel__intro-subtext">{{ section.settings.intro_subtext }}</div>
-        {%- endif -%}
-        {%- if section.settings.intro_button_label != blank -%}
-          <a href="{{ section.settings.intro_button_link | default: '#' }}" class="marchi-carousel__intro-btn typo-btn">
-            {{ section.settings.intro_button_label }}
-          </a>
-        {%- endif -%}
-      </div>
-    </div>
-  </div>
-
-  {%- comment -%} Scroll area with brand cards {%- endcomment -%}
-  <div class="marchi-carousel__scroller" data-marchi-scroller>
-    <div class="marchi-carousel__track" data-marchi-track>
-      {%- for block in section.blocks -%}
-        <div class="marchi-carousel__card" {{ block.shopify_attributes }}>
-
-          {%- comment -%} Background Image {%- endcomment -%}
-          <div class="marchi-carousel__media">
-            {%- if block.settings.image != blank -%}
-              {%- if forloop.first -%}
-                {{ block.settings.image | image_url: width: 800 | image_tag: class: 'marchi-carousel__media-el', loading: 'eager', fetchpriority: 'high' }}
-              {%- else -%}
-                {{ block.settings.image | image_url: width: 800 | image_tag: class: 'marchi-carousel__media-el', loading: 'lazy' }}
-              {%- endif -%}
+        <div class="marchi-hero__media">
+          {%- if block.settings.image != blank -%}
+            {%- if forloop.first -%}
+              {{ block.settings.image | image_url: width: 1920 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750, 1100, 1500, 1920' }}
             {%- else -%}
-              {{ 'lifestyle-1' | placeholder_svg_tag: 'marchi-carousel__media-el placeholder-svg' }}
+              {{ block.settings.image | image_url: width: 1920 | image_tag: loading: 'lazy', sizes: '100vw', widths: '750, 1100, 1500, 1920' }}
             {%- endif -%}
-          </div>
+          {%- else -%}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
 
-          {%- comment -%} Gradient Overlay {%- endcomment -%}
-          <div class="marchi-carousel__overlay"></div>
+        <div class="marchi-hero__overlay"></div>
 
-          {%- comment -%} Card Content {%- endcomment -%}
-          <div class="marchi-carousel__card-inner">
-            <div class="marchi-carousel__card-top">
-              {%- if block.settings.tag != blank -%}
-                <span class="marchi-carousel__tag">{{ block.settings.tag }}</span>
-              {%- endif -%}
-            </div>
-
-            <div class="marchi-carousel__card-center">
-              {%- if block.settings.logo != blank -%}
-                {%- assign logo_alt = block.settings.brand_name | default: '' | escape -%}
-                {{ block.settings.logo | image_url: width: 400 | image_tag: class: 'marchi-carousel__logo-img', loading: 'lazy', alt: logo_alt }}
-              {%- endif -%}
-            </div>
-
-            {%- comment -%} Product strip (bottom-left, like tiktok carousel) {%- endcomment -%}
-            {%- if block.settings.product != blank -%}
-              {%- assign p = block.settings.product -%}
-              <a href="{{ p.url }}" class="marchi-carousel__product">
-                {%- if p.featured_image != blank -%}
-                  <div class="marchi-carousel__product-img">
-                    {{ p.featured_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
-                  </div>
-                {%- endif -%}
-                <div class="marchi-carousel__product-info">
-                  <span class="marchi-carousel__product-title typo-h4">{{ p.title }}</span>
-                  <span class="marchi-carousel__product-price typo-caption">{{ p.price | money }}</span>
-                </div>
-                <span class="marchi-carousel__product-btn" aria-label="Vedi prodotto">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                </span>
-              </a>
-            {%- elsif block.settings.product_title != blank -%}
-              <div class="marchi-carousel__product">
-                {%- if block.settings.product_image != blank -%}
-                  <div class="marchi-carousel__product-img">
-                    {{ block.settings.product_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
-                  </div>
-                {%- endif -%}
-                <div class="marchi-carousel__product-info">
-                  <span class="marchi-carousel__product-title typo-h4">{{ block.settings.product_title }}</span>
-                  {%- if block.settings.product_price != blank -%}
-                    <span class="marchi-carousel__product-price typo-caption">{{ block.settings.product_price }}</span>
-                  {%- endif -%}
-                </div>
-                <span class="marchi-carousel__product-btn" aria-label="Vedi prodotto">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                </span>
+        <div class="marchi-hero__inner">
+          <div class="marchi-hero__content">
+            {%- if block.settings.tags != blank -%}
+              <div class="marchi-hero__tags">
+                {%- assign tag_list = block.settings.tags | split: ',' -%}
+                {%- for t in tag_list -%}
+                  <span class="marchi-hero__tag">{{ t | strip }}</span>
+                {%- endfor -%}
               </div>
             {%- endif -%}
+            {%- if block.settings.brand_name != blank -%}
+              <h2 class="marchi-hero__heading">{{ block.settings.brand_name }}</h2>
+            {%- endif -%}
+            {%- if block.settings.logo != blank -%}
+              <div class="marchi-hero__logo">
+                {{ block.settings.logo | image_url: width: 400 | image_tag: loading: 'lazy', alt: block.settings.brand_name }}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <p class="marchi-hero__subtext">{{ block.settings.description }}</p>
+            {%- endif -%}
+            <div class="marchi-hero__actions">
+              {%- if block.settings.button_label != blank -%}
+                <a href="{{ block.settings.button_link | default: '#' }}" class="marchi-hero__btn marchi-hero__btn--primary typo-btn">
+                  {{ block.settings.button_label }}
+                </a>
+              {%- endif -%}
+              {%- if block.settings.button_label_2 != blank -%}
+                <a href="{{ block.settings.button_link_2 | default: '#' }}" class="marchi-hero__btn marchi-hero__btn--secondary typo-btn">
+                  {{ block.settings.button_label_2 }}
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              {%- endif -%}
+            </div>
           </div>
         </div>
-      {%- endfor -%}
-    </div>
-  </div>
 
-  {%- comment -%} Floating next arrow {%- endcomment -%}
-  <button class="marchi-carousel__next-float" data-marchi-next aria-label="Next">
-    <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
-
-  {%- comment -%} Dot Indicators {%- endcomment -%}
-  <div class="marchi-carousel__dots" data-marchi-dots>
-    {%- for block in section.blocks -%}
-      <button class="marchi-carousel__dot{% if forloop.first %} is-active{% endif %}" data-dot-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+      </div>
     {%- endfor -%}
   </div>
+
+  {%- assign slide_count = section.blocks.size -%}
+  {%- if slide_count > 1 -%}
+    <div class="marchi-hero__controls" data-marchi-controls>
+      <div class="marchi-hero__counter">
+        <span data-marchi-current>01</span>
+        <span class="marchi-hero__counter-sep">/</span>
+        <span>{{ slide_count | prepend: '00' | slice: -2, 2 }}</span>
+      </div>
+      <div class="marchi-hero__progress" data-marchi-progress>
+        <div class="marchi-hero__progress-bar" data-marchi-bar></div>
+      </div>
+      <div class="marchi-hero__arrows">
+        <button class="marchi-hero__arrow marchi-hero__arrow--prev" data-marchi-prev aria-label="Slide precedente">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l6-6M5 12l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="marchi-hero__arrow marchi-hero__arrow--next" data-marchi-next aria-label="Slide successiva">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M19 12l-6-6M19 12l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <a href="#marchi-hero-next" class="marchi-hero__scroll" aria-label="Scorri giù">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+
 </div>
+<span id="marchi-hero-next"></span>
 
 <script>
   (function () {
-    document.querySelectorAll('[data-marchi-carousel]').forEach(function (carousel) {
-      var scroller = carousel.querySelector('[data-marchi-scroller]');
-      var track = carousel.querySelector('[data-marchi-track]');
-      if (!scroller || !track || track.children.length < 2) return;
+    var hero = document.querySelector('[data-marchi-hero]');
+    if (!hero) return;
 
-      var origCards = Array.from(track.children);
-      var n = origCards.length;
+    var slides = hero.querySelectorAll('[data-marchi-slide]');
+    if (slides.length < 2) return;
 
-      /* ── Infinite loop: clone before + after ── */
-      origCards.forEach(function (c) {
-        track.appendChild(c.cloneNode(true));
-      });
-      origCards.forEach(function (c) {
-        track.insertBefore(c.cloneNode(true), track.firstChild);
-      });
+    var current = 0;
+    var total = slides.length;
+    var autoDelay = 6000;
+    var timer;
+    var counterEl = hero.querySelector('[data-marchi-current]');
+    var barEl = hero.querySelector('[data-marchi-bar]');
 
-      var gap = parseFloat(getComputedStyle(track).gap) || 0;
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
-      function cardW() {
-        return track.children[0].offsetWidth + gap;
-      }
+    function goTo(idx) {
+      slides[current].classList.remove('is-active');
+      current = ((idx % total) + total) % total;
+      slides[current].classList.add('is-active');
+      if (counterEl) counterEl.textContent = pad(current + 1);
+      restartBar();
+    }
 
-      function jumpToMiddle(instant) {
-        var w = cardW();
-        if (instant) {
-          scroller.style.scrollBehavior = 'auto';
-          scroller.scrollLeft = w * n;
-          scroller.style.scrollBehavior = '';
-        }
-      }
+    function restartBar() {
+      if (!barEl) return;
+      barEl.style.transition = 'none';
+      barEl.style.width = '0%';
+      barEl.offsetWidth;
+      barEl.style.transition = 'width ' + autoDelay + 'ms linear';
+      barEl.style.width = '100%';
+    }
 
-      requestAnimationFrame(function () { requestAnimationFrame(function () { jumpToMiddle(true); }); });
+    function startAuto() {
+      restartBar();
+      timer = setInterval(function () { goTo(current + 1); }, autoDelay);
+    }
 
-      var ticking = false;
-      scroller.addEventListener('scroll', function () {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(function () {
-          ticking = false;
-          var w = cardW();
-          var sl = scroller.scrollLeft;
-          var total = w * n;
-          if (sl < w * 0.5) {
-            scroller.style.scrollBehavior = 'auto';
-            scroller.scrollLeft = sl + total;
-            scroller.style.scrollBehavior = '';
-          } else if (sl >= w * (n * 2 - 0.5)) {
-            scroller.style.scrollBehavior = 'auto';
-            scroller.scrollLeft = sl - total;
-            scroller.style.scrollBehavior = '';
-          }
-        });
-      });
-
-      /* ── Drag / swipe ── */
-      var isDragging = false;
-      var startX = 0;
-      var scrollStart = 0;
-      var velocity = 0;
-      var lastX = 0;
-      var lastTime = 0;
-
-      function onPointerDown(e) {
-        isDragging = true;
-        startX = e.pageX || e.touches[0].pageX;
-        scrollStart = scroller.scrollLeft;
-        lastX = startX;
-        lastTime = Date.now();
-        velocity = 0;
-        scroller.style.scrollSnapType = 'none';
-        scroller.style.cursor = 'grabbing';
-        scroller.classList.add('is-dragging');
-      }
-
-      function onPointerMove(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-        var x = e.pageX || e.touches[0].pageX;
-        var now = Date.now();
-        var dt = now - lastTime;
-        if (dt > 0) velocity = (lastX - x) / dt;
-        lastX = x;
-        lastTime = now;
-        scroller.scrollLeft = scrollStart - (x - startX);
-      }
-
-      function onPointerUp() {
-        if (!isDragging) return;
-        isDragging = false;
-        scroller.style.cursor = '';
-        scroller.classList.remove('is-dragging');
-        var w = cardW();
-        var momentum = velocity * 300;
-        var target = Math.round((scroller.scrollLeft + momentum) / w) * w;
-        scroller.style.scrollSnapType = '';
-        scroller.scrollTo({ left: target, behavior: 'smooth' });
-      }
-
-      scroller.addEventListener('mousedown', onPointerDown);
-      scroller.addEventListener('mousemove', onPointerMove);
-      scroller.addEventListener('mouseup', onPointerUp);
-      scroller.addEventListener('mouseleave', onPointerUp);
-      scroller.addEventListener('touchstart', onPointerDown, { passive: true });
-      scroller.addEventListener('touchmove', onPointerMove, { passive: false });
-      scroller.addEventListener('touchend', onPointerUp);
-
-      scroller.addEventListener('click', function (e) {
-        if (Math.abs(lastX - startX) > 5) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      }, true);
-
-      /* ── Next arrow ── */
-      var nextBtn = carousel.querySelector('[data-marchi-next]');
-      if (nextBtn) {
-        nextBtn.addEventListener('click', function () {
-          stopAuto();
-          scroller.scrollBy({ left: cardW(), behavior: 'smooth' });
-          setTimeout(startAuto, 3000);
-        });
-      }
-
-      /* ── Auto-play ── */
-      var autoInterval = null;
-      function startAuto() {
-        stopAuto();
-        autoInterval = setInterval(function () {
-          scroller.scrollBy({ left: cardW(), behavior: 'smooth' });
-        }, 6000);
-      }
-      function stopAuto() {
-        if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
-      }
-
+    function resetAuto() {
+      clearInterval(timer);
       startAuto();
-      carousel.addEventListener('mouseenter', stopAuto);
-      carousel.addEventListener('mouseleave', startAuto);
-      scroller.addEventListener('touchstart', stopAuto, { passive: true });
-      scroller.addEventListener('touchend', function () { setTimeout(startAuto, 3000); });
+    }
+
+    var prevBtn = hero.querySelector('[data-marchi-prev]');
+    var nextBtn = hero.querySelector('[data-marchi-next]');
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { goTo(current - 1); resetAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { goTo(current + 1); resetAuto(); });
+
+    var startX = 0;
+    var dragging = false;
+
+    hero.addEventListener('touchstart', function (e) {
+      startX = e.touches[0].clientX;
+      dragging = true;
+    }, { passive: true });
+
+    hero.addEventListener('touchend', function (e) {
+      if (!dragging) return;
+      dragging = false;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 50) { goTo(dx < 0 ? current + 1 : current - 1); resetAuto(); }
     });
+
+    startAuto();
   })();
 </script>
 
@@ -283,49 +166,14 @@
   "class": "section",
   "settings": [
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Colore sfondo",
-      "default": "#f5f3ec"
-    },
-    {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Sottotitolo",
-      "default": "Marchi"
-    },
-    {
-      "type": "text",
-      "id": "intro_heading",
-      "label": "Titolo",
-      "default": "I nostri marchi"
-    },
-    {
-      "type": "richtext",
-      "id": "intro_subtext",
-      "label": "Testo introduttivo",
-      "default": "<p>Collaboriamo con i migliori marchi a livello mondiale per offrirvi qualità e design senza compromessi.</p>"
-    },
-    {
-      "type": "text",
-      "id": "intro_button_label",
-      "label": "Testo pulsante",
-      "default": "Scopri di più"
-    },
-    {
-      "type": "url",
-      "id": "intro_button_link",
-      "label": "Link pulsante"
-    },
-    {
       "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
+      "id": "height",
+      "label": "Altezza sezione",
+      "min": 40,
       "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "Padding inferiore",
-      "default": 0
+      "step": 5,
+      "unit": "vh",
+      "default": 80
     }
   ],
   "blocks": [
@@ -345,33 +193,47 @@
         },
         {
           "type": "text",
-          "id": "tag",
-          "label": "Tag (es. Novità, Cucine, Bagni)",
-          "info": "Etichetta pill mostrata in alto."
-        },
-        {
-          "type": "product",
-          "id": "product",
-          "label": "Prodotto",
-          "info": "Seleziona un prodotto per la strip in basso."
-        },
-        {
-          "type": "image_picker",
-          "id": "product_image",
-          "label": "Immagine prodotto (manuale)",
-          "info": "Usata solo se nessun prodotto è selezionato."
+          "id": "tags",
+          "label": "Tag",
+          "info": "Separa più tag con una virgola. Es: Cucine, Bagni, Living"
         },
         {
           "type": "text",
-          "id": "product_title",
-          "label": "Titolo prodotto (manuale)",
-          "info": "Usato solo se nessun prodotto è selezionato."
+          "id": "brand_name",
+          "label": "Nome brand"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descrizione"
+        },
+        {
+          "type": "header",
+          "content": "Pulsante primario"
         },
         {
           "type": "text",
-          "id": "product_price",
-          "label": "Prezzo prodotto (manuale)",
-          "info": "Usato solo se nessun prodotto è selezionato. Es. €480"
+          "id": "button_label",
+          "label": "Testo pulsante"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Link pulsante"
+        },
+        {
+          "type": "header",
+          "content": "Pulsante secondario"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "Testo pulsante"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Link pulsante"
         }
       ]
     }

@@ -17,9 +17,14 @@
 <section class="community" data-community>
   <div class="community__inner">
     <div class="community__header">
-      {%- if section.settings.heading != blank -%}
-        <h2 class="typo-section-heading community__heading">{{ section.settings.heading | remove: '<p>' | remove: '</p>' }}</h2>
-      {%- endif -%}
+      <div class="community__title">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="typo-section-heading community__heading">{{ section.settings.heading | remove: '<p>' | remove: '</p>' }}</h2>
+        {%- endif -%}
+      </div>
       {%- if section.settings.cta_label != blank -%}
         <a href="{{ section.settings.cta_link | default: '#' }}" class="community__cta">
           {{ section.settings.cta_label }}
@@ -245,6 +250,11 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Pre-titolo"
+    },
     {
       "type": "color",
       "id": "background_color",

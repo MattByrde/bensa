@@ -12,17 +12,22 @@
 
 <div class="about-intro">
   <div class="about-intro__inner">
-    {%- if section.settings.heading_light != blank or section.settings.heading_bold != blank -%}
-      <h3 class="typo-section-heading about-intro__heading">
-        {%- if section.settings.heading_light != blank -%}
-          {{ section.settings.heading_light }}
-        {%- endif -%}
-        {% if section.settings.heading_light != blank and section.settings.heading_bold != blank %} {% endif %}
-        {%- if section.settings.heading_bold != blank -%}
-          <strong>{{ section.settings.heading_bold }}</strong>
-        {%- endif -%}
-      </h3>
-    {%- endif -%}
+    <div class="about-intro__title">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading_light != blank or section.settings.heading_bold != blank -%}
+        <h3 class="typo-section-heading about-intro__heading">
+          {%- if section.settings.heading_light != blank -%}
+            {{ section.settings.heading_light }}
+          {%- endif -%}
+          {% if section.settings.heading_light != blank and section.settings.heading_bold != blank %} {% endif %}
+          {%- if section.settings.heading_bold != blank -%}
+            <strong>{{ section.settings.heading_bold }}</strong>
+          {%- endif -%}
+        </h3>
+      {%- endif -%}
+    </div>
 
     {%- if section.settings.subtitle_left != blank or section.settings.subtitle_right != blank -%}
       <div class="about-intro__subtitle-row">
@@ -92,6 +97,11 @@
       "id": "bg_color",
       "label": "Colore sfondo",
       "default": "#f5f3ec"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Pre-titolo"
     },
     {
       "type": "text",

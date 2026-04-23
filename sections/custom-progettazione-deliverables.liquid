@@ -1,0 +1,180 @@
+{{ 'section-custom-progettazione-deliverables.css' | asset_url | stylesheet_tag: preload: true }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+</style>
+
+<div
+  class="prog-deliverables"
+  {% if section.settings.anchor_id != blank %}id="{{ section.settings.anchor_id }}"{% endif %}
+  {% if section.settings.screen_label != blank %}data-screen-label="{{ section.settings.screen_label }}"{% endif %}
+  style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="prog-deliverables__inner">
+  <div class="prog-deliverables__title">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h3 class="typo-section-heading prog-deliverables__heading">{{ section.settings.heading | remove: '<p>' | remove: '</p>' }}</h3>
+    {%- endif -%}
+  </div>
+
+  <div class="prog-deliverables__grid">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+
+        {%- when 'text_card' -%}
+          <div class="prog-deliverables__cell prog-deliverables__cell--text" {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}
+              <h4 class="typo-card-title prog-deliverables__card-title">{{ block.settings.title }}</h4>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <p class="prog-deliverables__text">{{ block.settings.description }}</p>
+            {%- endif -%}
+          </div>
+
+        {%- when 'image_card' -%}
+          <div class="prog-deliverables__cell prog-deliverables__cell--image" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'prog-deliverables__img' }}
+            {%- else -%}
+              <div class="prog-deliverables__placeholder prog-deliverables__placeholder--{{ block.settings.placeholder_tint | default: 'beige' }}">
+                {%- if block.settings.caption != blank -%}
+                  <span class="prog-deliverables__placeholder-tag">{{ block.settings.caption }}</span>
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Prog. Deliverables",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Pre-titolo"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Cosa ricevete, <em>nero su bianco.</em></p>"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "ID ancora",
+      "default": "deliverables"
+    },
+    {
+      "type": "text",
+      "id": "screen_label",
+      "label": "Etichetta sezione (screen)",
+      "default": "09 Deliverables"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_card",
+      "name": "Text Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Capitolato firmato"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Ogni voce di fornitura con marchio, codice, finitura, prezzo. Niente sorprese a fine cantiere."
+        }
+      ]
+    },
+    {
+      "type": "image_card",
+      "name": "Image Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Didascalia placeholder",
+          "info": "Mostrata quando non è caricata un'immagine."
+        },
+        {
+          "type": "select",
+          "id": "placeholder_tint",
+          "label": "Tinta placeholder",
+          "options": [
+            { "value": "beige", "label": "Beige" },
+            { "value": "blue", "label": "Blu" }
+          ],
+          "default": "beige"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "presets": [
+    {
+      "name": "Prog. Deliverables",
+      "blocks": [
+        { "type": "text_card", "settings": { "title": "Capitolato firmato", "description": "Ogni voce di fornitura con marchio, codice, finitura, prezzo. Niente sorprese a fine cantiere." } },
+        { "type": "image_card", "settings": { "caption": "Capitolato · 4:4", "placeholder_tint": "beige" } },
+        { "type": "text_card", "settings": { "title": "Tavole tecniche", "description": "Piante, prospetti, sezioni quotate. Schemi impianti elettrici e idraulici per le maestranze." } },
+        { "type": "image_card", "settings": { "caption": "Tavole · 4:4", "placeholder_tint": "blue" } },
+        { "type": "image_card", "settings": { "caption": "Render · 4:4", "placeholder_tint": "beige" } },
+        { "type": "text_card", "settings": { "title": "Render fotorealistici", "description": "Una vista per ogni ambiente principale, luce diurna e serale. Per vedere la casa prima di viverla." } },
+        { "type": "image_card", "settings": { "caption": "Piano luce · 4:4", "placeholder_tint": "beige" } },
+        { "type": "text_card", "settings": { "title": "Piano luce & moodboard", "description": "Schema illuminotecnico per ogni ambiente e moodboard materica firmata. Calcolo lux incluso." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

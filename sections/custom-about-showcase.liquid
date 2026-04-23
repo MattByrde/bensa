@@ -18,9 +18,14 @@
 <div class="about-showcase">
   {%- comment -%} Header row: heading + description {%- endcomment -%}
   <div class="about-showcase__header">
-    {%- if section.settings.heading != blank -%}
-      <h3 class="typo-section-heading about-showcase__heading">{{ section.settings.heading }}</h3>
-    {%- endif -%}
+    <div class="about-showcase__title">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h3 class="typo-section-heading about-showcase__heading">{{ section.settings.heading }}</h3>
+      {%- endif -%}
+    </div>
     <div class="about-showcase__intro">
       {%- if section.settings.description != blank -%}
         <p class="about-showcase__description">{{ section.settings.description }}</p>
@@ -70,6 +75,11 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Pre-titolo"
+    },
     {
       "type": "color",
       "id": "background_color",

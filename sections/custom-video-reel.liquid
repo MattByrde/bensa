@@ -1,0 +1,413 @@
+{{ 'section-custom-video-reel.css' | asset_url | stylesheet_tag }}
+
+<section class="video-reel" data-video-reel
+  style="--video-reel-bg: {{ section.settings.bg_color | default: '#F5F0E8' }}; --video-reel-pt: {{ section.settings.padding_top | default: 100 }}px; --video-reel-pb: {{ section.settings.padding_bottom | default: 100 }}px; --video-reel-pt-m: {{ section.settings.padding_top_mobile | default: 72 }}px; --video-reel-pb-m: {{ section.settings.padding_bottom_mobile | default: 72 }}px;"
+  aria-label="{{ section.settings.aria_label | default: 'Collezioni in movimento' | escape }}">
+  <div class="video-reel__inner">
+
+    <div class="video-reel__head">
+      <div class="video-reel__head-left">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="video-reel__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <h2 class="video-reel__title">{{ section.settings.title }}</h2>
+        {%- endif -%}
+      </div>
+      <div class="video-reel__head-right">
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_url | default: '#' }}" class="video-reel__cta">{{ section.settings.button_label }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="video-reel__stage">
+      <button type="button" class="video-reel__arrow video-reel__arrow--prev" data-video-reel-prev aria-label="Video precedente">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button type="button" class="video-reel__arrow video-reel__arrow--next" data-video-reel-next aria-label="Video successivo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <div class="video-reel__viewport" data-video-reel-viewport>
+        <div class="video-reel__track">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'video' -%}
+            {%- assign card_tag = 'div' -%}
+            {%- if block.settings.url != blank -%}{%- assign card_tag = 'a' -%}{%- endif -%}
+            <{{ card_tag }} class="video-reel-card"
+              {% if card_tag == 'a' %}href="{{ block.settings.url }}"{% endif %}
+              {{ block.shopify_attributes }}>
+              <div class="video-reel-card__media">
+                {%- if block.settings.video != blank -%}
+                  {{ block.settings.video
+                      | video_tag:
+                        image_size: '1600x',
+                        autoplay: true,
+                        loop: true,
+                        muted: true,
+                        controls: false,
+                        playsinline: true,
+                        preload: 'metadata' }}
+                {%- elsif block.settings.video_url != blank -%}
+                  {%- if block.settings.video_url.type == 'youtube' -%}
+                    <iframe
+                      src="https://www.youtube.com/embed/{{ block.settings.video_url.id }}?autoplay=1&mute=1&loop=1&playlist={{ block.settings.video_url.id }}&controls=0&modestbranding=1&rel=0&playsinline=1"
+                      title="{{ block.settings.headline | default: block.settings.kicker | escape }}"
+                      frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                  {%- elsif block.settings.video_url.type == 'vimeo' -%}
+                    <iframe
+                      src="https://player.vimeo.com/video/{{ block.settings.video_url.id }}?autoplay=1&muted=1&loop=1&background=1&controls=0"
+                      title="{{ block.settings.headline | default: block.settings.kicker | escape }}"
+                      frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                  {%- endif -%}
+                {%- elsif block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', alt: block.settings.headline | default: block.settings.kicker | escape }}
+                {%- else -%}
+                  <div class="ph ph--video"><span class="ph__label">{{ block.settings.placeholder_label | default: 'Video · 16:9 · 1920×1080' | escape }}</span></div>
+                {%- endif -%}
+                {%- if block.settings.tag != blank -%}
+                  <span class="video-reel-card__tag"><span class="video-reel-card__tag-dot"></span>{{ block.settings.tag }}</span>
+                {%- endif -%}
+                <span class="video-reel-card__play" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </span>
+              </div>
+              <div class="video-reel-card__body">
+                {%- if block.settings.kicker != blank -%}
+                  <span class="video-reel-card__kicker">{{ block.settings.kicker }}</span>
+                {%- endif -%}
+                {%- if block.settings.headline != blank -%}
+                  <h3 class="video-reel-card__brand">{{ block.settings.headline }}</h3>
+                {%- endif -%}
+                {%- if block.settings.duration != blank or block.settings.location != blank or block.settings.context != blank -%}
+                  <div class="video-reel-card__meta">
+                    {%- if block.settings.duration != blank -%}<span>{{ block.settings.duration }}</span>{%- endif -%}
+                    {%- if block.settings.duration != blank and block.settings.location != blank -%}<span class="video-reel-card__meta-sep"></span>{%- endif -%}
+                    {%- if block.settings.location != blank -%}<span>{{ block.settings.location }}</span>{%- endif -%}
+                    {%- if block.settings.location != blank and block.settings.context != blank -%}<span class="video-reel-card__meta-sep"></span>{%- elsif block.settings.duration != blank and block.settings.context != blank and block.settings.location == blank -%}<span class="video-reel-card__meta-sep"></span>{%- endif -%}
+                    {%- if block.settings.context != blank -%}<span>{{ block.settings.context }}</span>{%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            </{{ card_tag }}>
+          {%- endif -%}
+        {%- endfor -%}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  (function(){
+    var root = document.currentScript && document.currentScript.previousElementSibling;
+    while (root && (!root.matches || !root.matches('section.video-reel'))) {
+      root = root.previousElementSibling;
+    }
+    if (!root) return;
+    var vp = root.querySelector('[data-video-reel-viewport]');
+    if (!vp) return;
+    var track = vp.querySelector('.video-reel__track');
+    var cards = track ? track.querySelectorAll('.video-reel-card') : [];
+    var prev = root.querySelector('[data-video-reel-prev]');
+    var next = root.querySelector('[data-video-reel-next]');
+    if (!track || !cards.length) return;
+
+    function scrollToIndex(i){
+      var n = Math.max(0, Math.min(cards.length - 1, i));
+      var card = cards[n];
+      if (!card) return;
+      vp.scrollTo({ left: card.offsetLeft - vp.offsetLeft, behavior: 'smooth' });
+    }
+
+    function currentIndex(){
+      var closest = 0, min = Infinity;
+      var vpLeft = vp.scrollLeft;
+      for (var i = 0; i < cards.length; i++) {
+        var d = Math.abs(cards[i].offsetLeft - vp.offsetLeft - vpLeft);
+        if (d < min){ min = d; closest = i; }
+      }
+      return closest;
+    }
+
+    function updateUI(){
+      var idx = currentIndex();
+      if (prev) prev.disabled = idx <= 0;
+      if (next) next.disabled = idx >= cards.length - 1;
+    }
+
+    if (prev) prev.addEventListener('click', function(){ scrollToIndex(currentIndex() - 1); });
+    if (next) next.addEventListener('click', function(){ scrollToIndex(currentIndex() + 1); });
+
+    var t;
+    vp.addEventListener('scroll', function(){
+      clearTimeout(t);
+      t = setTimeout(updateUI, 80);
+    }, { passive: true });
+
+    var isDown = false, startX = 0, startScroll = 0, moved = false;
+    vp.addEventListener('pointerdown', function(e){
+      if (e.target.closest('a')) return;
+      isDown = true; moved = false; startX = e.clientX; startScroll = vp.scrollLeft;
+      try { vp.setPointerCapture(e.pointerId); } catch(err){}
+    });
+    vp.addEventListener('pointermove', function(e){
+      if (!isDown) return;
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) > 3) moved = true;
+      vp.scrollLeft = startScroll - dx;
+    });
+    function endDrag(){ isDown = false; }
+    vp.addEventListener('pointerup', endDrag);
+    vp.addEventListener('pointercancel', endDrag);
+    vp.addEventListener('click', function(e){
+      if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
+    }, true);
+
+    updateUI();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Custom · Video reel",
+  "tag": "section",
+  "class": "shopify-section--video-reel",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Collezioni in movimento"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titolo",
+      "info": "Usa <em>...</em> per il corsivo serif.",
+      "default": "I marchi li trovate in <em>showroom</em>. Le loro <em>storie</em>, <em>qui</em>."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Etichetta pulsante",
+      "default": "Guarda tutti i video"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "URL pulsante"
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "Etichetta ARIA",
+      "default": "Collezioni in movimento"
+    },
+    {
+      "type": "header",
+      "content": "Aspetto"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Colore sfondo",
+      "default": "#F5F0E8"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superiore (desktop)",
+      "min": 0, "max": 200, "step": 4, "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferiore (desktop)",
+      "min": 0, "max": 200, "step": 4, "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding superiore (mobile)",
+      "min": 0, "max": 160, "step": 4, "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding inferiore (mobile)",
+      "min": 0, "max": 160, "step": 4, "unit": "px",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "select",
+          "id": "tag",
+          "label": "Tag",
+          "options": [
+            { "value": "Atelier", "label": "Atelier" },
+            { "value": "Making-of", "label": "Making-of" },
+            { "value": "Salone", "label": "Salone" },
+            { "value": "Collezione", "label": "Collezione" }
+          ],
+          "default": "Atelier"
+        },
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "Kicker (brand · collezione)",
+          "default": "Flexform · Collezione 2026"
+        },
+        {
+          "type": "text",
+          "id": "headline",
+          "label": "Headline",
+          "info": "Usa <em>...</em> per il corsivo serif.",
+          "default": "Il divano <em>Groundpiece</em>, trent'anni dopo."
+        },
+        {
+          "type": "text",
+          "id": "duration",
+          "label": "Durata",
+          "default": "2:48"
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Luogo",
+          "default": "Meda, IT"
+        },
+        {
+          "type": "text",
+          "id": "context",
+          "label": "Contesto / evento",
+          "default": "Salone 2026"
+        },
+        {
+          "type": "header",
+          "content": "Video"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video caricato",
+          "info": "Carica un file video da Shopify. Viene riprodotto in muto in loop. Ha priorità sull'URL esterno."
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "URL video esterno",
+          "accept": ["youtube", "vimeo"],
+          "info": "Incolla un link YouTube o Vimeo. Usato se non è stato caricato un video."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Thumbnail (16:9)",
+          "info": "Fallback se non ci sono video."
+        },
+        {
+          "type": "text",
+          "id": "placeholder_label",
+          "label": "Etichetta placeholder",
+          "info": "Mostrata solo se non c'è una thumbnail."
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link al video"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom · Video reel",
+      "blocks": [
+        {
+          "type": "video",
+          "settings": {
+            "tag": "Atelier",
+            "kicker": "Flexform · Collezione 2026",
+            "headline": "Il divano <em>Groundpiece</em>, trent'anni dopo.",
+            "duration": "2:48",
+            "location": "Meda, IT",
+            "context": "Salone 2026",
+            "placeholder_label": "Video · Flexform atelier · Meda · 16:9 · 1920×1080"
+          }
+        },
+        {
+          "type": "video",
+          "settings": {
+            "tag": "Making-of",
+            "kicker": "Cassina · Maestri",
+            "headline": "La <em>LC4</em> nasce a mano, un pezzo alla volta.",
+            "duration": "3:12",
+            "location": "Meda, IT",
+            "context": "Le Corbusier",
+            "placeholder_label": "Video · Cassina making-of · 16:9 · 1920×1080"
+          }
+        },
+        {
+          "type": "video",
+          "settings": {
+            "tag": "Salone",
+            "kicker": "Poliform · Alea Pro",
+            "headline": "La cucina come <em>architettura</em> domestica.",
+            "duration": "1:58",
+            "location": "Milano",
+            "context": "Salone 2026",
+            "placeholder_label": "Video · Poliform cucine · Salone 2026 · 16:9"
+          }
+        },
+        {
+          "type": "video",
+          "settings": {
+            "tag": "Atelier",
+            "kicker": "Flos · Luce progettata",
+            "headline": "Ottant'anni di <em>innovazione italiana</em>.",
+            "duration": "4:20",
+            "location": "Bovezzo, IT",
+            "context": "Castiglioni",
+            "placeholder_label": "Video · Flos illuminazione · Bocci atelier · 16:9"
+          }
+        },
+        {
+          "type": "video",
+          "settings": {
+            "tag": "Collezione",
+            "kicker": "Minotti · Outdoor 2026",
+            "headline": "Vivere <em>fuori</em>, con la stessa cura.",
+            "duration": "2:35",
+            "location": "Meda, IT",
+            "context": "Salone 2026",
+            "placeholder_label": "Video · Minotti outdoor · 16:9"
+          }
+        },
+        {
+          "type": "video",
+          "settings": {
+            "tag": "Making-of",
+            "kicker": "Baxter · Pelle naturale",
+            "headline": "La pelle che <em>invecchia bene</em>.",
+            "duration": "3:02",
+            "location": "Lurago d'Erba, IT",
+            "context": "Atelier",
+            "placeholder_label": "Video · Baxter pelle · Lavorazione artigianale · 16:9"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
