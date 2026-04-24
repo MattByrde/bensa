@@ -32,7 +32,9 @@ body {
 em,
 .info-cards__heading strong,
 h3 strong,
-h2 strong{
+h2 strong,
+.prog-intro__lead strong,
+.ristr-process__title strong{
   font-family: 'Merriweather', Georgia, 'Times New Roman', serif;
   font-weight: 500;
   font-style: italic;

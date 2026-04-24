@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RCM · Intro — Bensa Arredamenti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ---- Tokens (from styles.css) ---- */
+:root{
+  --color-bg:#FAF8F5;
+  --color-beige:#F5F0E8;
+  --color-text:#202020;
+  --color-muted:#6b6b66;
+  --color-accent:#1E8BA8;
+  --color-line:#E5E0DA;
+  --font-heading:"Assistant","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --font-body:"Assistant","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --font-serif:"Merriweather",Georgia,"Times New Roman",serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--font-body);
+  background:var(--color-bg);
+  color:var(--color-text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.5;
+}
+em{font-family:var(--font-serif);font-weight:700;font-style:normal}
+
+/* ---- RCM Intro (from Ristrutturazioni-Chiavi-in-Mano.html) ---- */
+.rcm-intro{background:#fff;padding:120px 40px 100px}
+@media(max-width:749px){.rcm-intro{padding:80px 20px 72px}}
+.rcm-intro__inner{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:140px 1fr;gap:60px;align-items:start}
+@media(max-width:749px){.rcm-intro__inner{grid-template-columns:1fr;gap:24px}}
+.rcm-intro__eyebrow{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--color-muted);font-weight:600;padding-top:16px;position:relative}
+.rcm-intro__eyebrow::before{content:"";position:absolute;top:0;left:0;width:36px;height:2px;background:var(--color-accent)}
+.rcm-intro__statement{
+  font-family:var(--font-heading);font-size:clamp(1.5rem,2.3vw,2rem);font-weight:300;
+  line-height:1.28;letter-spacing:-.015em;color:#111;margin:0;text-wrap:pretty;
+}
+.rcm-intro__statement em{font-family:var(--font-serif);font-style:italic;color:var(--color-accent);font-weight:400}
+.rcm-intro__statement .rcm-intro__break{display:block;margin-top:18px;font-size:.9em;color:#555;font-family:var(--font-body);font-weight:400}
+</style>
+</head>
+<body>
+
+<section class="rcm-intro" data-screen-label="02 Manifesto">
+  <div class="rcm-intro__inner">
+    <p class="rcm-intro__eyebrow">Il servizio</p>
+    <p class="rcm-intro__statement">
+      Ristrutturare significa dire <em>sì</em> a cento decisioni al giorno — maestranze, fornitori, burocrazia, materiali, imprevisti. Noi le prendiamo per voi.
+      <span class="rcm-intro__break">
+        Quarant'anni, tre generazioni, un team di venti persone in studio: architetti, arredatori, geometri, ufficio tecnico. Tutto quello che serve per trasformare una casa qualunque nella <em>vostra</em> casa, senza dover parlare con venti interlocutori diversi.
+      </span>
+    </p>
+  </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,301 @@
+{{ 'section-custom-ristrutturazioni-timeline.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .ristr-timeline {
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding_top | times: 0.7 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.7 | round: 0 }}px;
+  }
+  #shopify-section-{{ section.id }} .ristr-timeline__step-num,
+  #shopify-section-{{ section.id }} .ristr-timeline__assurance-value em {
+    color: {{ section.settings.accent_color }};
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .ristr-timeline {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- assign steps = section.blocks | where: 'type', 'step' -%}
+{%- assign assurances = section.blocks | where: 'type', 'assurance' -%}
+
+<section class="ristr-timeline" {% if section.settings.anchor_id != blank %}id="{{ section.settings.anchor_id }}"{% endif %}>
+  <div class="ristr-timeline__inner">
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.cta_label != blank -%}
+      <div class="ristr-timeline__head">
+        <div>
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="ristr-timeline__eyebrow">{{ section.settings.eyebrow }}</p>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="ristr-timeline__heading">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.cta_label != blank -%}
+          <a href="{{ section.settings.cta_link | default: '#' }}" class="ristr-timeline__cta">
+            {{ section.settings.cta_label }}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if steps.size > 0 -%}
+      <div class="ristr-timeline__grid">
+        {%- for block in steps -%}
+          <div class="ristr-timeline__step" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <div class="ristr-timeline__step-media">
+                {{ block.settings.image | image_url: width: 1400 | image_tag:
+                   loading: 'lazy',
+                   widths: '400,600,800,1000,1200,1400',
+                   sizes: '(min-width: 1100px) 22vw, (min-width: 650px) 45vw, 90vw',
+                   alt: block.settings.image.alt | default: block.settings.number
+                }}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.number != blank -%}
+              <span class="ristr-timeline__step-num">{{ block.settings.number }}</span>
+            {%- endif -%}
+            {%- if block.settings.duration != blank -%}
+              <span class="ristr-timeline__step-dur">{{ block.settings.duration }}</span>
+            {%- endif -%}
+            <div class="ristr-timeline__step-body">
+              {%- if block.settings.title != blank -%}
+                <h3 class="ristr-timeline__step-title">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <p class="ristr-timeline__step-text">{{ block.settings.text }}</p>
+              {%- endif -%}
+              {%- if block.settings.who != blank -%}
+                <div class="ristr-timeline__step-who">{{ block.settings.who }}</div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if assurances.size > 0 -%}
+      <div class="ristr-timeline__assurance">
+        {%- for block in assurances -%}
+          <div class="ristr-timeline__assurance-item" {{ block.shopify_attributes }}>
+            {%- if block.settings.value != blank -%}
+              <span class="ristr-timeline__assurance-value">{{ block.settings.value }}</span>
+            {%- endif -%}
+            {%- if block.settings.label != blank -%}
+              <span class="ristr-timeline__assurance-label">{{ block.settings.label }}</span>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ristr · Timeline",
+  "tag": "section",
+  "class": "shopify-section--ristr-timeline",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor ID",
+      "default": "processo"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Kicker",
+      "default": "Il processo"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Titolo",
+      "info": "Usa <em>...</em> per il corsivo serif.",
+      "default": "<p>Sei fasi, <em>un metodo.</em></p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Etichetta CTA",
+      "default": "Richiedi un sopralluogo"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Link CTA"
+    },
+    {
+      "type": "header",
+      "content": "Colori"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Sfondo",
+      "default": "#0F0C0A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Testo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accento",
+      "default": "#1E8BA8"
+    },
+    {
+      "type": "header",
+      "content": "Spaziatura"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Fase",
+      "limit": 8,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Immagine di sfondo" },
+        { "type": "text", "id": "number", "label": "Numero + etichetta", "default": "01 · Sopralluogo" },
+        { "type": "text", "id": "duration", "label": "Durata", "default": "gratis" },
+        { "type": "richtext", "id": "title", "label": "Titolo", "info": "Usa <em>...</em> per il corsivo serif.", "default": "<p>Ci <em>conosciamo.</em></p>" },
+        { "type": "textarea", "id": "text", "label": "Descrizione", "default": "Sopralluogo a casa vostra. Rilievo, vincoli, budget." },
+        { "type": "richtext", "id": "who", "label": "Team", "info": "Usa <strong> per evidenziare i nomi.", "default": "<p><strong>Giovanni</strong> + geometra</p>" }
+      ]
+    },
+    {
+      "type": "assurance",
+      "name": "Garanzia",
+      "limit": 6,
+      "settings": [
+        { "type": "richtext", "id": "value", "label": "Valore", "info": "Usa <em>...</em> per il corsivo serif.", "default": "<p>20 <em>persone</em></p>" },
+        { "type": "text", "id": "label", "label": "Etichetta", "default": "Team interno — niente agenzie intermedie." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ristr · Timeline",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "number": "01 · Sopralluogo",
+            "duration": "gratis",
+            "title": "<p>Ci <em>conosciamo.</em></p>",
+            "text": "A casa vostra. Rilievo, vincoli, budget.",
+            "who": "<p><strong>Giovanni</strong> + geometra</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "number": "02 · Progetto",
+            "duration": "4–8 set.",
+            "title": "<p>Le <em>idee</em> prendono forma.</p>",
+            "text": "Layout, materiali, rendering. Due revisioni.",
+            "who": "<p><strong>Studio di progettazione</strong></p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "number": "03 · Capitolato",
+            "duration": "1 set.",
+            "title": "<p>Il <em>contratto</em>, per iscritto.</p>",
+            "text": "Finiture, tempi, costi. Firma unica.",
+            "who": "<p><strong>Ufficio tecnico</strong> + PM</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "number": "04 · Cantiere",
+            "duration": "10–26 set.",
+            "title": "<p>Le <em>maestranze</em> al lavoro.</p>",
+            "text": "Demolizioni, impianti, finiture. Report settimanale.",
+            "who": "<p><strong>Giovanni</strong> + squadre</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "number": "05 · Arredo",
+            "duration": "1–2 set.",
+            "title": "<p>La casa <em>si veste.</em></p>",
+            "text": "Arredi, tessili, luci, styling finale.",
+            "who": "<p><strong>Olga</strong>, <strong>Isabella</strong></p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "number": "06 · Consegna",
+            "duration": "1 giorno",
+            "title": "<p>Le <em>chiavi</em> in mano.</p>",
+            "text": "Collaudi, libretto casa, garanzie.",
+            "who": "<p><strong>Team al completo</strong></p>"
+          }
+        },
+        {
+          "type": "assurance",
+          "settings": {
+            "value": "<p>20 <em>persone</em></p>",
+            "label": "Team interno, in studio."
+          }
+        },
+        {
+          "type": "assurance",
+          "settings": {
+            "value": "<p>1 <em>referente</em></p>",
+            "label": "Dal primo incontro alla consegna."
+          }
+        },
+        {
+          "type": "assurance",
+          "settings": {
+            "value": "<p>10 <em>anni</em></p>",
+            "label": "Garanzia strutturale."
+          }
+        },
+        {
+          "type": "assurance",
+          "settings": {
+            "value": "<p>0 <em>sorprese</em></p>",
+            "label": "Prezzo chiuso al capitolato."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,228 @@
+{{ 'section-custom-ristrutturazioni-faq.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+  #shopify-section-{{ section.id }} .rcm-faq {
+    padding-top: {{ section.settings.padding_top | times: 0.7 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.7 | round: 0 }}px;
+  }
+  #shopify-section-{{ section.id }} .rcm-faq__heading em,
+  #shopify-section-{{ section.id }} .rcm-faq__q:hover,
+  #shopify-section-{{ section.id }} .rcm-faq__item.is-open .rcm-faq__q-icon {
+    color: {{ section.settings.accent_color }};
+  }
+  #shopify-section-{{ section.id }} .rcm-faq__item.is-open .rcm-faq__q-icon {
+    background: {{ section.settings.accent_color }};
+    border-color: {{ section.settings.accent_color }};
+    color: #fff;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .rcm-faq {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="rcm-faq" id="faq-{{ section.id }}">
+  <div class="rcm-faq__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="rcm-faq__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="rcm-faq__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="rcm-faq__list" data-rcm-faq>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'item' -%}
+            {%- assign open_class = '' -%}
+            {%- if block.settings.open_by_default -%}{%- assign open_class = ' is-open' -%}{%- endif -%}
+            <div class="rcm-faq__item{{ open_class }}" {{ block.shopify_attributes }}>
+              <button class="rcm-faq__q" type="button" aria-expanded="{% if block.settings.open_by_default %}true{% else %}false{% endif %}">
+                <span>{{ block.settings.question }}</span>
+                <span class="rcm-faq__q-icon" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                </span>
+              </button>
+              <div class="rcm-faq__a">
+                <div class="rcm-faq__a-inner">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+(function(){
+  var section = document.querySelector('#shopify-section-{{ section.id }}');
+  if (!section) return;
+  var list = section.querySelector('[data-rcm-faq]');
+  if (!list) return;
+  list.querySelectorAll('.rcm-faq__q').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var item = btn.closest('.rcm-faq__item');
+      var isOpen = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Ristrutturazioni FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Colore sfondo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Colore accento",
+      "default": "#1E8BA8"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Kicker",
+      "default": "Domande frequenti"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Titolo",
+      "info": "Usa <em> per evidenziare in corsivo/accento.",
+      "default": "<p>Le cose che ci chiedete <em>più spesso.</em></p>"
+    },
+    {
+      "type": "header",
+      "content": "Spaziatura"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Domanda",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Domanda",
+          "default": "Una domanda frequente dei vostri clienti?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Risposta",
+          "default": "<p>Scrivi qui la risposta. Puoi usare più paragrafi per spiegare meglio.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Aperta di default",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ristrutturazioni FAQ",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "question": "Il sopralluogo è davvero gratuito? Anche se poi non facciamo nulla?",
+            "answer": "<p>Sì, gratuito e senza impegno. Passiamo da voi, misuriamo, ascoltiamo, vi facciamo domande. Uscendo avrete già una forchetta di budget realistica. Se poi decidete di non procedere, buon proseguimento — non vi chiameremo mai per insistere.</p>",
+            "open_by_default": true
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Quanto dura in media una ristrutturazione completa?",
+            "answer": "<p>Un ambiente singolo: 4–8 settimane di cantiere. Un appartamento completo: 4–7 mesi. Una villa: 8–14 mesi. Alla firma del capitolato riceverete un cronoprogramma con date certe, e vi aggiorneremo ogni venerdì con foto e stato dei lavori.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Il prezzo del capitolato può aumentare in corso d'opera?",
+            "answer": "<p>Solo se chiedete una variante voi. Il capitolato è chiuso: materiali, finiture, quantità e costi sono fissati prima di aprire il cantiere. Se scoprite che volete il parquet invece del gres, ve lo quotiamo subito in forma scritta e voi decidete se procedere. Nessuna \"sorpresa finale\".</p><p>L'unica eccezione è il caso di strutture nascoste non rilevabili dal sopralluogo (es. una trave ammalorata sotto intonaco). In quel caso vi chiamiamo, vi mostriamo, decidiamo insieme.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Vi occupate anche delle pratiche burocratiche e dei bonus fiscali?",
+            "answer": "<p>Sì, è parte del servizio. CILA, SCIA, pratiche catastali, ENEA, APE: tutto in carico all'ufficio tecnico. Per quanto riguarda i bonus fiscali (ristrutturazione, ecobonus, sismabonus), possiamo applicare lo sconto in fattura quando la normativa lo consente, così non dovete anticipare nulla.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Come sono scadenzati i pagamenti?",
+            "answer": "<p>Pagamenti per stati avanzamento lavori. Tipicamente: 20% alla firma del capitolato, 30% all'apertura del cantiere, 30% a metà lavori, 15% alla consegna, 5% al collaudo finale dopo 30 giorni. Nessun saldo anticipato a inizio lavori: paghi man mano che vediamo il risultato.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Posso abitare in casa durante i lavori?",
+            "answer": "<p>Sconsigliato per ristrutturazioni complete: polvere, rumore, impianti staccati rendono la convivenza pesante. Su interventi parziali (solo cucina o solo bagno) è spesso possibile organizzare il cantiere per fasi in modo da lasciare l'abitazione utilizzabile. Ne parliamo in sopralluogo.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Coprite solo la provincia di Cuneo?",
+            "answer": "<p>Il nostro raggio naturale è Piemonte meridionale e Liguria di ponente, con cantieri regolari a Cuneo, Torino, Alba, Savigliano, Alassio e Sanremo. Per progetti di taglio superiore possiamo seguire anche Costa Azzurra e Milano, da valutare caso per caso in sopralluogo.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Cosa succede dopo la consegna? Se si rompe qualcosa, chi chiamo?",
+            "answer": "<p>Ci chiamate noi. Garanzia decennale strutturale, biennale su finiture e impianti, secondo i termini di legge. Il vostro PM resta il riferimento per i primi due anni: se salta una luce, non parte un mobile, si incrina una piastrella, ve la risolviamo noi senza passare da voi ai fornitori.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

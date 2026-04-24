@@ -1,0 +1,137 @@
+/* ── Progettazione Intro (mirrors rcm-intro) ── */
+.prog-intro {
+  padding: 120px 40px 100px;
+}
+
+@media (max-width: 749px) {
+  .prog-intro {
+    padding: 80px 20px 72px;
+  }
+}
+
+.prog-intro__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+@media (max-width: 749px) {
+  .prog-intro__inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* Eyebrow label with accent bar */
+.prog-intro__eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #6b6b66;
+  opacity: 0.75;
+  padding-top: 16px;
+  position: relative;
+  margin: 0;
+}
+
+.prog-intro__eyebrow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 2px;
+  background: var(--color-accent, #1E8BA8);
+}
+
+/* Main statement */
+.prog-intro__statement {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: #111;
+  text-wrap: balance;
+}
+
+@media (min-width: 990px) and (max-width: 1699.98px) {
+  .prog-intro__statement {
+    font-size: clamp(1.63rem, 2.07vw, 2.17rem);
+  }
+}
+
+.prog-intro__lead,
+.prog-intro__lead p {
+  font-family: var(--font-heading);
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(2.115rem, 3.42vw, 2.835rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #111;
+  margin: 0 auto 0 0;
+  text-wrap: balance;
+  max-width: 42.5rem;
+}
+
+@media screen and (min-width: 990px) and (max-width: 1699.98px) {
+  .prog-intro__lead,
+  .prog-intro__lead p {
+    font-size: clamp(2.13rem, 3vw, 2.82rem);
+    letter-spacing: -0.015em;
+  }
+}
+
+.prog-intro__break,
+.prog-intro__break p {
+  font-family: var(--font-heading, 'Assistant', system-ui, sans-serif);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: #222;
+  margin: 0;
+  letter-spacing: 0.005em;
+}
+
+.prog-intro__break strong,
+.prog-intro__break p strong {
+  font-weight: 600;
+  color: #111;
+  letter-spacing: 0;
+}
+
+.prog-intro__statement em {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
+  color: var(--color-accent, #1E8BA8);
+}
+
+.prog-intro__break {
+  display: block;
+  max-width: 48ch;
+  margin: 72px 0 0;
+  text-align: left;
+}
+
+@media (max-width: 749px) {
+  .prog-intro__break {
+    margin: 32px 0 0;
+  }
+}
+
+.prog-intro__media-wrap {
+  max-width: 1240px;
+  margin: 58px auto 0;
+  padding: 0 40px;
+}
+
+@media (max-width: 749px) {
+  .prog-intro__media-wrap {
+    margin-top: 38px;
+    padding: 0 20px;
+  }
+}

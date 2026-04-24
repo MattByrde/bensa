@@ -1,0 +1,272 @@
+{{ 'section-custom-ristrutturazioni-scope.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+  #shopify-section-{{ section.id }} .rcm-scope {
+    padding-top: {{ section.settings.padding_top | times: 0.7 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.7 | round: 0 }}px;
+  }
+  #shopify-section-{{ section.id }} .rcm-scope__heading em,
+  #shopify-section-{{ section.id }} .rcm-scope__item-icon {
+    color: {{ section.settings.accent_color }};
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .rcm-scope {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="rcm-scope">
+  <div class="rcm-scope__inner">
+    <div class="rcm-scope__sticky">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="rcm-scope__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="rcm-scope__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <div class="rcm-scope__desc">{{ section.settings.description }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: '#' }}" class="rcm-scope__btn">
+          {{ section.settings.button_label }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="rcm-scope__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'item' -%}
+            <div class="rcm-scope__item" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon_svg != blank -%}
+                <span class="rcm-scope__item-icon">{{ block.settings.icon_svg }}</span>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <h4>{{ block.settings.title }}</h4>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p>{{ block.settings.description }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ristrutturazioni Scope",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Colore sfondo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Colore accento",
+      "default": "#1E8BA8"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Kicker",
+      "default": "Cosa c'è dentro"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Titolo",
+      "info": "Usa <em> per evidenziare in corsivo/accento.",
+      "default": "<p>Dodici <em>voci</em>, una sola firma.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Descrizione",
+      "default": "<p>Tutto quello che solitamente gestireste con dieci ditte diverse, lo gestiamo noi con un unico contratto.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Bottone"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Etichetta bottone",
+      "default": "Richiedi un sopralluogo"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link bottone"
+    },
+    {
+      "type": "header",
+      "content": "Spaziatura"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Voce",
+      "settings": [
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "SVG icona",
+          "info": "Incolla qui il codice SVG (inline). Usa stroke=\"currentColor\" per applicare il colore accento."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titolo",
+          "default": "Titolo voce"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descrizione",
+          "default": "Breve descrizione di questa voce."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ristrutturazioni Scope",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 23 L14 5 L23 23 Z\"/><path d=\"M9 23 L14 13 L19 23\"/><path d=\"M5 23 H23\"/></svg>",
+            "title": "Progetto architettonico",
+            "description": "Rilievo, distribuzione, tavole esecutive, rendering di ogni ambiente."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"5\" width=\"20\" height=\"18\"/><path d=\"M4 11 H24 M4 17 H24\"/><path d=\"M11 5 V11 M17 11 V17 M11 17 V23\"/></svg>",
+            "title": "Opere murarie",
+            "description": "Demolizioni, tramezzi, cartongesso, intonaci, massetti, controsoffitti."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"5\" width=\"9\" height=\"6\"/><rect x=\"15\" y=\"5\" width=\"9\" height=\"6\"/><rect x=\"4\" y=\"13\" width=\"9\" height=\"6\"/><rect x=\"15\" y=\"13\" width=\"9\" height=\"6\"/><rect x=\"9\" y=\"21\" width=\"10\" height=\"2\"/></svg>",
+            "title": "Pavimenti e rivestimenti",
+            "description": "Parquet, gres, resine, pietre naturali, carte da parati e stucchi a calce."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 4 L7 16 H13 L11 24 L19 12 H13 L15 4 Z\"/></svg>",
+            "title": "Impianti",
+            "description": "Elettrico, idrico, riscaldamento, domotica, climatizzazione, certificazioni."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"5\" y=\"4\" width=\"18\" height=\"20\" rx=\"1\"/><path d=\"M14 4 V24 M5 14 H23\"/><circle cx=\"18.5\" cy=\"9.5\" r=\"0.8\" fill=\"currentColor\" stroke=\"none\"/></svg>",
+            "title": "Serramenti",
+            "description": "Porte interne, finestre, sistemi divisori vetrati, tapparelle, zanzariere."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14 4 V10\"/><ellipse cx=\"14\" cy=\"12\" rx=\"7\" ry=\"2\"/><path d=\"M9 15 L8 19 M14 15 V20 M19 15 L20 19\"/><path d=\"M12 22 V24 M16 22 V24\"/></svg>",
+            "title": "Bagno completo",
+            "description": "Sanitari, rubinetterie, docce, vasche, mobili, specchi, illuminazione."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"4\" width=\"20\" height=\"20\" rx=\"1\"/><circle cx=\"10\" cy=\"10\" r=\"2\"/><circle cx=\"18\" cy=\"10\" r=\"2\"/><circle cx=\"10\" cy=\"18\" r=\"2\"/><circle cx=\"18\" cy=\"18\" r=\"2\"/></svg>",
+            "title": "Cucina su misura",
+            "description": "Progetto, elettrodomestici di gamma, top in pietra o quarzo, posa chiavi in mano."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14 3 V7\"/><path d=\"M8 7 H20 L17 17 H11 Z\"/><path d=\"M12 17 V22\"/><path d=\"M16 17 V22\"/><path d=\"M10 24 H18\"/></svg>",
+            "title": "Illuminazione",
+            "description": "Light design, binari, sospensioni d'autore, domotica luce, scenari serali."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 18 V13 a2 2 0 0 1 2-2 h3 a2 2 0 0 1 2 2 v2 h6 v-2 a2 2 0 0 1 2-2 h3 a2 2 0 0 1 2 2 v5\"/><path d=\"M4 15 H24 V20 a1 1 0 0 1-1 1 H5 a1 1 0 0 1-1-1 Z\"/><path d=\"M7 21 V24 M21 21 V24\"/></svg>",
+            "title": "Arredo firmato",
+            "description": "Divani, letti, tavoli, sedute, armadiature: il catalogo Bensa con sconti riservati."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 3 H18 L22 7 V25 H6 Z\"/><path d=\"M18 3 V7 H22\"/><path d=\"M9 12 H16 M9 16 H19\"/><circle cx=\"18.5\" cy=\"20\" r=\"2.5\"/><path d=\"M16.8 21.7 L15.5 23\"/></svg>",
+            "title": "Pratiche burocratiche",
+            "description": "CILA, SCIA, permessi, Genio Civile, bonus fiscali, pratiche ENEA e APE."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 20 H24\"/><path d=\"M6 20 V15 a8 8 0 0 1 16 0 V20\"/><path d=\"M12 8 V13 M16 8 V13\"/><path d=\"M11 20 V23 M17 20 V23\"/></svg>",
+            "title": "Maestranze",
+            "description": "Squadre selezionate e verificate, operanti con Bensa da oltre dieci anni."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"9\" cy=\"14\" r=\"4.5\"/><path d=\"M13.5 14 H24\"/><path d=\"M18 14 V18 M21 14 V17\"/></svg>",
+            "title": "Consegna e assistenza",
+            "description": "Pulizia finale, collaudo, trasloco assistito, dieci anni di post-vendita."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

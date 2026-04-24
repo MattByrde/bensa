@@ -1,0 +1,273 @@
+{{ 'section-custom-ristrutturazioni-case.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+  #shopify-section-{{ section.id }} .rcm-case {
+    padding-top: {{ section.settings.padding_top | times: 0.7 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.7 | round: 0 }}px;
+  }
+  #shopify-section-{{ section.id }} .rcm-case__heading em,
+  #shopify-section-{{ section.id }} .rcm-case__fact-value em {
+    color: {{ section.settings.accent_color }};
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .rcm-case {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="rcm-case">
+  <div class="rcm-case__inner">
+    <div class="rcm-case__head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="rcm-case__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="rcm-case__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.meta_1_value != blank or section.settings.meta_2_value != blank -%}
+        <div class="rcm-case__meta">
+          {%- if section.settings.meta_1_value != blank -%}
+            <div class="rcm-case__meta-item">
+              <strong>{{ section.settings.meta_1_value }}</strong>
+              {{ section.settings.meta_1_label }}
+            </div>
+          {%- endif -%}
+          {%- if section.settings.meta_2_value != blank -%}
+            <div class="rcm-case__meta-item">
+              <strong>{{ section.settings.meta_2_value }}</strong>
+              {{ section.settings.meta_2_label }}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="rcm-case__grid">
+      <div class="rcm-case__cell">
+        <span class="rcm-case__cell-tag">{{ section.settings.before_label | default: 'Prima' }}</span>
+        {%- if section.settings.before_image != blank -%}
+          {{ section.settings.before_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '540, 960, 1280, 1600', alt: section.settings.before_image.alt | default: section.settings.before_label }}
+        {%- else -%}
+          <div class="rcm-case__cell-placeholder">Before · 960×720</div>
+        {%- endif -%}
+      </div>
+      <div class="rcm-case__cell">
+        <span class="rcm-case__cell-tag is-after">{{ section.settings.after_label | default: 'Dopo' }}</span>
+        {%- if section.settings.after_image != blank -%}
+          {{ section.settings.after_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '540, 960, 1280, 1600', alt: section.settings.after_image.alt | default: section.settings.after_label }}
+        {%- else -%}
+          <div class="rcm-case__cell-placeholder">After · 960×720</div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="rcm-case__facts">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'fact' -%}
+            <div class="rcm-case__fact" {{ block.shopify_attributes }}>
+              {%- if block.settings.label != blank -%}
+                <span class="rcm-case__fact-label">{{ block.settings.label }}</span>
+              {%- endif -%}
+              {%- if block.settings.value != blank -%}
+                <span class="rcm-case__fact-value">{{ block.settings.value }}</span>
+              {%- endif -%}
+              {%- if block.settings.note != blank -%}
+                <span class="rcm-case__fact-note">{{ block.settings.note }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ristrutturazioni Case",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Colore sfondo",
+      "default": "#F5F0E8"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Colore accento",
+      "default": "#1E8BA8"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Kicker",
+      "default": "Un caso reale"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Titolo",
+      "info": "Usa <em> per evidenziare in corsivo/accento.",
+      "default": "<p>Appartamento anni '70 a <em>Borgo San Dalmazzo.</em></p>"
+    },
+    {
+      "type": "header",
+      "content": "Meta informazioni"
+    },
+    {
+      "type": "text",
+      "id": "meta_1_value",
+      "label": "Meta 1 — titolo",
+      "default": "Famiglia Marchetti"
+    },
+    {
+      "type": "text",
+      "id": "meta_1_label",
+      "label": "Meta 1 — descrizione",
+      "default": "Cliente privato"
+    },
+    {
+      "type": "text",
+      "id": "meta_2_value",
+      "label": "Meta 2 — titolo",
+      "default": "Marzo — Ottobre 2025"
+    },
+    {
+      "type": "text",
+      "id": "meta_2_label",
+      "label": "Meta 2 — descrizione",
+      "default": "Otto mesi di cantiere"
+    },
+    {
+      "type": "header",
+      "content": "Prima / Dopo"
+    },
+    {
+      "type": "image_picker",
+      "id": "before_image",
+      "label": "Immagine Prima"
+    },
+    {
+      "type": "text",
+      "id": "before_label",
+      "label": "Etichetta Prima",
+      "default": "Prima"
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image",
+      "label": "Immagine Dopo"
+    },
+    {
+      "type": "text",
+      "id": "after_label",
+      "label": "Etichetta Dopo",
+      "default": "Dopo"
+    },
+    {
+      "type": "header",
+      "content": "Spaziatura"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    }
+  ],
+  "blocks": [
+    {
+      "type": "fact",
+      "name": "Dato",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Etichetta",
+          "default": "Superficie"
+        },
+        {
+          "type": "richtext",
+          "id": "value",
+          "label": "Valore",
+          "info": "Usa <em> per unità/secondaria in corsivo.",
+          "default": "<p>142 <em>m²</em></p>"
+        },
+        {
+          "type": "textarea",
+          "id": "note",
+          "label": "Nota",
+          "default": "Ridistribuzione totale, abbattuti 3 muri divisori."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ristrutturazioni Case",
+      "blocks": [
+        {
+          "type": "fact",
+          "settings": {
+            "label": "Superficie",
+            "value": "<p>142 <em>m²</em></p>",
+            "note": "Ridistribuzione totale, abbattuti 3 muri divisori."
+          }
+        },
+        {
+          "type": "fact",
+          "settings": {
+            "label": "Durata",
+            "value": "<p>8 <em>mesi</em></p>",
+            "note": "Consegna anticipata di 6 giorni sul capitolato."
+          }
+        },
+        {
+          "type": "fact",
+          "settings": {
+            "label": "Investimento",
+            "value": "<p>€ 186k</p>",
+            "note": "Chiavi in mano, arredo incluso, bonus fiscali scontati in fattura."
+          }
+        },
+        {
+          "type": "fact",
+          "settings": {
+            "label": "Varianti",
+            "value": "<p>2</p>",
+            "note": "Cambio finitura parquet + aggiunta cabina armadio."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

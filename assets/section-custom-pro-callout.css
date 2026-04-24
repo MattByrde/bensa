@@ -57,7 +57,7 @@
 .pro-callout__media {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 6;
+  aspect-ratio: 16 / 7;
   background: #cfe2e6;
   overflow: hidden;
 }

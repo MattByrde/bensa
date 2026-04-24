@@ -3,7 +3,7 @@
    Exact port of Sezione-Preventivo reference, scoped to .prog-preventivo
    ============================================================ */
 
-.prog-preventivo{padding:0;background:var(--color-accent,#1E8BA8);position:relative;color:#fff}
+.prog-preventivo{padding:0;background:#202020;position:relative;color:#fff}
 
 /* Image placeholder utility */
 .prog-preventivo .ph{
@@ -251,10 +251,10 @@
 @media(max-width:749px){.prog-preventivo .tf__nav{right:20px;bottom:20px}}
 .prog-preventivo .tf__nav button{
   width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;
-  background:#fff;border:1px solid rgba(0,0,0,.12);color:#111;cursor:pointer;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:#fff;cursor:pointer;
   transition:border-color .15s,background .15s;
 }
-.prog-preventivo .tf__nav button:hover:not(:disabled){border-color:#111;background:#fafaf6}
+.prog-preventivo .tf__nav button:hover:not(:disabled){border-color:#fff;background:rgba(255,255,255,.18)}
 .prog-preventivo .tf__nav button:disabled{opacity:.35;cursor:not-allowed}
 
 /* Thank-you */

@@ -1,0 +1,218 @@
+{{ 'section-custom-ristrutturazioni-process.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .ristr-process {
+    padding-top: {{ section.settings.padding_top | times: 0.7 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.7 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .ristr-process {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="ristr-process" aria-label="{{ section.settings.aria_label | default: 'Fasce di spesa indicative' | escape }}">
+  <div class="ristr-process__inner">
+
+    <div class="ristr-process__head">
+      <div>
+        {%- if section.settings.kicker != blank -%}
+          <p class="ristr-process__kicker">{{ section.settings.kicker }}</p>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <div class="typo-section-heading ristr-process__title">{{ section.settings.title }}</div>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.lead != blank -%}
+        <p class="ristr-process__lead">{{ section.settings.lead }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="ristr-process__grid ristr-process__grid--tiers" data-tier-count="{{ section.blocks.size }}">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'tier' -%}
+            <div class="ristr-process-card ristr-process-card--tier" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                <div class="ristr-process-card__media">
+                  {{ block.settings.image | image_url: width: 800 | image_tag:
+                     loading: 'lazy',
+                     widths: '300,400,600,800',
+                     sizes: '(min-width: 750px) 33vw, 90vw',
+                     alt: block.settings.image.alt | default: block.settings.title
+                  }}
+                </div>
+              {%- endif -%}
+              {%- if block.settings.number != blank -%}
+                <span class="ristr-process-card__num">{{ block.settings.number }}</span>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <h3 class="typo-card-title ristr-process-card__title">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.price_range != blank -%}
+                <p class="ristr-process-card__price">{{ block.settings.price_range }}</p>
+              {%- endif -%}
+              {%- if block.settings.bullets != blank -%}
+                <ul class="ristr-process-card__bullets">
+                  {%- assign items = block.settings.bullets | newline_to_br | split: '<br />' -%}
+                  {%- for item in items -%}
+                    {%- assign trimmed = item | strip -%}
+                    {%- if trimmed != blank -%}
+                      <li>{{ trimmed }}</li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+              {%- if block.settings.footnote != blank -%}
+                <p class="ristr-process-card__footnote">{{ block.settings.footnote }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.foot_text != blank or section.settings.foot_cta_label != blank -%}
+      <div class="ristr-process__foot">
+        {%- if section.settings.foot_text != blank -%}
+          <span>{{ section.settings.foot_text }}</span>
+        {%- endif -%}
+        {%- if section.settings.foot_cta_label != blank -%}
+          <a href="{{ section.settings.foot_cta_link | default: '#' }}" class="ristr-process__foot-cta">
+            {{ section.settings.foot_cta_label }} →
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ristr · Fasce di spesa",
+  "tag": "section",
+  "class": "shopify-section--ristr-process",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Fasce di spesa, indicative"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Titolo",
+      "info": "Usa <em>...</em> per il corsivo serif.",
+      "default": "<p>Tre ordini di grandezza per iniziare <em>a parlarne</em>.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "lead",
+      "label": "Paragrafo introduttivo",
+      "default": "<p>Non pubblichiamo listini: <strong>ogni casa è diversa</strong>. Ma condividiamo volentieri tre fasce reali dei nostri ultimi cantieri, così arrivate in studio con un'idea.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Footer"
+    },
+    {
+      "type": "richtext",
+      "id": "foot_text",
+      "label": "Testo in basso",
+      "info": "Usa <em>...</em> per il corsivo serif.",
+      "default": "<p>Le fasce sono indicative e basate sui nostri cantieri 2023–2025 in provincia di Cuneo, Torino e Genova. Il <em>preventivo vero</em> è gratuito e arriva dopo il sopralluogo.</p>"
+    },
+    {
+      "type": "text",
+      "id": "foot_cta_label",
+      "label": "Etichetta CTA",
+      "default": "Richiedi un sopralluogo"
+    },
+    {
+      "type": "url",
+      "id": "foot_cta_link",
+      "label": "Link CTA"
+    },
+    {
+      "type": "header",
+      "content": "Spaziatura"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Fascia",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Immagine (16:9)" },
+        { "type": "text", "id": "number", "label": "Numero + etichetta breve", "default": "01 / Ambiente singolo" },
+        { "type": "text", "id": "title", "label": "Titolo fascia", "default": "Cucina o bagno chiavi in mano." },
+        { "type": "text", "id": "price_range", "label": "Fascia di prezzo", "default": "€ 25 — 60 k iva inclusa" },
+        { "type": "textarea", "id": "bullets", "label": "Elenco puntato", "info": "Una voce per riga.", "default": "Progetto + rendering\nDemolizioni e opere murarie\nImpianti rifatti, certificati\nRivestimenti e finiture\nArredo e elettrodomestici" },
+        { "type": "textarea", "id": "footnote", "label": "Nota (durata / contesto)", "default": "Durata tipica 4–8 settimane. Bonus fiscali scontati in fattura." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ristr · Fasce di spesa",
+      "blocks": [
+        {
+          "type": "tier",
+          "settings": {
+            "number": "01 / Ambiente singolo",
+            "title": "Cucina o bagno chiavi in mano.",
+            "price_range": "€ 25 — 60 k iva inclusa",
+            "bullets": "Progetto + rendering\nDemolizioni e opere murarie\nImpianti rifatti, certificati\nRivestimenti e finiture\nArredo e elettrodomestici",
+            "footnote": "Durata tipica 4–8 settimane. Bonus fiscali scontati in fattura."
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "number": "02 / Appartamento · più comune",
+            "title": "Casa intera, completa di arredo.",
+            "price_range": "€ 90 — 220 k iva inclusa",
+            "bullets": "Progetto architettonico completo\nRidistribuzione spazi, impianti\nFiniture di fascia alta\nCucina + bagni completi\nArredo Flexform, Poliform, Cassina\nDomotica base, light design",
+            "footnote": "La fascia che scegliamo più spesso: 60% dei nostri cantieri. Durata 4–7 mesi."
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "number": "03 / Villa o residenza",
+            "title": "Progetto sartoriale completo.",
+            "price_range": "€ 250 k +",
+            "bullets": "Architettura, interni, giardino\nPezzi custom, marmi, pietre\nDomotica avanzata, automazione\nIlluminazione firmata\nOpere d'arte, tessili su misura",
+            "footnote": "Progetti esclusivi, 8–14 mesi. Agenda chiusa: due cantieri l'anno."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

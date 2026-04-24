@@ -1,0 +1,328 @@
+{{ 'section-custom-progettazione-promise.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+  #shopify-section-{{ section.id }} .prog-promise {
+    padding-top: {{ section.settings.padding_top | times: 0.72 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.72 | round: 0 }}px;
+  }
+  #shopify-section-{{ section.id }} .prog-promise__heading em,
+  #shopify-section-{{ section.id }} .prog-promise__desc em,
+  #shopify-section-{{ section.id }} .prog-promise__body h3 em {
+    color: {{ section.settings.accent_color }};
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .prog-promise {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="prog-promise" data-prog-promise>
+  <div class="prog-promise__inner">
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.description != blank -%}
+      <div class="prog-promise__body-head">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="section-eyebrow prog-vision__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="prog-promise__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <div class="prog-promise__desc">{{ section.settings.description }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="prog-promise__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'card' -%}
+            <article class="prog-promise__card" {{ block.shopify_attributes }}>
+              <div class="prog-promise__reel" data-prog-promise-reel>
+                {%- if block.settings.video != blank or block.settings.video_url != blank -%}
+                  <video
+                    class="prog-promise__reel-video"
+                    playsinline
+                    muted
+                    loop
+                    preload="metadata"
+                    {%- if block.settings.reel_image != blank %} poster="{{ block.settings.reel_image | image_url: width: 720 }}"{% endif -%}
+                    data-prog-promise-reel-video
+                  >
+                    {%- if block.settings.video != blank -%}
+                      {%- for src in block.settings.video.sources -%}
+                        <source src="{{ src.url }}" type="{{ src.mime_type }}">
+                      {%- endfor -%}
+                    {%- elsif block.settings.video_url != blank -%}
+                      <source src="{{ block.settings.video_url }}" type="video/mp4">
+                    {%- endif -%}
+                  </video>
+                {%- elsif block.settings.reel_image != blank -%}
+                  {{ block.settings.reel_image | image_url: width: 1080 | image_tag: class: 'prog-promise__reel-img', loading: 'lazy', widths: '540, 720, 1080', alt: block.settings.reel_image.alt | default: block.settings.title }}
+                {%- else -%}
+                  <div class="prog-promise__reel-placeholder">{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+                {%- endif -%}
+
+                <div class="prog-promise__reel-top">
+                  <button type="button" class="prog-promise__reel-mute" data-prog-promise-reel-mute aria-label="Mute/Unmute">
+                    <svg class="prog-promise__reel-icon-muted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><line x1="11" y1="5" x2="15" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="5" x2="11" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    <svg class="prog-promise__reel-icon-unmuted" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L4.5 5.5H2V10.5H4.5L8 14V2Z" fill="currentColor"/><path d="M11 5.5C11.8 6.3 12.25 7.4 12.25 8.5C12.25 9.6 11.8 10.7 11 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 3.5C14.3 4.8 15 6.6 15 8.5C15 10.4 14.3 12.2 13 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </button>
+                </div>
+
+                <div class="prog-promise__reel-overlay">
+                  {%- if block.settings.caption != blank -%}
+                    <span class="prog-promise__reel-caption">{{ block.settings.caption }}</span>
+                  {%- endif -%}
+                  <button type="button" class="prog-promise__reel-playbtn" data-prog-promise-reel-toggle aria-label="Play/Pause">
+                    <svg class="prog-promise__reel-icon-play" width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M4 2.5L13 8L4 13.5V2.5Z" fill="currentColor"/></svg>
+                    <svg class="prog-promise__reel-icon-pause" width="18" height="18" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="4" height="12" rx="1" fill="currentColor"/><rect x="9" y="2" width="4" height="12" rx="1" fill="currentColor"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="prog-promise__body">
+                {%- if block.settings.number_label != blank -%}
+                  <span class="prog-promise__num">{{ block.settings.number_label }}</span>
+                {%- endif -%}
+                {%- if block.settings.title != blank -%}
+                  <h3>{{ block.settings.title }}</h3>
+                {%- endif -%}
+                {%- if block.settings.description != blank -%}
+                  <p>{{ block.settings.description }}</p>
+                {%- endif -%}
+              </div>
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+(function(){
+  var root = document.currentScript.closest('[data-prog-promise]') || document.querySelector('[data-prog-promise]');
+  if (!root) return;
+
+  var reels = root.querySelectorAll('[data-prog-promise-reel]');
+  if (!reels.length) return;
+
+  var ioSupported = 'IntersectionObserver' in window;
+  var observer = null;
+
+  if (ioSupported) {
+    observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        var vid = entry.target.querySelector('[data-prog-promise-reel-video]');
+        if (!vid) return;
+        if (entry.isIntersecting) {
+          vid.play().catch(function(){});
+        } else {
+          vid.pause();
+        }
+      });
+    }, { threshold: 0.4 });
+  }
+
+  reels.forEach(function(reel) {
+    var vid = reel.querySelector('[data-prog-promise-reel-video]');
+    var toggle = reel.querySelector('[data-prog-promise-reel-toggle]');
+    var muteBtn = reel.querySelector('[data-prog-promise-reel-mute]');
+
+    if (vid && observer) observer.observe(reel);
+
+    if (muteBtn && vid) {
+      muteBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        vid.muted = !vid.muted;
+        reel.classList.toggle('is-unmuted', !vid.muted);
+      });
+    }
+
+    if (toggle && vid) {
+      toggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (vid.paused) {
+          vid.play().catch(function(){});
+          reel.classList.add('is-playing');
+        } else {
+          vid.pause();
+          reel.classList.remove('is-playing');
+        }
+      });
+
+      vid.addEventListener('play', function() { reel.classList.add('is-playing'); });
+      vid.addEventListener('pause', function() { reel.classList.remove('is-playing'); });
+    }
+
+    if (vid) {
+      reel.addEventListener('click', function() {
+        if (vid.paused) {
+          vid.play().catch(function(){});
+        } else {
+          vid.pause();
+        }
+      });
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Progettazione Promise",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Colore sfondo",
+      "default": "#F5F0E8"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Colore accento",
+      "default": "#1E8BA8"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Kicker",
+      "default": "Il metodo"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Titolo",
+      "info": "Usa <em> per evidenziare in corsivo/accento.",
+      "default": "<p>Perché lo chiamiamo <em>chiavi in mano</em>. Non è uno slogan: è un impegno contrattualizzato su tre punti fermi.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Descrizione",
+      "info": "Usa <em> per evidenziare. Appare sotto il titolo con una linea separatrice.",
+      "default": "<p>Un project manager dedicato, un capitolato chiuso, una data di consegna contrattualizzata. Tre punti fermi che rendono la ristrutturazione una <em>decisione</em>, non un problema.</p>"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (MP4)"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "URL video (fallback)",
+          "info": "Usato se non è caricato un video."
+        },
+        {
+          "type": "image_picker",
+          "id": "reel_image",
+          "label": "Poster / immagine fallback"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Didascalia sopra al video",
+          "info": "Mostrata in basso a sinistra sopra al reel."
+        },
+        {
+          "type": "text",
+          "id": "placeholder_label",
+          "label": "Etichetta placeholder",
+          "info": "Mostrata se non è presente un'immagine.",
+          "default": "Reel 9:16 · 1080×1920"
+        },
+        {
+          "type": "text",
+          "id": "number_label",
+          "label": "Numero / etichetta",
+          "default": "01 — Interlocutore"
+        },
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Titolo card",
+          "info": "Usa <em> per evidenziare.",
+          "default": "<p>Una sola <em>persona</em> a cui telefonare.</p>"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descrizione",
+          "default": "Ogni cantiere ha un project manager dedicato in studio. Voi chiamate un numero, lui parla con venti fornitori al posto vostro."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Progettazione Promise",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "placeholder_label": "Reel 9:16 · PM in sopralluogo · 1080×1920",
+            "number_label": "01 — Interlocutore",
+            "title": "<p>Una sola <em>persona</em> a cui telefonare.</p>",
+            "description": "Ogni cantiere ha un project manager dedicato in studio. Voi chiamate un numero, lui parla con venti fornitori al posto vostro."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "placeholder_label": "Reel 9:16 · Firma capitolato · 1080×1920",
+            "number_label": "02 — Capitolato",
+            "title": "<p>Un <em>capitolato chiuso</em>. Nessuna sorpresa.</p>",
+            "description": "Firmiamo un documento che descrive ogni voce — materiali, finiture, costi. Se non cambiate idea, il prezzo non si muove."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "placeholder_label": "Reel 9:16 · Giorno della consegna · 1080×1920",
+            "number_label": "03 — Tempi",
+            "title": "<p>Una <em>data</em> di consegna. Per iscritto.</p>",
+            "description": "Fissiamo il giorno in cui rientrate a casa. Dal 2020 abbiamo consegnato in anticipo sul capitolato di quattro giorni in media."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
